@@ -1,2 +1,0 @@
-# Module educatus
-# RPC service class, partial path of RPC policy file

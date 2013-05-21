@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
+	
+	<g:HTMLPanel>
+	   <footer class="art-footer clearfix">
+				<div class="art-footer-inner">
+					<div class="art-content-layout">
+						<div class="art-content-layout-row">
+							<div class="art-layout-cell layout-item-0" style="width: 50%">
+								<p style="float:left;">
+									<a href="#"><img width="32" height="32" alt="" src="images/rss_32-2.png"/></a>
+									<a href="https://www.facebook.com/Educateudes" target="_blank"><img width="32" height="32" alt="" src="images/facebook_32-2.png" class=""/></a>
+									<a href="#"><img width="32" height="32" alt="" src="images/twitter_32-2.png" class=""/></a>
+								</p>
+							</div>
+							<div class="art-layout-cell layout-item-0" style="width: 50%">
+								<p style="float:right;">Copyright © 2013 All Rights Reserved. EducateUdeS Team.</p>
+							</div>
+						</div>
+					</div>
+					<p class="art-page-footer">
+						<span id="art-footnote-links">Created with <a href="http://www.artisteer.com/" target="_blank">Artisteer</a>, modified by EducateUdeS Team</span>
+					</p>
+				</div>
+			</footer>
+	</g:HTMLPanel>	
+</ui:UiBinder> 

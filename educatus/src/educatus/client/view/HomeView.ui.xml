@@ -97,23 +97,7 @@
 					</div>
 				</div>
 			</div>	
-			<footer class="art-footer clearfix">
-				<div class="art-footer-inner">
-					<div class="art-content-layout">
-						<div class="art-content-layout-row">
-							<div class="art-layout-cell layout-item-0" style="width: 50%">
-								<p style="float:left;"><a href="#"></a><a href="#"><img width="32" height="32" alt="" src="images/rss_32-2.png"/></a><img width="32" height="32" alt="" src="images/facebook_32-2.png" class=""/><a href="#"></a><a href="#"><img width="32" height="32" alt="" src="images/twitter_32-2.png" class=""/></a></p>
-							</div>
-							<div class="art-layout-cell layout-item-0" style="width: 50%">
-								<p style="float:right;">Copyright © 2011 All Rights Reserved. Icons by <a href="http://itzikgur.deviantart.com">Itzik Gur</a></p>
-							</div>
-						</div>
-					</div>
-					<p class="art-page-footer">
-						<span id="art-footnote-links"><a href="http://www.artisteer.com/" target="_blank">Web Template</a> created with Artisteer.</span>
-					</p>
-				</div>
-			</footer>
+			
 		</div>    		    
 	</g:HTMLPanel>
 </ui:UiBinder> 

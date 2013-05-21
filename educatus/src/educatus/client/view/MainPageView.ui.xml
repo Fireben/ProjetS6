@@ -6,5 +6,6 @@
 	<g:HTMLPanel>		
 	    <npui:MainMenu ui:field="menuPanel" />
 		<g:FlowPanel ui:field="mainContentPanel" />
+		<npui:Footer ui:field="FooterPanel" />
 	</g:HTMLPanel>
 </ui:UiBinder> 
