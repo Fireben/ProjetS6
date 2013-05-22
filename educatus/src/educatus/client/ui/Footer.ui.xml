@@ -5,7 +5,7 @@
 	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
 	
 	<g:HTMLPanel>
-	   <footer class="art-footer clearfix">
+	   <div class="art-footer clearfix">
 				<div class="art-footer-inner">
 					<div class="art-content-layout">
 						<div class="art-content-layout-row">
@@ -25,6 +25,6 @@
 						<span id="art-footnote-links">Created with <a href="http://www.artisteer.com/" target="_blank">Artisteer</a>, modified by EducateUdeS Team</span>
 					</p>
 				</div>
-			</footer>
+			</div>
 	</g:HTMLPanel>	
 </ui:UiBinder> 

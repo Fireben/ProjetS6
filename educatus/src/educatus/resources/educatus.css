@@ -44,6 +44,7 @@ a, a:visited, a:hover {
    top: 0;
    cursor:default;
    overflow:hidden;
+   
 }
 
 table, ul.art-hmenu
@@ -2025,3 +2026,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 .art-blockheader .t, .art-vmenublockheader .t {white-space: nowrap;}
 /* End Additional CSS Styles */
+
+/* Begin EducateUdeS Css */
+.wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.content {
+	padding-bottom: 98px;
+}
+.footer {
+	width: 100%;
+    position: absolute;
+	height: 98px;
+	bottom: 0px;
+	left: 0px;
+}
+
+* {margin:0;padding:0;}

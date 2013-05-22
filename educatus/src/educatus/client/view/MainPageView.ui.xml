@@ -3,9 +3,17 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:npui="urn:import:educatus.client.ui">
 	 <ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
-	<g:HTMLPanel>		
-	    <npui:MainMenu ui:field="menuPanel" />
-		<g:FlowPanel ui:field="mainContentPanel" />
-		<npui:Footer ui:field="FooterPanel" />
+	<g:HTMLPanel height= "100%">
+		<div class="wrapper">
+			<div class="header">
+				<npui:MainMenu ui:field="menuPanel" />
+			</div>
+			<div class="content">
+				<g:FlowPanel ui:field="mainContentPanel" />
+			</div>
+			<div class="footer">
+				<npui:Footer ui:field="footerPanel" />
+			</div>
+		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

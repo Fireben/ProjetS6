@@ -15,7 +15,9 @@
 						<li>
 							<g:InlineHyperlink targetHistoryToken="{nameTokens.getSeminarHomePage}">Seminars</g:InlineHyperlink>				    
 						</li>
-					</ul> 
+					    <li>			
+							<g:InlineHyperlink targetHistoryToken="{nameTokens.getProfil}">Profil</g:InlineHyperlink>			    
+						</li>	
 				</div>
 			</nav>	
 		</div>	
