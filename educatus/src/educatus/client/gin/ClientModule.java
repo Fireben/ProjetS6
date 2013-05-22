@@ -25,6 +25,7 @@ import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.view.HomeView;
 import educatus.client.view.MainPageView;
+
 /**
  * @author Christian Goudreau
  */

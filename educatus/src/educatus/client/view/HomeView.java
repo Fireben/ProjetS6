@@ -29,24 +29,32 @@ import educatus.client.presenter.HomePresenter.MyView;
 /**
  * @author Christian Goudreau
  */
-public class HomeView extends ViewImpl implements MyView {
-  interface HomeViewUiBinder extends UiBinder<Widget, HomeView> {
-  }
-  @UiField Image newsPaper;
+public class HomeView extends ViewImpl implements MyView
+{
+	interface HomeViewUiBinder extends UiBinder<Widget, HomeView>
+	{
+	}
 
-  private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
+	@UiField
+	Image newsPaper;
 
-  private final Widget widget;
+	private static HomeViewUiBinder uiBinder = GWT
+			.create(HomeViewUiBinder.class);
 
-  public HomeView() {
-    widget = uiBinder.createAndBindUi(this);
-  }
+	private final Widget widget;
 
-  public Widget asWidget() {
-    return widget;
-  }
+	public HomeView()
+	{
+		widget = uiBinder.createAndBindUi(this);
+	}
 
-public Image getNewspaperImage() {
-	 return newsPaper;
-}
+	public Widget asWidget()
+	{
+		return widget;
+	}
+
+	public Image getNewspaperImage()
+	{
+		return newsPaper;
+	}
 }
