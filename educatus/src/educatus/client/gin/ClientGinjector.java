@@ -25,6 +25,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
+import educatus.client.presenter.SeminarHomePresenter;
 
 
 /**
@@ -37,6 +38,8 @@ public interface ClientGinjector extends Ginjector {
   AsyncProvider<HomePresenter> getHomePresenter();
 
   Provider<MainPagePresenter> getMainPagePresenter();
+  
+  AsyncProvider<SeminarHomePresenter> getSeminarHomePresenter();
 
   PlaceManager getPlaceManager();
 }
