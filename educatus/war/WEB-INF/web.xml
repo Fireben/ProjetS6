@@ -5,6 +5,17 @@
 
 	<display-name>educatus</display-name>
 
+ <!-- Servlets -->
+  <servlet>
+    <servlet-name>requestservice</servlet-name>
+    <servlet-class>educatus.server.services.RequestServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>requestservice</servlet-name>
+    <url-pattern>/educatus/requestservice</url-pattern>
+  </servlet-mapping>
+  
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>educatus.html</welcome-file>
