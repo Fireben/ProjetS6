@@ -18,6 +18,7 @@
 					    <li>			
 							<g:InlineHyperlink targetHistoryToken="{nameTokens.getProfil}">Profil</g:InlineHyperlink>			    
 						</li>	
+					</ul>
 				</div>
 			</nav>	
 		</div>	

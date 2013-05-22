@@ -49,7 +49,7 @@ public class ClientModule extends AbstractPresenterModule {
   
     bindPresenter(ProfilPresenter.class, ProfilPresenter.MyView.class,
         ProfilView.class, ProfilPresenter.MyProxy.class);
-  }
+    
     bindPresenter(SeminarHomePresenter.class, SeminarHomePresenter.MyView.class,
             SeminarHomeView.class, SeminarHomePresenter.MyProxy.class);
   }
