@@ -43,10 +43,9 @@ public class NameTokens {
       return homePage;
   }
 
-public static String getProfil() {
-	return profil;
-}
-
+  public static String getProfil() {
+		return profil;
+  }
   
   public static String getSeminarHomePage() {
 	  return seminarHomePage;

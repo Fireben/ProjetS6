@@ -16,8 +16,6 @@
 
 package educatus.client.presenter;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Image;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -47,7 +45,6 @@ public class HomePresenter extends
    * {@link HomePresenter}'s view.
    */
   public interface MyView extends View {
-	  Image  getNewspaperImage();
   }
 
   @Inject
@@ -65,12 +62,6 @@ public class HomePresenter extends
   @Override
   protected void onBind() {
     super.onBind();
-    registerHandler(getView().getNewspaperImage().addClickHandler(
-        new ClickHandler() {
-          public void onClick(ClickEvent event) {
-        	  getView().getNewspaperImage().setVisible(false);
-          }
-        }));
   }
  
   @Override

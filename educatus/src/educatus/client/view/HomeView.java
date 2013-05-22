@@ -45,8 +45,4 @@ public class HomeView extends ViewImpl implements MyView {
   public Widget asWidget() {
     return widget;
   }
-
-public Image getNewspaperImage() {
-	 return newsPaper;
-}
 }

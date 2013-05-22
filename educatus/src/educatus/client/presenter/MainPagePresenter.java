@@ -41,7 +41,7 @@ import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
  * @author Christian Goudreau
  */
 public class MainPagePresenter extends
-    Presenter<MainPagePresenter.MyView, MainPagePresenter.MyProxy> {
+  Presenter<MainPagePresenter.MyView, MainPagePresenter.MyProxy> {
   /**
    * {@link MainPagePresenter}'s proxy.
    */

@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
 
-	<g:HTMLPanel>	
+	<g:HTMLPanel height= "100%">	
 		<style>
 			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
 			.art-content .art-postcontent-0 .layout-item-1 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-color:#FAFAFA; color: #DEDEDE; background: ;  }
@@ -13,25 +13,14 @@
 			.ie7 .post .layout-cell {border:none !important; padding:0 !important; }
 			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
 		</style>    
-		<div id="art-mainPage">		
-			<header class="art-header clearfix">
-			    <div class="art-shapes">
-					<h1 class="art-headline" data-left="1.74%">
-					    <a href="#">TeleBit</a>
-					</h1>	
-			    </div>              
-			</header>
-			
+		<div id="art-mainPage" height= "100%">		
 		    <div class="art-sheet clearfix">
 				<div class="art-layout-wrapper clearfix">
 					<div class="art-content-layout">
-						<div class="art-content-layout-row">
-						    
+						<div class="art-content-layout-row">						    
 							<div class="art-layout-cell art-content clearfix">
 								<article class="art-post art-article">	    
-									<div class="art-postcontent art-postcontent-0 clearfix">
-									    
-									
+									<div class="art-postcontent art-postcontent-0 clearfix">  
 										<div class="art-content-layout-wrapper layout-item-3">
 											<div class="art-content-layout">
 												<div class="art-content-layout-row">
@@ -41,8 +30,6 @@
 														<p style="text-align: center;">
 														    <img width="154" height="154" alt="" src="images/Games-Playstation-3-icon-2.png"></img>		        
 													    </p>
-														<p>Praesent in arcu id libero sollicitudin vulputate. Proin mollis tincidunt fringilla. In et tortor mi, eget sagittis libero.</p>
-														<p><a href="#">Read more...</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-4" style="width: 25%" >
 														<h1>Computers</h1>
@@ -50,8 +37,6 @@
 														<p style="text-align: center;">
 														    <img width="154" height="154" alt="" src="images/Backup-Seagate-icon-2.png" class=""></img>
 													    </p>
-														<p>Proin mollis tincidunt fringilla. In et tortor mi, eget sagittis libero. Fusce tempus lorem ac diam gravida sed.</p>
-														<p><a href="#">Read more...</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-5" style="width: 25%" >
 														<h1>Mobile</h1>
@@ -59,8 +44,6 @@
 														<p style="text-align: center;">
 														    <img width="154" height="154" alt="" src="images/Phone-HTC-Dash-icon-2.png" class=""></img>
 														</p>
-														<p>In et tortor mi, eget sagittis libero. Praesent in arcu id libero sollicitudin vulputate. Proin mollis tincidunt fringilla.</p>
-														<p><a href="#">Read more...</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-4" style="width: 25%" >
 														<h1>Headlines</h1>
@@ -68,22 +51,17 @@
 														<p style="text-align: center;">
 															<g:Image ui:field='newsPaper' width="154" height="154" url="images/Newspapers-1-icon-2.png"></g:Image>			
 														</p>
-														<p>Fusce tempus lorem ac diam gravida sed egestas erat rhoncus. Praesent in arcu id libero sollicitudin vulputate.&nbsp;</p>
-														<p><a href="#">Read more...</a></p>
 													</div>
 												</div>
 											</div>
-										</div>
-										 
+										</div>										 
 									</div>	
-								</article>
-								
+								</article>								
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>	
-			
+			</div>				
 		</div>    		    
 	</g:HTMLPanel>
 </ui:UiBinder> 
