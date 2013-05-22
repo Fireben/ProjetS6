@@ -12,7 +12,12 @@
 					    <li>			
 							<g:InlineHyperlink targetHistoryToken="{nameTokens.getHomePage}">Home</g:InlineHyperlink>			    
 						</li>					    
-					</ul> 
+					</ul>
+					<ul class="art-hmenu">
+					    <li>			
+							<g:InlineHyperlink targetHistoryToken="{nameTokens.getProfil}">Profil</g:InlineHyperlink>			    
+						</li>					    
+					</ul>  
 				</div>
 			</nav>	
 		</div>	
