@@ -11,13 +11,14 @@
 					<ul class="art-hmenu">
 					    <li>			
 							<g:InlineHyperlink targetHistoryToken="{nameTokens.getHomePage}">Home</g:InlineHyperlink>			    
-						</li>					    
-					</ul>
-					<ul class="art-hmenu">
+						</li>	
+						<li>
+							<g:InlineHyperlink targetHistoryToken="{nameTokens.getSeminarHomePage}">Seminars</g:InlineHyperlink>				    
+						</li>
 					    <li>			
 							<g:InlineHyperlink targetHistoryToken="{nameTokens.getProfil}">Profil</g:InlineHyperlink>			    
-						</li>					    
-					</ul>  
+						</li>	
+					</ul>
 				</div>
 			</nav>	
 		</div>	

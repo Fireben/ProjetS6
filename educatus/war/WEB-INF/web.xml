@@ -8,7 +8,7 @@
  <!-- Servlets -->
   <servlet>
     <servlet-name>requestservice</servlet-name>
-    <servlet-class>educatus.server.services.RequestServiceImpl</servlet-class>
+    <servlet-class>educatus.server.services.requestservice.RequestServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
