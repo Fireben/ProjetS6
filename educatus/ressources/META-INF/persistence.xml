@@ -12,9 +12,9 @@
 			<property name="eclipselink.cache.shared.default" value="false" /> <!-- important pour refresh data -->
 			<property name="eclipselink.target-database" value="PostgreSQL" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/gif62010" />
-			<property name="javax.persistence.jdbc.user" value="gif62010" /> 
-			<property name="javax.persistence.jdbc.password" value="987654321" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/s6a1e02" />
+			<property name="javax.persistence.jdbc.user" value="s6a1e02" /> 
+			<property name="javax.persistence.jdbc.password" value="987654" />
 			<property name="eclipselink.ddl-generation" value="none" />
 			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.show-sql" value="true" />
