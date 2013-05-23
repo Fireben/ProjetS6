@@ -30,29 +30,34 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * <p />
  * Also note the exclamation mark in front of the tokens, this is used for
  * search engine crawling support.
- *
+ * 
  * @author Christian Goudreau
  */
-public class NameTokens {
-
-  public static final String homePage = "!homePage";
-  public static final String profil = "!profil";
-public static final String seminaryedit = "!seminaryedit";
- public static final String seminarHomePage = "!seminarHomePage";
-
-  public static String getHomePage() {
-  }
-
-  public static String getProfil() {
-		return profil;
-  }
-  
-  public static String getSeminarHomePage() {
-	  return seminarHomePage;
-  }
-public static String getSeminaryedit()
+public class NameTokens
 {
-	return seminaryedit;
-}
+	public static final String homePage = "!homePage";
+	public static final String profil = "!profil";
+	public static final String seminaryedit = "!seminaryedit";
+	public static final String seminarHomePage = "!seminarHomePage";
+
+	public static String getHomePage()
+	{
+		return homePage;
+	}
+
+	public static String getProfil()
+	{
+		return profil;
+	}
+
+	public static String getSeminarHomePage()
+	{
+		return seminarHomePage;
+	}
+
+	public static String getSeminaryedit()
+	{
+		return seminaryedit;
+	}
 
 }
