@@ -44,6 +44,7 @@ public class NameTokens
 	{
 		return homePage;
 	}
+public static final String viewseminary = "!viewseminary";
 
 	public static String getProfil()
 	{
@@ -60,4 +61,8 @@ public class NameTokens
 		return seminaryedit;
 	}
 
+
+public static String getViewseminary() {
+	return viewseminary;
+}
 }

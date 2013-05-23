@@ -1,0 +1,69 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
+
+<g:HTMLPanel>
+	   <style>
+			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
+			.art-content .art-postcontent-0 .layout-item-1 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-color:#FAFAFA; color: #DEDEDE; background: ;  }
+			.art-content .art-postcontent-0 .layout-item-2 { color: #FFFFFF; background: ; padding: 0px;  }
+			.art-content .art-postcontent-0 .layout-item-3 { margin-top: 20px;margin-bottom: 20px;  }
+			.art-content .art-postcontent-0 .layout-item-4 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
+			.art-content .art-postcontent-0 .layout-item-5 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
+			.ie7 .post .layout-cell {border:none !important; padding:0 !important; }
+			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
+		</style> 	
+	<div id="art-mainPage">		
+			<header class="art-header clearfix">
+			    <div class="art-shapes">
+					<h1 class="art-headline" data-left="1.74%">
+					    <!-- <g:Label text="seminaryTitle" ui:field="seminaryTitle"/> -->
+					    <span id="seminaryTitle"></span>
+					</h1>	
+					<br/>
+					<h3 style="float: right; padding-top:25px;padding-right:10px;">
+						<!-- <g:Label text="writtenBy" ui:field="writtenBy"/> -->
+						<span id="writtenBy"></span>
+						<a class="art-postheader" id="authorEmail" href="">
+							<!--  <g:Label text="author" ui:field="author"/>-->
+							<span id="author"></span>
+						</a> 
+						<!-- <g:Label text="createdDate" ui:field="createdDate"/>-->
+						<span id="createdDate"></span>
+						 <br/>
+						<!-- <g:Label text="modifyBy" ui:field="modifyBy"/>-->
+						<span id="modifyBy"></span>
+						<a class="art-postheader" id= "modifEmail" href="">
+							<!--<g:Label text="modif" ui:field="modif"/>-->
+							<span id="modif"></span>
+						</a> 
+						<!-- <g:Label text="modifiedDate" ui:field="modifiedDate"/>.-->
+						<span id="modifiedDate"></span>
+					</h3>
+			    </div>             
+			</header>
+			<div class="art-sheet clearfix">
+				<div class="art-layout-wrapper clearfix">
+					<div class="art-content-layout">
+						<div class="art-content-layout-row">						    
+							<div class="art-layout-cell art-content clearfix">
+								<article class="art-post art-article">	    
+									<div class="art-postcontent art-postcontent-0 clearfix">	    
+										<div class="art-content-layout-wrapper layout-item-3">
+											<div class="art-content-layout">
+												<div class="art-content-layout-row">
+													<!-- <g:Label text="seminaryContent" ui:field="seminaryContent"/>-->
+													<span id="seminaryContent"></span>
+			 									</div>
+			 								</div>
+			 							</div>
+			 						</div>
+			 					</article>
+			 				</div>
+			 			</div>
+			 		</div>
+			 	</div> 
+			 </div>
+		</div> 
+	</g:HTMLPanel>
+</ui:UiBinder> 
