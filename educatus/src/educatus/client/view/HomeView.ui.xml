@@ -53,7 +53,7 @@
 										<div class="art-content-layout-wrapper layout-item-3">
 											<div class="art-content-layout">
 												<div class="art-content-layout-row">
-											    	<div class="art-layout-cell layout-item-4" style="width: 25%" >
+											    	<div class="art-layout-cell layout-item-4" style="width: 25%">
 														<h1>Seminars</h1>
 														<p><span style="font-style:italic;">Watch or read tutorial</span></p>
 														<p style="text-align: center;">
@@ -101,6 +101,6 @@
 				</div>
 			</div>	
 			
-		</div>    		    
+		</div>    		   
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -30,16 +30,19 @@ public class HomeView extends ViewImpl implements MyView {
   interface HomeViewUiBinder extends UiBinder<Widget, HomeView> {
   }
 
-  private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
+	private static HomeViewUiBinder uiBinder = GWT
+			.create(HomeViewUiBinder.class);
 
-  private final Widget widget;
+	private final Widget widget;
 
-  public HomeView() {
-    widget = uiBinder.createAndBindUi(this);
-  }
+	public HomeView()
+	{
+		widget = uiBinder.createAndBindUi(this);
+	}
 
-  public Widget asWidget() {
-    return widget;
-  }
+	public Widget asWidget()
+	{
+		return widget;
+	}
 
 }

@@ -1,89 +1,50 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:my="urn:import:educatus.client.ui"
+	>	
+	
+    <ui:style>
+    .categoryButtonLabel {
+		color: rgb(0, 161, 214);
+		margin: 10px 0px 0px;
+		font-size: 18px;
+		font-family: "Century Gothic",Arial,"Arial Unicode MS",Helvetica,Sans-Serif;
+		font-weight: normal;
+		font-style: normal;
+    }
+    .categoryButton {
+		background: none repeat scroll 0% 0% #202020;
+  		margin: 0;
+  		padding: 3px 5px;
+  		cursor: pointer;
+ 		cursor: hand;
+        border: 1px solid #3B3B3B;
+		margin: auto;
+		opacity: 0;
+    }
+	</ui:style>
 
-	<g:HTMLPanel>	
-		<style>
-			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
-			.art-content .art-postcontent-0 .layout-item-1 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-color:#FAFAFA; color: #DEDEDE; background: ;  }
-			.art-content .art-postcontent-0 .layout-item-2 { color: #FFFFFF; background: ; padding: 0px;  }
-			.art-content .art-postcontent-0 .layout-item-3 { margin-top: 20px;margin-bottom: 20px;  }
-			.art-content .art-postcontent-0 .layout-item-4 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
-			.art-content .art-postcontent-0 .layout-item-5 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
-			.ie7 .post .layout-cell {border:none !important; padding:0 !important; }
-			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
-		</style>    
-		<div id="art-mainPage">		
-			<header class="art-header clearfix">
-			    <div class="art-shapes">
-					<h1 class="art-headline" data-left="1.74%">
-					    <a href="#">TeleBit</a>
-					</h1>	
-			    </div>              
-			</header>
-			
-		    <div class="art-sheet clearfix">
-				<div class="art-layout-wrapper clearfix">
-					<div class="art-content-layout">
-						<div class="art-content-layout-row">
-						    
-							<div class="art-layout-cell art-content clearfix">
-								<article class="art-post art-article">	    
-									<div class="art-postcontent art-postcontent-0 clearfix">
-									    
-									
-										<div class="art-content-layout-wrapper layout-item-3">
-											<div class="art-content-layout">
-												<div class="art-content-layout-row">
-											    	<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Gaming</h1>
-														<p><span style="font-style:italic;">Sed dapibus consectetur.</span></p>
-														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/Games-Playstation-3-icon-2.png"></img>		        
-													    </p>
-														<p>Praesent in arcu id libero sollicitudin vulputate. Proin mollis tincidunt fringilla. In et tortor mi, eget sagittis libero.</p>
-														<p><a href="#">Read more...</a></p>
-													</div>
-													<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Computers</h1>
-														<p><span style="font-style:italic;">Dolor sit amet adipiscing elit.&nbsp;</span></p>
-														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/Backup-Seagate-icon-2.png" class=""></img>
-													    </p>
-														<p>Proin mollis tincidunt fringilla. In et tortor mi, eget sagittis libero. Fusce tempus lorem ac diam gravida sed.</p>
-														<p><a href="#">Read more...</a></p>
-													</div>
-													<div class="art-layout-cell layout-item-5" style="width: 25%" >
-														<h1>Mobile</h1>
-														<p><span style="font-style:italic;">Sed dapibus consectetur.</span></p>
-														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/Phone-HTC-Dash-icon-2.png" class=""></img>
-														</p>
-														<p>In et tortor mi, eget sagittis libero. Praesent in arcu id libero sollicitudin vulputate. Proin mollis tincidunt fringilla.</p>
-														<p><a href="#">Read more...</a></p>
-													</div>
-													<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Headlines</h1>
-														<p><span style="font-style:italic;">Lorem ipsum dolor sit amet.</span></p>
-														<p style="text-align: center;">
-															<g:Image ui:field='newsPaper' width="154" height="154" url="images/Newspapers-1-icon-2.png"></g:Image>			
-														</p>
-														<p>Fusce tempus lorem ac diam gravida sed egestas erat rhoncus. Praesent in arcu id libero sollicitudin vulputate.&nbsp;</p>
-														<p><a href="#">Read more...</a></p>
-													</div>
-												</div>
-											</div>
-										</div>
-										 
-									</div>	
-								</article>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>	
-			
+	<g:HTMLPanel height= "100%">	
+		<div class="centeringParent" height= "100%">		
+		    <div class="centeringChild">
+		        <my:CustomButton ui:field="firstButton" styleName='{style.categoryButton}'>
+		            <g:Image url="images/Newspapers-1-icon-2.png"/>
+		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
+				</my:CustomButton>
+				<my:CustomButton ui:field="secondButton" styleName='{style.categoryButton}'>
+		            <g:Image url="images/Phone-HTC-Dash-icon-2.png"/>
+		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
+				</my:CustomButton>
+				<my:CustomButton ui:field="thirdButton" styleName='{style.categoryButton}'>
+		            <g:Image url="images/Newspapers-1-icon-2.png"/>
+		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
+				</my:CustomButton>
+				<my:CustomButton ui:field="fourthButton" styleName='{style.categoryButton}'>
+		            <g:Image url="images/Phone-HTC-Dash-icon-2.png"/>
+		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
+				</my:CustomButton>
+			</div>				
 		</div>    		    
 	</g:HTMLPanel>
 </ui:UiBinder> 
