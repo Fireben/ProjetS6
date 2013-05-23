@@ -61,11 +61,7 @@ public class HomePresenter extends
   @Override
   protected void onBind() {
     super.onBind();
-<<<<<<< HEAD
-=======
-    
-    
->>>>>>> remotes/origin/Version_0_1
+
   }
  
   @Override
