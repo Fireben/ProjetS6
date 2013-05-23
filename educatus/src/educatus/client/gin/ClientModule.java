@@ -25,6 +25,8 @@ import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.view.HomeView;
 import educatus.client.view.MainPageView;
+import educatus.client.view.SeminaryViewView;
+import educatus.client.presenter.SeminaryViewPresenter;
 /**
  * @author Christian Goudreau
  */
@@ -42,5 +44,9 @@ public class ClientModule extends AbstractPresenterModule {
         MainPageView.class, MainPagePresenter.MyProxy.class);
     bindPresenter(HomePresenter.class, HomePresenter.MyView.class,
         HomeView.class, HomePresenter.MyProxy.class);
+
+		bindPresenter(SeminaryViewPresenter.class,
+				SeminaryViewPresenter.MyView.class, SeminaryViewView.class,
+				SeminaryViewPresenter.MyProxy.class);
   }
 }

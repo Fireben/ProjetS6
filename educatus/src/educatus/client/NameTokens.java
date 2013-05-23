@@ -33,8 +33,13 @@ package educatus.client;
 public class NameTokens {
 
   public static final String homePage = "!homePage";
+public static final String viewseminary = "!viewseminary";
 
   public static String getHomePage() {
     return homePage;
   }
+
+public static String getViewseminary() {
+	return viewseminary;
+}
 }

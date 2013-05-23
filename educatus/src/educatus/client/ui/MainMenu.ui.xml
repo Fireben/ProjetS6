@@ -10,8 +10,11 @@
 				<div class="art-nav-inner">
 					<ul class="art-hmenu">
 					    <li>			
-							<g:InlineHyperlink targetHistoryToken="{nameTokens.getHomePage}">Home</g:InlineHyperlink>			    
-						</li>					    
+							<g:InlineHyperlink targetHistoryToken="{nameTokens.getHomePage}">Home</g:InlineHyperlink>
+						</li>
+						<li>
+							<g:InlineHyperlink targetHistoryToken="{nameTokens.getViewseminary}">View Seminary</g:InlineHyperlink>			    
+						</li>				    
 					</ul> 
 				</div>
 			</nav>	
