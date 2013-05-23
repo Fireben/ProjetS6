@@ -2048,5 +2048,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	left: 0px;
 	display: table-row;
 }
+.centeringParent {
+	padding-bottom:4%;
+	padding-top:4%;
+}
+.centeringChild {
+	padding-bottom:8%;
+	padding-top:8%;	
+	width:750px;
+	margin:auto;
+}
 
 * {margin:0;padding:0;}
