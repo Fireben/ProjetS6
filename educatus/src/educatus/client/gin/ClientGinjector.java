@@ -16,17 +16,18 @@
 
 package educatus.client.gin;
 
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import com.google.inject.Provider;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
-import educatus.client.presenter.SeminaryViewPresenter;
-
+import educatus.client.presenter.ProfilPresenter;
+import educatus.client.presenter.SeminarHomePresenter;
+import educatus.client.presenter.SeminaryEditPresenter;import educatus.client.presenter.SeminaryViewPresenter;
 
 /**
  * @author Christian Goudreau
@@ -39,7 +40,8 @@ public interface ClientGinjector extends Ginjector {
 
   Provider<MainPagePresenter> getMainPagePresenter();
 
-  PlaceManager getPlaceManager();
+  AsyncProvider<ProfilPresenter> getProfilPresenter();  
+  AsyncProvider<SeminarHomePresenter> getSeminarHomePresenter();
 
-AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();
-}
+  PlaceManager getPlaceManager();
+AsyncProvider<SeminaryEditPresenter> getSeminaryEditPresenter();AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();}

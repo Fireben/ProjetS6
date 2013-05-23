@@ -18,10 +18,7 @@ package educatus.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import educatus.client.presenter.HomePresenter.MyView;
@@ -32,21 +29,20 @@ import educatus.client.presenter.HomePresenter.MyView;
 public class HomeView extends ViewImpl implements MyView {
   interface HomeViewUiBinder extends UiBinder<Widget, HomeView> {
   }
-  @UiField Image newsPaper;
 
-  private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
+	private static HomeViewUiBinder uiBinder = GWT
+			.create(HomeViewUiBinder.class);
 
-  private final Widget widget;
+	private final Widget widget;
 
-  public HomeView() {
-    widget = uiBinder.createAndBindUi(this);
-  }
+	public HomeView()
+	{
+		widget = uiBinder.createAndBindUi(this);
+	}
 
-  public Widget asWidget() {
-    return widget;
-  }
+	public Widget asWidget()
+	{
+		return widget;
+	}
 
-public Image getNewspaperImage() {
-	 return newsPaper;
-}
 }

@@ -16,19 +16,16 @@
 
 package educatus.client.presenter;
 
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Image;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+
 import educatus.client.NameTokens;
-import educatus.client.presenter.MainPagePresenter;
 
 /**
  * @author Christian Goudreau
@@ -47,7 +44,6 @@ public class HomePresenter extends
    * {@link HomePresenter}'s view.
    */
   public interface MyView extends View {
-	  Image  getNewspaperImage();
   }
 
   @Inject
@@ -65,11 +61,12 @@ public class HomePresenter extends
   @Override
   protected void onBind() {
     super.onBind();
-    registerHandler(getView().getNewspaperImage().addClickHandler(
-        new ClickHandler() {
-          public void onClick(ClickEvent event) {
-        	  getView().getNewspaperImage().setVisible(false);
-          }
-        }));
+
   }
+ 
+  @Override
+	protected void onReset() {
+		super.onReset();
+
+	}
 }

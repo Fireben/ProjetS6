@@ -16,6 +16,9 @@
 
 package educatus.client;
 
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+
 /**
  * The central location of all name tokens for the application. All
  * {@link ProxyPlace} classes get their tokens from here. This class also makes
@@ -27,17 +30,37 @@ package educatus.client;
  * <p />
  * Also note the exclamation mark in front of the tokens, this is used for
  * search engine crawling support.
- *
+ * 
  * @author Christian Goudreau
  */
-public class NameTokens {
+public class NameTokens
+{
+	public static final String homePage = "!homePage";
+	public static final String profil = "!profil";
+	public static final String seminaryedit = "!seminaryedit";
+	public static final String seminarHomePage = "!seminarHomePage";
 
-  public static final String homePage = "!homePage";
+	public static String getHomePage()
+	{
+		return homePage;
+	}
 public static final String viewseminary = "!viewseminary";
 
-  public static String getHomePage() {
-    return homePage;
-  }
+	public static String getProfil()
+	{
+		return profil;
+	}
+
+	public static String getSeminarHomePage()
+	{
+		return seminarHomePage;
+	}
+
+	public static String getSeminaryedit()
+	{
+		return seminaryedit;
+	}
+
 
 public static String getViewseminary() {
 	return viewseminary;

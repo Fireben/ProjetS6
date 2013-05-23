@@ -27,7 +27,7 @@ import educatus.resources.Resources;
 /**
  * @author Christian Goudreau
  */
-public class Educatus implements EntryPoint {
+public class Educatus implements EntryPoint { 
   public final ClientGinjector ginjector = GWT.create(ClientGinjector.class);
 
   public final void onModuleLoad() {
