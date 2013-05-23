@@ -21,18 +21,16 @@ import com.gwtplatform.mvp.client.gin.DefaultModule;
 
 import educatus.client.EducatusPlaceManager;
 import educatus.client.NameTokens;
+import educatus.client.presenter.ConfirmChangesPresenter;
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
-import educatus.client.presenter.ProfilPresenter;
 import educatus.client.presenter.SeminarHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
 import educatus.client.view.ConfirmChangesView;
 import educatus.client.view.HomeView;
 import educatus.client.view.MainPageView;
-import educatus.client.view.ProfilView;
 import educatus.client.view.SeminarHomeView;
 import educatus.client.view.SeminaryEditView;
-import educatus.client.presenter.ConfirmChangesPresenter;
 /**
  * @author Christian Goudreau
  */
