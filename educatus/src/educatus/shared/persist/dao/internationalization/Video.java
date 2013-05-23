@@ -9,19 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="internationalization.Culture")
-public class Culture implements Serializable {
-	
-	private static final long serialVersionUID = 6906290633139198946L;
+@Table(name="internationalization.Video")
+public class Video implements Serializable {
+
+	private static final long serialVersionUID = -8563787337941866089L;
 
 	@Id
     @GeneratedValue
-	@Column(name="CULT_Id", nullable=false)
+	@Column(name="VIDE_Id", nullable=false)
 	private int 	id;
 
-	@Column(name="CULT_Code", nullable=false)
-	private String 	code;
-		
+	@Column(name="VIDE_Url", nullable=false)
+	private String 	url;
+	
 	public int getId() {
 		return id;
 	}
@@ -30,11 +30,11 @@ public class Culture implements Serializable {
 		this.id = id;
 	}
 	
-	public String getCode() {
-		return code;
+	public String getUrl() {
+		return url;
 	}
 	
-	public void setCode(String code) {
-		this.code = code;
-	}	
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }
