@@ -1,15 +1,10 @@
 package educatus.client.view;
 
-import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewImpl;
 
-import educatus.client.presenter.SeminaryViewPresenter;
 import educatus.client.presenter.SeminaryViewPresenter.MyView;
 
 public class SeminaryViewView extends ViewImpl implements MyView {

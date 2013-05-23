@@ -18,7 +18,7 @@ public class SeminaryEditPresenter extends
 	}
 	
 	@ProxyCodeSplit
-	@NameToken(NameTokens.seminaryedit)
+	@NameToken(NameTokens.seminaryEdit)
 	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter>
 	{
 	}
