@@ -37,6 +37,7 @@ public class NameTokens {
 
   public static final String homePage = "!homePage";
   public static final String profil = "!profil";
+public static final String seminaryedit = "!seminaryedit";
 
   public static String getHomePage() {
     return homePage;
@@ -44,6 +45,11 @@ public class NameTokens {
 
 public static String getProfil() {
 	return profil;
+}
+
+public static String getSeminaryedit()
+{
+	return seminaryedit;
 }
 
 }
