@@ -1,4 +1,4 @@
-package educatus.shared.request;
+package educatus.shared.services.requestservice;
 
 import java.io.Serializable;
 

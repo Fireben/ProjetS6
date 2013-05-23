@@ -1,4 +1,4 @@
-package educatus.shared.request;
+package educatus.shared.services.requestservice;
 
 public enum RequestTypeEnum {
 	MAIN_MENU_CONTENT_REQUEST,

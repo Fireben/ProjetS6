@@ -1,4 +1,7 @@
-package educatus.shared.request;
+package educatus.shared.services.requestservice.request;
+
+import educatus.shared.services.requestservice.AbstractRequest;
+import educatus.shared.services.requestservice.RequestTypeEnum;
 
 public class HomePageContentRequest extends AbstractRequest {
 

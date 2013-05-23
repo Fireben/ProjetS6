@@ -1,17 +1,17 @@
-package educatus.server.services;
+package educatus.server.services.requestservice;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import educatus.client.services.RequestService;
-import educatus.shared.request.AbstractRequest;
-import educatus.shared.request.FooterContentRequest;
-import educatus.shared.request.HomePageContentRequest;
-import educatus.shared.request.MainMenuContentRequest;
-import educatus.shared.request.RequestTypeEnum;
-import educatus.shared.response.AbstractResponse;
-import educatus.shared.response.FooterContentResponse;
-import educatus.shared.response.HomePageContentResponse;
-import educatus.shared.response.MainMenuContentResponse;
+import educatus.shared.services.requestservice.AbstractRequest;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.RequestTypeEnum;
+import educatus.shared.services.requestservice.request.FooterContentRequest;
+import educatus.shared.services.requestservice.request.HomePageContentRequest;
+import educatus.shared.services.requestservice.request.MainMenuContentRequest;
+import educatus.shared.services.requestservice.response.FooterContentResponse;
+import educatus.shared.services.requestservice.response.HomePageContentResponse;
+import educatus.shared.services.requestservice.response.MainMenuContentResponse;
 
 /**
  * The server side implementation of the RPC service.

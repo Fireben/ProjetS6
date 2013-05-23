@@ -1,4 +1,7 @@
-package educatus.shared.response;
+package educatus.shared.services.requestservice.response;
+
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
 
 public class HomePageContentResponse extends AbstractResponse {
 

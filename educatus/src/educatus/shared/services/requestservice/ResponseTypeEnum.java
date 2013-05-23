@@ -1,4 +1,4 @@
-package educatus.shared.response;
+package educatus.shared.services.requestservice;
 
 public enum ResponseTypeEnum {
 	MAIN_MENU_CONTENT_RESPONSE,
