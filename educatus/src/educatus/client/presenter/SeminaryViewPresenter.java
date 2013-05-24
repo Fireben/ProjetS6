@@ -1,30 +1,36 @@
 package educatus.client.presenter;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
-
+import com.gwtplatform.mvp.client.annotations.NameToken;
 import educatus.client.NameTokens;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
+
+import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+import educatus.client.presenter.MainPagePresenter;
 
 public class SeminaryViewPresenter extends
 		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy> {
 
 	public interface MyView extends View {
-		//public Label getSeminaryTitle();
-		//public Label getWrittenBy(); 
-		//public Label getModifyBy(); 
-		//public Label getAuthor();
-		//public Label getModif(); 
-		//public Label getCreatedDate(); 
-		//public Label getModifiedDate();
-		//public Label getSeminaryContent();
+		public Element getSeminaryTitle();
+		public Element getWrittenBy(); 
+		public Element getModifyBy(); 
+		public Element getAuthor();
+		public Element getAuthorEmail();
+		public Element getModif(); 
+		public Element getModifEmail();
+		public Element getCreatedDate(); 
+		public Element getModifiedDate();
+		public void insertContent(Widget w);
 	}
 
 	@ProxyCodeSplit
@@ -46,49 +52,55 @@ public class SeminaryViewPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
+		
+		Label label = new Label();
+		label.setText("Label Text");
+		getView().insertContent(label);
+		
+		Image img = new Image();
+		img.setUrl("images/earth_puzzle_3.png");
+		getView().insertContent(img);
+		
+		String src = "http://www.youtube.com/embed/Gm-RO-cmsEQ?list=PL29DDDC847F63AF82";
+		HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src=" + src + " frameborder=\"0\" allowfullscreen></iframe>");
+		getView().insertContent(videoHtml);
+		
+		String srcVideo = "http://www.dailymotion.com/embed/video/xzfw9p";
+		HTML videoDailyMotion = new HTML("<iframe width=\"560\" height=\"315\" src=" + srcVideo + " frameborder=\"0\" allowfullscreen></iframe>");
+		getView().insertContent(videoDailyMotion);
+		
+		/*if(type == "text")
+		{
+			Label label = new Label();
+			label.setText(content);
+			getView().insertContent(label);
+		}
+		else if(type == "image")
+		{
+			Image img = new Image();
+			img.setUrl(url);
+			getView().insertContent(img);
+		}
+		else if(type == "video")
+		{
+			HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src=" + videoSrc + " frameborder=\"0\" allowfullscreen></iframe>");
+			getView().insertContent(videoHtml);
+		}*/
 	}
 
 	@Override
 	protected void onReset() {
 		super.onReset();
 		
-		final Element seminaryTitle = Document.get().getElementById("seminaryTitle");
-		seminaryTitle.setInnerHTML("Seminary Title");
+		getView().getSeminaryTitle().setInnerHTML("Seminrary Title");
+		getView().getWrittenBy().setInnerHTML("written by");
+		getView().getAuthor().setInnerHTML("Author");
+		getView().getAuthorEmail().setPropertyString("href", "mailto:Prof@usherbrooke.qc.ca");
+		getView().getCreatedDate().setInnerHTML("23/03/13");
+		getView().getModifyBy().setInnerHTML("modified by");
+		getView().getModif().setInnerHTML("Modif");
+		getView().getModifEmail().setPropertyString("href", "mailto:Modif@usherbrooke.qc.ca");
+		getView().getModifiedDate().setInnerHTML("25/03/13");		
 		
-		final Element writtenBy = Document.get().getElementById("writtenBy");
-		writtenBy.setInnerHTML("written by");
-		
-		final Element author = Document.get().getElementById("author");
-		author.setInnerHTML("Author");
-		
-		final Element authorEmail = Document.get().getElementById("authorEmail");
-		authorEmail.setPropertyString("href", "Prof@usherbrooke.qc.ca");
-		
-		final Element createdDate = Document.get().getElementById("createdDate");
-		createdDate.setInnerHTML("23/03/13");
-		
-		final Element modifyBy = Document.get().getElementById("modifyBy");
-		modifyBy.setInnerHTML("modifed by");
-		
-		final Element modif = Document.get().getElementById("modif");
-		modif.setInnerHTML("Modifier");
-		
-		final Element modifEmail = Document.get().getElementById("modifEmail");
-		modifEmail.setPropertyString("href", "Modif@usherbrooke.qc.ca");
-		
-		final Element modifiedDate = Document.get().getElementById("modifiedDate");
-		modifiedDate.setInnerHTML("25/03/13");
-		
-		final Element seminaryContent = Document.get().getElementById("seminaryContent");
-		seminaryContent.setInnerHTML("Seminary Content");
-		
-		//getView().getSeminaryTitle().setText("Seminary Title");
-		//getView().getWrittenBy().setText("written by");
-		//getView().getAuthor().setText("Author");
-		//getView().getCreatedDate().setText("23/03/13");
-		//getView().getModifyBy().setText("modified by");
-		//getView().getModif().setText("Modif");
-		//getView().getModifiedDate().setText("25/03/13");
-		//getView().getSeminaryContent().setText("Seminary Content");
 	}
 }

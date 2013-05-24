@@ -2049,15 +2049,59 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	left: 0px;
 	display: table-row;
 }
-.centeringParent {
-	padding-bottom:4%;
-	padding-top:4%;
+
+.categoryPanelParent {
+	padding-bottom:3%;
+	padding-top:3%;
+	text-align:center;	
 }
-.centeringChild {
-	padding-bottom:8%;
-	padding-top:8%;	
-	width:750px;
+
+.categoryPanel {
+	padding-bottom:6%;
+	padding-top:6%;	
 	margin:auto;
+	display:inline-block;
+}
+
+.categoryPanel>button {
+	background: none repeat scroll 0% 0% #202020; 
+	margin: 0;
+	padding: 3px 5px;
+	cursor: pointer;
+	cursor: hand;
+    border: 1px solid #3B3B3B;
+	margin: 2px;
+	opacity: 0;
+	height: 200px;
+	width: 175px;
+}
+
+.categoryPanel>button:hover {
+	border: 1px solid #4B4B4B;	
+}
+
+.categoryPanel>button:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;
+}
+
+.categoryPanel>button>div {
+	color: rgb(180, 217, 230);
+	margin: 10px 0px 0px;
+	font-size: 24px;
+	font-family: "Century Gothic",Arial,"Arial Unicode MS",Helvetica,Sans-Serif;
+	font-weight: normal;
+	font-style: normal;
+	padding-bottom: 5px;
+}
+
+.categoryPanel>button>img {
+	width:140px;
+	height:140px;
+}
+
+button:disabled {
+	cursor : default;
 }
 
 * {margin:0;padding:0;}
