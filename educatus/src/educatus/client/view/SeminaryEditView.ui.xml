@@ -1,64 +1,92 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g='urn:import:com.google.gwt.user.client.ui' ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:my="urn:import:educatus.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
+
 	<ui:style>
+		.titleDesc {
+			width: 30%;
+			margin-left: 50px;
+			display: inline-block;
+		}
+		
 		.titleBox {
-			width: 25%;
+			width: 200px;
 		}
 		
 		.descBox {
-			width: 25%;
+			width: 350px;
 			resize: none;
-			margin-left: 15px;
 		}
 		
-		.addContentWidget {
-			border: 1px dotted #2B2B2B;
-			border-radius: 50% 50% 50% 50%;
-			bottom: 0;
-			height: 100px;
+		.difficultyList {
+			margin-top: 12px;
+			vertical-align: top;
+		}
+		
+		.addTextImg {
+			width: 50px;
+			height: 50px;
 			position: absolute;
-			right: 0px;
-			width: 100px;
+			top: 25%;
+			padding-left: 8px;
+		}
+		
+		.addTextImg:hover {
+			cursor: pointer;
 		}
 	</ui:style>
 
 	<g:HTMLPanel>
+		<style>
+			.addContentWidget {
+			border: 1px dotted #2B2B2B;
+			border-radius:
+			50% 50% 50% 50%;
+			bottom: 0;
+			height: 100px;
+			position: absolute;
+			right:
+			0px;
+			width: 100px;
+			}
+
+		</style>
 
 		<div id="art-mainPage">
 			<form>
 				<div class="art-blockcontent">
 					<h4>
-						<g:FlowPanel>
+						<g:FlowPanel styleName='{style.titleDesc}'>
 							<g:Label ui:field="semTitleLabel">Titre :</g:Label>
 							<g:TextBox name="semTitleBox" ui:field="semTitleBox"
 								styleName='{style.titleBox}' />
-						</g:FlowPanel>
-						<br />
-						<g:FlowPanel>
 							<g:Label ui:field="semDescLabel">Description :</g:Label>
 							<g:TextArea name="semDescBox" ui:field="semDescBox"
 								styleName='{style.descBox}' />
 						</g:FlowPanel>
-						<g:ListBox>
-							<g:item>
-								easy
-							</g:item>
-							<g:item>
-								hard
-							</g:item>
-						</g:ListBox>
-						<g:FlowPanel ui:field="semContainer">
 
-						</g:FlowPanel>
-						<g:SimplePanel styleName='{style.addContentWidget}'>
-							<g:Image ui:field="addTextImg" width="50px" height="50px"
-								url="images/addText.png" />
-						</g:SimplePanel>
+						
+							<g:ListBox styleName='{style.difficultyList}'>
+								<g:item>
+									easy
+								</g:item>
+								<g:item>
+									hard
+								</g:item>
+							</g:ListBox>
+						
+
+						<g:HTMLPanel ui:field="contentPanel" />
+						
+						<div class="addContentWidget">
+							<g:Image ui:field="addTextBoxImg" url="images/addText.png"
+								styleName="{style.addTextImg}" />
+						</div>
 					</h4>
 
 					<g:HTMLPanel ui:field="confirmPanel" />
