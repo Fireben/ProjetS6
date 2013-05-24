@@ -5,46 +5,11 @@
 	>	
 	
     <ui:style>
-    .categoryButtonLabel {
-		color: rgb(0, 161, 214);
-		margin: 10px 0px 0px;
-		font-size: 18px;
-		font-family: "Century Gothic",Arial,"Arial Unicode MS",Helvetica,Sans-Serif;
-		font-weight: normal;
-		font-style: normal;
-    }
-    .categoryButton {
-		background: none repeat scroll 0% 0% #202020;
-  		margin: 0;
-  		padding: 3px 5px;
-  		cursor: pointer;
- 		cursor: hand;
-        border: 1px solid #3B3B3B;
-		margin: auto;
-		opacity: 0;
-    }
 	</ui:style>
 
 	<g:HTMLPanel height= "100%">	
-		<div class="centeringParent" height= "100%">		
-		    <div class="centeringChild">
-		        <my:CustomButton ui:field="firstButton" styleName='{style.categoryButton}'>
-		            <g:Image url="images/Newspapers-1-icon-2.png"/>
-		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
-				</my:CustomButton>
-				<my:CustomButton ui:field="secondButton" styleName='{style.categoryButton}'>
-		            <g:Image url="images/Phone-HTC-Dash-icon-2.png"/>
-		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
-				</my:CustomButton>
-				<my:CustomButton ui:field="thirdButton" styleName='{style.categoryButton}'>
-		            <g:Image url="images/Newspapers-1-icon-2.png"/>
-		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
-				</my:CustomButton>
-				<my:CustomButton ui:field="fourthButton" styleName='{style.categoryButton}'>
-		            <g:Image url="images/Phone-HTC-Dash-icon-2.png"/>
-		            <g:Label styleName='{style.categoryButtonLabel}'>Whatever</g:Label>		            
-				</my:CustomButton>
-			</div>				
+		<div class="categoryPanelParent" height= "100%">		
+			<g:FlowPanel ui:field="categoryPanel"/>			
 		</div>    		    
 	</g:HTMLPanel>
 </ui:UiBinder> 

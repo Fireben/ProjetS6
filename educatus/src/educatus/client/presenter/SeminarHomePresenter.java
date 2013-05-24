@@ -16,9 +16,18 @@
 
 package educatus.client.presenter;
 
+
+import java.util.Iterator;
+
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.FocusPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -27,81 +36,119 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import educatus.client.NameTokens;
+import educatus.client.animation.ListFadeAnimation;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.ui.CustomButton;
-import educatus.client.ui.FadeAnimation;
 
 /**
- * @author Christian Goudreau
+ * @author Nicolas Michaud
  */
-public class SeminarHomePresenter extends
-    Presenter<SeminarHomePresenter.MyView, SeminarHomePresenter.MyProxy> {
-  /**
-   * {@link SeminarHomePresenter}'s proxy.
-   */
-  @ProxyCodeSplit
-  @NameToken(NameTokens.seminarHomePage)
-  public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
-  }
+public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView, SeminarHomePresenter.MyProxy> {
+    /**
+     * {@link SeminarHomePresenter}'s proxy.
+     */
+    @ProxyCodeSplit
+    @NameToken(NameTokens.seminarHomePage)
+    public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
+    }
 
-  /**
-   * {@link SeminarHomePresenter}'s view.
-   */
-  public interface MyView extends View {
-	  CustomButton getFirstButton();		
-	  CustomButton getSecondButton(); 
-	  CustomButton getThirdButton();
-	  CustomButton getFourthButton(); 
-  }
+    /**
+     * {@link SeminarHomePresenter}'s view.
+     */
+    public interface MyView extends View {
+    	FlowPanel getCategoryPanel();	  
+    }
+  
+    ListFadeAnimation<HasWidgets> listAnimation;
 
-  @Inject
-  public SeminarHomePresenter(final EventBus eventBus, final MyView view,
-      final MyProxy proxy) {
-    super(eventBus, view, proxy);
-  }
+    @Inject
+    public SeminarHomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
+      super(eventBus, view, proxy);
+    }
 
-  @Override
-  protected void revealInParent() {
-    RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent,
-        this);
-  }
+  	@Override
+	protected void revealInParent() {
+	  RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
+	}
   
-  @Override
-  protected void onBind() {
-    super.onBind();
-  }
+	@Override
+	protected void onBind() {
+	  super.onBind();    
+	  FlowPanel categoryPanel = getView().getCategoryPanel();
+	  registerHandlers(categoryPanel);
+	  animateButtonsIn(categoryPanel);
+	}
   
-  @Override
-  protected void onReset() {
-	  super.onReset();
-	  
-	  final FadeAnimation fourthFadeAnimation = new FadeAnimation(getView().getFourthButton().getElement(), 1.0, 750); 
-	  
-	  final FadeAnimation thirdFadeAnimation = new FadeAnimation(getView().getThirdButton().getElement(), 1.0, 750) {
-		  public void onComplete() {
-			  fourthFadeAnimation.start();
-		  };
-	  };
-	  
-	  final FadeAnimation secondFadeAnimation = new FadeAnimation(getView().getSecondButton().getElement(), 1.0, 750) {
-		  public void onComplete() {
-			  thirdFadeAnimation.start();
-		  };
-	  };
-	  
-	  FadeAnimation fadeAnimation = new FadeAnimation(getView().getFirstButton().getElement(), 1.0, 750) {
-		  public void onComplete() {
-			  secondFadeAnimation.start();
-		  };
-	  };
-	  fadeAnimation.start();
-  }
-  
-  protected void onHide() {
-	  getView().getFirstButton().getElement().getStyle().setOpacity(0);
-	  getView().getSecondButton().getElement().getStyle().setOpacity(0);
-	  getView().getThirdButton().getElement().getStyle().setOpacity(0);
-	  getView().getFourthButton().getElement().getStyle().setOpacity(0);
-  }
-  
+  	private void animateButtonsIn(Widget panelWidget) {
+	  listAnimation = new ListFadeAnimation<HasWidgets>((HasWidgets) panelWidget);
+	  listAnimation.start(250, 0, 1.0);
+  	}
+  	
+	private void registerHandlers(final FlowPanel panel) {
+		Iterator<Widget> it = panel.iterator();
+		CustomButton button;
+		while(it.hasNext()){
+			button = (CustomButton) it.next();
+			registerHandler((button).addClickHandler(
+					new ClickHandler() {
+			            @Override
+			            public void onClick(ClickEvent event) {
+			            	transitionCategoryPanel(panel);
+		                }
+		            }));    
+		}
+	}  
+  	
+    private void rePopulateCategoryPanel(FlowPanel panel) {    	
+		CustomButton button = new CustomButton();
+		button.add(new Label("Salut"));
+		button.add(new Image("images/Backup-Seagate-icon-2.png"));
+		button.setEnabled(false);
+		panel.add(button);
+		
+		button = new CustomButton();
+		button.add(new Label("Monsieur"));
+		button.add(new Image("images/Games-Playstation-3-icon-2.png"));	
+		button.setEnabled(false);
+		panel.add(button);
+		
+		button = new CustomButton();
+		button.add(new Label("Nuage,"));
+		button.add(new Image("images/Phone-HTC-Dash-icon-2.png"));	
+		button.setEnabled(false);
+		panel.add(button);
+		
+		button = new CustomButton();
+		button.add(new Label("Ca"));
+		button.add(new Image("images/Backup-Seagate-icon-2.png"));
+		button.setEnabled(false);
+		panel.add(button);
+		
+		button = new CustomButton();
+		button.add(new Label("Va"));
+		button.add(new Image("images/Newspapers-1-icon-2.png"));	
+		button.setEnabled(false);
+		panel.add(button);
+		
+		button = new CustomButton();
+		button.add(new Label("Bien ?"));
+		button.add(new Image("images/Games-Playstation-3-icon-2.png"));	
+		button.setEnabled(false);
+		panel.add(button);
+		
+		registerHandlers(panel);
+		animateButtonsIn(panel);		
+    }
+    
+  	private void transitionCategoryPanel(final FlowPanel panel) {
+  		listAnimation.killAnimations();
+  		panel.clear();
+		
+    	Timer timer = new Timer() {
+    		public void run() {
+    			rePopulateCategoryPanel(panel);
+    		};
+    	};
+    	timer.schedule(250);
+  	}
 }

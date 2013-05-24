@@ -2048,15 +2048,42 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	left: 0px;
 	display: table-row;
 }
-.centeringParent {
+
+.categoryPanelParent {
 	padding-bottom:4%;
 	padding-top:4%;
+	text-align:center;	
 }
-.centeringChild {
+
+.categoryPanel {
 	padding-bottom:8%;
 	padding-top:8%;	
-	width:750px;
 	margin:auto;
+	display:inline-block;
+}
+
+.categoryPanel>button {
+	background: none repeat scroll 0% 0% #202020; 
+	margin: 0;
+	padding: 3px 5px;
+	cursor: pointer;
+	cursor: hand;
+    border: 1px solid #3B3B3B;
+	margin: 2px;
+	opacity: 0;
+}
+
+.categoryPanel>button>div {
+	color: rgb(0, 161, 214);
+	margin: 10px 0px 0px;
+	font-size: 18px;
+	font-family: "Century Gothic",Arial,"Arial Unicode MS",Helvetica,Sans-Serif;
+	font-weight: normal;
+	font-style: normal;
+}
+
+button:disabled {
+	cursor : default;
 }
 
 * {margin:0;padding:0;}
