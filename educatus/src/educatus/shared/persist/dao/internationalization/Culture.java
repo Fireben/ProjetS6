@@ -5,36 +5,45 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * The persistent class for the culture database table.
+ * 
+ */
 @Entity
-@Table(name="internationalization.Culture")
+@Table(name = "internationalization.culture")
 public class Culture implements Serializable {
-	
-	private static final long serialVersionUID = 6906290633139198946L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue
-	@Column(name="CULT_Id", nullable=false)
-	private int 	id;
+	@SequenceGenerator(name = "CULTURE_CULTID_GENERATOR", sequenceName = "internationalization.culture_cult_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CULTURE_CULTID_GENERATOR")
+	@Column(name = "cult_id", unique = true, nullable = false)
+	private Integer id;
 
-	@Column(name="CULT_Code", nullable=false)
-	private String 	code;
-		
-	public int getId() {
-		return id;
+	@Column(name = "cult_code", nullable = false, length = 2)
+	private String code;
+
+	public Culture() {
 	}
-	
-	public void setId(int id) {
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getCode() {
-		return code;
+		return this.code;
 	}
-	
+
 	public void setCode(String code) {
 		this.code = code;
-	}	
+	}
 }

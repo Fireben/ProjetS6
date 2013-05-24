@@ -1,20 +1,61 @@
 package educatus.shared.persist.dao.internationalization;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+/**
+ * The persistent class for the imagecontententry database table.
+ * 
+ */
 @Entity
-@Table(name="internationalization.ImageContentEntry")
+@Table(name = "internationalization.imagecontententry")
 public class ImageContentEntry implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = -7148364128610515371L;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<ImageContentTranslationEntry> imageContentTranslationEntries;
+	@Id
+	@Column(name = "imce_id", unique = true, nullable = false)
+	private Integer imceId;
+
+	// bi-directional many-to-one association to Imagecontenttranslationentry
+	@OneToMany(mappedBy = "imagecontententry")
+	private List<ImageContentTranslationEntry> imagecontenttranslationentries;
+
+	public ImageContentEntry() {
+	}
+
+	public Integer getImceId() {
+		return this.imceId;
+	}
+
+	public void setImceId(Integer imceId) {
+		this.imceId = imceId;
+	}
+
+	public List<ImageContentTranslationEntry> getImagecontenttranslationentries() {
+		return this.imagecontenttranslationentries;
+	}
+
+	public void setImagecontenttranslationentries(
+			List<ImageContentTranslationEntry> imagecontenttranslationentries) {
+		this.imagecontenttranslationentries = imagecontenttranslationentries;
+	}
+
+	public ImageContentTranslationEntry addImagecontenttranslationentry(
+			ImageContentTranslationEntry imagecontenttranslationentry) {
+		getImagecontenttranslationentries().add(imagecontenttranslationentry);
+		imagecontenttranslationentry.setImagecontententry(this);
+
+		return imagecontenttranslationentry;
+	}
+
+	public ImageContentTranslationEntry removeImagecontenttranslationentry(
+			ImageContentTranslationEntry imagecontenttranslationentry) {
+		getImagecontenttranslationentries()
+				.remove(imagecontenttranslationentry);
+		imagecontenttranslationentry.setImagecontententry(null);
+
+		return imagecontenttranslationentry;
+	}
+
 }
