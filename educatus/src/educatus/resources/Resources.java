@@ -11,6 +11,16 @@ public interface Resources extends ClientBundle {
     @CssResource.NotStrict
     CssResource css();
     
+    /* Seminar Section View Resources */
     @Source("deleteButton.png")
     ImageResource deleteButton();
+    
+    @Source("alignLeft.png")
+    ImageResource alignLeft();
+    
+    @Source("alignCenter.png")
+    ImageResource alignCenter();
+    
+    @Source("alignRight.png")
+    ImageResource alignRight();
 }
