@@ -93,7 +93,6 @@ public class HomePresenter extends
   @Override
   protected void onBind() {
     super.onBind();
-
   }
  
   @Override

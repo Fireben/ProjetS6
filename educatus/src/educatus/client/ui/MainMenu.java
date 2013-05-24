@@ -18,7 +18,9 @@ package educatus.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -32,7 +34,54 @@ public class MainMenu extends Composite {
 
   private static MainMenuUiBinder uiBinder = GWT.create(MainMenuUiBinder.class);
 
+  @UiField InlineHyperlink mainMenuHomeButton;
+  @UiField InlineHyperlink mainMenuSeminarsButton;
+  @UiField InlineHyperlink mainMenuProfilButton;
+  @UiField InlineHyperlink mainMenuViewSeminaryButton;
+
+
   public MainMenu() {
     initWidget(uiBinder.createAndBindUi(this));
   }
+
+  //Getter and Setter
+  public InlineHyperlink getMainMenuHomeButton() {
+		return mainMenuHomeButton;
+	}
+
+
+	public void setMainMenuHomeButton(InlineHyperlink mainMenuHomeButton) {
+		this.mainMenuHomeButton = mainMenuHomeButton;
+	}
+
+
+	public InlineHyperlink getMainMenuSeminarsButton() {
+		return mainMenuSeminarsButton;
+	}
+
+
+	public void setMainMenuSeminarsButton(InlineHyperlink mainMenuSeminarsButton) {
+		this.mainMenuSeminarsButton = mainMenuSeminarsButton;
+	}
+
+
+	public InlineHyperlink getMainMenuProfilButton() {
+		return mainMenuProfilButton;
+	}
+
+
+	public void setMainMenuProfilButton(InlineHyperlink mainMenuProfilButton) {
+		this.mainMenuProfilButton = mainMenuProfilButton;
+	}
+
+
+	public InlineHyperlink getMainMenuViewSeminaryButton() {
+		return mainMenuViewSeminaryButton;
+	}
+
+
+	public void setMainMenuViewSeminaryButton(
+			InlineHyperlink mainMenuViewSeminaryButton) {
+		this.mainMenuViewSeminaryButton = mainMenuViewSeminaryButton;
+	}
 }

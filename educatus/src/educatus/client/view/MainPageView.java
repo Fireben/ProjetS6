@@ -25,6 +25,8 @@ import com.gwtplatform.mvp.client.ViewImpl;
 
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.presenter.MainPagePresenter.MyView;
+import educatus.client.ui.Footer;
+import educatus.client.ui.MainMenu;
 
 /**
  * This is the top-level view of the application. Every time another presenter
@@ -44,6 +46,12 @@ public class MainPageView extends ViewImpl implements MyView {
   @UiField
   FlowPanel mainContentPanel;
   
+  @UiField 
+  MainMenu menuPanel;
+
+  @UiField
+  Footer footerPanel;
+  
   public MainPageView() {
     widget = uiBinder.createAndBindUi(this);
   }
@@ -62,7 +70,7 @@ public class MainPageView extends ViewImpl implements MyView {
 
   private void setMainContent(Widget content) {
     mainContentPanel.clear();
-
+    
     if (content != null) {
       mainContentPanel.add(content);
     }
@@ -70,4 +78,28 @@ public class MainPageView extends ViewImpl implements MyView {
 
   public void showLoading(boolean visibile) {
   }
+  
+  public FlowPanel getMainContentPanel() {
+	return mainContentPanel;
+  }
+
+	public void setMainContentPanel(FlowPanel mainContentPanel) {
+		this.mainContentPanel = mainContentPanel;
+	}
+	
+	public MainMenu getMenuPanel() {
+		return menuPanel;
+	}
+	
+	public void setMenuPanel(MainMenu menuPanel) {
+		this.menuPanel = menuPanel;
+	}
+	
+	public Footer getFooterPanel() {
+		return footerPanel;
+	}
+	
+	public void setFooterPanel(Footer footerPanel) {
+		this.footerPanel = footerPanel;
+	}
 }
