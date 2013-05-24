@@ -4,6 +4,10 @@
 	version="2.0">
 	<persistence-unit name="db-manager-localhost"
 		transaction-type="RESOURCE_LOCAL">
+		<class>educatus.shared.persist.dao.security.LogUserConnection</class>
+		<class>educatus.shared.persist.dao.security.Permission</class>
+		<class>educatus.shared.persist.dao.security.User</class>
+		<class>educatus.shared.persist.dao.security.UserType</class>
 		<class>educatus.shared.persist.dao.internationalization.Culture</class>
 		<class>educatus.shared.persist.dao.internationalization.Image</class>
 		<class>educatus.shared.persist.dao.internationalization.ImageContentEntry</class>
