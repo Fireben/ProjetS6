@@ -4,7 +4,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.gwt.dom.client.ButtonElement;
+import com.google.gwt.user.client.ui.Button;
 
 public class ConfirmChangesPresenter extends
 		PresenterWidget<ConfirmChangesPresenter.MyView>
@@ -12,8 +12,8 @@ public class ConfirmChangesPresenter extends
 
 	public interface MyView extends View
 	{
-		public ButtonElement getSaveButton();
-		public ButtonElement getCancelButton();
+		public Button getSaveButton();
+		public Button getCancelButton();
 	}
 
 	@Inject
