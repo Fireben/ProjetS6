@@ -1,10 +1,11 @@
 package educatus.client.view;
 
 import com.gwtplatform.mvp.client.ViewImpl;
-import com.google.gwt.dom.client.LabelElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -17,7 +18,9 @@ public class SeminaryEditView extends ViewImpl implements
 	@UiField
 	HTMLPanel confirmPanel;
 	@UiField
-	LabelElement semTitleLabel;
+	Label semTitleLabel;
+	@UiField
+	TextBox semTitleBox;
 
 	private final Widget widget;
 
@@ -49,6 +52,11 @@ public class SeminaryEditView extends ViewImpl implements
 	public Widget asWidget()
 	{
 		return widget;
+	}
+	
+	public TextBox getSemTitleBox()
+	{
+		return semTitleBox;
 	}
 
 }

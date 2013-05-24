@@ -5,30 +5,67 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
-	<g:HTMLPanel>
-		<style>
+	<ui:style>
+		.titleBox {
+			width: 25%;
+		}
+		
+		.descBox {
+			width: 25%;
+			resize: none;
+			margin-left: 15px;
+		}
+		
+		.addContentWidget {
+			border: 1px dotted #2B2B2B;
+			border-radius: 50% 50% 50% 50%;
+			bottom: 0;
+			height: 100px;
+			position: absolute;
+			right: 0px;
+			width: 100px;
+		}
+	</ui:style>
 
-		</style>
+	<g:HTMLPanel>
 
 		<div id="art-mainPage">
 			<form>
 				<div class="art-blockcontent">
 					<h4>
-						<label for="seminaryTitle" ui:field="semTitleLabel">Titre :</label>
-						<input type="text" name="seminaryTitle" id="seminaryTitle"
-							style="width:25%;" />
-						<br/>
-						<label for="seminaryDescription">Description :</label>
-						<br/>
-						<textarea name="seminaryDescription" id="seminaryDescription" style="width:25%; resize:none; margin-left:15px">
-							Entrez votre description ici...
-						</textarea>
+						<g:FlowPanel>
+							<g:Label ui:field="semTitleLabel">Titre :</g:Label>
+							<g:TextBox name="semTitleBox" ui:field="semTitleBox"
+								styleName='{style.titleBox}' />
+						</g:FlowPanel>
+						<br />
+						<g:FlowPanel>
+							<g:Label ui:field="semDescLabel">Description :</g:Label>
+							<g:TextArea name="semDescBox" ui:field="semDescBox"
+								styleName='{style.descBox}' />
+						</g:FlowPanel>
+						<g:ListBox>
+							<g:item>
+								easy
+							</g:item>
+							<g:item>
+								hard
+							</g:item>
+						</g:ListBox>
+						<g:FlowPanel ui:field="semContainer">
+
+						</g:FlowPanel>
+						<g:SimplePanel styleName='{style.addContentWidget}'>
+							<g:Image ui:field="addTextImg" width="50px" height="50px"
+								url="images/addText.png" />
+						</g:SimplePanel>
 					</h4>
+
+					<g:HTMLPanel ui:field="confirmPanel" />
 				</div>
-				
+
 			</form>
 		</div>
-		
-		<g:HTMLPanel ui:field="confirmPanel"/>
+
 	</g:HTMLPanel>
 </ui:UiBinder>
