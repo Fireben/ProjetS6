@@ -4,6 +4,8 @@ import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,48 +23,59 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 
 	  private final Widget widget;
 	  
-	  //@UiField Label seminaryTitle;
-	  //@UiField Label writtenBy;
-	  //@UiField Label modifyBy;
-	  //@UiField Label author;
-	  //@UiField Label modif;
-	  //@UiField Label createdDate;
-	  //@UiField Label modifiedDate;
-	  //@UiField Label seminaryContent;
+	  @UiField FlowPanel textAreaContainer;
+	  @UiField Element seminaryTitle;
+	  @UiField Element writtenBy;
+	  @UiField Element modifyBy;
+	  @UiField Element author;
+	  @UiField Element authorEmail;
+	  @UiField Element modif;
+	  @UiField Element modifEmail;
+	  @UiField Element createdDate;
+	  @UiField Element modifiedDate;
 
 
-	//public Label getSeminaryTitle() {
-	//	return seminaryTitle;
-	//}
+	public Element getSeminaryTitle() {
+		return seminaryTitle;
+	}
 
-	//public Label getWrittenBy() {
-	//	return writtenBy;
-	//}
+	public Element getWrittenBy() {
+		return writtenBy;
+	}
 
-	/*public Label getModifyBy() {
+	public Element getModifyBy() {
 		return modifyBy;
 	}
 
-	public Label getAuthor() {
+	public Element getAuthor() {
 		return author;
 	}
-
-	public Label getModif() {
-		return modif;
+	
+	public Element getAuthorEmail() {
+		return authorEmail;
 	}
 
-	public Label getCreatedDate() {
+	public Element getModif() {
+		return modif;
+	}
+	
+	public Element getModifEmail() {
+		return modifEmail;
+	}
+
+	public Element getCreatedDate() {
 		return createdDate;
 	}
 
-	public Label getModifiedDate() {
+	public Element getModifiedDate() {
 		return modifiedDate;
 	}
-
-	public Label getSeminaryContent() {
-		return seminaryContent;
-	}*/
-
+	
+	public void insertContent(Widget w)
+	{
+		textAreaContainer.add(w);
+	}
+	  
 	public SeminaryViewView() {
 	    widget = uiBinder.createAndBindUi(this);
 	  }
@@ -70,4 +83,5 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	  public Widget asWidget() {
 	    return widget;
 	  }
+	 
 }

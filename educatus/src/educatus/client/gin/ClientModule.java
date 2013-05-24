@@ -47,18 +47,20 @@ public class ClientModule extends AbstractPresenterModule {
 
     // Presenters
     bindPresenter(MainPagePresenter.class, MainPagePresenter.MyView.class,
-        MainPageView.class, MainPagePresenter.MyProxy.class);
+    			MainPageView.class, MainPagePresenter.MyProxy.class);
     bindPresenter(HomePresenter.class, HomePresenter.MyView.class,
-        HomeView.class, HomePresenter.MyProxy.class);
-bindPresenter(SeminaryEditPresenter.class,
+    			HomeView.class, HomePresenter.MyProxy.class);
+    bindPresenter(SeminaryEditPresenter.class,
 				SeminaryEditPresenter.MyView.class, SeminaryEditView.class,
 				SeminaryEditPresenter.MyProxy.class);
-    
+    bindPresenter(ProfilPresenter.class,
+    			ProfilPresenter.MyView.class, ProfilView.class,
+    			ProfilPresenter.MyProxy.class);
     bindPresenter(SeminarHomePresenter.class, SeminarHomePresenter.MyView.class,
             SeminarHomeView.class, SeminarHomePresenter.MyProxy.class);
-
-		bindPresenterWidget(ConfirmChangesPresenter.class,
-				ConfirmChangesPresenter.MyView.class, ConfirmChangesView.class);		bindPresenter(SeminaryViewPresenter.class,
+    bindPresenterWidget(ConfirmChangesPresenter.class,
+				ConfirmChangesPresenter.MyView.class, ConfirmChangesView.class);		
+	bindPresenter(SeminaryViewPresenter.class,
 				SeminaryViewPresenter.MyView.class, SeminaryViewView.class,
 				SeminaryViewPresenter.MyProxy.class);  }
 }
