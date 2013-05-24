@@ -1164,7 +1164,8 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
    background: #F9FAFB;
    margin:0 auto;
 }
-input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
+/*input[type="text"],*/
+input[type="password"], input[type="email"], input[type="url"], textarea
 {
    width: 100%;
    padding: 8px 0;
