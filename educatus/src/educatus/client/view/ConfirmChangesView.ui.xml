@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel>
 		Confirm changes ?
-		<button type="submit" ui:field="saveButton">Confirm</button>
-		<button ui:field="cancelButton">Cancel</button>
+		<g:Button ui:field="saveButton">Confirm</g:Button>
+		<g:Button ui:field="cancelButton">Cancel</g:Button>
 	</g:HTMLPanel>
 </ui:UiBinder>

@@ -1,9 +1,10 @@
 package educatus.client.view;
 
 import com.gwtplatform.mvp.client.ViewImpl;
-import com.google.gwt.dom.client.ButtonElement;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -14,8 +15,10 @@ public class ConfirmChangesView extends ViewImpl implements
 {
 	private final Widget widget;
 	
-	ButtonElement saveButton;
-	ButtonElement cancelButton;
+	@UiField
+	Button saveButton;
+	@UiField
+	Button cancelButton;
 
 	public interface Binder extends UiBinder<Widget, ConfirmChangesView>
 	{
@@ -34,12 +37,12 @@ public class ConfirmChangesView extends ViewImpl implements
 		return widget;
 	}
 	
-	public ButtonElement getSaveButton()
+	public Button getSaveButton()
 	{
 		return saveButton;
 	}
 	
-	public ButtonElement getCancelButton()
+	public Button getCancelButton()
 	{
 		return cancelButton;
 	}

@@ -6,6 +6,10 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import educatus.client.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
@@ -15,14 +19,23 @@ public class SeminaryEditPresenter extends
 {
 	public interface MyView extends View
 	{
+		public TextBox getSemTitleBox();
 	}
 	
 	@ProxyCodeSplit
-	@NameToken(NameTokens.seminaryEdit)
-	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter>
+	@NameToken(NameTokens.seminaryEdit)	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter>
 	{
 	}
 	
+	private ClickHandler saveHandler = new ClickHandler()
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			Window.alert(getView().getSemTitleBox().getText());
+		}
+	};
+
 	public static final Object SLOT_confirm = new Object();
 	
 	@Inject
@@ -51,8 +64,8 @@ public class SeminaryEditPresenter extends
 	@Override
 	protected void onReset()
 	{
-		
 		super.onReset();
 		setInSlot(SLOT_confirm, confirmPresenter);
+		confirmPresenter.getView().getSaveButton().addClickHandler(saveHandler);
 	}
 }
