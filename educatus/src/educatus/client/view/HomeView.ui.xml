@@ -1,7 +1,9 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
-
+	
+	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
+	
 	<g:HTMLPanel>	
 		<style>
 			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
@@ -17,7 +19,7 @@
 			<header class="art-header clearfix">
 			    <div class="art-shapes">
 					<h1 class="art-headline" data-left="1.74%">
-					    <a href="#">TeleBit</a>
+					    <a href="#" ui:field="homePageTitle">EducateUdeS</a>
 					</h1>	
 			    </div>              
 			</header>
@@ -35,12 +37,13 @@
 											<div class="art-content-layout layout-item-1">
 												<div class="art-content-layout-row">
 													<div class="art-layout-cell layout-item-2" style="width: 100%" >
-														<p><img width="410" height="410" alt="" src="images/3D-Eagle-icon-2.png" style="float: left;" class=""/></p>
-														<h5>Online TV in 3D</h5>
-														<h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit.&nbsp;</h6>
-														<h6>Etiam pharetra, tellus sit amet congue vulputate, nisi erat iaculis nibh, vitae feugiat sapien ante eget mauris.&nbsp;</h6>
-														<h6>Cras elit nisl, rhoncus nec iaculis ultricies, feugiat eget sapien.</h6>
-														<p style="margin-left: 40px"><a href="" class="art-button">Continue</a></p>
+													<!--	<p><img width="330" height="200" alt="" src="images/HomeView-BrainUseIt.png" style="float: left;" class="brainImg"/></p> -->
+														<p><img ui:field="homePageBulbImg" width="150" height="220" alt="" src="images/light_bulb.png" style="float: left; padding-top: 100px" class="bulbImg"/></p>
+														<h5 ui:field="homePageSecondTitle">Learn By Yourself</h5>
+														<h6 ui:field="homePageFirstDescription">Enhance your abilities in multiples categories.&nbsp;</h6>
+														<h6 ui:field="homePageFirstDescription2">In collaboration with Université de Sherbrooke, our team of 6 members do their best to offer you useful content in a unique motivating way.</h6>
+														<h6 ui:field="homePageFirstDescription3">Be the best and complete all the problems!</h6>
+														<p style="margin-left: 40px"><a ui:field="homePageButton" href="" class="art-button">Start</a></p>
 													</div>
 												</div>
 											</div>
@@ -49,41 +52,40 @@
 										<div class="art-content-layout-wrapper layout-item-3">
 											<div class="art-content-layout">
 												<div class="art-content-layout-row">
-											    	<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Gaming</h1>
-														<p><span style="font-style:italic;">Sed dapibus consectetur.</span></p>
+											    	<div class="art-layout-cell layout-item-4" style="width: 25%">
+														<h1 ui:field="homePageFirstSectionTitle">Seminars</h1>
+														<p><span ui:field="homePageFirstSectionText" style="font-style:italic;">Watch or read tutorial</span></p>
 														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/Games-Playstation-3-icon-2.png"></img>		        
+														    <img ui:field="homePageFirstSectionImg" width="154" height="154" alt="" src="images/door_mind.png"></img>		        
 													    </p>
-														<p>Praesent in arcu id libero sollicitudin vulputate. Proin mollis tincidunt fringilla. In et tortor mi, eget sagittis libero.</p>
-														<p><a href="#">Read more...</a></p>
+														<p ui:field="homePageFirstSectionDescription">With these seminars, would learn all you need to know to successfully resolve the problems and to increase your knowledge.</p>
+														<p><a ui:field="homePageFirstSectionLink" href="http://127.0.0.1:8888/educatus.html?gwt.codesvr=127.0.0.1:9997#!seminarHomePage" >Start now!</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Computers</h1>
-														<p><span style="font-style:italic;">Dolor sit amet adipiscing elit.&nbsp;</span></p>
+														<h1 ui:field="homePageSecondSectionTitle">Problems</h1>
+														<p><span ui:field="homePageSecondSectionText" style="font-style:italic;">Test your knowledge.&nbsp;</span></p>
 														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/Backup-Seagate-icon-2.png" class=""></img>
+														    <img ui:field="homePageSecondSectionImg" width="154" height="154" alt="" src="images/earth_puzzle_3.png" class=""></img>
 													    </p>
-														<p>Proin mollis tincidunt fringilla. In et tortor mi, eget sagittis libero. Fusce tempus lorem ac diam gravida sed.</p>
-														<p><a href="#">Read more...</a></p>
+														<p ui:field="homePageSecondSectionDescription">Resolve a multitude of exercises and success to be rewarded with Achievement. Push your skills and your knowledge to the limits.</p>
+														<p><a ui:field="homePageSecondSectionLink" href="#">Start now!</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-5" style="width: 25%" >
-														<h1>Mobile</h1>
-														<p><span style="font-style:italic;">Sed dapibus consectetur.</span></p>
+														<h1 ui:field="homePageThirdSectionTitle">Stats</h1>
+														<p><span ui:field="homePageThirdSectionText" style="font-style:italic;">See if you are good.</span></p>
 														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/Phone-HTC-Dash-icon-2.png" class=""></img>
+														    <img ui:field="homePageThirdSectionImg" width="154" height="154" alt="" src="images/pie_chart.png" class=""></img>
 														</p>
-														<p>In et tortor mi, eget sagittis libero. Praesent in arcu id libero sollicitudin vulputate. Proin mollis tincidunt fringilla.</p>
-														<p><a href="#">Read more...</a></p>
+														<p ui:field="homePageThirdSectionDescription">Watch the statistic of everybody. See if your friend have solved more problems than you and compare yourself with others.</p>
+														<p><a ui:field="homePageThirdSectionLink" href="#">Watch now!</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Headlines</h1>
-														<p><span style="font-style:italic;">Lorem ipsum dolor sit amet.</span></p>
+														<h1 ui:field="homePageFourthSectionTitle">Forums</h1>
+														<p><span ui:field="homePageFourthSectionText" style="font-style:italic;">Talk with others.</span></p>
 														<p style="text-align: center;">
-															<g:Image ui:field='newsPaper' width="154" height="154" url="images/Newspapers-1-icon-2.png"></g:Image>			
+															<img ui:field="homePageFourthSectionImg" width="154" height="154" alt="" src="images/Forums.png"></img>			
 														</p>
-														<p>Fusce tempus lorem ac diam gravida sed egestas erat rhoncus. Praesent in arcu id libero sollicitudin vulputate.&nbsp;</p>
-														<p><a href="#">Read more...</a></p>
+														<p ui:field="homePageFourthSectionDescription">Working on it ...&nbsp;</p>
 													</div>
 												</div>
 											</div>
@@ -98,6 +100,6 @@
 				</div>
 			</div>	
 			
-		</div>    		    
+		</div>    		   
 	</g:HTMLPanel>
 </ui:UiBinder> 

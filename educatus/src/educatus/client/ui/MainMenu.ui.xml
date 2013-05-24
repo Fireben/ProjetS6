@@ -18,7 +18,10 @@
 					    <li>			
 							<g:InlineHyperlink targetHistoryToken="{nameTokens.getProfil}">Profil</g:InlineHyperlink>			    
 						</li>	
-					</ul>
+						<li>
+							<g:InlineHyperlink targetHistoryToken="{nameTokens.getViewSeminary}">View Seminary</g:InlineHyperlink>			    
+						</li>
+					</ul>				
 				</div>
 			</nav>	
 		</div>	

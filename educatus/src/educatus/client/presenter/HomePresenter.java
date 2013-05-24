@@ -16,6 +16,7 @@
 
 package educatus.client.presenter;
 
+import com.google.gwt.dom.client.Element;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -44,6 +45,37 @@ public class HomePresenter extends
    * {@link HomePresenter}'s view.
    */
   public interface MyView extends View {
+		public Element getHomePageTitle();
+		public Element getHomePageBulbImg();
+		public Element getHomePageSecondTitle();
+		public Element getHomePageFirstDescription();
+		public Element getHomePageFirstDescription2();
+		public Element getHomePageFirstDescription3();
+
+		public Element getHomePageButton();
+		
+		public Element getHomePageFirstSectionTitle();
+		public Element getHomePageFirstSectionText();
+		public Element getHomePageFirstSectionImg();
+		public Element getHomePageFirstSectionDescription();
+		public Element getHomePageFirstSectionLink();
+		
+		public Element getHomePageSecondSectionTitle();
+		public Element getHomePageSecondSectionText();
+		public Element getHomePageSecondSectionImg();
+		public Element getHomePageSecondSectionDescription();
+		public Element getHomePageSecondSectionLink();
+		
+		public Element getHomePageThirdSectionTitle();
+		public Element getHomePageThirdSectionText();
+		public Element getHomePageThirdSectionImg();
+		public Element getHomePageThirdSectionDescription();
+		public Element getHomePageThirdSectionLink();
+		
+		public Element getHomePageFourthSectionTitle();
+		public Element getHomePageFourthSectionText();
+		public Element getHomePageFourthSectionImg();
+		public Element getHomePageFourthSectionDescription();
   }
 
   @Inject
@@ -61,11 +93,13 @@ public class HomePresenter extends
   @Override
   protected void onBind() {
     super.onBind();
+
   }
  
   @Override
 	protected void onReset() {
 		super.onReset();
-
+		//getView().getHomePageTitle().setInnerText("Testing");
+		//getView().getHomePageFirstDescription().setInnerText("El Test");
 	}
 }

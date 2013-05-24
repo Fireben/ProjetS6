@@ -2087,3 +2087,10 @@ button:disabled {
 }
 
 * {margin:0;padding:0;}
+
+.brainImg {
+	padding-right: 40px;
+	padding-top: 79px;
+	padding-left: 40px;
+	padding-bottom: 50px;
+}
