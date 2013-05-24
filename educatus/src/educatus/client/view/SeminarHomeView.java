@@ -29,23 +29,24 @@ public class SeminarHomeView extends ViewImpl implements MyView {
 	  widget = uiBinder.createAndBindUi(this);
 	  
 	  firstButton = new CustomButton();
-	  firstButton.add(new Label("Nuage"));
-	  firstButton.add(new Image("images/Phone-HTC-Dash-icon-2.png"));
+	  firstButton.add(new Image("images/earth_puzzle_3.png"));
+	  firstButton.add(new Label("Databases"));	  
 	  firstButton.setEnabled(false);
 	  
 	  secondButton = new CustomButton();
-	  secondButton.add(new Label("Sauce"));
-	  secondButton.add(new Image("images/Newspapers-1-icon-2.png"));
+	  secondButton.add(new Image("images/earth_puzzle_3.png"));
+	  secondButton.add(new Label("C++"));	  
 	  secondButton.setEnabled(false);
 	  
 	  thirdButton = new CustomButton();
-	  thirdButton.add(new Label("Nuage"));
-	  thirdButton.add(new Image("images/Phone-HTC-Dash-icon-2.png"));
+	  thirdButton.add(new Image("images/earth_puzzle_3.png"));
+	  thirdButton.add(new Label("Javascript"));
+	  
 	  thirdButton.setEnabled(false);
 	  
 	  fourthButton = new CustomButton();
-	  fourthButton.add(new Label("Sauce"));
-	  fourthButton.add(new Image("images/Newspapers-1-icon-2.png"));
+	  fourthButton.add(new Image("images/earth_puzzle_3.png"));
+	  fourthButton.add(new Label("Nuage"));	  
 	  fourthButton.setEnabled(false);
 	  
 	  categoryPanel.setStyleName("categoryPanel");

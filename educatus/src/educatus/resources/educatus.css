@@ -2050,14 +2050,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 .categoryPanelParent {
-	padding-bottom:4%;
-	padding-top:4%;
+	padding-bottom:3%;
+	padding-top:3%;
 	text-align:center;	
 }
 
 .categoryPanel {
-	padding-bottom:8%;
-	padding-top:8%;	
+	padding-bottom:6%;
+	padding-top:6%;	
 	margin:auto;
 	display:inline-block;
 }
@@ -2071,15 +2071,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     border: 1px solid #3B3B3B;
 	margin: 2px;
 	opacity: 0;
+	height: 200px;
+	width: 175px;
+}
+
+.categoryPanel>button:hover {
+	border: 1px solid #4B4B4B;	
+}
+
+.categoryPanel>button:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;
 }
 
 .categoryPanel>button>div {
-	color: rgb(0, 161, 214);
+	color: rgb(180, 217, 230);
 	margin: 10px 0px 0px;
-	font-size: 18px;
+	font-size: 24px;
 	font-family: "Century Gothic",Arial,"Arial Unicode MS",Helvetica,Sans-Serif;
 	font-weight: normal;
 	font-style: normal;
+	padding-bottom: 5px;
+}
+
+.categoryPanel>button>img {
+	width:140px;
+	height:140px;
 }
 
 button:disabled {

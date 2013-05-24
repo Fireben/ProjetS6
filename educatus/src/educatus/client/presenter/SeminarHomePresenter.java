@@ -81,7 +81,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   
   	private void animateButtonsIn(Widget panelWidget) {
 	  listAnimation = new ListFadeAnimation<HasWidgets>((HasWidgets) panelWidget);
-	  listAnimation.start(250, 0, 1.0);
+	  listAnimation.start(150, 0, 0.75);
   	}
   	
 	private void registerHandlers(final FlowPanel panel) {
@@ -101,38 +101,38 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   	
     private void rePopulateCategoryPanel(FlowPanel panel) {    	
 		CustomButton button = new CustomButton();
-		button.add(new Label("Salut"));
-		button.add(new Image("images/Backup-Seagate-icon-2.png"));
+		button.add(new Image("images/door_mind.png"));
+		button.add(new Label("Salut"));		
 		button.setEnabled(false);
 		panel.add(button);
 		
-		button = new CustomButton();
+		button = new CustomButton();		
+		button.add(new Image("images/Forums.png"));	
 		button.add(new Label("Monsieur"));
-		button.add(new Image("images/Games-Playstation-3-icon-2.png"));	
 		button.setEnabled(false);
 		panel.add(button);
 		
-		button = new CustomButton();
+		button = new CustomButton();		
+		button.add(new Image("images/door_mind.png"));	
 		button.add(new Label("Nuage,"));
-		button.add(new Image("images/Phone-HTC-Dash-icon-2.png"));	
 		button.setEnabled(false);
 		panel.add(button);
 		
 		button = new CustomButton();
-		button.add(new Label("Ca"));
-		button.add(new Image("images/Backup-Seagate-icon-2.png"));
+		button.add(new Image("images/earth_puzzle_3.png"));
+		button.add(new Label("Ca"));		
 		button.setEnabled(false);
 		panel.add(button);
 		
 		button = new CustomButton();
-		button.add(new Label("Va"));
-		button.add(new Image("images/Newspapers-1-icon-2.png"));	
+		button.add(new Image("images/Forums.png"));	
+		button.add(new Label("Va"));		
 		button.setEnabled(false);
 		panel.add(button);
 		
 		button = new CustomButton();
-		button.add(new Label("Bien ?"));
-		button.add(new Image("images/Games-Playstation-3-icon-2.png"));	
+		button.add(new Image("images/earth_puzzle_3.png"));	
+		button.add(new Label("Bien ?"));		
 		button.setEnabled(false);
 		panel.add(button);
 		

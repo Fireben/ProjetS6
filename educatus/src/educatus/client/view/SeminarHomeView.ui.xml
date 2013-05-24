@@ -8,6 +8,14 @@
 	</ui:style>
 
 	<g:HTMLPanel height= "100%">	
+	    <header class="art-header clearfix">
+		    <div class="art-shapes">
+				<h1 class="art-headline" data-left="1.74%">
+				    <g:Label text="Seminaries" ui:field="seminaryTitle"/>
+				    <span id="seminaryTitle"></span>
+				</h1>	
+		    </div>             
+		</header>
 		<div class="categoryPanelParent" height= "100%">		
 			<g:FlowPanel ui:field="categoryPanel"/>			
 		</div>    		    
