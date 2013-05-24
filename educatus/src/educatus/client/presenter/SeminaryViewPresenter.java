@@ -1,19 +1,17 @@
 package educatus.client.presenter;
 
-import com.gwtplatform.mvp.client.Presenter;
-import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.annotations.NameToken;
-import educatus.client.NameTokens;
-import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-
+import com.gwtplatform.mvp.client.Presenter;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
-import educatus.client.presenter.MainPagePresenter;
+
+import educatus.client.NameTokens;
 
 public class SeminaryViewPresenter extends
 		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy> {
@@ -30,7 +28,7 @@ public class SeminaryViewPresenter extends
 	}
 
 	@ProxyCodeSplit
-	@NameToken(NameTokens.viewseminary)
+	@NameToken(NameTokens.viewSeminary)
 	public interface MyProxy extends ProxyPlace<SeminaryViewPresenter> {
 	}
 
