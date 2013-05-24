@@ -37,14 +37,14 @@ public class NameTokens
 {
 	public static final String homePage = "!homePage";
 	public static final String profil = "!profil";
-	public static final String seminaryedit = "!seminaryedit";
+	public static final String seminaryEdit = "!seminaryEdit";
 	public static final String seminarHomePage = "!seminarHomePage";
+	public static final String viewSeminary = "!viewSeminary";
 
 	public static String getHomePage()
 	{
 		return homePage;
 	}
-public static final String viewseminary = "!viewseminary";
 
 	public static String getProfil()
 	{
@@ -56,13 +56,13 @@ public static final String viewseminary = "!viewseminary";
 		return seminarHomePage;
 	}
 
-	public static String getSeminaryedit()
+	public static String getSeminaryEdit()
 	{
-		return seminaryedit;
+		return seminaryEdit;
 	}
 
-
-public static String getViewseminary() {
-	return viewseminary;
-}
+	public static String getViewSeminary()
+	{
+		return viewSeminary;
+	}
 }

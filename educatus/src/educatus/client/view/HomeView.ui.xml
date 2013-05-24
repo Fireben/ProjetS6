@@ -4,7 +4,6 @@
 	
 	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
 	
-
 	<g:HTMLPanel>	
 		<style>
 			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
@@ -20,7 +19,7 @@
 			<header class="art-header clearfix">
 			    <div class="art-shapes">
 					<h1 class="art-headline" data-left="1.74%">
-					    <a href="#">EducateUdeS</a>
+					    <a href="#" ui:field="homePageTitle">EducateUdeS</a>
 					</h1>	
 			    </div>              
 			</header>
@@ -39,12 +38,12 @@
 												<div class="art-content-layout-row">
 													<div class="art-layout-cell layout-item-2" style="width: 100%" >
 													<!--	<p><img width="330" height="200" alt="" src="images/HomeView-BrainUseIt.png" style="float: left;" class="brainImg"/></p> -->
-														<p><img width="150" height="220" alt="" src="images/light_bulb.png" style="float: left;" class="brainImg"/></p>
-														<h5>Learn By Yourself</h5>
-														<h6>Enhance your abilities in multiples categories.&nbsp;</h6>
-														<h6>In collaboration with Université de Sherbrooke, our team of 6 members do their best to offer you useful content in a unique motivating way.</h6>
-														<h6>Be the best and complete all the problems!</h6>
-														<p style="margin-left: 40px"><a href="" class="art-button">Start</a></p>
+														<p><img ui:field="homePageBulbImg" width="150" height="220" alt="" src="images/light_bulb.png" style="float: left; padding-top: 100px" class="bulbImg"/></p>
+														<h5 ui:field="homePageSecondTitle">Learn By Yourself</h5>
+														<h6 ui:field="homePageFirstDescription">Enhance your abilities in multiples categories.&nbsp;</h6>
+														<h6 ui:field="homePageFirstDescription2">In collaboration with Université de Sherbrooke, our team of 6 members do their best to offer you useful content in a unique motivating way.</h6>
+														<h6 ui:field="homePageFirstDescription3">Be the best and complete all the problems!</h6>
+														<p style="margin-left: 40px"><a ui:field="homePageButton" href="" class="art-button">Start</a></p>
 													</div>
 												</div>
 											</div>
@@ -54,39 +53,39 @@
 											<div class="art-content-layout">
 												<div class="art-content-layout-row">
 											    	<div class="art-layout-cell layout-item-4" style="width: 25%">
-														<h1>Seminars</h1>
-														<p><span style="font-style:italic;">Watch or read tutorial</span></p>
+														<h1 ui:field="homePageFirstSectionTitle">Seminars</h1>
+														<p><span ui:field="homePageFirstSectionText" style="font-style:italic;">Watch or read tutorial</span></p>
 														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/door_mind.png"></img>		        
+														    <img ui:field="homePageFirstSectionImg" width="154" height="154" alt="" src="images/door_mind.png"></img>		        
 													    </p>
-														<p>With these seminars, would learn all you need to know to successfully resolve the problems and to increase your knowledge.</p>
-														<p><a href="http://127.0.0.1:8888/educatus.html?gwt.codesvr=127.0.0.1:9997#!seminarHomePage" >Start now!</a></p>
+														<p ui:field="homePageFirstSectionDescription">With these seminars, would learn all you need to know to successfully resolve the problems and to increase your knowledge.</p>
+														<p><a ui:field="homePageFirstSectionLink" href="http://127.0.0.1:8888/educatus.html?gwt.codesvr=127.0.0.1:9997#!seminarHomePage" >Start now!</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Problems</h1>
-														<p><span style="font-style:italic;">Test your knowledge.&nbsp;</span></p>
+														<h1 ui:field="homePageSecondSectionTitle">Problems</h1>
+														<p><span ui:field="homePageSecondSectionText" style="font-style:italic;">Test your knowledge.&nbsp;</span></p>
 														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/earth_puzzle_3.png" class=""></img>
+														    <img ui:field="homePageSecondSectionImg" width="154" height="154" alt="" src="images/earth_puzzle_3.png" class=""></img>
 													    </p>
-														<p>Resolve a multitude of exercises and success to be rewarded with Achievement. Push your skills and your knowledge to the limits.</p>
-														<p><a href="#">Start now!</a></p>
+														<p ui:field="homePageSecondSectionDescription">Resolve a multitude of exercises and success to be rewarded with Achievement. Push your skills and your knowledge to the limits.</p>
+														<p><a ui:field="homePageSecondSectionLink" href="#">Start now!</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-5" style="width: 25%" >
-														<h1>Stats</h1>
-														<p><span style="font-style:italic;">See if you are good.</span></p>
+														<h1 ui:field="homePageThirdSectionTitle">Stats</h1>
+														<p><span ui:field="homePageThirdSectionText" style="font-style:italic;">See if you are good.</span></p>
 														<p style="text-align: center;">
-														    <img width="154" height="154" alt="" src="images/pie_chart.png" class=""></img>
+														    <img ui:field="homePageThirdSectionImg" width="154" height="154" alt="" src="images/pie_chart.png" class=""></img>
 														</p>
-														<p>Watch the statistic of everybody. See if your friend have solved more problems than you and compare yourself with others.</p>
-														<p><a href="#">Watch now!</a></p>
+														<p ui:field="homePageThirdSectionDescription">Watch the statistic of everybody. See if your friend have solved more problems than you and compare yourself with others.</p>
+														<p><a ui:field="homePageThirdSectionLink" href="#">Watch now!</a></p>
 													</div>
 													<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1>Forums</h1>
-														<p><span style="font-style:italic;">Talk with others.</span></p>
+														<h1 ui:field="homePageFourthSectionTitle">Forums</h1>
+														<p><span ui:field="homePageFourthSectionText" style="font-style:italic;">Talk with others.</span></p>
 														<p style="text-align: center;">
-															<img width="154" height="154" alt="" src="images/Forums.png"></img>			
+															<img ui:field="homePageFourthSectionImg" width="154" height="154" alt="" src="images/Forums.png"></img>			
 														</p>
-														<p>Working on it ...&nbsp;</p>
+														<p ui:field="homePageFourthSectionDescription">Working on it ...&nbsp;</p>
 													</div>
 												</div>
 											</div>
