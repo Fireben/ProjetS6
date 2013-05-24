@@ -16,10 +16,12 @@
 
 package educatus.client.presenter;
 
-import com.google.web.bindery.event.shared.EventBus;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
-
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
@@ -29,6 +31,9 @@ import com.gwtplatform.mvp.client.proxy.LockInteractionEvent;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
+
+import educatus.client.ui.Footer;
+import educatus.client.ui.MainMenu;
 
 /**
  * This is the top-level presenter of the hierarchy. Other presenters reveal
@@ -53,7 +58,11 @@ public class MainPagePresenter extends
    * {@link MainPagePresenter}'s view.
    */
   public interface MyView extends View {
-    void showLoading(boolean visibile);
+	public FlowPanel getMainContentPanel();
+	public MainMenu getMenuPanel(); 
+	public Footer getFooterPanel();
+	
+	void showLoading(boolean visibile);
   }
 
   /**
@@ -82,5 +91,53 @@ public class MainPagePresenter extends
   public void onLockInteraction(LockInteractionEvent event) {
     getView().showLoading(event.shouldLock());
   }
-
+  
+  @SuppressWarnings("deprecation")
+  @Override
+	protected void onBind() {
+		super.onBind();
+		
+		getView().getMenuPanel().getMainMenuHomeButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("active");
+				getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
+			}
+		});
+		
+		getView().getMenuPanel().getMainMenuSeminarsButton().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("active");
+				getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
+			}
+		});
+		
+		getView().getMenuPanel().getMainMenuProfilButton().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("active");
+				getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
+			}
+		});
+		
+		getView().getMenuPanel().getMainMenuViewSeminaryButton().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
+				getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("active");
+			}
+		});
+  }
 }

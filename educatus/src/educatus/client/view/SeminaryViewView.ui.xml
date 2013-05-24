@@ -17,28 +17,21 @@
 			<header class="art-header clearfix">
 			    <div class="art-shapes">
 					<h1 class="art-headline" data-left="1.74%">
-					    <!-- <g:Label text="seminaryTitle" ui:field="seminaryTitle"/> -->
-					    <span id="seminaryTitle"></span>
+					    <span ui:field="seminaryTitle"></span>
 					</h1>	
 					<br/>
 					<h3 style="float: right; padding-top:25px;padding-right:10px;">
-						<!-- <g:Label text="writtenBy" ui:field="writtenBy"/> -->
-						<span id="writtenBy"></span>
-						<a class="art-postheader" id="authorEmail" href="">
-							<!--  <g:Label text="author" ui:field="author"/>-->
-							<span id="author"></span>
+						<span ui:field="writtenBy"></span>
+						<a class="art-postheader" ui:field="authorEmail" href="">
+							<span ui:field="author"></span>
 						</a> 
-						<!-- <g:Label text="createdDate" ui:field="createdDate"/>-->
-						<span id="createdDate"></span>
+						<span ui:field="createdDate"></span>
 						 <br/>
-						<!-- <g:Label text="modifyBy" ui:field="modifyBy"/>-->
-						<span id="modifyBy"></span>
-						<a class="art-postheader" id= "modifEmail" href="">
-							<!--<g:Label text="modif" ui:field="modif"/>-->
-							<span id="modif"></span>
-						</a> 
-						<!-- <g:Label text="modifiedDate" ui:field="modifiedDate"/>.-->
-						<span id="modifiedDate"></span>
+						<span ui:field="modifyBy"></span>
+						<a class="art-postheader" ui:field= "modifEmail" href="">
+							<span ui:field="modif"></span>
+						</a>
+						<span ui:field="modifiedDate"></span>
 					</h3>
 			    </div>             
 			</header>
@@ -52,8 +45,8 @@
 										<div class="art-content-layout-wrapper layout-item-3">
 											<div class="art-content-layout">
 												<div class="art-content-layout-row">
-													<!-- <g:Label text="seminaryContent" ui:field="seminaryContent"/>-->
-													<span id="seminaryContent"></span>
+													 <g:FlowPanel ui:field="textAreaContainer">
+													</g:FlowPanel>
 			 									</div>
 			 								</div>
 			 							</div>
