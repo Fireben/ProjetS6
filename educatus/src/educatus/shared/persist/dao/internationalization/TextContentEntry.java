@@ -1,8 +1,16 @@
 package educatus.shared.persist.dao.internationalization;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the textcontententry database table.
@@ -14,6 +22,8 @@ public class TextContentEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "TEXTCONTENTENTRY_TECE_ID_GENERATOR", sequenceName = "internationalization.textcontententry_tece_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEXTCONTENTENTRY_TECE_ID_GENERATOR")
 	@Column(name = "tece_id", unique = true, nullable = false)
 	private Integer teceId;
 

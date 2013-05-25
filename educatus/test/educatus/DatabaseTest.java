@@ -9,8 +9,10 @@ import educatus.server.persist.dao.BaseDao;
 import educatus.server.persist.dao.DaoModule;
 import educatus.server.persist.dao.JpaInitializer;
 import educatus.shared.persist.dao.internationalization.Culture;
+import educatus.shared.persist.dao.internationalization.Language;
 import educatus.shared.persist.dao.internationalization.TextContentEntry;
 import educatus.shared.persist.dao.internationalization.TextContentTranslationEntry;
+import educatus.shared.persist.dao.internationalization.TextContentTranslationEntryPK;
 
 
 public class DatabaseTest {
@@ -42,6 +44,26 @@ public class DatabaseTest {
 			for (TextContentTranslationEntry textContentTranslationEntry : entries) {
 				System.out.println(textContentTranslationEntry.getTcteTranslation());	
 			}
-		}
+		}		
+				
+		Culture frCulture = new Culture();
+		frCulture.setCode("FR");		
+		dao.set(frCulture, Culture.class);
+							
+		Language geLanguage = new Language();
+		geLanguage.setLangCode("ge");
+		dao.set(geLanguage, Language.class);
+		
+		TextContentEntry newTextContentEntry = new TextContentEntry();
+		dao.set(newTextContentEntry, TextContentEntry.class);
+
+		TextContentTranslationEntry translationEntry = new TextContentTranslationEntry();
+		translationEntry.setCulture(frCulture);
+		translationEntry.setLanguage(geLanguage);
+		translationEntry.setTextcontententry(newTextContentEntry);
+		translationEntry.setTcteTranslation("Sauce");
+	
+		dao.set(translationEntry, TextContentTranslationEntry.class);
+		
 	}
 }

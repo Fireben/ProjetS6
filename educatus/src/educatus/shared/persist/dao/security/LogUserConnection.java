@@ -6,9 +6,12 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -21,6 +24,8 @@ public class LogUserConnection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "LOGUSERCONNECTION_LOUC_ID_GENERATOR", sequenceName = "security.loguserconnection_louc_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOGUSERCONNECTION_LOUC_ID_GENERATOR")
 	@Column(name = "louc_id")
 	private Integer id;
 
