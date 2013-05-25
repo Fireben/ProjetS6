@@ -1,14 +1,13 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g='urn:import:com.google.gwt.user.client.ui' 
-	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
 	<ui:with field='res' type='educatus.resources.Resources' />
 
-	<ui:style>
+	<ui:style type="educatus.client.view.SeminarySectionView.ContentStyle">
 		@external .deleteButton;
 		.deleteButton {
 			width: 48px;
@@ -22,6 +21,7 @@
 		.textArea {
 			width: 800px;
 			height: 125px;
+			resize: vertical;
 		}
 		
 		.alignButton {
@@ -34,10 +34,11 @@
 	<g:HTMLPanel>
 		<style>
 			.contentBlock{
-			display: inline-block;
+				display: inline-block;
 			}
 		</style>
-		<div id="art-mainPage">
+		
+		<div class="contentAlign" ui:field="contentAlignBlock">
 			<div class="contentBlock">
 				<br />
 				<g:PushButton ui:field="deleteBtn" enabled='true'
@@ -45,8 +46,11 @@
 					<g:upFace image='{res.deleteButton}' />
 				</g:PushButton>
 				<div class="contentBlock">
-					<g:TextArea ui:field="textBox" styleName='{style.textArea}'>
-					</g:TextArea>
+					<g:SimplePanel ui:field="contentArea" />
+
+					<!-- <g:TextArea ui:field="textArea" styleName='{style.textArea}'> -->
+					<!-- </g:TextArea> -->
+
 					<div style="clear:right">
 						<g:PushButton ui:field="alignRightBtn" enabled='true'
 							addStyleNames='{style.alignButton}'>

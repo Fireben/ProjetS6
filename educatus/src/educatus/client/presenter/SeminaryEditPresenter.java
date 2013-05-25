@@ -70,6 +70,7 @@ public class SeminaryEditPresenter extends
 				public void onSuccess(SeminarySectionPresenter result)
 				{
 					addToSlot(SLOT_content, result);
+					result.getView().createTextContent();
 					result.getView().getDeleteBtn().addClickHandler(new DeleteClickHandler(result));
 				}
 				
