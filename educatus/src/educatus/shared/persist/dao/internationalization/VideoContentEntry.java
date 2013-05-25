@@ -2,6 +2,7 @@ package educatus.shared.persist.dao.internationalization;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 /**
@@ -14,6 +15,8 @@ public class VideoContentEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "VIDEOCONTENTENTRY_VICE_ID_GENERATOR", sequenceName = "internationalization.videocontententry_vice_id_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VIDEOCONTENTENTRY_VICE_ID_GENERATOR")
 	@Column(name = "vice_id", unique = true, nullable = false)
 	private Integer viceId;
 

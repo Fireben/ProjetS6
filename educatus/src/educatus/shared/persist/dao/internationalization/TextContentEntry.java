@@ -15,8 +15,8 @@ public class TextContentEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "IMAGECONTENTENTRY_IMCE_ID_GENERATOR", sequenceName = "internationalization.textcontententry_tece_id_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMAGECONTENTENTRY_IMCE_ID_GENERATOR")
+	@SequenceGenerator(name = "TEXTCONTENTENTRY_TECE_ID_GENERATOR", sequenceName = "internationalization.textcontententry_tece_id_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEXTCONTENTENTRY_TECE_ID_GENERATOR")
 	@Column(name = "tece_id", unique = true, nullable = false)
 	private Integer teceId;
 

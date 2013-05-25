@@ -20,8 +20,8 @@ public class Culture implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "CULTURE_CULTID_GENERATOR", sequenceName = "internationalization.culture_cult_id_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CULTURE_CULTID_GENERATOR")
+	@SequenceGenerator(name = "CULTURE_CULT_ID_GENERATOR", sequenceName = "internationalization.culture_cult_id_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CULTURE_CULT_ID_GENERATOR")
 	@Column(name = "cult_id", unique = true, nullable = false)
 	private Integer id;
 
