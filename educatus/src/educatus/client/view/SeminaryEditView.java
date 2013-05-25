@@ -31,7 +31,7 @@ public class SeminaryEditView extends ViewImpl implements
 
 	public interface Binder extends UiBinder<Widget, SeminaryEditView>
 	{
-		
+
 	}
 
 	@Inject
@@ -45,19 +45,43 @@ public class SeminaryEditView extends ViewImpl implements
 	{
 		if (slot == SeminaryEditPresenter.SLOT_confirm)
 		{
+
 			confirmPanel.clear();
-			if(content != null)
+			if (content != null)
 				confirmPanel.add(content);
-			
-		} 
-		else if(slot == SeminaryEditPresenter.SLOT_content)
+
+		} else if (slot == SeminaryEditPresenter.SLOT_content)
 		{
 			contentPanel.clear();
-			if(content != null)
+			if (content != null)
 				contentPanel.add(content);
+		} else
+			super.setInSlot(slot, content);
+	}
+
+	@Override
+	public void addToSlot(Object slot, Widget content)
+	{
+		if (slot == SeminaryEditPresenter.SLOT_content)
+		{
+			if (content != null)
+				contentPanel.add(content);
+		} else
+			super.addToSlot(slot, content);
+	}
+	
+	@Override
+	public void removeFromSlot(Object slot, Widget content)
+	{
+		if(content == null)
+			return;
+
+		if (slot == SeminaryEditPresenter.SLOT_content)
+		{
+			contentPanel.remove(content);
 		}
 		else
-			super.setInSlot(slot, content);
+			super.removeFromSlot(slot, content);
 	}
 
 	@Override
@@ -65,12 +89,12 @@ public class SeminaryEditView extends ViewImpl implements
 	{
 		return widget;
 	}
-	
+
 	public TextBox getSemTitleBox()
 	{
 		return semTitleBox;
 	}
-	
+
 	public Image getAddTextBoxImg()
 	{
 		return addTextBoxImg;
