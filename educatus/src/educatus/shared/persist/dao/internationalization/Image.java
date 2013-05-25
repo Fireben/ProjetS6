@@ -36,6 +36,7 @@ public abstract class Image implements Serializable {
 	private ImageType type;
 
 	// bi-directional many-to-one association to Imagecontenttranslationentry
+	// TODO, Vérifier s'il faut mettre mappedBy = "vimage"
 	@OneToMany(mappedBy = "image")
 	private List<ImageContentTranslationEntry> imageContentTranslationEntries;
 

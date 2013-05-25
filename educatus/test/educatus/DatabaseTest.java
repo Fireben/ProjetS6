@@ -11,6 +11,7 @@ import educatus.server.persist.dao.JpaInitializer;
 import educatus.shared.persist.dao.internationalization.Culture;
 import educatus.shared.persist.dao.internationalization.TextContentEntry;
 import educatus.shared.persist.dao.internationalization.TextContentTranslationEntry;
+import educatus.shared.persist.dao.security.Permission;
 
 
 public class DatabaseTest {
@@ -43,5 +44,8 @@ public class DatabaseTest {
 				System.out.println(textContentTranslationEntry.getTcteTranslation());	
 			}
 		}
+		
+		Permission writePermission = new Permission();
+		wri
 	}
 }

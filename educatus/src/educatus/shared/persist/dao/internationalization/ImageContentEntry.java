@@ -2,6 +2,7 @@ package educatus.shared.persist.dao.internationalization;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 /**
@@ -14,6 +15,8 @@ public class ImageContentEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "IMAGECONTENTENTRY_IMCE_ID_GENERATOR", sequenceName = "internationalization.imagecontententry_imce_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMAGECONTENTENTRY_IMCE_ID_GENERATOR")
 	@Column(name = "imce_id", unique = true, nullable = false)
 	private Integer imceId;
 
