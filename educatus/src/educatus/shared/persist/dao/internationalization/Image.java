@@ -28,9 +28,9 @@ import javax.persistence.Table;
 @Table(name = "internationalization.vimage")
 public abstract class Image implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@SequenceGenerator(name = "IMAGE_IMAG_ID_GENERATOR", sequenceName = "internationalization.image_imag_id_seq", allocationSize=1)
+	@SequenceGenerator(name = "IMAGE_IMAG_ID_GENERATOR", sequenceName = "internationalization.image_imag_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMAGE_IMAG_ID_GENERATOR")
 	@Column(name = "imag_id", unique = true, nullable = false)
 	private Integer id;

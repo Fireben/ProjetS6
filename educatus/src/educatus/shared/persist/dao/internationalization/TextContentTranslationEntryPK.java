@@ -1,7 +1,9 @@
 package educatus.shared.persist.dao.internationalization;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * The primary key class for the textcontenttranslationentry database table.

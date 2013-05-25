@@ -23,7 +23,7 @@ public class ImageType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "IMAGETYPE_IMTY_ID_GENERATOR", sequenceName = "internationalization.imagetype_imty_id_seq", allocationSize=1)
+	@SequenceGenerator(name = "IMAGETYPE_IMTY_ID_GENERATOR", sequenceName = "internationalization.imagetype_imty_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMAGETYPE_IMTY_ID_GENERATOR")
 	@Column(name = "imty_id", unique = true, nullable = false)
 	private Integer imtyId;
