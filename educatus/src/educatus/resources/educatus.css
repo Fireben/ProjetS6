@@ -2067,17 +2067,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	background: none repeat scroll 0% 0% #202020; 
 	margin: 0;
 	padding: 3px 5px;
-	cursor: pointer;
 	cursor: hand;
     border: 1px solid #3B3B3B;
 	margin: 2px;
 	opacity: 0;
 	height: 200px;
 	width: 175px;
-}
-
-.categoryPanel>button:hover {
-	border: 1px solid #4B4B4B;	
 }
 
 .categoryPanel>button:hover:enabled {

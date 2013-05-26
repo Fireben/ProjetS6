@@ -24,8 +24,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.Presenter;
@@ -39,6 +37,7 @@ import educatus.client.NameTokens;
 import educatus.client.animation.ListFadeAnimation;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.ui.CustomButton;
+import educatus.client.ui.factory.CategoryButtonFactory;
 
 /**
  * @author Nicolas Michaud
@@ -59,6 +58,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     	FlowPanel getCategoryPanel();	  
     }
   
+    private int state = 0;
     ListFadeAnimation<HasWidgets> listAnimation;
 
     @Inject
@@ -75,8 +75,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	protected void onBind() {
 	  super.onBind();    
 	  FlowPanel categoryPanel = getView().getCategoryPanel();
-	  registerHandlers(categoryPanel);
-	  animateButtonsIn(categoryPanel);
+	  populateCategoryPanel(categoryPanel, state);
 	}
   
   	private void animateButtonsIn(Widget panelWidget) {
@@ -99,42 +98,33 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		}
 	}  
   	
-    private void rePopulateCategoryPanel(FlowPanel panel) {    	
-		CustomButton button = new CustomButton();
-		button.add(new Image("images/door_mind.png"));
-		button.add(new Label("Salut"));		
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();		
-		button.add(new Image("images/Forums.png"));	
-		button.add(new Label("Monsieur"));
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();		
-		button.add(new Image("images/door_mind.png"));	
-		button.add(new Label("Nuage,"));
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();
-		button.add(new Image("images/earth_puzzle_3.png"));
-		button.add(new Label("Ca"));		
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();
-		button.add(new Image("images/Forums.png"));	
-		button.add(new Label("Va"));		
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();
-		button.add(new Image("images/earth_puzzle_3.png"));	
-		button.add(new Label("Bien ?"));		
-		button.setEnabled(false);
-		panel.add(button);
+    private void populateCategoryPanel(FlowPanel panel, int state) {  
+    	if(state == 0) {
+			CustomButton button = CategoryButtonFactory.get("Languages", "images/categories/language.png");
+			panel.add(button);
+			
+			button = CategoryButtonFactory.get("Databases", "images/categories/database.png");
+			panel.add(button);
+			
+			button = CategoryButtonFactory.get("Algorithms", "images/categories/algorithm.png");
+			panel.add(button);
+			
+			button = CategoryButtonFactory.get("Math", "images/categories/math.png");
+			panel.add(button);
+    	}
+    	else if(state == 1) {
+			CustomButton button = CategoryButtonFactory.get("Java", "images/langages/java.png");
+			panel.add(button);
+			
+			button = CategoryButtonFactory.get("C++", "images/langages/c++.png");
+			panel.add(button);
+			
+			button = CategoryButtonFactory.get("Javascript", "images/langages/javascript.png");
+			panel.add(button);
+			
+			button = CategoryButtonFactory.get("C", "images/langages/c.png");
+			panel.add(button);
+    	}
 		
 		registerHandlers(panel);
 		animateButtonsIn(panel);		
@@ -143,10 +133,11 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   	private void transitionCategoryPanel(final FlowPanel panel) {
   		listAnimation.killAnimations();
   		panel.clear();
+  		state = 1;
 		
     	Timer timer = new Timer() {
     		public void run() {
-    			rePopulateCategoryPanel(panel);
+    			populateCategoryPanel(panel, state);
     		};
     	};
     	timer.schedule(250);
