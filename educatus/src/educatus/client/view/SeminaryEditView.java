@@ -4,6 +4,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -18,9 +19,13 @@ public class SeminaryEditView extends ViewImpl implements
 	@UiField
 	HTMLPanel confirmPanel;
 	@UiField
+	HTMLPanel contentPanel;
+	@UiField
 	Label semTitleLabel;
 	@UiField
 	TextBox semTitleBox;
+	@UiField
+	Image addTextBoxImg;
 
 	private final Widget widget;
 
@@ -44,7 +49,14 @@ public class SeminaryEditView extends ViewImpl implements
 			if(content != null)
 				confirmPanel.add(content);
 			
-		} else
+		} 
+		else if(slot == SeminaryEditPresenter.SLOT_content)
+		{
+			contentPanel.clear();
+			if(content != null)
+				contentPanel.add(content);
+		}
+		else
 			super.setInSlot(slot, content);
 	}
 
@@ -57,6 +69,11 @@ public class SeminaryEditView extends ViewImpl implements
 	public TextBox getSemTitleBox()
 	{
 		return semTitleBox;
+	}
+	
+	public Image getAddTextBoxImg()
+	{
+		return addTextBoxImg;
 	}
 
 }

@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -20,10 +21,12 @@ public class SeminaryEditPresenter extends
 	public interface MyView extends View
 	{
 		public TextBox getSemTitleBox();
+		public Image getAddTextBoxImg();
 	}
 	
 	@ProxyCodeSplit
-	@NameToken(NameTokens.seminaryEdit)	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter>
+	@NameToken(NameTokens.seminaryEdit)	
+	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter>
 	{
 	}
 	
@@ -35,12 +38,25 @@ public class SeminaryEditPresenter extends
 			Window.alert(getView().getSemTitleBox().getText());
 		}
 	};
-
-	public static final Object SLOT_confirm = new Object();
+	
+	private ClickHandler addTextBoxHandler = new ClickHandler()
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			setInSlot(SLOT_content, seminarySectionPresenter);
+		}
+	};
 	
 	@Inject
 	ConfirmChangesPresenter confirmPresenter;
-
+	
+	@Inject
+	SeminarySectionPresenter seminarySectionPresenter;
+	
+	public static final Object SLOT_confirm = new Object();
+	public static final Object SLOT_content = new Object();
+	
 	@Inject
 	public SeminaryEditPresenter(final EventBus eventBus, final MyView view,
 			final MyProxy proxy)
@@ -67,5 +83,6 @@ public class SeminaryEditPresenter extends
 		super.onReset();
 		setInSlot(SLOT_confirm, confirmPresenter);
 		confirmPresenter.getView().getSaveButton().addClickHandler(saveHandler);
+		getView().getAddTextBoxImg().addClickHandler(addTextBoxHandler);
 	}
 }

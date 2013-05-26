@@ -35,6 +35,9 @@ import educatus.client.view.ProfilView;
 import educatus.client.view.SeminarHomeView;
 import educatus.client.view.SeminaryEditView;
 import educatus.client.view.SeminaryViewView;
+import educatus.client.view.SeminarySectionView;
+import educatus.client.presenter.SeminarySectionPresenter;
+
 /**
  * @author Christian Goudreau
  */
@@ -64,5 +67,9 @@ public class ClientModule extends AbstractPresenterModule {
 	bindPresenter(SeminaryViewPresenter.class,
 			SeminaryViewPresenter.MyView.class, SeminaryViewView.class,
 			SeminaryViewPresenter.MyProxy.class);  
+
+		bindPresenterWidget(SeminarySectionPresenter.class,
+				SeminarySectionPresenter.MyView.class,
+				SeminarySectionView.class);
 }
 }

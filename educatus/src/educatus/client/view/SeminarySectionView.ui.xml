@@ -1,0 +1,68 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:my="urn:import:educatus.client.ui"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<ui:with field='res' type='educatus.resources.Resources' />
+
+	<ui:style>
+		@external .deleteButton;
+		.deleteButton {
+			width: 48px;
+			height: 48px;
+			background: none;
+			border: none;
+			position: relative;
+			float: right;
+		}
+		
+		.textArea {
+			width: 800px;
+			height: 125px;
+		}
+		
+		.alignButton {
+			width: 32px;
+			height: 32px;
+			float: right;
+		}
+	</ui:style>
+
+	<g:HTMLPanel>
+		<style>
+			.contentBlock{
+			display: inline-block;
+			}
+		</style>
+		<div id="art-mainPage">
+			<div class="contentBlock">
+				<br />
+				<g:PushButton ui:field="deleteBtn" enabled='true'
+					addStyleNames='{style.deleteButton}'>
+					<g:upFace image='{res.deleteButton}' />
+				</g:PushButton>
+				<div class="contentBlock">
+					<g:TextArea ui:field="textBox" styleName='{style.textArea}'>
+					</g:TextArea>
+					<div style="clear:right">
+						<g:PushButton ui:field="alignRightBtn" enabled='true'
+							addStyleNames='{style.alignButton}'>
+							<g:upFace image='{res.alignRight}' />
+						</g:PushButton>
+						<g:PushButton ui:field="alignCenterBtn" enabled='true'
+							addStyleNames='{style.alignButton}'>
+							<g:upFace image='{res.alignCenter}' />
+						</g:PushButton>
+						<g:PushButton ui:field="alignLeftBtn" enabled='true'
+							addStyleNames='{style.alignButton}'>
+							<g:upFace image='{res.alignLeft}' />
+						</g:PushButton>
+					</div>
+				</div>
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>
