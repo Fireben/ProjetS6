@@ -16,8 +16,6 @@
 				</h1>	
 		    </div>             
 		</header>
-		<div class="categoryPanelParent" height= "100%">		
-			<g:FlowPanel ui:field="categoryPanel"/>			
-		</div>    		    
+		<g:HTMLPanel ui:field="contentPanel" height= "100%"/> 		    
 	</g:HTMLPanel>
 </ui:UiBinder> 

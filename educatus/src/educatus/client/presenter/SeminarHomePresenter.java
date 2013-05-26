@@ -16,16 +16,10 @@
 
 package educatus.client.presenter;
 
-import java.util.Iterator;
-
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -34,10 +28,6 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
-import educatus.client.animation.ListFadeAnimation;
-import educatus.client.presenter.MainPagePresenter;
-import educatus.client.ui.CustomButton;
-import educatus.client.ui.factory.CategoryButtonFactory;
 
 /**
  * @author Nicolas Michaud
@@ -50,16 +40,22 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     @NameToken(NameTokens.seminarHomePage)
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
     }
+    
+    private int state = 0;
+    
+    public static final Object SLOT_content = new Object();
+    
+	@Inject
+	SeminarCategoryPresenter seminarCategoryPresenter;
+	
+	@Inject
+	SeminaryListPresenter seminaryListPresenter;
 
     /**
      * {@link SeminarHomePresenter}'s view.
      */
-    public interface MyView extends View {
-    	FlowPanel getCategoryPanel();	  
+    public interface MyView extends View {	  
     }
-  
-    private int state = 0;
-    ListFadeAnimation<HasWidgets> listAnimation;
 
     @Inject
     public SeminarHomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
@@ -72,74 +68,26 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	}
   
 	@Override
-	protected void onBind() {
-	  super.onBind();    
-	  FlowPanel categoryPanel = getView().getCategoryPanel();
-	  populateCategoryPanel(categoryPanel, state);
+	protected void onReset() {
+	  super.onReset();    
+	  state = 0;
+	  /*
+	  setInSlot(SLOT_content, seminarCategoryPresenter);
+	  seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);
+	  */
+	  setInSlot(SLOT_content, seminaryListPresenter);
+	  seminaryListPresenter.initializeColumns();
 	}
-  
-  	private void animateButtonsIn(Widget panelWidget) {
-	  listAnimation = new ListFadeAnimation<HasWidgets>((HasWidgets) panelWidget);
-	  listAnimation.start(150, 0, 0.75);
-  	}
-  	
-	private void registerHandlers(final FlowPanel panel) {
-		Iterator<Widget> it = panel.iterator();
-		CustomButton button;
-		while(it.hasNext()){
-			button = (CustomButton) it.next();
-			registerHandler((button).addClickHandler(
-					new ClickHandler() {
-			            @Override
-			            public void onClick(ClickEvent event) {
-			            	transitionCategoryPanel(panel);
-		                }
-		            }));    
+	
+	private ClickHandler categoryClickHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			changeCategoryPanel();
 		}
-	}  
-  	
-    private void populateCategoryPanel(FlowPanel panel, int state) {  
-    	if(state == 0) {
-			CustomButton button = CategoryButtonFactory.get("Languages", "images/categories/language.png");
-			panel.add(button);
-			
-			button = CategoryButtonFactory.get("Databases", "images/categories/database.png");
-			panel.add(button);
-			
-			button = CategoryButtonFactory.get("Algorithms", "images/categories/algorithm.png");
-			panel.add(button);
-			
-			button = CategoryButtonFactory.get("Math", "images/categories/math.png");
-			panel.add(button);
-    	}
-    	else if(state == 1) {
-			CustomButton button = CategoryButtonFactory.get("Java", "images/langages/java.png");
-			panel.add(button);
-			
-			button = CategoryButtonFactory.get("C++", "images/langages/c++.png");
-			panel.add(button);
-			
-			button = CategoryButtonFactory.get("Javascript", "images/langages/javascript.png");
-			panel.add(button);
-			
-			button = CategoryButtonFactory.get("C", "images/langages/c.png");
-			panel.add(button);
-    	}
-		
-		registerHandlers(panel);
-		animateButtonsIn(panel);		
-    }
-    
-  	private void transitionCategoryPanel(final FlowPanel panel) {
-  		listAnimation.killAnimations();
-  		panel.clear();
-  		state = 1;
-		
-    	Timer timer = new Timer() {
-    		public void run() {
-    			populateCategoryPanel(panel, state);
-    		};
-    	};
-    	timer.schedule(250);
-  	}
+	};
+	
+	private void changeCategoryPanel() {
+		state++;
+		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);
+	}
 }

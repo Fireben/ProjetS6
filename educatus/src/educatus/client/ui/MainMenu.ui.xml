@@ -21,6 +21,9 @@
 						<li>
 							<g:InlineHyperlink ui:field="mainMenuViewSeminaryButton" targetHistoryToken="{nameTokens.getViewSeminary}">View Seminary</g:InlineHyperlink>			    
 						</li>
+						<li>
+							<a href="#{nameTokens.getViewSeminary}">View Seminary</a>			    
+						</li>
 					</ul>
 				</div>
 			</nav>
