@@ -7,17 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * The persistent class for the language database table.
- * 
- */
 @Entity
+@NamedQueries({
+		@NamedQuery(name = Language.FIND_ALL, query = "SELECT l FROM Language l"),
+		@NamedQuery(name = Language.FIND_BY_CODE, query = "SELECT l FROM Language l WHERE l.code=:code") })
 @Table(name = "internationalization.language")
 public class Language implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_ALL = "LANGUAGE.FIND_ALL";
+	public static final String FIND_BY_CODE = "LANGUAGE.FIND_BY_CODE";
+	public static final String FIND_BY_CODE_PARAM_NAME = "code";
 
 	@Id
 	@SequenceGenerator(name = "LANGUAGE_LANG_ID_GENERATOR", sequenceName = "internationalization.language_lang_id_seq", allocationSize = 1)

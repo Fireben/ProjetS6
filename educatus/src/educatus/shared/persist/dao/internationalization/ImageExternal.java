@@ -6,10 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-/**
- * The persistent class for the imageexternal database table.
- * 
- */
 @Entity
 @DiscriminatorValue("2")
 public class ImageExternal extends Image implements Serializable {

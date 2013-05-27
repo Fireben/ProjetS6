@@ -5,49 +5,45 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-/**
- * The primary key class for the imagecontenttranslationentry database table.
- * 
- */
 @Embeddable
 public class ImageContentTranslationEntryPK implements Serializable {
 	// default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "imce_id", unique = true, nullable = false)
-	private Integer imceId;
+	private Integer imageContentEntryId;
 
 	@Column(name = "cult_id", unique = true, nullable = false)
-	private Integer cultId;
+	private Integer cultureId;
 
 	@Column(name = "lang_id", unique = true, nullable = false)
-	private Integer langId;
+	private Integer languageId;
 
 	public ImageContentTranslationEntryPK() {
 	}
 
-	public Integer getImceId() {
-		return this.imceId;
+	public Integer getImageContentEntryId() {
+		return this.imageContentEntryId;
 	}
 
-	public void setImceId(Integer imceId) {
-		this.imceId = imceId;
+	public void setImageContentEntryId(Integer imageContentEntryId) {
+		this.imageContentEntryId = imageContentEntryId;
 	}
 
-	public Integer getCultId() {
-		return this.cultId;
+	public Integer getCultureId() {
+		return this.cultureId;
 	}
 
-	public void setCultId(Integer cultId) {
-		this.cultId = cultId;
+	public void setCultureId(Integer cultureId) {
+		this.cultureId = cultureId;
 	}
 
-	public Integer getLangId() {
-		return this.langId;
+	public Integer getLanguageId() {
+		return this.languageId;
 	}
 
-	public void setLangId(Integer langId) {
-		this.langId = langId;
+	public void setLanguageId(Integer languageId) {
+		this.languageId = languageId;
 	}
 
 	public boolean equals(Object other) {
@@ -58,17 +54,17 @@ public class ImageContentTranslationEntryPK implements Serializable {
 			return false;
 		}
 		ImageContentTranslationEntryPK castOther = (ImageContentTranslationEntryPK) other;
-		return this.imceId.equals(castOther.imceId)
-				&& this.cultId.equals(castOther.cultId)
-				&& this.langId.equals(castOther.langId);
+		return this.imageContentEntryId.equals(castOther.imageContentEntryId)
+				&& this.cultureId.equals(castOther.cultureId)
+				&& this.languageId.equals(castOther.languageId);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.imceId.hashCode();
-		hash = hash * prime + this.cultId.hashCode();
-		hash = hash * prime + this.langId.hashCode();
+		hash = hash * prime + this.imageContentEntryId.hashCode();
+		hash = hash * prime + this.cultureId.hashCode();
+		hash = hash * prime + this.languageId.hashCode();
 
 		return hash;
 	}

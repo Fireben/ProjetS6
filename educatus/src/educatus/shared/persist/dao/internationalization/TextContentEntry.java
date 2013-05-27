@@ -12,56 +12,54 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * The persistent class for the textcontententry database table.
- * 
- */
 @Entity
 @Table(name = "internationalization.textcontententry")
 public class TextContentEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String FIND_ALL = "TEXT_CONTENT_ENTRY.FIND_ALL";
+	
 	@Id
 	@SequenceGenerator(name = "TEXTCONTENTENTRY_TECE_ID_GENERATOR", sequenceName = "internationalization.textcontententry_tece_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEXTCONTENTENTRY_TECE_ID_GENERATOR")
 	@Column(name = "tece_id", unique = true, nullable = false)
-	private Integer teceId;
+	private Integer id;
 
 	// bi-directional many-to-one association to Textcontenttranslationentry
 	@OneToMany(mappedBy = "textcontententry")
-	private List<TextContentTranslationEntry> textcontenttranslationentries;
+	private List<TextContentTranslationEntry> textContentTranslationEntries;
 
 	public TextContentEntry() {
 	}
 
-	public Integer getTeceId() {
-		return this.teceId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setTeceId(Integer teceId) {
-		this.teceId = teceId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public List<TextContentTranslationEntry> getTextcontenttranslationentries() {
-		return this.textcontenttranslationentries;
+	public List<TextContentTranslationEntry> getTextContentTranslationEntries() {
+		return this.textContentTranslationEntries;
 	}
 
-	public void setTextcontenttranslationentries(
+	public void setTextContentTranslationEntries(
 			List<TextContentTranslationEntry> textcontenttranslationentries) {
-		this.textcontenttranslationentries = textcontenttranslationentries;
+		this.textContentTranslationEntries = textcontenttranslationentries;
 	}
 
-	public TextContentTranslationEntry addTextcontenttranslationentry(
+	public TextContentTranslationEntry addTextContentTranslationEntry(
 			TextContentTranslationEntry textcontenttranslationentry) {
-		getTextcontenttranslationentries().add(textcontenttranslationentry);
+		getTextContentTranslationEntries().add(textcontenttranslationentry);
 		textcontenttranslationentry.setTextcontententry(this);
 
 		return textcontenttranslationentry;
 	}
 
-	public TextContentTranslationEntry removeTextcontenttranslationentry(
+	public TextContentTranslationEntry removeTextContentTranslationEntry(
 			TextContentTranslationEntry textcontenttranslationentry) {
-		getTextcontenttranslationentries().remove(textcontenttranslationentry);
+		getTextContentTranslationEntries().remove(textcontenttranslationentry);
 		textcontenttranslationentry.setTextcontententry(null);
 
 		return textcontenttranslationentry;

@@ -2,19 +2,17 @@ package educatus;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import educatus.server.persist.dao.BaseDao;
 import educatus.server.persist.dao.DaoModule;
+import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.JpaInitializer;
 import educatus.shared.persist.dao.internationalization.Culture;
 import educatus.shared.persist.dao.internationalization.Image;
 import educatus.shared.persist.dao.internationalization.ImageExternal;
 import educatus.shared.persist.dao.internationalization.ImageInternal;
-import educatus.shared.persist.dao.internationalization.Language;
 import educatus.shared.persist.dao.internationalization.TextContentEntry;
 import educatus.shared.persist.dao.internationalization.TextContentTranslationEntry;
 
@@ -24,11 +22,22 @@ public class DatabaseTest {
 	public static void main(String[] args) {
 		
 		BaseDao dao = null;
+		InternationalizationDao internationalizationDao = null;
 		
 		Injector dbInjector = Guice.createInjector(new DaoModule("db-manager-localhost"));	 
 		dbInjector.getInstance(JpaInitializer.class);
 		dao = dbInjector.getInstance(BaseDao.class);
-
+		internationalizationDao = dbInjector.getInstance(InternationalizationDao.class);
+		
+		try {
+			Culture c = internationalizationDao.getCultureByCode("CA");
+			System.out.println(c.getId());	
+			System.out.println(c.getCode());	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		Culture culture = (Culture) dao.get(1, Culture.class);
 		
 		if (culture != null)
@@ -41,28 +50,27 @@ public class DatabaseTest {
 		
 		if (entry != null)
 		{
-			System.out.println(entry.getTeceId());	
+			System.out.println(entry.getId());	
 			
-			List<TextContentTranslationEntry> entries = entry.getTextcontenttranslationentries();
+			List<TextContentTranslationEntry> entries = entry.getTextContentTranslationEntries();
 			
 			for (TextContentTranslationEntry textContentTranslationEntry : entries) {
 				System.out.println(textContentTranslationEntry.getTcteTranslation());	
 			}
-		}		
+		}
 				
 		List<Image> imageList = (List<Image>) dao.getEntityManager().createQuery("SELECT t FROM Image t").getResultList();
 		
 		for (Image image : imageList) {
 			
-			if (image.getType().getImtyId() == 1){
+			if (image.getType().getId() == 1){
 				ImageInternal internalImage = (ImageInternal) image;
-				System.out.println(internalImage.getImagName());
+				System.out.println(internalImage.getImageName());
 			} else {
 				ImageExternal externalImage = (ImageExternal) image;
 				System.out.println(externalImage.getUrl());
 			}	
 		}
-		
 		
 //		try {
 //			EntityManager tr = dao.getEntityManager();

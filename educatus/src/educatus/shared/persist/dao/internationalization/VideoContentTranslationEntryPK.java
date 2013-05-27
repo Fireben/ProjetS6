@@ -5,49 +5,45 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-/**
- * The primary key class for the videocontenttranslationentry database table.
- * 
- */
 @Embeddable
 public class VideoContentTranslationEntryPK implements Serializable {
 	// default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "vice_id", unique = true, nullable = false)
-	private Integer viceId;
+	private Integer videoContentEntryId;
 
 	@Column(name = "cult_id", unique = true, nullable = false)
-	private Integer cultId;
+	private Integer cultureId;
 
 	@Column(name = "lang_id", unique = true, nullable = false)
-	private Integer langId;
+	private Integer languageId;
 
 	public VideoContentTranslationEntryPK() {
 	}
 
-	public Integer getViceId() {
-		return this.viceId;
+	public Integer getVideoContentEntryId() {
+		return this.videoContentEntryId;
 	}
 
-	public void setViceId(Integer viceId) {
-		this.viceId = viceId;
+	public void setVideoContentEntryId(Integer videoContentEntryId) {
+		this.videoContentEntryId = videoContentEntryId;
 	}
 
-	public Integer getCultId() {
-		return this.cultId;
+	public Integer getCultureId() {
+		return this.cultureId;
 	}
 
-	public void setCultId(Integer cultId) {
-		this.cultId = cultId;
+	public void setCultureId(Integer cultureId) {
+		this.cultureId = cultureId;
 	}
 
-	public Integer getLangId() {
-		return this.langId;
+	public Integer getLanguageId() {
+		return this.languageId;
 	}
 
-	public void setLangId(Integer langId) {
-		this.langId = langId;
+	public void setLanguageId(Integer languageId) {
+		this.languageId = languageId;
 	}
 
 	public boolean equals(Object other) {
@@ -58,17 +54,17 @@ public class VideoContentTranslationEntryPK implements Serializable {
 			return false;
 		}
 		VideoContentTranslationEntryPK castOther = (VideoContentTranslationEntryPK) other;
-		return this.viceId.equals(castOther.viceId)
-				&& this.cultId.equals(castOther.cultId)
-				&& this.langId.equals(castOther.langId);
+		return this.videoContentEntryId.equals(castOther.videoContentEntryId)
+				&& this.cultureId.equals(castOther.cultureId)
+				&& this.languageId.equals(castOther.languageId);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.viceId.hashCode();
-		hash = hash * prime + this.cultId.hashCode();
-		hash = hash * prime + this.langId.hashCode();
+		hash = hash * prime + this.videoContentEntryId.hashCode();
+		hash = hash * prime + this.cultureId.hashCode();
+		hash = hash * prime + this.languageId.hashCode();
 
 		return hash;
 	}

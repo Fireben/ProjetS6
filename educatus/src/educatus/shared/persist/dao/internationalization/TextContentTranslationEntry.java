@@ -8,16 +8,21 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-/**
- * The persistent class for the textcontenttranslationentry database table.
- * 
- */
 @Entity
+@NamedQueries({
+		@NamedQuery(name = Culture.FIND_ALL, query = "SELECT c FROM Culture c"),
+		@NamedQuery(name = Culture.FIND_BY_CODE, query = "SELECT c FROM Culture c WHERE c.code=:code") })
 @Table(name = "internationalization.textcontenttranslationentry")
 public class TextContentTranslationEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_ALL = "TEXT_CONTENT_TRANSLATION_ENTRY.FIND_ALL";
+	public static final String FIND_ALL_BY_TECE = "TEXT_CONTENT_TRANSLATION_ENTRY.FIND_ALL_BY_TECE";
+	public static final String FIND_ALL_BY_TECE_PARAM_NAME = "textContentEntry";
 
 	@EmbeddedId
 	private TextContentTranslationEntryPK id;
@@ -38,7 +43,7 @@ public class TextContentTranslationEntry implements Serializable {
 	// bi-directional many-to-one association to Textcontententry
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tece_id", nullable = false, insertable = false, updatable = false)
-	private TextContentEntry textcontententry;
+	private TextContentEntry textContentEntry;
 
 	public TextContentTranslationEntry() {
 	}
@@ -76,11 +81,11 @@ public class TextContentTranslationEntry implements Serializable {
 	}
 
 	public TextContentEntry getTextcontententry() {
-		return this.textcontententry;
+		return this.textContentEntry;
 	}
 
 	public void setTextcontententry(TextContentEntry textcontententry) {
-		this.textcontententry = textcontententry;
+		this.textContentEntry = textcontententry;
 	}
 
 }

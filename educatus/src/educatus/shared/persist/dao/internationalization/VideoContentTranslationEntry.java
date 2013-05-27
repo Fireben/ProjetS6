@@ -7,16 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-/**
- * The persistent class for the videocontenttranslationentry database table.
- * 
- */
 @Entity
+@NamedQueries({ @NamedQuery(name = VideoContentTranslationEntry.FIND_ALL, query = "SELECT v FROM VideoContentTranslationEntry v") })
 @Table(name = "internationalization.videocontenttranslationentry")
 public class VideoContentTranslationEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_ALL = "VIDEO_CONTENT_TRANSLATION_ENTRY.FIND_ALL";
 
 	@EmbeddedId
 	private VideoContentTranslationEntryPK id;
@@ -39,7 +40,7 @@ public class VideoContentTranslationEntry implements Serializable {
 	// bi-directional many-to-one association to Videocontententry
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "vice_id", nullable = false, insertable = false, updatable = false)
-	private VideoContentEntry videocontententry;
+	private VideoContentEntry videoContentEntry;
 
 	public VideoContentTranslationEntry() {
 	}
@@ -77,11 +78,11 @@ public class VideoContentTranslationEntry implements Serializable {
 	}
 
 	public VideoContentEntry getVideocontententry() {
-		return this.videocontententry;
+		return this.videoContentEntry;
 	}
 
 	public void setVideocontententry(VideoContentEntry videocontententry) {
-		this.videocontententry = videocontententry;
+		this.videoContentEntry = videocontententry;
 	}
 
 }
