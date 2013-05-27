@@ -16,6 +16,9 @@
 
 package educatus.client.presenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.inject.Inject;
@@ -28,6 +31,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
+import educatus.client.animation.FadeAnimation;
+import educatus.client.ui.dataGrids.Seminary;
 
 /**
  * @author Nicolas Michaud
@@ -46,7 +51,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     public static final Object SLOT_content = new Object();
     
 	@Inject
-	SeminarCategoryPresenter seminarCategoryPresenter;
+	CategoryPresenter seminarCategoryPresenter;
 	
 	@Inject
 	SeminaryListPresenter seminaryListPresenter;
@@ -69,25 +74,47 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   
 	@Override
 	protected void onReset() {
-	  super.onReset();    
-	  state = 0;
-	  /*
-	  setInSlot(SLOT_content, seminarCategoryPresenter);
-	  seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);
-	  */
-	  setInSlot(SLOT_content, seminaryListPresenter);
-	  seminaryListPresenter.initializeColumns();
+	  super.onReset();      
+	}
+	
+	@Override
+	protected void onReveal() {
+		state = 0;	  
+		setInSlot(SLOT_content, seminarCategoryPresenter);
+		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);			
 	}
 	
 	private ClickHandler categoryClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			changeCategoryPanel();
+			changeState();
 		}
 	};
 	
-	private void changeCategoryPanel() {
-		state++;
+	private void changeCategoryPanel() {		
 		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);
+	}
+	
+	private void changeState() {
+		state++;
+		if(state < 2) {
+			changeCategoryPanel();
+		}
+		else {
+			setSeminaryList();
+		}
+	}
+	
+	private void setSeminaryList() {
+		setInSlot(SLOT_content, seminaryListPresenter);
+		List<Seminary> seminaries = new ArrayList<Seminary>();;
+		for(int i=1;i<=30;i++) {
+			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?"));
+		}	
+		seminaryListPresenter.setData(seminaries);
+		FadeAnimation animation;
+		animation = new FadeAnimation(seminaryListPresenter.getView().getDataGrid(), FadeAnimation.MIN_OPACITY,
+										FadeAnimation.MAX_OPACITY, FadeAnimation.VERY_LONG);
+		animation.start();
 	}
 }

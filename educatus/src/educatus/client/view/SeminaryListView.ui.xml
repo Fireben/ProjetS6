@@ -7,7 +7,9 @@
     <ui:style>
 	</ui:style>
 
-	<g:HTMLPanel height= "100%">	
-	     <c:DataGrid height= "500px" width= "500px" ui:field='dataGrid' />	    
+	<g:HTMLPanel height= "100%">
+	    <div class="dataGridParent" height= "100%">		
+	    	 <c:DataGrid ui:field='dataGrid' />	 
+		</div> 	   
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -12,12 +12,13 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import educatus.client.animation.FadeAnimation;
 import educatus.client.animation.ListFadeAnimation;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.factory.CategoryButtonFactory;
 
-public class SeminarCategoryPresenter extends
-		PresenterWidget<SeminarCategoryPresenter.MyView>
+public class CategoryPresenter extends
+		PresenterWidget<CategoryPresenter.MyView>
 {
     ListFadeAnimation<HasWidgets> listAnimation = null;
 
@@ -26,7 +27,7 @@ public class SeminarCategoryPresenter extends
 	}
 
 	@Inject
-	public SeminarCategoryPresenter(final EventBus eventBus, final MyView view) {
+	public CategoryPresenter(final EventBus eventBus, final MyView view) {
 		super(eventBus, view);
 	}
 
@@ -42,7 +43,7 @@ public class SeminarCategoryPresenter extends
 	
 	public void animatePanelIn() {
 	  listAnimation = new ListFadeAnimation<HasWidgets>(getView().getCategoryPanel());
-	  listAnimation.start(150, 0, 0.75);
+	  listAnimation.start(FadeAnimation.QUICK, FadeAnimation.MIN_OPACITY, FadeAnimation.MEDIUM_OPACITY);
   	} 
 	
 	public void clear() {

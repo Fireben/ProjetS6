@@ -7,20 +7,20 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-import educatus.client.presenter.SeminarCategoryPresenter;
+import educatus.client.presenter.CategoryPresenter;
 
-public class SeminarCategoryView extends ViewImpl implements
-SeminarCategoryPresenter.MyView {
+public class CategoryView extends ViewImpl implements
+CategoryPresenter.MyView {
 
 	public final Widget widget;
 	
 	@UiField FlowPanel categoryPanel;
 	
-	public interface Binder extends UiBinder<Widget, SeminarCategoryView> {
+	public interface Binder extends UiBinder<Widget, CategoryView> {
 	}
 
 	@Inject
-	public SeminarCategoryView(final Binder binder) {		
+	public CategoryView(final Binder binder) {		
 	  widget = binder.createAndBindUi(this);
 	  categoryPanel.setStyleName("categoryPanel");	  
 	}

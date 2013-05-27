@@ -16,10 +16,9 @@
 
 package educatus.client;
 
-import com.gwtplatform.mvp.client.DelayedBindRegistry;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.gwtplatform.mvp.client.DelayedBindRegistry;
 
 import educatus.client.gin.ClientGinjector;
 import educatus.resources.Resources;
