@@ -26,6 +26,8 @@ public class SeminaryEditView extends ViewImpl implements
 	TextBox semTitleBox;
 	@UiField
 	Image addTextBoxImg;
+	@UiField
+	Image addImageImg;
 
 	private final Widget widget;
 
@@ -98,6 +100,11 @@ public class SeminaryEditView extends ViewImpl implements
 	public Image getAddTextBoxImg()
 	{
 		return addTextBoxImg;
+	}
+	
+	public Image getAddImageImg()
+	{
+		return addImageImg;
 	}
 
 }

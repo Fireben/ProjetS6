@@ -27,6 +27,8 @@ public class SeminaryEditPresenter extends
 		public TextBox getSemTitleBox();
 
 		public Image getAddTextBoxImg();
+		
+		public Image getAddImageImg();
 	}
 
 	@ProxyCodeSplit
@@ -77,9 +79,36 @@ public class SeminaryEditPresenter extends
 				@Override
 				public void onFailure(Throwable caught)
 				{
-					Window.alert("Error while creating a seminary content section");
+					Window.alert("Error while creating a text content seminary section");
 				}
 			});
+		}
+	};
+	
+	private ClickHandler addImageHandler = new ClickHandler()
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			seminarySectionFactory.get(new AsyncCallback<SeminarySectionPresenter>()
+			{
+				@Override
+				public void onSuccess(SeminarySectionPresenter result)
+				{
+					addToSlot(SLOT_content, result);
+					result.getView().createTextContent();
+					result.getView().getDeleteBtn().addClickHandler(new DeleteClickHandler(result));
+			        
+					//TODO Image navigator
+				}
+				
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					Window.alert("Error while creating a text content seminary section");
+					
+				}
+			});		
 		}
 	};
 
@@ -110,6 +139,9 @@ public class SeminaryEditPresenter extends
 	protected void onBind()
 	{
 		super.onBind();
+		
+		getView().getAddTextBoxImg().addClickHandler(addTextBoxHandler);
+		getView().getAddImageImg().addClickHandler(addImageHandler);
 	}
 
 	@Override
@@ -120,6 +152,6 @@ public class SeminaryEditPresenter extends
 		setInSlot(SLOT_content, null);
 		
 		confirmPresenter.getView().getSaveButton().addClickHandler(saveHandler);
-		getView().getAddTextBoxImg().addClickHandler(addTextBoxHandler);
+		
 	}
 }
