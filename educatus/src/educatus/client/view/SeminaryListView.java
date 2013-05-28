@@ -59,11 +59,20 @@ SeminaryListPresenter.MyView {
 		TextColumn<Seminary> NameColumn = new TextColumn<Seminary>() {
 		    @Override
 		    public String getValue(Seminary seminary) {
-		      return String.valueOf(seminary.getName());
+		      return seminary.getName();
 		    }
 		  };
 		dataGrid.addColumn(NameColumn, "Name", "");
 		dataGrid.setColumnWidth(NameColumn, 200, Unit.PX);
+		
+		TextColumn<Seminary> AuthorColumn = new TextColumn<Seminary>() {
+		    @Override
+		    public String getValue(Seminary seminary) {
+		      return seminary.getAuthor();
+		    }
+		  };
+		dataGrid.addColumn(AuthorColumn, "Author", "");
+		dataGrid.setColumnWidth(AuthorColumn, 200, Unit.PX);
 		
 		Column<Seminary, Hyperlink> DescriptionColumn = 
 		    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 

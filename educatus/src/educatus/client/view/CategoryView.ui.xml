@@ -9,7 +9,10 @@
 
 	<g:HTMLPanel height= "100%">	
 		<div class="categoryPanelParent" height= "100%">		
-			<g:FlowPanel ui:field="categoryPanel"/>			
+			<g:FlowPanel ui:field="categoryPanel">
+			    <g:FlowPanel ui:field="buttonPanel">			        
+			    </g:FlowPanel>
+			 </g:FlowPanel>			
 		</div>    		    
 	</g:HTMLPanel>
 </ui:UiBinder> 

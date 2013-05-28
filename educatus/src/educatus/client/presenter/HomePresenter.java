@@ -29,6 +29,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
 import educatus.client.services.RequestService;
 import educatus.client.services.RequestServiceAsync;
 import educatus.shared.businesslogic.dto.HomePageContent;
@@ -151,6 +152,7 @@ public class HomePresenter extends
 	@Override
 	protected void onReset() {
 		super.onReset();
+		PageChangingEvent.fire(this, NameTokens.getHomePage());
 		// getView().getHomePageTitle().setInnerText("Testing");
 		// getView().getHomePageFirstDescription().setInnerText("El Test");
 	}

@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,6 +25,7 @@ public class CategoryPresenter extends
 
 	public interface MyView extends View {
     	FlowPanel getCategoryPanel();
+    	FlowPanel getButtonPanel();
 	}
 
 	@Inject
@@ -42,7 +44,7 @@ public class CategoryPresenter extends
 	}
 	
 	public void animatePanelIn() {
-	  listAnimation = new ListFadeAnimation<HasWidgets>(getView().getCategoryPanel());
+	  listAnimation = new ListFadeAnimation<HasWidgets>(getView().getButtonPanel());
 	  listAnimation.start(FadeAnimation.QUICK, FadeAnimation.MIN_OPACITY, FadeAnimation.MEDIUM_OPACITY);
   	} 
 	
@@ -50,41 +52,43 @@ public class CategoryPresenter extends
 		if(listAnimation != null) {
 			listAnimation.killAnimations();
 		}
-  		getView().getCategoryPanel().clear();
+  		getView().getButtonPanel().clear();
 	}
   	
     public void populateCategoryPanel(int state) {  
+    	FlowPanel buttonPanel = getView().getButtonPanel();
     	FlowPanel panel = getView().getCategoryPanel();
-    	if(state == 0) {
+    	if(state == 0) {    		
 			CustomButton button = CategoryButtonFactory.get("Languages", "images/categories/language.png");
-			panel.add(button);
+			buttonPanel.add(button);
 			
 			button = CategoryButtonFactory.get("Databases", "images/categories/database.png");
-			panel.add(button);
+			buttonPanel.add(button);
 			
 			button = CategoryButtonFactory.get("Algorithms", "images/categories/algorithm.png");
-			panel.add(button);
+			buttonPanel.add(button);
 			
 			button = CategoryButtonFactory.get("Math", "images/categories/math.png");
-			panel.add(button);
+			buttonPanel.add(button);
     	}
     	else if(state == 1) {
 			CustomButton button = CategoryButtonFactory.get("Java", "images/langages/java.png");
-			panel.add(button);
+			buttonPanel.add(button);
 			
 			button = CategoryButtonFactory.get("C++", "images/langages/c++.png");
-			panel.add(button);
+			buttonPanel.add(button);
 			
 			button = CategoryButtonFactory.get("Javascript", "images/langages/javascript.png");
-			panel.add(button);
+			buttonPanel.add(button);
 			
 			button = CategoryButtonFactory.get("C", "images/langages/c.png");
-			panel.add(button);
-    	}		
+			buttonPanel.add(button);
+    	}	
+    	panel.add(buttonPanel);
     }
     
 	public void registerCategoryPanelHandlers(ClickHandler categoryClickHandler) {
-		Iterator<Widget> it = getView().getCategoryPanel().iterator();
+		Iterator<Widget> it = getView().getButtonPanel().iterator();
 		Widget widget;
 		while(it.hasNext()) {
 			widget = it.next();

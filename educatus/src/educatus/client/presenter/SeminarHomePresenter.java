@@ -32,6 +32,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
 import educatus.client.animation.FadeAnimation;
+import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.dataGrids.Seminary;
 
 /**
@@ -75,6 +76,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	@Override
 	protected void onReset() {
 	  super.onReset();      
+	  PageChangingEvent.fire(this, NameTokens.getSeminarHomePage());
 	}
 	
 	@Override
@@ -109,7 +111,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		setInSlot(SLOT_content, seminaryListPresenter);
 		List<Seminary> seminaries = new ArrayList<Seminary>();;
 		for(int i=1;i<=30;i++) {
-			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?"));
+			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", null, null, null));
 		}	
 		seminaryListPresenter.setData(seminaries);
 		FadeAnimation animation;
