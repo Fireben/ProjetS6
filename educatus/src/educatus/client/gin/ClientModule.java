@@ -25,15 +25,19 @@ import educatus.client.presenter.ConfirmChangesPresenter;
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.presenter.ProfilPresenter;
+import educatus.client.presenter.CategoryPresenter;
 import educatus.client.presenter.SeminarHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
+import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
 import educatus.client.view.ConfirmChangesView;
 import educatus.client.view.HomeView;
 import educatus.client.view.MainPageView;
 import educatus.client.view.ProfilView;
+import educatus.client.view.CategoryView;
 import educatus.client.view.SeminarHomeView;
 import educatus.client.view.SeminaryEditView;
+import educatus.client.view.SeminaryListView;
 import educatus.client.view.SeminaryViewView;
 import educatus.client.view.SeminarySectionView;
 import educatus.client.presenter.SeminarySectionPresenter;
@@ -60,6 +64,10 @@ public class ClientModule extends AbstractPresenterModule {
 				SeminaryEditPresenter.MyProxy.class);
     bindPresenter(SeminarHomePresenter.class, SeminarHomePresenter.MyView.class,
             SeminarHomeView.class, SeminarHomePresenter.MyProxy.class);
+	bindPresenterWidget(CategoryPresenter.class,
+			CategoryPresenter.MyView.class, CategoryView.class);
+	bindPresenterWidget(SeminaryListPresenter.class,
+			SeminaryListPresenter.MyView.class, SeminaryListView.class);
     bindPresenter(ProfilPresenter.class, ProfilPresenter.MyView.class,
 			ProfilView.class, ProfilPresenter.MyProxy.class);
 	bindPresenterWidget(ConfirmChangesPresenter.class,

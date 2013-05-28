@@ -1907,21 +1907,32 @@ img.art-lightbox-image.active {
 	display:inline-block;
 }
 
+.dataGridParent {
+	padding-bottom:3%;
+	padding-top:3%;
+	text-align:center;	
+}
+
+.dataGridContainer {
+	padding-bottom:3%;
+	padding-top:3%;	
+	margin:auto;
+	display:inline-block;
+	width:700px;
+	height:290px;
+	opacity:0;
+}
+
 .categoryPanel>button {
 	background: none repeat scroll 0% 0% #202020; 
 	margin: 0;
 	padding: 3px 5px;
-	cursor: pointer;
 	cursor: hand;
     border: 1px solid #3B3B3B;
 	margin: 2px;
 	opacity: 0;
 	height: 200px;
 	width: 175px;
-}
-
-.categoryPanel>button:hover {
-	border: 1px solid #4B4B4B;	
 }
 
 .categoryPanel>button:hover:enabled {

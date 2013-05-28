@@ -16,18 +16,13 @@
 
 package educatus.client.presenter;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -36,9 +31,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
-import educatus.client.animation.ListFadeAnimation;
-import educatus.client.presenter.MainPagePresenter;
-import educatus.client.ui.CustomButton;
+import educatus.client.animation.FadeAnimation;
+import educatus.client.ui.dataGrids.Seminary;
 
 /**
  * @author Nicolas Michaud
@@ -51,15 +45,22 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     @NameToken(NameTokens.seminarHomePage)
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
     }
+    
+    private int state = 0;
+    
+    public static final Object SLOT_content = new Object();
+    
+	@Inject
+	CategoryPresenter seminarCategoryPresenter;
+	
+	@Inject
+	SeminaryListPresenter seminaryListPresenter;
 
     /**
      * {@link SeminarHomePresenter}'s view.
      */
-    public interface MyView extends View {
-    	FlowPanel getCategoryPanel();	  
+    public interface MyView extends View {	  
     }
-  
-    ListFadeAnimation<HasWidgets> listAnimation;
 
     @Inject
     public SeminarHomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
@@ -72,83 +73,48 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	}
   
 	@Override
-	protected void onBind() {
-	  super.onBind();    
-	  FlowPanel categoryPanel = getView().getCategoryPanel();
-	  registerHandlers(categoryPanel);
-	  animateButtonsIn(categoryPanel);
+	protected void onReset() {
+	  super.onReset();      
 	}
-  
-  	private void animateButtonsIn(Widget panelWidget) {
-	  listAnimation = new ListFadeAnimation<HasWidgets>((HasWidgets) panelWidget);
-	  listAnimation.start(150, 0, 0.75);
-  	}
-  	
-	private void registerHandlers(final FlowPanel panel) {
-		Iterator<Widget> it = panel.iterator();
-		CustomButton button;
-		while(it.hasNext()){
-			button = (CustomButton) it.next();
-			registerHandler((button).addClickHandler(
-					new ClickHandler() {
-			            @Override
-			            public void onClick(ClickEvent event) {
-			            	transitionCategoryPanel(panel);
-		                }
-		            }));    
+	
+	@Override
+	protected void onReveal() {
+		state = 0;	  
+		setInSlot(SLOT_content, seminarCategoryPresenter);
+		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);			
+	}
+	
+	private ClickHandler categoryClickHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			changeState();
 		}
-	}  
-  	
-    private void rePopulateCategoryPanel(FlowPanel panel) {    	
-		CustomButton button = new CustomButton();
-		button.add(new Image("images/door_mind.png"));
-		button.add(new Label("Salut"));		
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();		
-		button.add(new Image("images/Forums.png"));	
-		button.add(new Label("Monsieur"));
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();		
-		button.add(new Image("images/door_mind.png"));	
-		button.add(new Label("Nuage,"));
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();
-		button.add(new Image("images/earth_puzzle_3.png"));
-		button.add(new Label("Ca"));		
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();
-		button.add(new Image("images/Forums.png"));	
-		button.add(new Label("Va"));		
-		button.setEnabled(false);
-		panel.add(button);
-		
-		button = new CustomButton();
-		button.add(new Image("images/earth_puzzle_3.png"));	
-		button.add(new Label("Bien ?"));		
-		button.setEnabled(false);
-		panel.add(button);
-		
-		registerHandlers(panel);
-		animateButtonsIn(panel);		
-    }
-    
-  	private void transitionCategoryPanel(final FlowPanel panel) {
-  		listAnimation.killAnimations();
-  		panel.clear();
-		
-    	Timer timer = new Timer() {
-    		public void run() {
-    			rePopulateCategoryPanel(panel);
-    		};
-    	};
-    	timer.schedule(250);
-  	}
+	};
+	
+	private void changeCategoryPanel() {		
+		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);
+	}
+	
+	private void changeState() {
+		state++;
+		if(state < 2) {
+			changeCategoryPanel();
+		}
+		else {
+			setSeminaryList();
+		}
+	}
+	
+	private void setSeminaryList() {
+		setInSlot(SLOT_content, seminaryListPresenter);
+		List<Seminary> seminaries = new ArrayList<Seminary>();;
+		for(int i=1;i<=30;i++) {
+			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?"));
+		}	
+		seminaryListPresenter.setData(seminaries);
+		FadeAnimation animation;
+		animation = new FadeAnimation(seminaryListPresenter.getView().getDataGrid(), FadeAnimation.MIN_OPACITY,
+										FadeAnimation.MAX_OPACITY, FadeAnimation.VERY_LONG);
+		animation.start();
+	}
 }
