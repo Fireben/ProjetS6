@@ -78,217 +78,108 @@ public class HomeView extends ViewImpl implements MyView {
 		return widget;
 	}
 	
-	//Getter and Setter
+	// Getter only
 	public Element getHomePageTitle() {
 		return homePageTitle;
-	}
-
-	public void setHomePageTitle(Element homePageTitle) {
-		this.homePageTitle = homePageTitle;
 	}
 
 	public Element getHomePageBulbImg() {
 		return homePageBulbImg;
 	}
 
-	public void setHomePageBulbImg(Element homePageBulbImg) {
-		this.homePageBulbImg = homePageBulbImg;
-	}
-
 	public Element getHomePageSecondTitle() {
 		return homePageSecondTitle;
 	}
 
-	public void setHomePageSecondTitle(Element homePageSecondTitle) {
-		this.homePageSecondTitle = homePageSecondTitle;
-	}
-
 	public Element getHomePageFirstDescription() {
 		return homePageFirstDescription;
-	}
-
-	public void setHomePageFirstDescription(Element homePageFirstDescription) {
-		this.homePageFirstDescription = homePageFirstDescription;
 	}
 	
 	public Element getHomePageFirstDescription2() {
 		return homePageFirstDescription2;
 	}
 
-	public void setHomePageFirstDescription2(Element homePageFirstDescription2) {
-		this.homePageFirstDescription2 = homePageFirstDescription2;
-	}
-
 	public Element getHomePageFirstDescription3() {
 		return homePageFirstDescription3;
-	}
-
-	public void setHomePageFirstDescription3(Element homePageFirstDescription3) {
-		this.homePageFirstDescription3 = homePageFirstDescription3;
 	}
 
 	public Element getHomePageButton() {
 		return homePageButton;
 	}
 
-	public void setHomePageButton(Element homePageButton) {
-		this.homePageButton = homePageButton;
-	}
-
 	public Element getHomePageFirstSectionTitle() {
 		return homePageFirstSectionTitle;
-	}
-
-	public void setHomePageFirstSectionTitle(Element homePageFirstSectionTitle) {
-		this.homePageFirstSectionTitle = homePageFirstSectionTitle;
 	}
 
 	public Element getHomePageFirstSectionText() {
 		return homePageFirstSectionText;
 	}
 
-	public void setHomePageFirstSectionText(Element homePageFirstSectionText) {
-		this.homePageFirstSectionText = homePageFirstSectionText;
-	}
-
 	public Element getHomePageFirstSectionImg() {
 		return homePageFirstSectionImg;
-	}
-
-	public void setHomePageFirstSectionImg(Element homePageFirstSectionImg) {
-		this.homePageFirstSectionImg = homePageFirstSectionImg;
 	}
 
 	public Element getHomePageFirstSectionDescription() {
 		return homePageFirstSectionDescription;
 	}
 
-	public void setHomePageFirstSectionDescription(
-			Element homePageFirstSectionDescription) {
-		this.homePageFirstSectionDescription = homePageFirstSectionDescription;
-	}
-
 	public Element getHomePageFirstSectionLink() {
 		return homePageFirstSectionLink;
-	}
-
-	public void setHomePageFirstSectionLink(Element homePageFirstSectionLink) {
-		this.homePageFirstSectionLink = homePageFirstSectionLink;
 	}
 
 	public Element getHomePageSecondSectionTitle() {
 		return homePageSecondSectionTitle;
 	}
 
-	public void setHomePageSecondSectionTitle(Element homePageSecondSectionTitle) {
-		this.homePageSecondSectionTitle = homePageSecondSectionTitle;
-	}
-
 	public Element getHomePageSecondSectionText() {
 		return homePageSecondSectionText;
-	}
-
-	public void setHomePageSecondSectionText(Element homePageSecondSectionText) {
-		this.homePageSecondSectionText = homePageSecondSectionText;
 	}
 
 	public Element getHomePageSecondSectionImg() {
 		return homePageSecondSectionImg;
 	}
 
-	public void setHomePageSecondSectionImg(Element homePageSecondSectionImg) {
-		this.homePageSecondSectionImg = homePageSecondSectionImg;
-	}
-
 	public Element getHomePageSecondSectionDescription() {
 		return homePageSecondSectionDescription;
-	}
-
-	public void setHomePageSecondSectionDescription(
-			Element homePageSecondSectionDescription) {
-		this.homePageSecondSectionDescription = homePageSecondSectionDescription;
 	}
 
 	public Element getHomePageSecondSectionLink() {
 		return homePageSecondSectionLink;
 	}
 
-	public void setHomePageSecondSectionLink(Element homePageSecondSectionLink) {
-		this.homePageSecondSectionLink = homePageSecondSectionLink;
-	}
-
 	public Element getHomePageThirdSectionTitle() {
 		return homePageThirdSectionTitle;
-	}
-
-	public void setHomePageThirdSectionTitle(Element homePageThirdSectionTitle) {
-		this.homePageThirdSectionTitle = homePageThirdSectionTitle;
 	}
 
 	public Element getHomePageThirdSectionText() {
 		return homePageThirdSectionText;
 	}
 
-	public void setHomePageThirdSectionText(Element homePageThirdSectionText) {
-		this.homePageThirdSectionText = homePageThirdSectionText;
-	}
-
 	public Element getHomePageThirdSectionImg() {
 		return homePageThirdSectionImg;
-	}
-
-	public void setHomePageThirdSectionImg(Element homePageThirdSectionImg) {
-		this.homePageThirdSectionImg = homePageThirdSectionImg;
 	}
 
 	public Element getHomePageThirdSectionDescription() {
 		return homePageThirdSectionDescription;
 	}
 
-	public void setHomePageThirdSectionDescription(
-			Element homePageThirdSectionDescription) {
-		this.homePageThirdSectionDescription = homePageThirdSectionDescription;
-	}
-
 	public Element getHomePageThirdSectionLink() {
 		return homePageThirdSectionLink;
-	}
-
-	public void setHomePageThirdSectionLink(Element homePageThirdSectionLink) {
-		this.homePageThirdSectionLink = homePageThirdSectionLink;
 	}
 
 	public Element getHomePageFourthSectionTitle() {
 		return homePageFourthSectionTitle;
 	}
 
-	public void setHomePageFourthSectionTitle(Element homePageFourthSectionTitle) {
-		this.homePageFourthSectionTitle = homePageFourthSectionTitle;
-	}
-
 	public Element getHomePageFourthSectionText() {
 		return homePageFourthSectionText;
-	}
-
-	public void setHomePageFourthSectionText(Element homePageFourthSectionText) {
-		this.homePageFourthSectionText = homePageFourthSectionText;
 	}
 
 	public Element getHomePageFourthSectionImg() {
 		return homePageFourthSectionImg;
 	}
 
-	public void setHomePageFourthSectionImg(Element homePageFourthSectionImg) {
-		this.homePageFourthSectionImg = homePageFourthSectionImg;
-	}
-
 	public Element getHomePageFourthSectionDescription() {
 		return homePageFourthSectionDescription;
 	}
-
-	public void setHomePageFourthSectionDescription(
-			Element homePageFourthSectionDescription) {
-		this.homePageFourthSectionDescription = homePageFourthSectionDescription;
-	}
-
 }

@@ -19,12 +19,12 @@
 			<header class="art-header clearfix">
 			    <div class="art-shapes">
 					<h1 class="art-headline" data-left="1.74%">
-					    <a href="#" ui:field="homePageTitle">EducateUdeS</a>
+					    <a href="#" ui:field="homePageTitle"></a>
 					</h1>	
 			    </div>              
 			</header>
 			
-		    <div class="art-sheet clearfix">
+  <div class="art-sheet clearfix">
 				<div class="art-layout-wrapper clearfix">
 					<div class="art-content-layout">
 						<div class="art-content-layout-row">
@@ -37,7 +37,81 @@
 											<div class="art-content-layout layout-item-1">
 												<div class="art-content-layout-row">
 													<div class="art-layout-cell layout-item-2" style="width: 100%" >
-													<!--	<p><img width="330" height="200" alt="" src="images/HomeView-BrainUseIt.png" style="float: left;" class="brainImg"/></p> -->
+														<p><img ui:field="homePageBulbImg" width="150" height="220" alt="" src="" style="float: left; padding-top: 100px" class="bulbImg"/></p>
+														<h5 ui:field="homePageSecondTitle"></h5>
+														<h6 ui:field="homePageFirstDescription"></h6>
+														<h6 ui:field="homePageFirstDescription2"></h6>
+														<h6 ui:field="homePageFirstDescription3"></h6>
+														<p style="margin-left: 40px"><a ui:field="homePageButton" href="" class="art-button"></a></p>
+													</div>
+												</div>
+											</div>
+										</div>
+									
+										<div class="art-content-layout-wrapper layout-item-3">
+											<div class="art-content-layout">
+												<div class="art-content-layout-row">
+											    	<div class="art-layout-cell layout-item-4" style="width: 25%">
+														<h1 ui:field="homePageFirstSectionTitle"></h1>
+														<p><span ui:field="homePageFirstSectionText" style="font-style:italic;"></span></p>
+														<p style="text-align: center;">
+														    <img ui:field="homePageFirstSectionImg" width="154" height="154" alt="" src=""></img>		        
+													    </p>
+														<p ui:field="homePageFirstSectionDescription"></p>
+														<p><a ui:field="homePageFirstSectionLink" href="#" ></a></p>
+													</div>
+													<div class="art-layout-cell layout-item-4" style="width: 25%" >
+														<h1 ui:field="homePageSecondSectionTitle"></h1>
+														<p><span ui:field="homePageSecondSectionText" style="font-style:italic;"></span></p>
+														<p style="text-align: center;">
+														    <img ui:field="homePageSecondSectionImg" width="154" height="154" alt="" src="" class=""></img>
+													    </p>
+														<p ui:field="homePageSecondSectionDescription"></p>
+														<p><a ui:field="homePageSecondSectionLink" href="#"></a></p>
+													</div>
+													<div class="art-layout-cell layout-item-5" style="width: 25%" >
+														<h1 ui:field="homePageThirdSectionTitle"></h1>
+														<p><span ui:field="homePageThirdSectionText" style="font-style:italic;"></span></p>
+														<p style="text-align: center;">
+														    <img ui:field="homePageThirdSectionImg" width="154" height="154" alt="" src="" class=""></img>
+														</p>
+														<p ui:field="homePageThirdSectionDescription"></p>
+														<p><a ui:field="homePageThirdSectionLink" href="#"></a></p>
+													</div>
+													<div class="art-layout-cell layout-item-3" style="width: 25%; padding-right: 20px; padding-left: 20px;" >
+														<h1 ui:field="homePageFourthSectionTitle"></h1>
+														<p><span ui:field="homePageFourthSectionText" style="font-style:italic;"></span></p>
+														<p style="text-align: center;">
+															<img ui:field="homePageFourthSectionImg" width="154" height="154" alt="" src=""></img>			
+														</p>
+														<p ui:field="homePageFourthSectionDescription"></p>
+													</div>
+												</div>
+											</div>
+										</div>
+										 
+									</div>	
+								</article>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>		
+				
+<!--		    <div class="art-sheet clearfix">
+				<div class="art-layout-wrapper clearfix">
+					<div class="art-content-layout">
+						<div class="art-content-layout-row">
+						    
+							<div class="art-layout-cell art-content clearfix">
+								<article class="art-post art-article">	    
+									<div class="art-postcontent art-postcontent-0 clearfix">
+									    
+										<div class="art-content-layout-wrapper layout-item-0">
+											<div class="art-content-layout layout-item-1">
+												<div class="art-content-layout-row">
+													<div class="art-layout-cell layout-item-2" style="width: 100%" >
 														<p><img ui:field="homePageBulbImg" width="150" height="220" alt="" src="images/light_bulb.png" style="float: left; padding-top: 100px" class="bulbImg"/></p>
 														<h5 ui:field="homePageSecondTitle">Learn By Yourself</h5>
 														<h6 ui:field="homePageFirstDescription">Enhance your abilities in multiples categories.&nbsp;</h6>
@@ -98,8 +172,8 @@
 						</div>
 					</div>
 				</div>
-			</div>	
-			
+			</div>	 
+			 -->
 		</div>    		   
 	</g:HTMLPanel>
 </ui:UiBinder> 

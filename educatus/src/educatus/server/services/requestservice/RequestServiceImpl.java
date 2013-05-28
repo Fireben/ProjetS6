@@ -3,6 +3,8 @@ package educatus.server.services.requestservice;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import educatus.client.services.RequestService;
+import educatus.server.businesslogic.uibuilder.HomePageFactory;
+import educatus.shared.businesslogic.dto.HomePageContent;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.RequestTypeEnum;
@@ -62,7 +64,10 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	
 	private HomePageContentResponse ProcessHomePageContentRequest(HomePageContentRequest request)
 	{
+		HomePageContent content = HomePageFactory.createHomePageContent("CA", "fr");
+		
 		HomePageContentResponse response = new HomePageContentResponse();
+		response.setHomeContent(content);
 		
 		return response;
 	}	
