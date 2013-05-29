@@ -8,6 +8,8 @@
   <inherits name="com.google.gwt.inject.Inject" />
 
   <inherits name="com.gwtplatform.mvp.Mvp" />
+  
+  <inherits name='com.google.gwt.visualization.Visualization'/>
 
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->
