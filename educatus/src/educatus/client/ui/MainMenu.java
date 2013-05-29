@@ -25,63 +25,85 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * A simple menu that can be reused.
- *
+ * 
  * @author Christian Goudreau
  */
-public class MainMenu extends Composite {
-  interface MainMenuUiBinder extends UiBinder<Widget, MainMenu> {
-  }
+public class MainMenu extends Composite
+{
+	interface MainMenuUiBinder extends UiBinder<Widget, MainMenu>
+	{
+	}
 
-  private static MainMenuUiBinder uiBinder = GWT.create(MainMenuUiBinder.class);
+	private static MainMenuUiBinder uiBinder = GWT
+			.create(MainMenuUiBinder.class);
 
-  @UiField InlineHyperlink mainMenuHomeButton;
-  @UiField InlineHyperlink mainMenuSeminarsButton;
-  @UiField InlineHyperlink mainMenuProfilButton;
-  @UiField InlineHyperlink mainMenuViewSeminaryButton;
+	@UiField
+	InlineHyperlink mainMenuHomeButton;
+	@UiField
+	InlineHyperlink mainMenuSeminarsButton;
+	@UiField
+	InlineHyperlink mainMenuProfilButton;
+	@UiField
+	InlineHyperlink mainMenuViewSeminaryButton;
+	@UiField
+	InlineHyperlink mainMenuEditSeminaryButton;
+
+	public MainMenu()
+	{
+		initWidget(uiBinder.createAndBindUi(this));
+	}
 
 
-  public MainMenu() {
-    initWidget(uiBinder.createAndBindUi(this));
-  }
-
-  //Getter and Setter
-  public InlineHyperlink getMainMenuHomeButton() {
+	// Getter and Setter
+	public InlineHyperlink getMainMenuHomeButton()
+	{
 		return mainMenuHomeButton;
 	}
 
-
-	public void setMainMenuHomeButton(InlineHyperlink mainMenuHomeButton) {
+	public void setMainMenuHomeButton(InlineHyperlink mainMenuHomeButton)
+	{
 		this.mainMenuHomeButton = mainMenuHomeButton;
 	}
 
-
-	public InlineHyperlink getMainMenuSeminarsButton() {
+	public InlineHyperlink getMainMenuSeminarsButton()
+	{
 		return mainMenuSeminarsButton;
 	}
 
-
-	public void setMainMenuSeminarsButton(InlineHyperlink mainMenuSeminarsButton) {
+	public void setMainMenuSeminarsButton(InlineHyperlink mainMenuSeminarsButton)
+	{
 		this.mainMenuSeminarsButton = mainMenuSeminarsButton;
 	}
 
-
-	public InlineHyperlink getMainMenuProfilButton() {
+	public InlineHyperlink getMainMenuProfilButton()
+	{
 		return mainMenuProfilButton;
 	}
 
-
-	public void setMainMenuProfilButton(InlineHyperlink mainMenuProfilButton) {
+	public void setMainMenuProfilButton(InlineHyperlink mainMenuProfilButton)
+	{
 		this.mainMenuProfilButton = mainMenuProfilButton;
 	}
 
-
-	public InlineHyperlink getMainMenuViewSeminaryButton() {
+	public InlineHyperlink getMainMenuViewSeminaryButton()
+	{
 		return mainMenuViewSeminaryButton;
 	}
 
-
 	public void setMainMenuViewSeminaryButton(
-			InlineHyperlink mainMenuViewSeminaryButton) {
+			InlineHyperlink mainMenuViewSeminaryButton)
+	{
 		this.mainMenuViewSeminaryButton = mainMenuViewSeminaryButton;
+	}
+	
+	public InlineHyperlink getMainMenuEditSeminaryButton()
+	{
+		return mainMenuEditSeminaryButton;
+	}
+
+	public void setMainMenuEditSeminaryButton(
+			InlineHyperlink mainMenuEditSeminaryButton)
+	{
+		this.mainMenuEditSeminaryButton = mainMenuEditSeminaryButton;
 	}
 }
