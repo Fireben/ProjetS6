@@ -16,10 +16,16 @@ import educatus.shared.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.shared.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.shared.persist.dao.internationalization.Culture;
 import educatus.shared.persist.dao.internationalization.Image;
+import educatus.shared.persist.dao.internationalization.ImageContentEntry;
+import educatus.shared.persist.dao.internationalization.ImageContentTranslationEntry;
 import educatus.shared.persist.dao.internationalization.ImageExternal;
 import educatus.shared.persist.dao.internationalization.ImageInternal;
+import educatus.shared.persist.dao.internationalization.Language;
 import educatus.shared.persist.dao.internationalization.TextContentEntry;
 import educatus.shared.persist.dao.internationalization.TextContentTranslationEntry;
+import educatus.shared.persist.dao.internationalization.Video;
+import educatus.shared.persist.dao.internationalization.VideoContentEntry;
+import educatus.shared.persist.dao.internationalization.VideoContentTranslationEntry;
 
 
 public class DatabaseTest {
@@ -35,9 +41,26 @@ public class DatabaseTest {
 		internationalizationDao = dbInjector.getInstance(InternationalizationDao.class);
 		
 		try {
-			Culture c = internationalizationDao.getCultureByCode("CA");
+			Culture c = internationalizationDao.findCultureByCode("CA");
 			System.out.println(c.getId());	
 			System.out.println(c.getCode());	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			List<Culture> 						allCulture = internationalizationDao.findAllCulture();
+			List<Image> 						allImage = internationalizationDao.findAllImage();
+			List<ImageContentEntry> 			allImageContentEntry = internationalizationDao.findAllImageContentEntry();
+			List<ImageContentTranslationEntry> 	allImageContentTranslationEntry = internationalizationDao.findAllImageContentTranslationEntry();
+			List<Language>						allLanguage = internationalizationDao.findAllLanguage();
+			List<TextContentEntry> 				allTextContentEntry = internationalizationDao.findAllTextContentEntry();
+			List<TextContentTranslationEntry> 	allTextContentTranslationEntry = internationalizationDao.findAllTextContentTranslationEntry();
+			List<Video>		 					allVideo = internationalizationDao.findAllVideo();
+			List<VideoContentEntry> 			allVideoContentEntry = internationalizationDao.findAllVideoContentEntry();
+			List<VideoContentTranslationEntry>  allVideoContentTranslationEntry = internationalizationDao.findAllVideoContentTranslationEntry();
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
