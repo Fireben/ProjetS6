@@ -9,6 +9,11 @@ import educatus.server.persist.dao.BaseDao;
 import educatus.server.persist.dao.DaoModule;
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.JpaInitializer;
+import educatus.shared.persist.dao.dynamiccontent.DynamicSection;
+import educatus.shared.persist.dao.dynamiccontent.DynamicSectionFormula;
+import educatus.shared.persist.dao.dynamiccontent.DynamicSectionImage;
+import educatus.shared.persist.dao.dynamiccontent.DynamicSectionText;
+import educatus.shared.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.shared.persist.dao.internationalization.Culture;
 import educatus.shared.persist.dao.internationalization.Image;
 import educatus.shared.persist.dao.internationalization.ImageExternal;
@@ -71,6 +76,28 @@ public class DatabaseTest {
 				System.out.println(externalImage.getUrl());
 			}	
 		}
+		
+
+		List<DynamicSection> dynamicSection = (List<DynamicSection>) dao.getEntityManager().createQuery("SELECT t FROM DynamicSection t").getResultList();
+		
+		for (DynamicSection section : dynamicSection) {
+			System.out.println(section.getId());
+			if (section.getDynamicSectionType().getId() == 1){
+				DynamicSectionText text = (DynamicSectionText) section;
+				System.out.println(text.getText().getTextContentTranslationEntries().get(0).getTcteTranslation());
+			} else if (section.getDynamicSectionType().getId() == 2){
+				DynamicSectionImage image = (DynamicSectionImage) section;
+				System.out.println(image.getImage().getImageContentTranslationEntries().get(0).getImage().getType());
+			} else if (section.getDynamicSectionType().getId() == 3){
+				DynamicSectionVideo video = (DynamicSectionVideo) section;
+				System.out.println(video.getVideo().getVideoContentTranslationEntries().get(0).getVideo().getUrl());			
+			} else if (section.getDynamicSectionType().getId() == 4){
+				DynamicSectionFormula formula = (DynamicSectionFormula) section;
+				System.out.println(formula.getFormula());
+			}
+								
+		}
+		
 		
 //		try {
 //			EntityManager tr = dao.getEntityManager();

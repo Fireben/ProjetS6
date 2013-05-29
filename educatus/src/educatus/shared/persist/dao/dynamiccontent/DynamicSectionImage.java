@@ -1,52 +1,49 @@
 package educatus.shared.persist.dao.dynamiccontent;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-/**
- * The persistent class for the dynamicsectionimage database table.
- * 
- */
+import educatus.shared.persist.dao.internationalization.ImageContentEntry;
+import educatus.shared.persist.dao.internationalization.TextContentEntry;
+
 @Entity
-@Table(name="dynamic_content.dynamicsectionimage")
-public class DynamicSectionImage implements Serializable {
+@DiscriminatorValue("2")
+// DYNAMIC SECTION TYPE = 2
+public class DynamicSectionImage extends DynamicSection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="dyse_id", unique=true, nullable=false)
-	private Integer dyseId;
+	// bi-directional many-to-one association to ImageContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "imce_image", nullable = false, insertable = false, updatable = false)
+	private ImageContentEntry image;
 
-	@Column(name="imce_image", nullable=false)
-	private Integer imceImage;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	// changed tece_description to tece_descriptionimage
+	@JoinColumn(name = "tece_descriptionimage", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry description;
 
-	@Column(name="tece_description", nullable=false)
-	private Integer teceDescription;
-
-    public DynamicSectionImage() {
-    }
-
-	public Integer getDyseId() {
-		return this.dyseId;
+	public DynamicSectionImage() {
 	}
 
-	public void setDyseId(Integer dyseId) {
-		this.dyseId = dyseId;
+	public TextContentEntry getDescription() {
+		return description;
 	}
 
-	public Integer getImceImage() {
-		return this.imceImage;
+	public void setDescription(TextContentEntry description) {
+		this.description = description;
 	}
 
-	public void setImceImage(Integer imceImage) {
-		this.imceImage = imceImage;
+	public ImageContentEntry getImage() {
+		return image;
 	}
 
-	public Integer getTeceDescription() {
-		return this.teceDescription;
-	}
-
-	public void setTeceDescription(Integer teceDescription) {
-		this.teceDescription = teceDescription;
+	public void setImage(ImageContentEntry image) {
+		this.image = image;
 	}
 }

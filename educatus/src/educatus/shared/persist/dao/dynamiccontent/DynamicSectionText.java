@@ -1,52 +1,47 @@
 package educatus.shared.persist.dao.dynamiccontent;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-/**
- * The persistent class for the dynamicsectiontext database table.
- * 
- */
+import educatus.shared.persist.dao.internationalization.TextContentEntry;
+
 @Entity
-@Table(name="dynamic_content.dynamicsectiontext")
-public class DynamicSectionText implements Serializable {
+@DiscriminatorValue("1")
+// DYNAMIC SECTION TYPE = 1
+public class DynamicSectionText extends DynamicSection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="dyse_id", unique=true, nullable=false)
-	private Integer dyseId;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_text", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry text;
 
-	@Column(name="tece_text", nullable=false)
-	private Integer teceText;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_title", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry title;
 
-	@Column(name="tece_title", nullable=false)
-	private Integer teceTitle;
-
-    public DynamicSectionText() {
-    }
-
-	public Integer getDyseId() {
-		return this.dyseId;
+	public DynamicSectionText() {
 	}
 
-	public void setDyseId(Integer dyseId) {
-		this.dyseId = dyseId;
+	public TextContentEntry getText() {
+		return text;
 	}
 
-	public Integer getTeceText() {
-		return this.teceText;
+	public void setText(TextContentEntry text) {
+		this.text = text;
 	}
 
-	public void setTeceText(Integer teceText) {
-		this.teceText = teceText;
+	public TextContentEntry getTitle() {
+		return title;
 	}
 
-	public Integer getTeceTitle() {
-		return this.teceTitle;
-	}
-
-	public void setTeceTitle(Integer teceTitle) {
-		this.teceTitle = teceTitle;
+	public void setTitle(TextContentEntry title) {
+		this.title = title;
 	}
 }

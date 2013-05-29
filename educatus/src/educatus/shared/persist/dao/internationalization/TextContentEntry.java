@@ -26,7 +26,7 @@ public class TextContentEntry implements Serializable {
 	private Integer id;
 
 	// bi-directional many-to-one association to Textcontenttranslationentry
-	@OneToMany(mappedBy = "textcontententry")
+	@OneToMany(mappedBy = "TextContentEntry")
 	private List<TextContentTranslationEntry> textContentTranslationEntries;
 
 	public TextContentEntry() {

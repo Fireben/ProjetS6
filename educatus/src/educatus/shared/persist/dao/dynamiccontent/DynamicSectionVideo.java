@@ -1,52 +1,53 @@
 package educatus.shared.persist.dao.dynamiccontent;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import educatus.shared.persist.dao.internationalization.TextContentEntry;
+import educatus.shared.persist.dao.internationalization.VideoContentEntry;
 
 /**
  * The persistent class for the dynamicsectionvideo database table.
  * 
  */
 @Entity
-@Table(name="dynamic_content.dynamicsectionvideo")
-public class DynamicSectionVideo implements Serializable {
+@DiscriminatorValue("3")
+// DYNAMIC SECTION TYPE = 3
+public class DynamicSectionVideo extends DynamicSection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="dyse_id", unique=true, nullable=false)
-	private Integer dyseId;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	// changed tece_description to tece_descriptionvideo
+	@JoinColumn(name = "tece_descriptionvideo", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry description;
 
-	@Column(name="tece_description", nullable=false)
-	private Integer teceDescription;
+	// bi-directional many-to-one association to VideoContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "vice_video", nullable = false, insertable = false, updatable = false)
+	private VideoContentEntry video;
 
-	@Column(name="vice_video", nullable=false)
-	private Integer viceVideo;
-
-    public DynamicSectionVideo() {
-    }
-
-	public Integer getDyseId() {
-		return this.dyseId;
+	public DynamicSectionVideo() {
 	}
 
-	public void setDyseId(Integer dyseId) {
-		this.dyseId = dyseId;
+	public TextContentEntry getDescription() {
+		return description;
 	}
 
-	public Integer getTeceDescription() {
-		return this.teceDescription;
+	public void setDescription(TextContentEntry description) {
+		this.description = description;
 	}
 
-	public void setTeceDescription(Integer teceDescription) {
-		this.teceDescription = teceDescription;
+	public VideoContentEntry getVideo() {
+		return video;
 	}
 
-	public Integer getViceVideo() {
-		return this.viceVideo;
-	}
-
-	public void setViceVideo(Integer viceVideo) {
-		this.viceVideo = viceVideo;
+	public void setVideo(VideoContentEntry video) {
+		this.video = video;
 	}
 }
