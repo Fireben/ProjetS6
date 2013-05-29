@@ -9,7 +9,7 @@ public class SeminaryHomePageCategoryContentRequest extends AbstractRequest {
 	private static final long serialVersionUID = -4696609413320649244L;
 	private static RequestTypeEnum REQUEST_TYPE = RequestTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_REQUEST;
 
-	private CategoryContent parentCategory;
+	private CategoryContent parentCategory = null;
 
 	@Override
 	public RequestTypeEnum GetRequestType() {

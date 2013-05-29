@@ -9,6 +9,7 @@ import educatus.server.persist.dao.BaseDao;
 import educatus.server.persist.dao.DaoModule;
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.JpaInitializer;
+import educatus.server.persist.dao.SeminaryDao;
 import educatus.shared.persist.dao.dynamiccontent.DynamicSection;
 import educatus.shared.persist.dao.dynamiccontent.DynamicSectionFormula;
 import educatus.shared.persist.dao.dynamiccontent.DynamicSectionImage;
@@ -26,6 +27,7 @@ import educatus.shared.persist.dao.internationalization.TextContentTranslationEn
 import educatus.shared.persist.dao.internationalization.Video;
 import educatus.shared.persist.dao.internationalization.VideoContentEntry;
 import educatus.shared.persist.dao.internationalization.VideoContentTranslationEntry;
+import educatus.shared.persist.dao.seminary.Category;
 
 
 public class DatabaseTest {
@@ -34,11 +36,75 @@ public class DatabaseTest {
 		
 		BaseDao dao = null;
 		InternationalizationDao internationalizationDao = null;
+		SeminaryDao seminaryDao = null;
 		
 		Injector dbInjector = Guice.createInjector(new DaoModule("db-manager-localhost"));	 
 		dbInjector.getInstance(JpaInitializer.class);
 		dao = dbInjector.getInstance(BaseDao.class);
 		internationalizationDao = dbInjector.getInstance(InternationalizationDao.class);
+		seminaryDao = dbInjector.getInstance(SeminaryDao.class);
+		
+		try {
+			
+			TextContentTranslationEntry nameFr = internationalizationDao.insertTextContentTranslationEntry(
+					"fr", 
+					"CA", 
+					"Logiciel"
+			);
+					
+			TextContentTranslationEntry nameEn = internationalizationDao.insertTextContentTranslationEntry(
+					"en", 
+					"CA", 
+					"Software",
+					nameFr.getTextcontententry().getId()
+			);
+			
+			TextContentTranslationEntry descriptionFr = internationalizationDao.insertTextContentTranslationEntry(
+					"fr", 
+					"CA", 
+					"Logiciel"
+			);
+					
+			TextContentTranslationEntry descriptionEn = internationalizationDao.insertTextContentTranslationEntry(
+					"en", 
+					"CA", 
+					"Software",
+					descriptionFr.getTextcontententry().getId()
+			);
+			
+			Category cat = seminaryDao.createNewCategory(
+					nameEn.getTextcontententry().getId(), 
+					descriptionEn.getTextcontententry().getId(), 
+					null
+			);
+		
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+
+	
+	
+//	Culture frCulture = new Culture();
+//	frCulture.setCode("FR");		
+//	dao.set(frCulture, Culture.class);
+//						
+//	Language geLanguage = new Language();
+//	geLanguage.setLangCode("de");
+//	dao.set(geLanguage, Language.class);
+//	
+//	TextContentEntry newTextContentEntry = new TextContentEntry();
+//	dao.set(newTextContentEntry, TextContentEntry.class);
+//
+//	TextContentTranslationEntry translationEntry = new TextContentTranslationEntry();
+//	translationEntry.setCulture(frCulture);
+//	translationEntry.setLanguage(geLanguage);
+//	translationEntry.setTextcontententry(newTextContentEntry);
+//	translationEntry.setTcteTranslation("Sauce");
+//
+//	dao.set(translationEntry, TextContentTranslationEntry.class);
+		
 		
 		try {
 			Culture c = internationalizationDao.findCultureByCode("CA");
@@ -122,64 +188,7 @@ public class DatabaseTest {
 		}
 		
 		
-//		try {
-//			EntityManager tr = dao.getEntityManager();
-//			tr.getTransaction().begin();
-//			
-//			Culture frCulture = new Culture();
-//			frCulture.setCode("FR");		
-//			tr.persist(frCulture);
-//			
-//			Language geLanguage = new Language();
-//			geLanguage.setLangCode("de");
-//			tr.persist(geLanguage);
-//			
-//			TextContentEntry newTextContentEntry = new TextContentEntry();
-//			tr.persist(newTextContentEntry);
-//			
-//			//TextContentTranslationEntryPK pk = new TextContentTranslationEntryPK();
-//			//pk.setCultId(frCulture.getId());
-//			//pk.setLangId(geLanguage.getId());
-//			//pk.setTeceId(newTextContentEntry.getTeceId());
-//			
-//			TextContentTranslationEntry translationEntry = new TextContentTranslationEntry();
-//			translationEntry.setTcteTranslation("Sauce");
-//			//translationEntry.setId(pk);
-//			
-//			translationEntry.setCulture(frCulture);
-//			translationEntry.setTextcontententry(newTextContentEntry);
-//			translationEntry.setLanguage(geLanguage);
-//
-//			tr.persist(translationEntry);
-//			
-//			tr.getTransaction().commit();
-//
-//			System.out.println("Transaction OK");	
-//			
-//		} catch (Exception e) {
-//			dao.getEntityManager().getTransaction().rollback();
-//			e.printStackTrace();
-//		}
-		
-		
-//		Culture frCulture = new Culture();
-//		frCulture.setCode("FR");		
-//		dao.set(frCulture, Culture.class);
-//							
-//		Language geLanguage = new Language();
-//		geLanguage.setLangCode("de");
-//		dao.set(geLanguage, Language.class);
-//		
-//		TextContentEntry newTextContentEntry = new TextContentEntry();
-//		dao.set(newTextContentEntry, TextContentEntry.class);
-//
-//		TextContentTranslationEntry translationEntry = new TextContentTranslationEntry();
-//		translationEntry.setCulture(frCulture);
-//		translationEntry.setLanguage(geLanguage);
-//		translationEntry.setTextcontententry(newTextContentEntry);
-//		translationEntry.setTcteTranslation("Sauce");
-//	
-//		dao.set(translationEntry, TextContentTranslationEntry.class);
+
 		
 	}
 }

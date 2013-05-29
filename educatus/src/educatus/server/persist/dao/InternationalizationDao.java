@@ -136,4 +136,65 @@ public class InternationalizationDao {
 		return null;
 	}
 	
+	public TextContentTranslationEntry insertTextContentTranslationEntry(String languageCode, String cultureCode, String translation) throws Exception {
+		
+		entityManager.getTransaction().begin();
+		Language language = findLanguageByCode(languageCode);
+		Culture culture = findCultureByCode(cultureCode);
+
+		TextContentEntry tece = new TextContentEntry();
+		entityManager.persist(tece);
+		
+		TextContentTranslationEntry tcte = new TextContentTranslationEntry();
+		
+		// Create a primary key
+		TextContentTranslationEntryPK pk = new TextContentTranslationEntryPK();
+		pk.setLanguageId(language.getId());
+		pk.setCultureId(culture.getId());
+		pk.setTextContentEntryId(tece.getId());
+		
+		// Assign primary key and objects
+		tcte.setId(pk);
+		tcte.setCulture(culture);
+		tcte.setLanguage(language);
+		tcte.setTextcontententry(tece);
+		tcte.setTcteTranslation(translation);
+		
+		// Insert Object
+		entityManager.persist(tcte);		
+		// TODO check for rollback or throw exception higher ?
+		entityManager.getTransaction().commit();
+		
+		return tcte;
+	}
+	
+	public TextContentTranslationEntry insertTextContentTranslationEntry(String languageCode, String cultureCode, String translation, int textContentEntryId) throws Exception {
+		
+		entityManager.getTransaction().begin();
+		Language language = findLanguageByCode(languageCode);
+		Culture culture = findCultureByCode(cultureCode);
+		TextContentEntry tece = entityManager.find(TextContentEntry.class, textContentEntryId);
+		
+		TextContentTranslationEntry tcte = new TextContentTranslationEntry();
+		
+		// Create a primary key
+		TextContentTranslationEntryPK pk = new TextContentTranslationEntryPK();
+		pk.setLanguageId(language.getId());
+		pk.setCultureId(culture.getId());
+		pk.setTextContentEntryId(tece.getId());
+		
+		// Assign primary key and objects
+		tcte.setId(pk);
+		tcte.setCulture(culture);
+		tcte.setLanguage(language);
+		tcte.setTextcontententry(tece);
+		tcte.setTcteTranslation(translation);
+		
+		// Insert Object
+		entityManager.persist(tcte);		
+		// TODO check for rollback or throw exception higher ?
+		entityManager.getTransaction().commit();
+		
+		return tcte;
+	}	
 }

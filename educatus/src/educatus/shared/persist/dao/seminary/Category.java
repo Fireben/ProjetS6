@@ -6,11 +6,14 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import educatus.shared.persist.dao.internationalization.TextContentEntry;
@@ -21,6 +24,8 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "CATEGORY_CATE_ID_GENERATOR", sequenceName = "seminary.category_cate_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CATEGORY_CATE_ID_GENERATOR")
 	@Column(name = "cate_id", unique = true, nullable = false)
 	private Integer id;
 
@@ -29,21 +34,21 @@ public class Category implements Serializable {
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tece_name", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "tece_name", nullable = false, insertable = true, updatable = true)
 	private TextContentEntry name;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tex_tece_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "tex_tece_id", nullable = false, insertable = true, updatable = true)
 	private TextContentEntry description;
 
 	// bi-directional many-to-one association to Category
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cate_parent")
-	private Category category;
+	private Category parentCategory;
 
 	// bi-directional many-to-one association to Category
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "parentCategory")
 	private List<Category> childCategories;
 
 	// bi-directional many-to-many association to Seminary
@@ -69,12 +74,12 @@ public class Category implements Serializable {
 		this.deleteFlag = deleteflag;
 	}
 
-	public Category getCategory() {
-		return this.category;
+	public Category getParentCategory() {
+		return this.parentCategory;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setParentCategory(Category category) {
+		this.parentCategory = category;
 	}
 
 	public List<Category> getChildCategories() {
