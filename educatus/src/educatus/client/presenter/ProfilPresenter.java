@@ -22,6 +22,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
+
 
 public class ProfilPresenter extends
 		Presenter<ProfilPresenter.MyView, ProfilPresenter.MyProxy> {
@@ -59,6 +61,7 @@ public class ProfilPresenter extends
 	@Override
 	protected void onReset() {
 		super.onReset();
+		PageChangingEvent.fire(this, NameTokens.getProfil());
 		
 		if(getView().getChartContainer().getWidgetCount() == 0) {
 			Runnable onLoadCallback = new Runnable() {

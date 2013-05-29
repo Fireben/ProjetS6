@@ -16,7 +16,9 @@ import java.util.List;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id	
+	@SequenceGenerator(name = "USERS_USER_ID_GENERATOR", sequenceName = "security.users_user_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_USER_ID_GENERATOR")
 	@Column(name="user_id")
 	private Integer id;
 

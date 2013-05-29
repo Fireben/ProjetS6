@@ -7,7 +7,6 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel>
-		Confirm changes ?
 		<g:Button ui:field="saveButton">Confirm</g:Button>
 		<g:Button ui:field="cancelButton">Cancel</g:Button>
 	</g:HTMLPanel>

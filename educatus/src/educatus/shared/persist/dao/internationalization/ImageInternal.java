@@ -6,37 +6,33 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-/**
- * The persistent class for the imageinternal database table.
- * 
- */
 @Entity
 @DiscriminatorValue("1")
 public class ImageInternal extends Image implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "imin_content", nullable = false)
-	private byte[] imagContent;
+	private byte[] imageContent;
 
 	@Column(name = "imin_name", nullable = false, length = 50)
-	private String imagName;
+	private String imageName;
 
 	public ImageInternal() {
 	}
 
-	public byte[] getImagContent() {
-		return this.imagContent;
+	public byte[] getImageContent() {
+		return this.imageContent;
 	}
 
-	public void setImagContent(byte[] imagContent) {
-		this.imagContent = imagContent;
+	public void setImageContent(byte[] imageContent) {
+		this.imageContent = imageContent;
 	}
 
-	public String getImagName() {
-		return this.imagName;
+	public String getImageName() {
+		return this.imageName;
 	}
 
-	public void setImagName(String imagName) {
-		this.imagName = imagName;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 }

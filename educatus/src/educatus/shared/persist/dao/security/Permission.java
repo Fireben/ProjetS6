@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import educatus.shared.persist.dao.internationalization.TextContentEntry;
@@ -24,6 +27,8 @@ public class Permission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "PERMISSION_PERM_ID_GENERATOR", sequenceName = "security.permission_perm_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERMISSION_PERM_ID_GENERATOR")
 	@Column(name = "perm_id")
 	private Integer id;
 
