@@ -1,11 +1,5 @@
 package educatus.client.presenter;
 
-import com.gwtplatform.mvp.client.Presenter;
-import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.annotations.NameToken;
-import educatus.client.NameTokens;
-import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
@@ -13,12 +7,18 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-
+import com.gwtplatform.mvp.client.Presenter;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
-import educatus.client.presenter.MainPagePresenter;
+
+import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
 
 public class SeminaryViewPresenter extends
-		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy> {
+		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy>{
 
 	public interface MyView extends View {
 		public Element getSeminaryTitle();
@@ -103,4 +103,10 @@ public class SeminaryViewPresenter extends
 		getView().getModifiedDate().setInnerHTML("25/03/13");		
 		
 	}
+	
+	@Override
+	protected void onReveal() {
+		PageChangingEvent.fire(this, NameTokens.getViewSeminary());
+	}
+	
 }

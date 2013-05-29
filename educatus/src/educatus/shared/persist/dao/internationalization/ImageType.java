@@ -13,10 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * The persistent class for the imagetype database table.
- * 
- */
 @Entity
 @Table(name = "internationalization.imagetype")
 public class ImageType implements Serializable {
@@ -26,30 +22,29 @@ public class ImageType implements Serializable {
 	@SequenceGenerator(name = "IMAGETYPE_IMTY_ID_GENERATOR", sequenceName = "internationalization.imagetype_imty_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMAGETYPE_IMTY_ID_GENERATOR")
 	@Column(name = "imty_id", unique = true, nullable = false)
-	private Integer imtyId;
+	private Integer id;
 
 	// bi-directional many-to-one association to Textcontententry
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tece_name", nullable = false)
-	private TextContentEntry textcontententry;
+	private TextContentEntry textContentEntry;
 
 	public ImageType() {
 	}
 
-	public Integer getImtyId() {
-		return this.imtyId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setImtyId(Integer imtyId) {
-		this.imtyId = imtyId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public TextContentEntry getTextcontententry() {
-		return this.textcontententry;
+	public TextContentEntry getTextContentEntry() {
+		return this.textContentEntry;
 	}
 
-	public void setTextcontententry(TextContentEntry textcontententry) {
-		this.textcontententry = textcontententry;
+	public void setTextContentEntry(TextContentEntry textContentEntry) {
+		this.textContentEntry = textContentEntry;
 	}
-
 }

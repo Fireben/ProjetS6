@@ -1907,11 +1907,26 @@ img.art-lightbox-image.active {
 	display:inline-block;
 }
 
-.categoryPanel>button {
+.dataGridParent {
+	padding-bottom:3%;
+	padding-top:3%;
+	text-align:center;	
+}
+
+.dataGridContainer {
+	padding-bottom:3%;
+	padding-top:3%;	
+	margin:auto;
+	display:inline-block;
+	width:900px;
+	height:290px;
+	opacity:0;
+}
+
+.buttonPanel>button {
 	background: none repeat scroll 0% 0% #202020; 
 	margin: 0;
 	padding: 3px 5px;
-	cursor: pointer;
 	cursor: hand;
     border: 1px solid #3B3B3B;
 	margin: 2px;
@@ -1920,16 +1935,12 @@ img.art-lightbox-image.active {
 	width: 175px;
 }
 
-.categoryPanel>button:hover {
-	border: 1px solid #4B4B4B;	
-}
-
-.categoryPanel>button:hover:enabled {
+.buttonPanel>button:hover:enabled {
 	border: 1px solid #4B4B4B;
 	opacity: 1 !important;
 }
 
-.categoryPanel>button>div {
+.buttonPanel>button>div {
 	color: rgb(180, 217, 230);
 	margin: 10px 0px 0px;
 	font-size: 24px;
@@ -1939,7 +1950,7 @@ img.art-lightbox-image.active {
 	padding-bottom: 5px;
 }
 
-.categoryPanel>button>img {
+.buttonPanel>button>img {
 	width:140px;
 	height:140px;
 }

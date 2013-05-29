@@ -7,17 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-/**
- * The persistent class for the imagecontenttranslationentry database table.
- * 
- */
 @Entity
 @Table(name = "internationalization.imagecontenttranslationentry")
+@NamedQueries({ @NamedQuery(name = ImageContentTranslationEntry.FIND_ALL, query = "SELECT i FROM ImageContentTranslationEntry i") })
 public class ImageContentTranslationEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String FIND_ALL = "IMAGE_CONTENT_TRANSLANTION_ENTRY.FIND_ALL";
+	
 	@EmbeddedId
 	private ImageContentTranslationEntryPK id;
 
@@ -83,5 +84,4 @@ public class ImageContentTranslationEntry implements Serializable {
 	public void setLanguage(Language language) {
 		this.language = language;
 	}
-
 }

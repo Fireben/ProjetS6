@@ -5,49 +5,45 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-/**
- * The primary key class for the textcontenttranslationentry database table.
- * 
- */
 @Embeddable
 public class TextContentTranslationEntryPK implements Serializable {
 	// default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "lang_id", unique = true, nullable = false)
-	private Integer langId;
+	private Integer languageId;
 
 	@Column(name = "cult_id", unique = true, nullable = false)
-	private Integer cultId;
+	private Integer cultureId;
 
 	@Column(name = "tece_id", unique = true, nullable = false)
-	private Integer teceId;
+	private Integer textContentEntryId;
 
 	public TextContentTranslationEntryPK() {
 	}
 
-	public Integer getLangId() {
-		return this.langId;
+	public Integer getLanguageId() {
+		return this.languageId;
 	}
 
-	public void setLangId(Integer langId) {
-		this.langId = langId;
+	public void setLanguageId(Integer langId) {
+		this.languageId = langId;
 	}
 
-	public Integer getCultId() {
-		return this.cultId;
+	public Integer getCultureId() {
+		return this.cultureId;
 	}
 
-	public void setCultId(Integer cultId) {
-		this.cultId = cultId;
+	public void setCultureId(Integer cultId) {
+		this.cultureId = cultId;
 	}
 
-	public Integer getTeceId() {
-		return this.teceId;
+	public Integer getTextContentEntryId() {
+		return this.textContentEntryId;
 	}
 
-	public void setTeceId(Integer teceId) {
-		this.teceId = teceId;
+	public void setTextContentEntryId(Integer textContentEntryId) {
+		this.textContentEntryId = textContentEntryId;
 	}
 
 	public boolean equals(Object other) {
@@ -58,17 +54,17 @@ public class TextContentTranslationEntryPK implements Serializable {
 			return false;
 		}
 		TextContentTranslationEntryPK castOther = (TextContentTranslationEntryPK) other;
-		return this.langId.equals(castOther.langId)
-				&& this.cultId.equals(castOther.cultId)
-				&& this.teceId.equals(castOther.teceId);
+		return this.languageId.equals(castOther.languageId)
+				&& this.cultureId.equals(castOther.cultureId)
+				&& this.textContentEntryId.equals(castOther.textContentEntryId);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.langId.hashCode();
-		hash = hash * prime + this.cultId.hashCode();
-		hash = hash * prime + this.teceId.hashCode();
+		hash = hash * prime + this.languageId.hashCode();
+		hash = hash * prime + this.cultureId.hashCode();
+		hash = hash * prime + this.textContentEntryId.hashCode();
 
 		return hash;
 	}

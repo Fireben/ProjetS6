@@ -1,47 +1,46 @@
 package educatus.shared.persist.dao.seminary;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-/**
- * The persistent class for the difficulty database table.
- * 
- */
+import educatus.shared.persist.dao.internationalization.TextContentEntry;
+
 @Entity
-@Table(name="seminary.difficulty")
+@Table(name = "seminary.difficulty")
 public class Difficulty implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="diff_value", unique=true, nullable=false)
-	private Integer diffValue;
+	@Column(name = "diff_value", unique = true, nullable = false)
+	private Integer difficultyValue;
 
-	@Column(name="tece_name", nullable=false)
-	private Integer teceName;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_name", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry name;
 
-	//bi-directional many-to-one association to Seminary
-	@OneToMany(mappedBy="difficulty")
+	// bi-directional many-to-one association to Seminary
+	@OneToMany(mappedBy = "difficulty")
 	private List<Seminary> seminaries;
 
-    public Difficulty() {
-    }
-
-	public Integer getDiffValue() {
-		return this.diffValue;
+	public Difficulty() {
 	}
 
-	public void setDiffValue(Integer diffValue) {
-		this.diffValue = diffValue;
+	public Integer getDifficultyValue() {
+		return this.difficultyValue;
 	}
 
-	public Integer getTeceName() {
-		return this.teceName;
-	}
-
-	public void setTeceName(Integer teceName) {
-		this.teceName = teceName;
+	public void setDifficultyValue(Integer difficultyValue) {
+		this.difficultyValue = difficultyValue;
 	}
 
 	public List<Seminary> getSeminaries() {
@@ -51,5 +50,12 @@ public class Difficulty implements Serializable {
 	public void setSeminaries(List<Seminary> seminaries) {
 		this.seminaries = seminaries;
 	}
-	
+
+	public TextContentEntry getName() {
+		return name;
+	}
+
+	public void setName(TextContentEntry name) {
+		this.name = name;
+	}
 }

@@ -4,42 +4,48 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import educatus.shared.persist.dao.internationalization.TextContentEntry;
 
 /**
  * The persistent class for the dynamicsectiontype database table.
  * 
  */
 @Entity
-@Table(name="dynamic_content.dynamicsectiontype")
+@Table(name = "dynamic_content.dynamicsectiontype")
 public class DynamicSectionType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="dyst_id", unique=true, nullable=false)
-	private Integer dystId;
+	@Column(name = "dyst_id", unique = true, nullable = false)
+	private Integer id;
 
-	@Column(name="tece_name", nullable=false)
-	private Integer teceName;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_name", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry name;
 
-    public DynamicSectionType() {
-    }
-
-	public Integer getDystId() {
-		return this.dystId;
+	public DynamicSectionType() {
 	}
 
-	public void setDystId(Integer dystId) {
-		this.dystId = dystId;
+	public Integer getId() {
+		return this.id;
+	} 
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public Integer getTeceName() {
-		return this.teceName;
+	public TextContentEntry getName() {
+		return name;
 	}
 
-	public void setTeceName(Integer teceName) {
-		this.teceName = teceName;
-	}	
+	public void setName(TextContentEntry name) {
+		this.name = name;
+	}
 }

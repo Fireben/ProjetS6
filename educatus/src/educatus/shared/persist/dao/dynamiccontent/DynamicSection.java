@@ -1,84 +1,87 @@
 package educatus.shared.persist.dao.dynamiccontent;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
-/**
- * The persistent class for the dynamicsection database table.
- * 
- */
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance
 @DiscriminatorColumn(name = "DYST_Type")
-@Table(name="dynamic_content.dynamicsection")
+@Table(name = "dynamic_content.vdynamicsection")
 public class DynamicSection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="dyse_id", unique=true, nullable=false)
-	private Integer dyseId;
+	@Column(name = "dyse_id", unique = true, nullable = false)
+	private Integer id;
 
-	@Column(name="dyse_sequence", nullable=false)
-	private Integer dyseSequence;
+	@Column(name = "dyse_sequence", nullable = false)
+	private Integer sequence;
 
-	//bi-directional many-to-one association to DynamicContent
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="dyco_container", nullable=false)
-	private DynamicContent dynamiccontent;
+	// bi-directional many-to-one association to DynamicContent
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dyco_container", nullable = false)
+	private DynamicContent dynamicContent;
 
-	//bi-directional many-to-one association to DynamicSectionAlignment
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="dysa_alignment", nullable=false)
-	private DynamicSectionAlignment dynamicsectionalignment;
+	// bi-directional many-to-one association to DynamicSectionAlignment
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dysa_alignment", nullable = false)
+	private DynamicSectionAlignment dynamicSectionAlignment;
 
-	//bi-directional many-to-one association to DynamicSectionType
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="dyst_type", unique=true, nullable=false)
-	private DynamicSectionType dynamicsectiontype;
+	// bi-directional many-to-one association to DynamicSectionType
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dyst_type", unique = true, nullable = false)
+	private DynamicSectionType dynamicSectionType;
 
-    public DynamicSection() {
-    }
-
-	public Integer getDyseId() {
-		return this.dyseId;
+	public DynamicSection() {
 	}
 
-	public void setDyseId(Integer dyseId) {
-		this.dyseId = dyseId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public Integer getDyseSequence() {
-		return this.dyseSequence;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setDyseSequence(Integer dyseSequence) {
-		this.dyseSequence = dyseSequence;
+	public Integer getSequence() {
+		return this.sequence;
 	}
 
-	public DynamicContent getDynamiccontent() {
-		return this.dynamiccontent;
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
-	public void setDynamiccontent(DynamicContent dynamiccontent) {
-		this.dynamiccontent = dynamiccontent;
-	}
-	
-	public DynamicSectionAlignment getDynamicsectionalignment() {
-		return this.dynamicsectionalignment;
+	public DynamicContent getDynamicContent() {
+		return this.dynamicContent;
 	}
 
-	public void setDynamicsectionalignment(DynamicSectionAlignment dynamicsectionalignment) {
-		this.dynamicsectionalignment = dynamicsectionalignment;
-	}
-	
-	public DynamicSectionType getDynamicsectiontype() {
-		return this.dynamicsectiontype;
+	public void setDynamicContent(DynamicContent dynamicContent) {
+		this.dynamicContent = dynamicContent;
 	}
 
-	public void setDynamicsectiontype(DynamicSectionType dynamicsectiontype) {
-		this.dynamicsectiontype = dynamicsectiontype;
-	}	
+	public DynamicSectionAlignment getDynamicSectionAlignment() {
+		return this.dynamicSectionAlignment;
+	}
+
+	public void setDynamicSectionAlignment(
+			DynamicSectionAlignment dynamicSectionAlignment) {
+		this.dynamicSectionAlignment = dynamicSectionAlignment;
+	}
+
+	public DynamicSectionType getDynamicSectionType() {
+		return this.dynamicSectionType;
+	}
+
+	public void setDynamicSectionType(DynamicSectionType dynamicSectionType) {
+		this.dynamicSectionType = dynamicSectionType;
+	}
 }

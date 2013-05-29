@@ -19,11 +19,14 @@ public class ListFadeAnimation<T extends HasWidgets> {
 		
 		Iterator<Widget> it = widgetList.iterator();		
 		Widget widget;		
+		FadeAnimation animation;
 		int count = 0;
 		while(it.hasNext()) {
 			widget = it.next();
-			animations.add(new FadeAnimation(widget, beginOpacity, targetOpacity, duration));
-			animations.get(count).startAfterDelay(duration * (count++));
+			animation = new FadeAnimation(widget, beginOpacity, targetOpacity, duration);
+			animations.add(animation);
+			animation.startAfterDelay(duration * count);
+			count++;
 		}
 	}
 	

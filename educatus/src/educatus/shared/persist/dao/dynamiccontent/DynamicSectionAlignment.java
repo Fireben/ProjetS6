@@ -1,55 +1,62 @@
 package educatus.shared.persist.dao.dynamiccontent;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-/**
- * The persistent class for the dynamicsectionalignment database table.
- * 
- */
+import educatus.shared.persist.dao.internationalization.TextContentEntry;
+
 @Entity
-@Table(name="dynamic_content.dynamicsectionalignment")
+@Table(name = "dynamic_content.dynamicsectionalignment")
 public class DynamicSectionAlignment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="dysa_id", unique=true, nullable=false)
-	private Integer dysaId;
+	@Column(name = "dysa_id", unique = true, nullable = false)
+	private Integer id;
 
-	@Column(name="tece_name", nullable=false)
-	private Integer teceName;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_name", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry name;
 
-	//bi-directional many-to-one association to DynamicSection
-	@OneToMany(mappedBy="dynamicsectionalignment")
-	private List<DynamicSection> dynamicsections;
+	// bi-directional many-to-one association to DynamicSection
+	@OneToMany(mappedBy = "DynamicSectionAlignment")
+	private List<DynamicSection> dynamicSections;
 
-    public DynamicSectionAlignment() {
-    }
-
-	public Integer getDysaId() {
-		return this.dysaId;
+	public DynamicSectionAlignment() {
 	}
 
-	public void setDysaId(Integer dysaId) {
-		this.dysaId = dysaId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public Integer getTeceName() {
-		return this.teceName;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setTeceName(Integer teceName) {
-		this.teceName = teceName;
+	public List<DynamicSection> getDynamicSections() {
+		return this.dynamicSections;
 	}
 
-	public List<DynamicSection> getDynamicsections() {
-		return this.dynamicsections;
+	public void setDynamicSections(List<DynamicSection> dynamicSections) {
+		this.dynamicSections = dynamicSections;
 	}
 
-	public void setDynamicsections(List<DynamicSection> dynamicsections) {
-		this.dynamicsections = dynamicsections;
+	public TextContentEntry getName() {
+		return name;
 	}
-	
+
+	public void setName(TextContentEntry name) {
+		this.name = name;
+	}
+
 }
