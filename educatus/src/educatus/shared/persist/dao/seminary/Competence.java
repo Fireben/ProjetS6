@@ -5,11 +5,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-
-/**
- * The persistent class for the competence database table.
- * 
- */
 @Entity
 @Table(name="seminary.competence")
 public class Competence implements Serializable {
@@ -17,19 +12,19 @@ public class Competence implements Serializable {
 
 	@Id
 	@Column(name="comp_id", unique=true, nullable=false)
-	private Integer compId;
+	private Integer id;
 
 	@Column(name="comp_datecreated", nullable=false)
-	private Timestamp compDatecreated;
+	private Timestamp dateCreated;
 
 	@Column(name="comp_datedeleted")
-	private Timestamp compDatedeleted;
+	private Timestamp dateDeleted;
 
 	@Column(name="comp_datemodified", nullable=false)
-	private Timestamp compDatemodified;
+	private Timestamp dateModified;
 
 	@Column(name="comp_deleteflag", nullable=false)
-	private Boolean compDeleteflag;
+	private Boolean deleteFlag;
 
 	@Column(name="tece_description", nullable=false)
 	private Integer teceDescription;
@@ -51,43 +46,43 @@ public class Competence implements Serializable {
     }
 
 	public Integer getCompId() {
-		return this.compId;
+		return this.id;
 	}
 
 	public void setCompId(Integer compId) {
-		this.compId = compId;
+		this.id = compId;
 	}
 
 	public Timestamp getCompDatecreated() {
-		return this.compDatecreated;
+		return this.dateCreated;
 	}
 
 	public void setCompDatecreated(Timestamp compDatecreated) {
-		this.compDatecreated = compDatecreated;
+		this.dateCreated = compDatecreated;
 	}
 
 	public Timestamp getCompDatedeleted() {
-		return this.compDatedeleted;
+		return this.dateDeleted;
 	}
 
 	public void setCompDatedeleted(Timestamp compDatedeleted) {
-		this.compDatedeleted = compDatedeleted;
+		this.dateDeleted = compDatedeleted;
 	}
 
 	public Timestamp getCompDatemodified() {
-		return this.compDatemodified;
+		return this.dateModified;
 	}
 
 	public void setCompDatemodified(Timestamp compDatemodified) {
-		this.compDatemodified = compDatemodified;
+		this.dateModified = compDatemodified;
 	}
 
 	public Boolean getCompDeleteflag() {
-		return this.compDeleteflag;
+		return this.deleteFlag;
 	}
 
 	public void setCompDeleteflag(Boolean compDeleteflag) {
-		this.compDeleteflag = compDeleteflag;
+		this.deleteFlag = compDeleteflag;
 	}
 
 	public Integer getTeceDescription() {

@@ -1,78 +1,72 @@
 package educatus.shared.persist.dao.seminary;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-/**
- * The persistent class for the category database table.
- * 
- */
+import educatus.shared.persist.dao.internationalization.TextContentEntry;
+
 @Entity
-@Table(name="seminary.category")
+@Table(name = "seminary.category")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="cate_id", unique=true, nullable=false)
-	private Integer cateId;
+	@Column(name = "cate_id", unique = true, nullable = false)
+	private Integer id;
 
-	@Column(name="cate_deleteflag", nullable=false)
-	private Boolean cateDeleteflag;
+	@Column(name = "cate_deleteflag", nullable = false)
+	private Boolean deleteFlag;
 
-	@Column(name="tece_name", nullable=false)
-	private Integer teceName;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_name", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry name;
 
-	@Column(name="tex_tece_id", nullable=false)
-	private Integer texTeceId;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tex_tece_id", nullable = false, insertable = false, updatable = false)
+	private TextContentEntry description;
 
-	//bi-directional many-to-one association to Category
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="cate_parent")
+	// bi-directional many-to-one association to Category
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cate_parent")
 	private Category category;
 
-	//bi-directional many-to-one association to Category
-	@OneToMany(mappedBy="category")
-	private List<Category> categories;
+	// bi-directional many-to-one association to Category
+	@OneToMany(mappedBy = "category")
+	private List<Category> childCategories;
 
-	//bi-directional many-to-many association to Seminary
-	@ManyToMany(mappedBy="categories")
+	// bi-directional many-to-many association to Seminary
+	@ManyToMany(mappedBy = "categories")
 	private List<Seminary> seminaries;
 
-    public Category() {
-    }
-
-	public Integer getCateId() {
-		return this.cateId;
+	public Category() {
 	}
 
-	public void setCateId(Integer cateId) {
-		this.cateId = cateId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public Boolean getCateDeleteflag() {
-		return this.cateDeleteflag;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setCateDeleteflag(Boolean cateDeleteflag) {
-		this.cateDeleteflag = cateDeleteflag;
+	public Boolean getDeleteflag() {
+		return this.deleteFlag;
 	}
 
-	public Integer getTeceName() {
-		return this.teceName;
-	}
-
-	public void setTeceName(Integer teceName) {
-		this.teceName = teceName;
-	}
-
-	public Integer getTexTeceId() {
-		return this.texTeceId;
-	}
-
-	public void setTexTeceId(Integer texTeceId) {
-		this.texTeceId = texTeceId;
+	public void setDeleteflag(Boolean deleteflag) {
+		this.deleteFlag = deleteflag;
 	}
 
 	public Category getCategory() {
@@ -82,15 +76,15 @@ public class Category implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	public List<Category> getCategories() {
-		return this.categories;
+
+	public List<Category> getChildCategories() {
+		return this.childCategories;
 	}
 
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
+	public void setChildCategories(List<Category> childCategories) {
+		this.childCategories = childCategories;
 	}
-	
+
 	public List<Seminary> getSeminaries() {
 		return this.seminaries;
 	}
@@ -98,5 +92,20 @@ public class Category implements Serializable {
 	public void setSeminaries(List<Seminary> seminaries) {
 		this.seminaries = seminaries;
 	}
-	
+
+	public TextContentEntry getName() {
+		return name;
+	}
+
+	public void setName(TextContentEntry name) {
+		this.name = name;
+	}
+
+	public TextContentEntry getDescription() {
+		return description;
+	}
+
+	public void setDescription(TextContentEntry description) {
+		this.description = description;
+	}
 }
