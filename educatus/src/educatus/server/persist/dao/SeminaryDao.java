@@ -5,8 +5,8 @@ import javax.persistence.EntityManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import educatus.shared.persist.dao.internationalization.TextContentEntry;
-import educatus.shared.persist.dao.seminary.Category;
+import educatus.server.persist.dao.internationalization.TextContentEntry;
+import educatus.server.persist.dao.seminary.Category;
 
 @Singleton
 public class SeminaryDao {

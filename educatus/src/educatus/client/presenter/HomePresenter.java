@@ -30,9 +30,9 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
-import educatus.client.services.RequestService;
-import educatus.client.services.RequestServiceAsync;
-import educatus.shared.businesslogic.dto.HomePageContent;
+import educatus.shared.dto.HomePageContent;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;

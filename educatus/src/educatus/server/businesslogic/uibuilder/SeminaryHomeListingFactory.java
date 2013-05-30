@@ -1,6 +1,6 @@
 package educatus.server.businesslogic.uibuilder;
 
-import educatus.shared.businesslogic.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.dto.seminary.SeminaryHomeListingContent;
 
 public class SeminaryHomeListingFactory {
 

@@ -1,7 +1,7 @@
 package educatus.server.businesslogic.uibuilder;
 
-import educatus.shared.businesslogic.dto.HomePageContent;
-import educatus.shared.businesslogic.dto.HomePageContent.HomePageSection;
+import educatus.shared.dto.HomePageContent;
+import educatus.shared.dto.HomePageContent.HomePageSection;
 
 public class HomePageFactory {
 

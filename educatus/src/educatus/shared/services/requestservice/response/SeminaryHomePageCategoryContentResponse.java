@@ -1,6 +1,6 @@
 package educatus.shared.services.requestservice.response;
 
-import educatus.shared.businesslogic.dto.seminary.SeminaryHomeCategoryContent;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 

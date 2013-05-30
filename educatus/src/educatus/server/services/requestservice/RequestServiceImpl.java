@@ -2,13 +2,13 @@ package educatus.server.services.requestservice;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import educatus.client.services.RequestService;
 import educatus.server.businesslogic.uibuilder.HomePageFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeListingFactory;
-import educatus.shared.businesslogic.dto.HomePageContent;
-import educatus.shared.businesslogic.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.businesslogic.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.dto.HomePageContent;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
+import educatus.shared.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.RequestTypeEnum;

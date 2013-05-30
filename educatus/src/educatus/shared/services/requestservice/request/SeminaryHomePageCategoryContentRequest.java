@@ -1,6 +1,6 @@
 package educatus.shared.services.requestservice.request;
 
-import educatus.shared.businesslogic.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.RequestTypeEnum;
 

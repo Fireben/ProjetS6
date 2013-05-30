@@ -8,17 +8,17 @@ import javax.persistence.EntityNotFoundException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import educatus.shared.persist.dao.internationalization.Culture;
-import educatus.shared.persist.dao.internationalization.Image;
-import educatus.shared.persist.dao.internationalization.ImageContentEntry;
-import educatus.shared.persist.dao.internationalization.ImageContentTranslationEntry;
-import educatus.shared.persist.dao.internationalization.Language;
-import educatus.shared.persist.dao.internationalization.TextContentEntry;
-import educatus.shared.persist.dao.internationalization.TextContentTranslationEntry;
-import educatus.shared.persist.dao.internationalization.TextContentTranslationEntryPK;
-import educatus.shared.persist.dao.internationalization.Video;
-import educatus.shared.persist.dao.internationalization.VideoContentEntry;
-import educatus.shared.persist.dao.internationalization.VideoContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.Culture;
+import educatus.server.persist.dao.internationalization.Image;
+import educatus.server.persist.dao.internationalization.ImageContentEntry;
+import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.Language;
+import educatus.server.persist.dao.internationalization.TextContentEntry;
+import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.TextContentTranslationEntryPK;
+import educatus.server.persist.dao.internationalization.Video;
+import educatus.server.persist.dao.internationalization.VideoContentEntry;
+import educatus.server.persist.dao.internationalization.VideoContentTranslationEntry;
 
 @Singleton
 public class InternationalizationDao {
