@@ -134,7 +134,6 @@ public class CategoryPresenter extends
 		clear();
 		Timer timer = new Timer() {
 			 public void run() {
-				 System.out.print(state);
 				 populateCategoryPanel(state);
 				 registerCategoryPanelHandlers(categoryClickHandler, state);
 				 animatePanelIn(state);
