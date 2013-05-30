@@ -36,7 +36,6 @@ public class HomeView extends ViewImpl implements MyView {
 			.create(HomeViewUiBinder.class);
 
 	private final Widget widget;
-	@UiField Element homePageTitle;
 	@UiField Element homePageBulbImg;
 	@UiField Element homePageSecondTitle;
 	@UiField Element homePageFirstDescription;
@@ -79,10 +78,6 @@ public class HomeView extends ViewImpl implements MyView {
 	}
 	
 	// Getter only
-	public Element getHomePageTitle() {
-		return homePageTitle;
-	}
-
 	public Element getHomePageBulbImg() {
 		return homePageBulbImg;
 	}

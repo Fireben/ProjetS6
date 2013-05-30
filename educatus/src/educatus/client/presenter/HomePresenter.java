@@ -59,8 +59,6 @@ public class HomePresenter extends
 	 * {@link HomePresenter}'s view.
 	 */
 	public interface MyView extends View {
-		public Element getHomePageTitle();
-
 		public Element getHomePageBulbImg();
 
 		public Element getHomePageSecondTitle();
@@ -159,8 +157,6 @@ public class HomePresenter extends
 	
 	private void fillPageWithContent(HomePageContent content)
 	{
-		getView().getHomePageTitle().setInnerText(content.getTitle());
-
 		// Welcome 
 		getView().getHomePageSecondTitle().setInnerText(content.getWelcomeTitle());
 		getView().getHomePageBulbImg().setAttribute("src", content.getWelcomeImage());

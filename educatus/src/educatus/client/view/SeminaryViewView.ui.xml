@@ -14,27 +14,6 @@
 			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
 		</style> 	
 	<div id="art-mainPage">		
-			<header class="art-header clearfix">
-			    <div class="art-shapes">
-					<h1 class="art-headline" data-left="1.74%">
-					    <span ui:field="seminaryTitle"></span>
-					</h1>	
-					<br/>
-					<h3 style="float: right; padding-top:25px;padding-right:10px;">
-						<span ui:field="writtenBy"></span>
-						<a class="art-postheader" ui:field="authorEmail" href="">
-							<span ui:field="author"></span>
-						</a> 
-						<span ui:field="createdDate"></span>
-						 <br/>
-						<span ui:field="modifyBy"></span>
-						<a class="art-postheader" ui:field= "modifEmail" href="">
-							<span ui:field="modif"></span>
-						</a>
-						<span ui:field="modifiedDate"></span>
-					</h3>
-			    </div>             
-			</header>
 			<div class="art-sheet clearfix">
 				<div class="art-layout-wrapper clearfix">
 					<div class="art-content-layout">
@@ -45,7 +24,20 @@
 										<div class="art-content-layout-wrapper layout-item-3">
 											<div class="art-content-layout">
 												<div class="art-content-layout-row">
-													 <g:FlowPanel ui:field="textAreaContainer">
+													<h3 style="float: right;">
+														<span ui:field="writtenBy"></span>
+														<a class="art-postheader" ui:field="authorEmail" href="">
+															<span ui:field="author"></span>
+														</a> 
+														<span ui:field="createdDate"></span>
+														 <br/>
+														<span ui:field="modifyBy"></span>
+														<a class="art-postheader" ui:field= "modifEmail" href="">
+															<span ui:field="modif"></span>
+														</a>
+														<span ui:field="modifiedDate"></span>
+													</h3>
+												 	<g:FlowPanel ui:field="textAreaContainer">
 													</g:FlowPanel>
 			 									</div>
 			 								</div>

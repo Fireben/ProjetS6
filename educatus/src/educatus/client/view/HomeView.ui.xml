@@ -15,15 +15,7 @@
 			.ie7 .post .layout-cell {border:none !important; padding:0 !important; }
 			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
 		</style>    
-		<div id="art-mainPage">		
-			<header class="art-header clearfix">
-			    <div class="art-shapes">
-					<h1 class="art-headline" data-left="1.74%">
-					    <a href="#" ui:field="homePageTitle"></a>
-					</h1>	
-			    </div>              
-			</header>
-			
+  <div id="art-mainPage">		
   <div class="art-sheet clearfix">
 				<div class="art-layout-wrapper clearfix">
 					<div class="art-content-layout">
