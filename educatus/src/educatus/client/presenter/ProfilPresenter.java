@@ -10,8 +10,8 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.Selection;
 import com.google.gwt.visualization.client.VisualizationUtils;
 import com.google.gwt.visualization.client.events.SelectHandler;
-import com.google.gwt.visualization.client.visualizations.PieChart;
-import com.google.gwt.visualization.client.visualizations.PieChart.Options;
+import com.google.gwt.visualization.client.visualizations.corechart.Options;
+import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -74,28 +74,14 @@ public class ProfilPresenter extends
 				// Load the visualization api, passing the onLoadCallback to be called
 			    // when loading is done.
 			VisualizationUtils.loadVisualizationApi(onLoadCallback, PieChart.PACKAGE);
-		} else {
-			getView().removeChart(pie);
-			Runnable onLoadCallback = new Runnable() {
-			      public void run() {
-			          pie = new PieChart(createTable(), createOptions());
-			          pie.addSelectHandler(createSelectHandler(pie));
-			          getView().insertChart(pie);
-			      }
-			    };
-				// Load the visualization api, passing the onLoadCallback to be called
-			    // when loading is done.
-			VisualizationUtils.loadVisualizationApi(onLoadCallback, PieChart.PACKAGE);
 		}
-		
-		//getView().removeChart(pie);
 	}
 	
 	private Options createOptions() {
         Options options = Options.create();
         options.setWidth(400);
         options.setHeight(240);
-        options.set3D(true);
+//        options.set3D(true);
         options.setTitle("My Daily Activities");
         return options;
       }
@@ -104,7 +90,8 @@ public class ProfilPresenter extends
         return new SelectHandler() {
           @Override
           public void onSelect(SelectEvent event) {
-            String message = "";
+            @SuppressWarnings("unused")
+			String message = "";
             
             // May be multiple selections.
             JsArray<Selection> selections = chart.getSelections();

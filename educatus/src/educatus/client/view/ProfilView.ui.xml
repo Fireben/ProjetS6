@@ -19,14 +19,6 @@
 			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
 		</style> 	
 	<div id="art-mainPage">		
-			<header class="art-header clearfix">
-			    <div class="art-shapes">
-					<h1 class="art-headline" data-left="1.74%">
-					    <span ui:field="profilTitle">Profil</span>
-					</h1>	
-					<br/>
-			    </div>             
-			</header>
 			<div class="art-sheet clearfix">
 				<div class="art-layout-wrapper clearfix">
 					<div class="art-content-layout">
@@ -37,10 +29,11 @@
 										<div class="art-content-layout-wrapper layout-item-3">
 											<div class="art-content-layout">
 												<div class="art-content-layout-row">
+													<h5></h5>
 													<div id="imageProfil">
 														<g:Image ui:field="userImage" url="images/icons/user_128.png"/>
 														<g:InlineHyperlink  text="Change Profil Picture"/>
-													</div>>
+													</div>
 													<g:Label text="Name:"/>
 													<g:Label text="Surname"/>
 													<g:Label text="Email: "/>

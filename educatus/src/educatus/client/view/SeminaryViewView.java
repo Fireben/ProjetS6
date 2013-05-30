@@ -20,7 +20,6 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	  private final Widget widget;
 	  
 	  @UiField FlowPanel textAreaContainer;
-	  @UiField Element seminaryTitle;
 	  @UiField Element writtenBy;
 	  @UiField Element modifyBy;
 	  @UiField Element author;
@@ -30,10 +29,6 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	  @UiField Element createdDate;
 	  @UiField Element modifiedDate;
 
-
-	public Element getSeminaryTitle() {
-		return seminaryTitle;
-	}
 
 	public Element getWrittenBy() {
 		return writtenBy;

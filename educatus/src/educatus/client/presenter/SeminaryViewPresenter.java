@@ -21,7 +21,6 @@ public class SeminaryViewPresenter extends
 		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy>{
 
 	public interface MyView extends View {
-		public Element getSeminaryTitle();
 		public Element getWrittenBy(); 
 		public Element getModifyBy(); 
 		public Element getAuthor();
@@ -92,7 +91,6 @@ public class SeminaryViewPresenter extends
 	protected void onReset() {
 		super.onReset();
 		
-		getView().getSeminaryTitle().setInnerHTML("Seminrary Title");
 		getView().getWrittenBy().setInnerHTML("written by");
 		getView().getAuthor().setInnerHTML("Author");
 		getView().getAuthorEmail().setPropertyString("href", "mailto:Prof@usherbrooke.qc.ca");
