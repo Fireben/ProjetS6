@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = TextContentTranslationEntry.FIND_ALL, query = "SELECT t FROM TextContentTranslationEntry t"),
-		@NamedQuery(name = TextContentTranslationEntry.FIND_ALL_BY_TECE, query = "SELECT T FROM TextContentTranslationEntry t WHERE t.textContentEntry=:textContentEntry") })
+		@NamedQuery(name = TextContentTranslationEntry.FIND_ALL_BY_TECE, query = "SELECT t FROM TextContentTranslationEntry t WHERE t.textContentEntry=:textContentEntry") })
 @Table(name = "internationalization.textcontenttranslationentry")
 public class TextContentTranslationEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
