@@ -6,17 +6,17 @@ public class Seminary {
 	private String description;	
 	private String author;
 	private String date;
-	private String editor;
+	private int difficulty;
 	
 	public Seminary(int id, String name, String description, String author,
-			String date, String editor) {
+			String date, int difficulty) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.author = author;
 		this.date = date;
-		this.editor = editor;
+		this.difficulty = difficulty;
 	}
 
 	public int getId() {
@@ -59,11 +59,11 @@ public class Seminary {
 		this.date = date;
 	}
 
-	public String getEditor() {
-		return editor;
+	public int getDifficulty() {
+		return difficulty;
 	}
 
-	public void setEditor(String editor) {
-		this.editor = editor;
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 }

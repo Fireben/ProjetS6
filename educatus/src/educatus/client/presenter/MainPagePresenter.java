@@ -93,7 +93,6 @@ public class MainPagePresenter extends
     getView().showLoading(event.shouldLock());
   }
   
-  @SuppressWarnings("deprecation")
   @Override
 	protected void onBind() {
 		super.onBind();
