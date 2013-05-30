@@ -7,6 +7,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
+
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -148,6 +150,8 @@ public class SeminaryEditPresenter extends
 	protected void onReset()
 	{
 		super.onReset();
+		PageChangingEvent.fire(this, NameTokens.getSeminaryEdit());
+		
 		setInSlot(SLOT_confirm, confirmPresenter);
 		setInSlot(SLOT_content, null);
 		

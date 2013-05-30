@@ -1895,21 +1895,45 @@ img.art-lightbox-image.active {
 }
 
 .categoryPanelParent {
-	padding-bottom:3%;
-	padding-top:3%;
-	text-align:center;	
+	padding-bottom:4%;
+	padding-top:4%;
 }
 
 .categoryPanel {
 	padding-bottom:6%;
 	padding-top:6%;	
 	margin:auto;
-	display:inline-block;
+}
+
+.categoryPanel>button {
+	background: none repeat scroll 0% 0% #202020; 
+	opacity: 0.75;
+	border: 1px solid #3B3B3B;
+	margin-right: 2px;
+	margin-top: 5px;
+	width:65px;
+	height:35px;
+	color : rgb(180, 217, 230);
+	float: right;
+}
+
+.categoryPanel>button:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;
+}
+
+.categoryPanel>div {
+	color: #00A1D6;
+	font-size: 30px;
+	margin-bottom:10px;
+	margin-left:2px;
+	font-family: 'Century Gothic', Arial, 'Arial Unicode MS', Helvetica,
+		Sans-Serif;
 }
 
 .dataGridParent {
-	padding-bottom:3%;
-	padding-top:3%;
+	padding-bottom:6%;
+	padding-top:6%;
 	text-align:center;	
 }
 
@@ -1918,14 +1942,13 @@ img.art-lightbox-image.active {
 	padding-top:3%;	
 	margin:auto;
 	display:inline-block;
-	width:900px;
+	width:1050px;
 	height:290px;
 	opacity:0;
 }
 
 .buttonPanel>button {
 	background: none repeat scroll 0% 0% #202020; 
-	margin: 0;
 	padding: 3px 5px;
 	cursor: hand;
     border: 1px solid #3B3B3B;

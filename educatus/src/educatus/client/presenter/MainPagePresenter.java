@@ -93,7 +93,6 @@ public class MainPagePresenter extends
     getView().showLoading(event.shouldLock());
   }
   
-  @SuppressWarnings("deprecation")
   @Override
 	protected void onBind() {
 		super.onBind();
@@ -101,7 +100,6 @@ public class MainPagePresenter extends
 	    addRegisteredHandler( PageChangingEvent.getType(), new PageChangeHandler() {
 	          @Override
 	          public void onPageChange(PageChangingEvent event) {
-	        	  System.out.print(event.getMessage());
 	        	  setActiveMenuItem(event.getMessage());
 	          }
 	        } );
@@ -113,24 +111,35 @@ public class MainPagePresenter extends
 		  getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
+		  getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 	  }
 	  else if(name == NameTokens.getProfil()) {
 		  getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("active");
 		  getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
+		  getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 	  }
 	  else if(name == NameTokens.getSeminarHomePage()) {
 		  getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("active");
 		  getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
+		  getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 	  }
 	  else if(name == NameTokens.getViewSeminary()) {
 		  getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
 		  getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("active");
+		  getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 	  }	  
+	  else if(name == NameTokens.getSeminaryEdit()) {
+		  getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
+		  getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
+		  getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
+		  getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
+		  getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("active");
+	  }	 
   }
 }

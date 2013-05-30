@@ -15,6 +15,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 import educatus.client.NameTokens;
 import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.ui.dataGrids.HyperLinkCell;
+import educatus.client.ui.dataGrids.ImageCell;
 import educatus.client.ui.dataGrids.Seminary;
 import educatus.resources.SeminaryDataGridCssRessource;
 
@@ -73,6 +74,16 @@ SeminaryListPresenter.MyView {
 		  };
 		dataGrid.addColumn(AuthorColumn, "Author", "");
 		dataGrid.setColumnWidth(AuthorColumn, 200, Unit.PX);
+		
+		Column<Seminary, Integer> DifficultyColumn = 
+			    new Column<Seminary, Integer>(new ImageCell()) { 
+			        @Override 
+			        public Integer getValue(Seminary seminary) { 
+			        	return seminary.getDifficulty();
+			        }
+				};
+		dataGrid.addColumn(DifficultyColumn, "Difficulty", "");
+		dataGrid.setColumnWidth(DifficultyColumn, 150, Unit.PX);
 		
 		Column<Seminary, Hyperlink> DescriptionColumn = 
 		    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
