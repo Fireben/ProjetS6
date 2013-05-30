@@ -10,7 +10,6 @@
 	<ui:style>
 		.titleDesc {
 			width: 30%;
-			margin-left: 50px;
 			display: inline-block;
 		}
 		
@@ -28,16 +27,39 @@
 			vertical-align: top;
 		}
 		
+		.contentPanel {
+			margin-right: 200px;
+		}
+		
 		.addTextImg {
-			width: 50px;
 			height: 50px;
-			position: absolute;
-			top: 25%;
 			padding-left: 8px;
+			position: relative;
+			vertical-align: middle;
+			width: 50px;
 		}
 		
 		.addTextImg:hover {
 			cursor: pointer;
+		}
+		
+		.addImageImg {
+			height: 50px;
+			margin-top: -25px;
+			padding-right: 8px;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			width: 50px;
+		}
+		
+		.addImageImg:hover {
+			cursor: pointer;
+		}
+		
+		.confirmPanel {
+			bottom: 0;
+			position: relative;
 		}
 	</ui:style>
 
@@ -48,10 +70,12 @@
 			border-radius:
 			50% 50% 50% 50%;
 			bottom: 0;
-			height: 100px;
-			position: absolute;
-			right: 0px;
-			width: 100px;
+			height: 200px;
+			line-height: 200px;
+			position:
+			absolute;
+			right: 0;
+			width: 200px;
 			}
 
 		</style>
@@ -60,16 +84,15 @@
 			<form>
 				<div class="art-blockcontent">
 					<h4>
-						<g:FlowPanel styleName='{style.titleDesc}'>
-							<g:Label ui:field="semTitleLabel">Titre :</g:Label>
-							<g:TextBox name="semTitleBox" ui:field="semTitleBox"
-								styleName='{style.titleBox}' />
-							<g:Label ui:field="semDescLabel">Description :</g:Label>
-							<g:TextArea name="semDescBox" ui:field="semDescBox"
-								styleName='{style.descBox}' />
-						</g:FlowPanel>
-
-						
+						<div style="margin-left:50px">
+							<g:FlowPanel styleName='{style.titleDesc}'>
+								<g:Label ui:field="semTitleLabel">Titre :</g:Label>
+								<g:TextBox name="semTitleBox" ui:field="semTitleBox"
+									styleName='{style.titleBox}' />
+								<g:Label ui:field="semDescLabel">Description :</g:Label>
+								<g:TextArea name="semDescBox" ui:field="semDescBox"
+									styleName='{style.descBox}' />
+							</g:FlowPanel>
 							<g:ListBox styleName='{style.difficultyList}'>
 								<g:item>
 									easy
@@ -78,19 +101,18 @@
 									hard
 								</g:item>
 							</g:ListBox>
-						
+							<g:HTMLPanel ui:field="contentPanel" styleName='{style.contentPanel}' />
 
-						<g:HTMLPanel ui:field="contentPanel" />
-						
-						<div class="addContentWidget">
-							<g:Image ui:field="addTextBoxImg" url="images/addText.png"
-								styleName="{style.addTextImg}" />
+							<div class="addContentWidget">
+								<g:Image ui:field="addTextBoxImg" url="images/addText.png"
+									styleName="{style.addTextImg}" />
+								<g:Image ui:field="addImageImg" url="images/addImage.png"
+									styleName="{style.addImageImg}" />
+							</div>
+							<g:HTMLPanel ui:field="confirmPanel" styleName='{style.confirmPanel}' />
 						</div>
-					</h4>
-
-					<g:HTMLPanel ui:field="confirmPanel" />
+					</h4>	
 				</div>
-
 			</form>
 		</div>
 

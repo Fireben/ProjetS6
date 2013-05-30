@@ -29,7 +29,7 @@ public class VideoContentEntry implements Serializable {
 	private Integer id;
 
 	// bi-directional many-to-one association to Videocontenttranslationentry
-	@OneToMany(mappedBy = "videocontententry")
+	@OneToMany(mappedBy = "VideoContentEntry")
 	private List<VideoContentTranslationEntry> videoContentTranslationEntries;
 
 	public VideoContentEntry() {

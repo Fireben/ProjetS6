@@ -75,9 +75,8 @@ public class ClientModule extends AbstractPresenterModule {
 	bindPresenter(SeminaryViewPresenter.class,
 			SeminaryViewPresenter.MyView.class, SeminaryViewView.class,
 			SeminaryViewPresenter.MyProxy.class);  
-
-		bindPresenterWidget(SeminarySectionPresenter.class,
-				SeminarySectionPresenter.MyView.class,
-				SeminarySectionView.class);
+	bindPresenterWidget(SeminarySectionPresenter.class,
+			SeminarySectionPresenter.MyView.class,
+			SeminarySectionView.class);
 }
 }

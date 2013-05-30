@@ -8,11 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = TextContentEntry.FIND_ALL, query = "SELECT t FROM TextContentEntry t")})
 @Table(name = "internationalization.textcontententry")
 public class TextContentEntry implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +30,7 @@ public class TextContentEntry implements Serializable {
 	private Integer id;
 
 	// bi-directional many-to-one association to Textcontenttranslationentry
-	@OneToMany(mappedBy = "textcontententry")
+	@OneToMany(mappedBy = "TextContentEntry")
 	private List<TextContentTranslationEntry> textContentTranslationEntries;
 
 	public TextContentEntry() {
