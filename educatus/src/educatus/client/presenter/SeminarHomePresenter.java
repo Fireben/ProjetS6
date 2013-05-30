@@ -72,11 +72,18 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	protected void revealInParent() {
 	  RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
 	}
+  	
+  	@Override
+  	protected void onBind() {
+  		super.onBind();
+  		
+  	}
   
 	@Override
 	protected void onReset() {
 	  super.onReset();      
 	  PageChangingEvent.fire(this, NameTokens.getSeminarHomePage());
+	  seminarCategoryPresenter.initializeBackButton(backClickHandler);
 	}
 	
 	@Override
@@ -86,9 +93,18 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);			
 	}
 	
+	private ClickHandler backClickHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			state--;
+			changeState();
+		}
+	};
+	
 	private ClickHandler categoryClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
+			state++;
 			changeState();
 		}
 	};
@@ -98,7 +114,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	}
 	
 	private void changeState() {
-		state++;
+		
 		if(state < 2) {
 			changeCategoryPanel();
 		}
@@ -109,10 +125,13 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	
 	private void setSeminaryList() {
 		setInSlot(SLOT_content, seminaryListPresenter);
-		List<Seminary> seminaries = new ArrayList<Seminary>();;
-		for(int i=1;i<=30;i++) {
-			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", null, null, null));
+		List<Seminary> seminaries = new ArrayList<Seminary>();
+		for(int i=1;i<=5;i++) {
+			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", "Marc-Andre Beaudry", null, 4));
 		}	
+		for(int j=6;j<=15;j++) {
+			seminaries.add(new Seminary(j, "Sauce Nuage", "Comment faire de la sauce nuage quand il fait beau?", "Nicolas Michaud", null, 2));
+		}
 		seminaryListPresenter.setData(seminaries);
 		FadeAnimation animation;
 		animation = new FadeAnimation(seminaryListPresenter.getView().getDataGrid(), FadeAnimation.MIN_OPACITY,

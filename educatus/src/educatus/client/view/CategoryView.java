@@ -4,6 +4,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
@@ -17,6 +18,8 @@ CategoryPresenter.MyView {
 	
 	@UiField FlowPanel categoryPanel;
 	@UiField FlowPanel buttonPanel;
+	Button button;
+	Label label;
 	
 	public interface Binder extends UiBinder<Widget, CategoryView> {
 	}
@@ -26,8 +29,11 @@ CategoryPresenter.MyView {
 	  widget = binder.createAndBindUi(this);
 	  categoryPanel.setStyleName("categoryPanel");
 	  buttonPanel.setStyleName("buttonPanel");
-	  categoryPanel.add(new Button("Back"));
+	  button = new Button("Back");
+	  label = new Label("Seminars");
+	  categoryPanel.add(label);
 	  categoryPanel.add(buttonPanel);
+	  categoryPanel.add(button);	  
 	}
 	
 	public Widget asWidget() {
@@ -38,8 +44,15 @@ CategoryPresenter.MyView {
 		return categoryPanel;
 	}
 
-	@Override
 	public FlowPanel getButtonPanel() {
 		return buttonPanel;
-	}	  
+	}	 
+	
+	public Button getButton() {
+		return button;
+	}
+	
+	public Label getLabel() {
+		return label;
+	}
 }

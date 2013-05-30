@@ -93,7 +93,6 @@ public class MainPagePresenter extends
     getView().showLoading(event.shouldLock());
   }
   
-  @SuppressWarnings("deprecation")
   @Override
 	protected void onBind() {
 		super.onBind();
@@ -101,7 +100,6 @@ public class MainPagePresenter extends
 	    addRegisteredHandler( PageChangingEvent.getType(), new PageChangeHandler() {
 	          @Override
 	          public void onPageChange(PageChangingEvent event) {
-	        	  System.out.print(event.getMessage());
 	        	  setActiveMenuItem(event.getMessage());
 	          }
 	        } );
