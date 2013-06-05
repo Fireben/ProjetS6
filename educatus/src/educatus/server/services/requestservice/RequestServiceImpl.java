@@ -1,6 +1,7 @@
 package educatus.server.services.requestservice;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Singleton;
 
 import educatus.server.businesslogic.uibuilder.HomePageFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
@@ -27,8 +28,8 @@ import educatus.shared.services.requestservice.response.SeminaryHomePageListingC
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
+@Singleton
 public class RequestServiceImpl extends RemoteServiceServlet implements RequestService {
-
 	@Override
 	public AbstractResponse sendRequest(AbstractRequest request) throws IllegalArgumentException {
 		

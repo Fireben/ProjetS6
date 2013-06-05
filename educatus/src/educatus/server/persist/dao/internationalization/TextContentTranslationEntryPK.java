@@ -22,6 +22,12 @@ public class TextContentTranslationEntryPK implements Serializable {
 	public TextContentTranslationEntryPK() {
 	}
 
+	public TextContentTranslationEntryPK(Integer languageId, Integer cultureId, Integer textContentEntryId) {
+		this.languageId = languageId;
+		this.cultureId = cultureId;
+		this.textContentEntryId = textContentEntryId;
+	}
+	
 	public Integer getLanguageId() {
 		return this.languageId;
 	}
