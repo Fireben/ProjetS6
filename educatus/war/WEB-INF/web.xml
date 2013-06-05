@@ -4,18 +4,31 @@
 	version="2.5">
 
 	<display-name>educatus</display-name>
+	<filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
 
- <!-- Servlets -->
-  <servlet>
-    <servlet-name>requestservice</servlet-name>
-    <servlet-class>educatus.server.services.requestservice.RequestServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>requestservice</servlet-name>
-    <url-pattern>/educatus/requestservice</url-pattern>
-  </servlet-mapping>
-  
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Servlets -->
+	<!-- <servlet> -->
+	<!-- <servlet-name>requestservice</servlet-name> -->
+	<!-- <servlet-class>educatus.server.services.requestservice.RequestServiceImpl</servlet-class> -->
+	<!-- </servlet> -->
+
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>requestservice</servlet-name> -->
+	<!-- <url-pattern>/educatus/requestservice</url-pattern> -->
+	<!-- </servlet-mapping> -->
+
+	<listener>
+		<listener-class>educatus.server.services.requestservice.RequestServiceContextListener</listener-class>
+	</listener>
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>educatus.html</welcome-file>
