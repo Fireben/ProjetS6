@@ -1,6 +1,8 @@
 package educatus.client.presenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
@@ -23,6 +25,13 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
+import educatus.shared.dto.user.UserProfilContent;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.UserProfilContentRequest;
+import educatus.shared.services.requestservice.response.UserProfilContentResponse;
 
 
 public class ProfilPresenter extends
@@ -34,6 +43,11 @@ public class ProfilPresenter extends
 		public void insertChart(Widget w);
 		public void removeChart(Widget w);
 	}
+	
+
+	// Create a remote service proxy to talk to the server-side service.
+	private final RequestServiceAsync requestService = GWT
+			.create(RequestService.class);
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.profil)
@@ -55,6 +69,27 @@ public class ProfilPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
+		
+		UserProfilContentRequest request = new UserProfilContentRequest();
+		request.setUserCip("graj2308");
+		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
+			
+			@Override
+			public void onSuccess(AbstractResponse result) {
+				if (result.GetResponseType() == ResponseTypeEnum.PROFIL_PAGE_CONTENT_RESPONSE){
+					UserProfilContentResponse response = (UserProfilContentResponse) result;
+					
+					UserProfilContent content = response.getUserProfilContent();
+					content.getCip();					
+				}				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	private PieChart pie;

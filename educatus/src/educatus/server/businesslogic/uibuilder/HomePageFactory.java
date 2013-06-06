@@ -15,7 +15,7 @@ public class HomePageFactory {
 	private InternationalizationDao interDao;
 	
 	private static int HOME_TITLE = -10000;
-	
+		
 	public HomePageContent createHomePageContent(String culture, String language) {
 		
 		int cultureId;

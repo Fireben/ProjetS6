@@ -7,6 +7,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
+import educatus.server.businesslogic.profilmanager.UserProfilFactory;
 import educatus.server.businesslogic.uibuilder.HomePageFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeListingFactory;
@@ -15,6 +16,7 @@ import educatus.server.persist.dao.DaoModule;
 import educatus.shared.dto.HomePageContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 import educatus.shared.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.dto.user.UserProfilContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -24,11 +26,13 @@ import educatus.shared.services.requestservice.request.HomePageContentRequest;
 import educatus.shared.services.requestservice.request.MainMenuContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
+import educatus.shared.services.requestservice.request.UserProfilContentRequest;
 import educatus.shared.services.requestservice.response.FooterContentResponse;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.MainMenuContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
+import educatus.shared.services.requestservice.response.UserProfilContentResponse;
 
 /**
  * The server side implementation of the RPC service.
@@ -38,6 +42,7 @@ import educatus.shared.services.requestservice.response.SeminaryHomePageListingC
 public class RequestServiceImpl extends RemoteServiceServlet implements RequestService {
 	
 	private HomePageFactory homePageFactory;
+	private UserProfilFactory userProfilFactory;
 	
 	@Override
 	public void init() throws ServletException {
@@ -74,6 +79,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
 					response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
 					break;
+				case PROFIL_PAGE_CONTENT_REQUEST:
+					response = ProcessUserProfilContentRequest((UserProfilContentRequest) request);
 				default:
 					break;
 			}
@@ -132,6 +139,17 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			
 		SeminaryHomePageListingContentResponse response = new SeminaryHomePageListingContentResponse();
 		response.setContent(content);
+		
+		return response;
+	}
+	
+	private UserProfilContentResponse ProcessUserProfilContentRequest(UserProfilContentRequest request){
+		UserProfilContent content = userProfilFactory.createUserProfilContent(
+				request.getUserCip()
+		);
+		
+		UserProfilContentResponse response = new UserProfilContentResponse();
+		response.setUserProfilContent(content);
 		
 		return response;
 	}
