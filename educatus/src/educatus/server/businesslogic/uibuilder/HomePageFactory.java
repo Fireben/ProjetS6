@@ -1,16 +1,42 @@
 package educatus.server.businesslogic.uibuilder;
 
-import educatus.shared.businesslogic.dto.HomePageContent;
-import educatus.shared.businesslogic.dto.HomePageContent.HomePageSection;
+import com.google.inject.Singleton;
 
+import educatus.server.persist.dao.InternationalizationDao;
+import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
+import educatus.server.services.requestservice.GuiceInjector;
+import educatus.shared.dto.HomePageContent;
+import educatus.shared.dto.HomePageContent.HomePageSection;
+
+@Singleton
 public class HomePageFactory {
-
+	
+	private static InternationalizationDao intlDao = GuiceInjector.getInjector().getInstance(InternationalizationDao.class);
+	
+	private static int HOME_TITLE = -10000;
+	
 	public static HomePageContent createHomePageContent(String culture, String language) {
+		int cultureId;
+		int languageId;
 		
-		// TODO, we will get textcontententries from database here, to build the correct homepage from provided culture & language
+		try
+		{
+			cultureId = intlDao.findCultureByCode(culture).getId();
+			languageId = intlDao.findLanguageByCode(language).getId();
+		} catch (Exception e)
+		{
+			//TODO Manage Exceptions
+			e.printStackTrace();
+			return null;
+		}
+		
 		HomePageContent content = new HomePageContent();
+		TextContentTranslationEntry textContentTranslationEntry = null;
+
+		textContentTranslationEntry = intlDao.findTextContentTranslationEntryById(languageId, cultureId, HOME_TITLE);
+		content.setTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		
-		content.setTitle("EducateUdeS");
+//		content.setTitle("EducateUdeS");
 		content.setWelcomeImage("images/light_bulb.png");
 		content.setWelcomeTitle("EducateUdeS");
 		content.setWelcomeDescription1("Enhance your abilities in multiples categories.");

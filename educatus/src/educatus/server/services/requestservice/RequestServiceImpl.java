@@ -1,14 +1,15 @@
 package educatus.server.services.requestservice;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Singleton;
 
-import educatus.client.services.RequestService;
 import educatus.server.businesslogic.uibuilder.HomePageFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeListingFactory;
-import educatus.shared.businesslogic.dto.HomePageContent;
-import educatus.shared.businesslogic.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.businesslogic.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.dto.HomePageContent;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
+import educatus.shared.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.RequestTypeEnum;
@@ -27,8 +28,8 @@ import educatus.shared.services.requestservice.response.SeminaryHomePageListingC
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
+@Singleton
 public class RequestServiceImpl extends RemoteServiceServlet implements RequestService {
-
 	@Override
 	public AbstractResponse sendRequest(AbstractRequest request) throws IllegalArgumentException {
 		

@@ -9,13 +9,11 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import educatus.server.persist.dao.BaseDao;
 import educatus.server.persist.dao.DaoModule;
-import educatus.server.persist.dao.JpaInitializer;
+import educatus.server.persist.JpaInitializer;
 
 public class InternationalizationTest {
 
-	static BaseDao dao = null;
 	static Injector dbInjector = null;
 	
 	
@@ -23,7 +21,6 @@ public class InternationalizationTest {
 	public static void setUpBeforeClass() throws Exception {
 		dbInjector = Guice.createInjector(new DaoModule("db-manager-localhost"));
 		dbInjector.getInstance(JpaInitializer.class);
-		dao = dbInjector.getInstance(BaseDao.class);
 	}
 
 	@AfterClass
