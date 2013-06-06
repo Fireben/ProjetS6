@@ -2,7 +2,8 @@ package educatus.server.services.requestservice;
 
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import educatus.server.persist.dao.JpaInitializer;
+
+import educatus.server.persist.JpaInitializer;
 
 public class RequestServiceContextListener extends GuiceServletContextListener
 {
