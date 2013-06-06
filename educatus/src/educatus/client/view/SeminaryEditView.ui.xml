@@ -6,10 +6,12 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
+<ui:with field='res' type='educatus.resources.Resources'/>
 
 	<ui:style>
 		.titleDesc {
 			width: 30%;
+			margin-left: 50px;
 			display: inline-block;
 		}
 		
@@ -32,7 +34,10 @@
 		}
 		
 		.addTextImg {
+			width: 50px;
 			height: 50px;
+			position: absolute;
+			top: 25%;
 			padding-left: 8px;
 			position: relative;
 			vertical-align: middle;
@@ -57,6 +62,20 @@
 			cursor: pointer;
 		}
 		
+		.contentPanel {
+			width: 30%;
+			margin-left: 50px;
+		}
+		
+		@external .gwt-b;
+		.gwt-b {
+			width: 0px;
+			height: 0px;
+			
+        	background: none;
+        	border: none;
+    	}
+		
 		.confirmPanel {
 			bottom: 0;
 			position: relative;
@@ -66,18 +85,29 @@
 	<g:HTMLPanel>
 		<style>
 			.addContentWidget {
-			border: 1px dotted #2B2B2B;
+			border: 1px #2B2B2B;
 			border-radius:
 			50% 50% 50% 50%;
 			bottom: 0;
-			height: 200px;
+			height: 100px;
+			position: absolute;
+			right: 0;
+			width: 100px;
+			height: 200px
 			line-height: 200px;
-			position:
-			absolute;
+			position: absolute;
 			right: 0;
 			width: 200px;
+			background-origin: border-box !important;
+			background: #00b4f0;
+			background: linear-gradient(top, #14c4ff 0, #00bfff 29%, #09c 100%) no-repeat;
+			background: -webkit-linear-gradient(top, #14c4ff 0, #00bfff 29%, #09c 100%) no-repeat;
+			background: -moz-linear-gradient(top, #14c4ff 0, #00bfff 29%, #09c 100%) no-repeat;
+			background: -o-linear-gradient(top, #14c4ff 0, #00bfff 29%, #09c 100%) no-repeat;
+			background: -ms-linear-gradient(top, #14c4ff 0, #00bfff 29%, #09c 100%) no-repeat;
+			background: linear-gradient(top, #14c4ff 0, #00bfff 29%, #09c 100%) no-repeat;
+			-svg-background: linear-gradient(top, #14c4ff 0, #00bfff 29%, #09c 100%) no-repeat;			
 			}
-
 		</style>
 
 		<div id="art-mainPage">
@@ -93,6 +123,7 @@
 								<g:TextArea name="semDescBox" ui:field="semDescBox"
 									styleName='{style.descBox}' />
 							</g:FlowPanel>
+
 							<g:ListBox styleName='{style.difficultyList}'>
 								<g:item>
 									easy
@@ -101,14 +132,27 @@
 									hard
 								</g:item>
 							</g:ListBox>
-							<g:HTMLPanel ui:field="contentPanel" styleName='{style.contentPanel}' />
-
-							<div class="addContentWidget">
-								<g:Image ui:field="addTextBoxImg" url="images/addText.png"
-									styleName="{style.addTextImg}" />
-								<g:Image ui:field="addImageImg" url="images/addImage.png"
-									styleName="{style.addImageImg}" />
+						
+						<g:HTMLPanel ui:field="contentPanel" styleName="{style.contentPanel}" />
+	
+						
+						<div class="addContentWidget">
+							<div style="position: absolute;top: 42%;padding-left: 70px;">
+								<g:PushButton ui:field="addTextButton" enabled='true' addStyleNames='{style.gwt-b}'>
+									<g:upFace image='{res.addTextButton}'/>
+								</g:PushButton>
 							</div>
+							<div style='position: absolute;top: 15%;padding-left: 135px;'>
+								<g:PushButton ui:field="addImageButton" enabled="true" addStyleNames='{style.gwt-b}'>
+									<g:upFace image='{res.addImageButton}'/>
+								</g:PushButton>
+							</div>
+							<div style="position: absolute;top: 15%;padding-left: 0px;">
+								<g:PushButton ui:field="addVideoButton" enabled="true" addStyleNames='{style.gwt-b}'>
+									<g:upFace image='{res.addVideoButton}'/>
+								</g:PushButton>
+							</div>
+						</div>
 							<g:HTMLPanel ui:field="confirmPanel" styleName='{style.confirmPanel}' />
 						</div>
 					</h4>	

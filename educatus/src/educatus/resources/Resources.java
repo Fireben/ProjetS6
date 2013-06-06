@@ -23,4 +23,13 @@ public interface Resources extends ClientBundle {
     
     @Source("alignRight.png")
     ImageResource alignRight();
+    
+    @Source("addImage.png")
+    ImageResource addImageButton();
+    
+    @Source("addText.png")
+    ImageResource addTextButton();
+    
+    @Source("addVideo.png")
+    ImageResource addVideoButton();
 }
