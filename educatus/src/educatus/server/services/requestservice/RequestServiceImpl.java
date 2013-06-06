@@ -1,11 +1,17 @@
 package educatus.server.services.requestservice;
 
+import javax.servlet.ServletException;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 import educatus.server.businesslogic.uibuilder.HomePageFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeListingFactory;
+import educatus.server.persist.JpaInitializer;
+import educatus.server.persist.dao.DaoModule;
 import educatus.shared.dto.HomePageContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 import educatus.shared.dto.seminary.SeminaryHomeListingContent;
@@ -30,6 +36,21 @@ import educatus.shared.services.requestservice.response.SeminaryHomePageListingC
 @SuppressWarnings("serial")
 @Singleton
 public class RequestServiceImpl extends RemoteServiceServlet implements RequestService {
+	
+	private HomePageFactory homePageFactory;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+				
+		DaoModule module = new DaoModule("db-manager-localhost");
+		Injector dbInjector = Guice.createInjector(module);	 
+		dbInjector.getInstance(JpaInitializer.class);
+		//dbInjector.getInstance(InternationalizationDao.class);
+		//dbInjector.getInstance(SeminaryDao.class);
+		homePageFactory = dbInjector.getInstance(HomePageFactory.class);
+	}
+
 	@Override
 	public AbstractResponse sendRequest(AbstractRequest request) throws IllegalArgumentException {
 		
@@ -79,7 +100,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	
 	private HomePageContentResponse ProcessHomePageContentRequest(HomePageContentRequest request)
 	{
-		HomePageContent content = HomePageFactory.createHomePageContent("CA", "fr");
+		HomePageContent content = homePageFactory.createHomePageContent("CA", "fr");
 		
 		HomePageContentResponse response = new HomePageContentResponse();
 		response.setHomeContent(content);
