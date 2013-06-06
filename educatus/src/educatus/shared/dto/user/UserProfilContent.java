@@ -1,9 +1,12 @@
 package educatus.shared.dto.user;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class UserProfilContent {
+public class UserProfilContent implements Serializable {
 
+	private static final long serialVersionUID = 7413591483810523323L;
+	
 	private String cip;
 	private String firstName;
 	private String lastName;

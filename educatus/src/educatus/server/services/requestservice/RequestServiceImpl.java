@@ -54,6 +54,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		//dbInjector.getInstance(InternationalizationDao.class);
 		//dbInjector.getInstance(SeminaryDao.class);
 		homePageFactory = dbInjector.getInstance(HomePageFactory.class);
+		userProfilFactory = dbInjector.getInstance(UserProfilFactory.class);
 	}
 
 	@Override

@@ -2,9 +2,11 @@ package educatus.server.businesslogic.profilmanager;
 
 import java.sql.Date;
 
+import com.google.inject.Singleton;
+
 import educatus.shared.dto.user.UserProfilContent;
 
-
+@Singleton
 public class UserProfilFactory {
 
 	public UserProfilContent createUserProfilContent(String cip){
