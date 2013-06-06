@@ -42,8 +42,6 @@ public class HomeView extends ViewImpl implements MyView {
 	@UiField Element homePageFirstDescription2;
 	@UiField Element homePageFirstDescription3;
 	
-	@UiField Element homePageButton;
-	
 	@UiField Element homePageFirstSectionTitle;
 	@UiField Element homePageFirstSectionText;
 	@UiField Element homePageFirstSectionImg;
@@ -96,10 +94,6 @@ public class HomeView extends ViewImpl implements MyView {
 
 	public Element getHomePageFirstDescription3() {
 		return homePageFirstDescription3;
-	}
-
-	public Element getHomePageButton() {
-		return homePageButton;
 	}
 
 	public Element getHomePageFirstSectionTitle() {

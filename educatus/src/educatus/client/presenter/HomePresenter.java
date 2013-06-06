@@ -69,8 +69,6 @@ public class HomePresenter extends
 
 		public Element getHomePageFirstDescription3();
 
-		public Element getHomePageButton();
-
 		public Element getHomePageFirstSectionTitle();
 
 		public Element getHomePageFirstSectionText();
@@ -163,7 +161,6 @@ public class HomePresenter extends
 		getView().getHomePageFirstDescription().setInnerText(content.getWelcomeDescription1());
 		getView().getHomePageFirstDescription2().setInnerText(content.getWelcomeDescription2());
 		getView().getHomePageFirstDescription3().setInnerText(content.getWelcomeDescription3());
-		getView().getHomePageButton().setInnerText(content.getWelcomeButtonText());
 		
 		// Seminary section
 		getView().getHomePageFirstSectionTitle().setInnerText(content.getSeminarsSection().getSectionTitle());

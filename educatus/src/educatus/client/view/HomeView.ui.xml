@@ -34,7 +34,6 @@
 														<h6 ui:field="homePageFirstDescription"></h6>
 														<h6 ui:field="homePageFirstDescription2"></h6>
 														<h6 ui:field="homePageFirstDescription3"></h6>
-														<p style="margin-left: 40px"><a ui:field="homePageButton" href="" class="art-button"></a></p>
 													</div>
 												</div>
 											</div>
