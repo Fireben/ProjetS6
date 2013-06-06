@@ -1,28 +1,30 @@
 package educatus.server.businesslogic.uibuilder;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
-import educatus.server.services.requestservice.GuiceInjector;
 import educatus.shared.dto.HomePageContent;
 import educatus.shared.dto.HomePageContent.HomePageSection;
 
 @Singleton
 public class HomePageFactory {
 	
-	private static InternationalizationDao intlDao = GuiceInjector.getInjector().getInstance(InternationalizationDao.class);
+	@Inject
+	private InternationalizationDao interDao;
 	
 	private static int HOME_TITLE = -10000;
-	
-	public static HomePageContent createHomePageContent(String culture, String language) {
+		
+	public HomePageContent createHomePageContent(String culture, String language) {
+		
 		int cultureId;
 		int languageId;
 		
 		try
 		{
-			cultureId = intlDao.findCultureByCode(culture).getId();
-			languageId = intlDao.findLanguageByCode(language).getId();
+			cultureId = interDao.findCultureByCode(culture).getId();
+			languageId = interDao.findLanguageByCode(language).getId();
 		} catch (Exception e)
 		{
 			//TODO Manage Exceptions
@@ -33,7 +35,7 @@ public class HomePageFactory {
 		HomePageContent content = new HomePageContent();
 		TextContentTranslationEntry textContentTranslationEntry = null;
 
-		textContentTranslationEntry = intlDao.findTextContentTranslationEntryById(languageId, cultureId, HOME_TITLE);
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, HOME_TITLE);
 		content.setTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		
 //		content.setTitle("EducateUdeS");
