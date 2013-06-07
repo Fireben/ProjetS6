@@ -1,10 +1,12 @@
 package educatus.server.persist.dao.internationalization;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +32,8 @@ public class TextContentEntry implements Serializable {
 	private Integer id;
 
 	// bi-directional many-to-one association to Textcontenttranslationentry
-	@OneToMany(mappedBy = "TextContentEntry")
-	private List<TextContentTranslationEntry> textContentTranslationEntries;
+	@OneToMany(mappedBy = "TextContentEntry", fetch = FetchType.LAZY)
+	private List<TextContentTranslationEntry> textContentTranslationEntries = new ArrayList<TextContentTranslationEntry>();
 
 	public TextContentEntry() {
 	}

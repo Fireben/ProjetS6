@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Inheritance
 @NamedQueries({ @NamedQuery(name = Image.FIND_ALL, query = "SELECT i FROM Image i") })
-@DiscriminatorColumn(name = "IMTY_TYPE")
+@DiscriminatorColumn(name = "IMTY_TYPE", discriminatorType = DiscriminatorType.INTEGER)
 // Vue Image
 @Table(name = "internationalization.vimage")
 public abstract class Image implements Serializable {
