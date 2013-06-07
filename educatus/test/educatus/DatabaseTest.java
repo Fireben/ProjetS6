@@ -113,17 +113,17 @@ public class DatabaseTest {
 //		}
 			
 		
-		Category foundParentCat = manager.find(Category.class, 42);
-		List<Category> listCat = seminaryDao.findChildrensCategories(foundParentCat.getId());
+		//Category foundParentCat = manager.find(Category.class, 42);
+		//List<Category> listCat = seminaryDao.findChildrensCategories(foundParentCat.getId());
 		
 		
-		for (Category category : listCat) {
-			TextContentEntry entry = category.getName();
-			List<TextContentTranslationEntry> entries = entry.getTextContentTranslationEntries();
-			for (TextContentTranslationEntry textContentTranslationEntry : entries) {
-				System.out.println(textContentTranslationEntry.getTcteTranslation());
-			}			
-		}		
+//		for (Category category : listCat) {
+//			TextContentEntry entry = category.getName();
+//			List<TextContentTranslationEntry> entries = entry.getTextContentTranslationEntries();
+//			for (TextContentTranslationEntry textContentTranslationEntry : entries) {
+//				System.out.println(textContentTranslationEntry.getTcteTranslation());
+//			}			
+//		}		
 		
 		try {
 			Culture c = internationalizationDao.findCultureByCode("CA");
