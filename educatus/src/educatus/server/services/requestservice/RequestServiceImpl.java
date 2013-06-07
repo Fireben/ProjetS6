@@ -42,6 +42,8 @@ import educatus.shared.services.requestservice.response.UserProfilContentRespons
 public class RequestServiceImpl extends RemoteServiceServlet implements RequestService {
 	
 	private HomePageFactory homePageFactory;
+	private SeminaryHomeCategoryFactory seminaryHomeCategoryFactory;
+	private SeminaryHomeListingFactory seminaryHomeListingFactory;
 	private UserProfilFactory userProfilFactory;
 	
 	@Override
@@ -55,6 +57,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		//dbInjector.getInstance(SeminaryDao.class);
 		homePageFactory = dbInjector.getInstance(HomePageFactory.class);
 		userProfilFactory = dbInjector.getInstance(UserProfilFactory.class);
+		seminaryHomeCategoryFactory = dbInjector.getInstance(SeminaryHomeCategoryFactory.class);
+		seminaryHomeListingFactory = dbInjector.getInstance(SeminaryHomeListingFactory.class);
 	}
 
 	@Override
@@ -118,8 +122,13 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	
 	private SeminaryHomePageCategoryContentResponse ProcessSeminaryHomePageCategoryContentRequest(SeminaryHomePageCategoryContentRequest request){
 		
-		SeminaryHomeCategoryContent content = SeminaryHomeCategoryFactory.createSeminaryHomeCategoryContent(
-			request.getParentCategory().getId(), 
+		Integer parentCategoryId = null;
+		if (request.getParentCategory() != null) {
+			parentCategoryId = request.getParentCategory().getId();
+		}
+		
+		SeminaryHomeCategoryContent content = seminaryHomeCategoryFactory.createSeminaryHomeCategoryContent(
+			parentCategoryId, 
 			"CA", 
 			"fr"
 		);
@@ -132,7 +141,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 	
 	private SeminaryHomePageListingContentResponse ProcessSeminaryHomePageListingContentRequest(SeminaryHomePageListingContentRequest request){
-		SeminaryHomeListingContent content = SeminaryHomeListingFactory.createSeminaryHomeListingContent(
+		SeminaryHomeListingContent content = seminaryHomeListingFactory.createSeminaryHomeListingContent(
 				request.getSelectedCategory().getId(), 
 				"CA", 
 				"fr"

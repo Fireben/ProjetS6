@@ -25,14 +25,16 @@ import educatus.server.persist.dao.internationalization.TextContentEntry;
 @Entity
 @NamedQueries({
 	@NamedQuery(name = Category.FIND_ALL, query = "SELECT c FROM Category c"),
-	@NamedQuery(name = Category.FIND_ALL_CHILDRENS, query = "SELECT c FROM Category c WHERE c.parentCategory=:parentCategory") })
+	@NamedQuery(name = Category.FIND_ALL_CHILDREN, query = "SELECT c FROM Category c WHERE c.parentCategory=:parentCategory"),
+	@NamedQuery(name = Category.FIND_ALL_TOP_LEVEL, query = "SELECT c FROM Category c WHERE c.parentCategory IS NULL")})
 @Table(name = "seminary.category")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "CATEGORY.FIND_ALL";
-	public static final String FIND_ALL_CHILDRENS = "CATEGORY.FIND_ALL_CHILDRENS";
-	public static final String FIND_ALL_CHILDRENS_PARAM_NAME = "parentCategory";
+	public static final String FIND_ALL_CHILDREN = "CATEGORY.FIND_ALL_CHILDREN";
+	public static final String FIND_ALL_CHILDREN_PARAM_NAME = "parentCategory";
+	public static final String FIND_ALL_TOP_LEVEL = "CATEGORY.FIND_ALL_TOP_LEVEL";
 	
 	@Id
 	@SequenceGenerator(name = "CATEGORY_CATE_ID_GENERATOR", sequenceName = "seminary.category_cate_id_seq", allocationSize = 1)

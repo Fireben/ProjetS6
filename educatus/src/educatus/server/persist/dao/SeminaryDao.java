@@ -49,13 +49,26 @@ public class SeminaryDao {
 		return category;
 	}	
 	
+	public Category findCategoryById(int categoryId) throws Exception{
+		Category category = entityManager.find(Category.class, categoryId);
+		return category;
+	}
+	
 	@SuppressWarnings("unchecked")
-	public List<Category> findChildrensCategories(int parentId){
+	public List<Category> findChildrenCategories(Integer parentId) throws Exception {
 		
 		Category parentCategory = entityManager.find(Category.class, parentId);
 		List<?> resultList = entityManager.createNamedQuery(
-				Category.FIND_ALL_CHILDRENS).setParameter(Category.FIND_ALL_CHILDRENS_PARAM_NAME, parentCategory).getResultList();
+				Category.FIND_ALL_CHILDREN).setParameter(Category.FIND_ALL_CHILDREN_PARAM_NAME, parentCategory).getResultList();
 
 		return (List<Category>) resultList;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Category> findTopLevelCategories() throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(
+				Category.FIND_ALL_TOP_LEVEL).getResultList();
+		
+		return (List<Category>) resultList; 
 	}
 }
