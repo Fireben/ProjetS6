@@ -156,8 +156,9 @@ public class SeminaryEditPresenter extends
 	{
 		super.onBind();
 		
-		//getView().getAddTextBoxImg().addClickHandler(addTextBoxHandler);
-		//getView().getAddImageImg().addClickHandler(addImageHandler);
+		getView().getAddTextButton().addClickHandler(addTextBoxHandler);
+		getView().getAddImageButton().addClickHandler(addImageBoxHandler);
+		getView().getAddVideoButton().addClickHandler(addVideoBoxHandler);		
 	}
 
 	@Override
@@ -165,12 +166,11 @@ public class SeminaryEditPresenter extends
 	{
 		super.onReset();
 		setInSlot(SLOT_confirm, confirmPresenter);
-		setInSlot(SLOT_content, null);
+		setInSlot(SLOT_content, null);		
 		
 		confirmPresenter.getView().getSaveButton().addClickHandler(saveHandler);
+		
 		//getView().getAddTextBoxImg().addClickHandler(addTextBoxHandler);
-		getView().getAddTextButton().addClickHandler(addTextBoxHandler);
-		getView().getAddImageButton().addClickHandler(addImageBoxHandler);
-		getView().getAddVideoButton().addClickHandler(addVideoBoxHandler);
+
 	}
 }

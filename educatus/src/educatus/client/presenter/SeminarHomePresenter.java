@@ -75,8 +75,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   	
   	@Override
   	protected void onBind() {
-  		super.onBind();
-  		
+  		super.onBind();  		
   	}
   
 	@Override
