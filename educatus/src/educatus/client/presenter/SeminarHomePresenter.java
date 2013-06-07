@@ -112,7 +112,11 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private ClickHandler backClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-		
+			// TODO Adjustments on server for correct "back" behavior
+			// Back click returns to top level			
+	  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+	  		request.setParentCategory(null);
+	  		requestService.sendRequest(request, responseHandler);
 		}
 	};
 	
