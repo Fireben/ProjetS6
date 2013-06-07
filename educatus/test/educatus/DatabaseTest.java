@@ -2,6 +2,8 @@ package educatus;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -13,6 +15,7 @@ import educatus.server.persist.dao.internationalization.Culture;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.Language;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
@@ -28,51 +31,99 @@ public class DatabaseTest {
 		
 		InternationalizationDao internationalizationDao = null;
 		SeminaryDao seminaryDao = null;
+		EntityManager manager = null;
 		
 		Injector dbInjector = Guice.createInjector(new DaoModule("db-manager-localhost"));	 
 		dbInjector.getInstance(JpaInitializer.class);
 		internationalizationDao = dbInjector.getInstance(InternationalizationDao.class);
 		seminaryDao = dbInjector.getInstance(SeminaryDao.class);
+		manager = dbInjector.getInstance(EntityManager.class);
+//		
+//		Category parentCat = null;
+//		Category child1 = null;
+//		Category child2 = null;
+//		
+//		try {
+//			
+//			TextContentTranslationEntry parentNameEn = internationalizationDao.insertTextContentTranslationEntry(
+//					"en", 
+//					"CA", 
+//					"Computer Engineering"
+//			);
+//								
+//			TextContentTranslationEntry parentDescriptionEn = internationalizationDao.insertTextContentTranslationEntry(
+//					"en", 
+//					"CA", 
+//					"Computer Engineering"
+//			);
+//			
+//			TextContentTranslationEntry child1NameEn = internationalizationDao.insertTextContentTranslationEntry(
+//					"en", 
+//					"CA", 
+//					"Software"
+//			);
+//								
+//			TextContentTranslationEntry child1DescriptionEn = internationalizationDao.insertTextContentTranslationEntry(
+//					"en", 
+//					"CA", 
+//					"Software"
+//			);
+//			
+//			TextContentTranslationEntry child2NameEn = internationalizationDao.insertTextContentTranslationEntry(
+//					"en", 
+//					"CA", 
+//					"Hardware"
+//			);
+//								
+//			TextContentTranslationEntry child2DescriptionEn = internationalizationDao.insertTextContentTranslationEntry(
+//					"en", 
+//					"CA", 
+//					"Hardware"
+//			);
+//					
+//			// Url des images
+//			ImageExternal external1 = internationalizationDao.insertImageExternal("sauceNuage1");
+//			ImageExternal external2 = internationalizationDao.insertImageExternal("sauceNuage2");
+//			ImageExternal external3 = internationalizationDao.insertImageExternal("sauceNuage3");
+//			
+//			parentCat = seminaryDao.createNewCategory(
+//					parentNameEn.getTextcontententry().getId(), 
+//					parentDescriptionEn.getTextcontententry().getId(), 
+//					external1.getId(),
+//					null
+//			);
+//			
+//			child1 = seminaryDao.createNewCategory(
+//					child1NameEn.getTextcontententry().getId(), 
+//					child1DescriptionEn.getTextcontententry().getId(), 
+//					external2.getId(),
+//					parentCat.getId()
+//			);
+//			
+//			child2 = seminaryDao.createNewCategory(
+//					child2NameEn.getTextcontententry().getId(), 
+//					child2DescriptionEn.getTextcontententry().getId(), 
+//					external3.getId(),
+//					parentCat.getId()
+//			);
+//		
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+			
 		
-		try {
-			
-			TextContentTranslationEntry nameFr = internationalizationDao.insertTextContentTranslationEntry(
-					"fr", 
-					"CA", 
-					"Logiciel"
-			);
-					
-			TextContentTranslationEntry nameEn = internationalizationDao.insertTextContentTranslationEntry(
-					"en", 
-					"CA", 
-					"Software",
-					nameFr.getTextcontententry().getId()
-			);
-			
-			TextContentTranslationEntry descriptionFr = internationalizationDao.insertTextContentTranslationEntry(
-					"fr", 
-					"CA", 
-					"Logiciel"
-			);
-					
-			TextContentTranslationEntry descriptionEn = internationalizationDao.insertTextContentTranslationEntry(
-					"en", 
-					"CA", 
-					"Software",
-					descriptionFr.getTextcontententry().getId()
-			);
-			
-			Category cat = seminaryDao.createNewCategory(
-					nameEn.getTextcontententry().getId(), 
-					descriptionEn.getTextcontententry().getId(), 
-					null
-			);
+		Category foundParentCat = manager.find(Category.class, 42);
+		List<Category> listCat = seminaryDao.findChildrensCategories(foundParentCat.getId());
 		
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-			
+		
+		for (Category category : listCat) {
+			TextContentEntry entry = category.getName();
+			List<TextContentTranslationEntry> entries = entry.getTextContentTranslationEntries();
+			for (TextContentTranslationEntry textContentTranslationEntry : entries) {
+				System.out.println(textContentTranslationEntry.getTcteTranslation());
+			}			
+		}		
 		
 		try {
 			Culture c = internationalizationDao.findCultureByCode("CA");
