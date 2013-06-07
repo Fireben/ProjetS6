@@ -19,8 +19,10 @@ package educatus.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -34,6 +36,15 @@ import educatus.client.NameTokens;
 import educatus.client.animation.FadeAnimation;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.dataGrids.Seminary;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
+import educatus.shared.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
+import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 
 /**
  * @author Nicolas Michaud
@@ -46,6 +57,11 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     @NameToken(NameTokens.seminarHomePage)
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
     }
+    
+	// Create a remote service proxy to talk to the server-side service.
+	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
+	// Response handler
+	AbstractResponseHandler responseHandler = null;
     
     private int state = 0;
     
@@ -75,7 +91,14 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   	
   	@Override
   	protected void onBind() {
-  		super.onBind();  		
+  		super.onBind();
+  		
+  		// We create the handler
+  		responseHandler = new AbstractResponseHandler();
+  		
+  		// Parent category will be null, find all top level
+  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		requestService.sendRequest(request, responseHandler);
   	}
   
 	@Override
@@ -137,4 +160,33 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 										FadeAnimation.MAX_OPACITY, FadeAnimation.VERY_LONG);
 		animation.start();
 	}
+	
+	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
+		
+		@Override
+		public void onSuccess(AbstractResponse result) {
+			
+			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){
+				
+				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
+				SeminaryHomeCategoryContent content = response.getContent();
+				
+			} else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE) {
+				
+				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
+				SeminaryHomeListingContent content = response.getContent();
+				
+			} else {
+				// ERROR, not the response type we expected
+			}
+			
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
 }
