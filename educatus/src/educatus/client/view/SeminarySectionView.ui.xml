@@ -10,12 +10,11 @@
 	<ui:style type="educatus.client.view.SeminarySectionView.ContentStyle">
 		@external .deleteButton;
 		.deleteButton {
-			width: 48px;
-			height: 48px;
 			background: none;
 			border: none;
 			position: relative;
 			float: right;
+			top: 30px;
 		}
 		
 		.textArea {
@@ -41,10 +40,12 @@
 		<div class="contentAlign" ui:field="contentAlignBlock">
 			<div class="contentBlock">
 				<br />
-				<g:PushButton ui:field="deleteBtn" enabled='true'
-					addStyleNames='{style.deleteButton}'>
-					<g:upFace image='{res.deleteButton}' />
-				</g:PushButton>
+				<div>
+					<g:PushButton ui:field="deleteBtn" enabled='true'
+						addStyleNames='{style.deleteButton}'>
+						<g:upFace image='{res.deleteButton}' />
+					</g:PushButton>
+				</div>
 				<div class="contentBlock">
 					<g:SimplePanel ui:field="contentArea" />
 

@@ -1989,3 +1989,9 @@ button:disabled {
 	padding: 0;
 }
 
+.languageButton {
+	background: none;
+	border: none;
+	float: right;
+}
+

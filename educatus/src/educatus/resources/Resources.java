@@ -12,7 +12,7 @@ public interface Resources extends ClientBundle {
     CssResource css();
     
     /* Seminar Section View Resources */
-    @Source("deleteButton.png")
+    @Source("1370561423_Gnome-Window-Close-20.png")
     ImageResource deleteButton();
     
     @Source("alignLeft.png")
@@ -24,6 +24,12 @@ public interface Resources extends ClientBundle {
     @Source("alignRight.png")
     ImageResource alignRight();
     
+    @Source("french.png")
+    ImageResource frenchLanguageButton();
+    
+    @Source("english.png")
+    ImageResource englishLanguageButton();
+
     @Source("addImage.png")
     ImageResource addImageButton();
     
