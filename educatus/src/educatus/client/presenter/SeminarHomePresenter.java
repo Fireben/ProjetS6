@@ -35,16 +35,16 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import educatus.client.NameTokens;
 import educatus.client.animation.FadeAnimation;
 import educatus.client.events.PageChangingEvent;
+import educatus.client.ui.CustomButton;
 import educatus.client.ui.dataGrids.Seminary;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.dto.seminary.SeminaryHomeListingContent;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
-import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 
 /**
  * @author Nicolas Michaud
@@ -62,8 +62,6 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
 	// Response handler
 	AbstractResponseHandler responseHandler = null;
-    
-    private int state = 0;
     
     public static final Object SLOT_content = new Object();
     
@@ -92,57 +90,47 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   	@Override
   	protected void onBind() {
   		super.onBind();
-  		
-  		// We create the handler
   		responseHandler = new AbstractResponseHandler();
-  		
-  		// Parent category will be null, find all top level
-  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
-  		requestService.sendRequest(request, responseHandler);
   	}
   
 	@Override
 	protected void onReset() {
 	  super.onReset();      
 	  PageChangingEvent.fire(this, NameTokens.getSeminarHomePage());
-	  seminarCategoryPresenter.initializeBackButton(backClickHandler);
+	  seminarCategoryPresenter.registerBackButton(backClickHandler);
 	}
 	
 	@Override
-	protected void onReveal() {
-		state = 0;	  
+	protected void onReveal() {  	
+		seminarCategoryPresenter.clear(); 
 		setInSlot(SLOT_content, seminarCategoryPresenter);
-		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);			
+  		// Parent category will be null, find all top level
+  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		requestService.sendRequest(request, responseHandler);
 	}
 	
 	private ClickHandler backClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			state--;
-			changeState();
+		
 		}
 	};
 	
 	private ClickHandler categoryClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			state++;
-			changeState();
+			CustomButton buttonClicked = (CustomButton) event.getSource();
+			changeCategoryPanel(Integer.parseInt(buttonClicked.getElement().getId()));
 		}
 	};
 	
-	private void changeCategoryPanel() {		
-		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);
-	}
-	
-	private void changeState() {
-		
-		if(state < 2) {
-			changeCategoryPanel();
-		}
-		else {
-			setSeminaryList();
-		}
+	private void changeCategoryPanel(int id) {  		
+  		CategoryContent parentCategory = new CategoryContent();
+  		parentCategory.setId(id);  		
+  		
+  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		request.setParentCategory(parentCategory);
+  		requestService.sendRequest(request, responseHandler);
 	}
 	
 	private void setSeminaryList() {
@@ -166,17 +154,22 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		@Override
 		public void onSuccess(AbstractResponse result) {
 			
-			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){
-				
+			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){				
 				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
 				SeminaryHomeCategoryContent content = response.getContent();
+				if(content.getCategoryChildren().size() != 0) {
+					seminarCategoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
+					CategoryContent parent = content.getCommonParent();
+					if(parent != null) {
+						seminarCategoryPresenter.animateBackButtonIn();
+					}
+				}
+				else {
+					setSeminaryList();
+				}
 				
-			} else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE) {
-				
-				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
-				SeminaryHomeListingContent content = response.getContent();
-				
-			} else {
+			} 
+			else {
 				// ERROR, not the response type we expected
 			}
 			
