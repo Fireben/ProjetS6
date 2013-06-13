@@ -12,6 +12,7 @@ import educatus.server.persist.dao.internationalization.Culture;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.Language;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
@@ -88,6 +89,20 @@ public class InternationalizationDao
 				.getResultList();
 
 		return (List<Image>) resultList;
+	}
+	
+	public ImageExternal findImageById(Integer id)
+	{
+		ImageExternal imageExternal = null;
+		try
+		{
+			imageExternal = (ImageExternal)entityManager.find(Image.class, id);
+		} catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return imageExternal; 
 	}
 
 	@SuppressWarnings("unchecked")
