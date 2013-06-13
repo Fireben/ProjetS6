@@ -91,6 +91,20 @@ public class InternationalizationDao
 
 		return (List<Image>) resultList;
 	}
+	
+	public ImageExternal findImageById(Integer id)
+	{
+		ImageExternal imageExternal = null;
+		try
+		{
+			imageExternal = (ImageExternal)entityManager.find(Image.class, id);
+		} catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return imageExternal; 
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<ImageContentEntry> findAllImageContentEntry() throws Exception

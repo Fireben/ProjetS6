@@ -149,8 +149,6 @@ public class HomePresenter extends
 	protected void onReset() {
 		super.onReset();
 		PageChangingEvent.fire(this, NameTokens.getHomePage());
-		// getView().getHomePageTitle().setInnerText("Testing");
-		// getView().getHomePageFirstDescription().setInnerText("El Test");
 	}
 	
 	private void fillPageWithContent(HomePageContent content)
