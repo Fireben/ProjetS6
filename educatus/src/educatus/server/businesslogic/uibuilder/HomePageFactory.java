@@ -55,10 +55,10 @@ public class HomePageFactory {
 	public HomePageContent createHomePageContent(String culture, String language) {
 		int cultureId;
 		int languageId;
-
 		try {
 			cultureId = interDao.findCultureByCode(culture).getId();
 			languageId = interDao.findLanguageByCode(language).getId();
+	
 		} catch (Exception e) {
 			// TODO Manage Exceptions
 			e.printStackTrace();
@@ -141,7 +141,6 @@ public class HomePageFactory {
 		forumsSection.setSectionLinkText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		content.setForumsSection(forumsSection);
 
-		return content;
 	}
 
 }

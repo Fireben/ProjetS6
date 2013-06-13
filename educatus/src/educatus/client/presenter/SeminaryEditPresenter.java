@@ -7,8 +7,6 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import educatus.client.NameTokens;
-import educatus.client.events.PageChangingEvent;
-
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,6 +14,7 @@ import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -29,11 +28,14 @@ public class SeminaryEditPresenter extends
 	{
 		public TextBox getSemTitleBox();
 
-		public Image getAddTextBoxImg();
+		//public Image getAddTextBoxImg();
+		public PushButton getAddTextButton();
+		public PushButton getAddImageButton();
+		public PushButton getAddVideoButton();
 		
-		public Image getAddImageImg();
+		//public Image getAddImageImg();
 	}
-
+	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.seminaryEdit)
 	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter>
@@ -89,7 +91,7 @@ public class SeminaryEditPresenter extends
 		}
 	};
 	
-	private ClickHandler addImageHandler = new ClickHandler()
+		private ClickHandler addImageBoxHandler = new ClickHandler()
 	{
 		@Override
 		public void onClick(ClickEvent event)
@@ -115,10 +117,22 @@ public class SeminaryEditPresenter extends
 			});		
 		}
 	};
-
+	
+	private ClickHandler addVideoBoxHandler = new ClickHandler()
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			setInSlot(SLOT_content, seminarySectionPresenter);
+		}
+	};
+	
 	@Inject
 	ConfirmChangesPresenter confirmPresenter;
-
+	
+	@Inject
+	SeminarySectionPresenter seminarySectionPresenter;
+	
 	public static final Object SLOT_confirm = new Object();
 	public static final Object SLOT_content = new Object();
 	
@@ -144,20 +158,21 @@ public class SeminaryEditPresenter extends
 	{
 		super.onBind();
 		
-		getView().getAddTextBoxImg().addClickHandler(addTextBoxHandler);
-		getView().getAddImageImg().addClickHandler(addImageHandler);
+		getView().getAddTextButton().addClickHandler(addTextBoxHandler);
+		getView().getAddImageButton().addClickHandler(addImageBoxHandler);
+		getView().getAddVideoButton().addClickHandler(addVideoBoxHandler);		
 	}
 
 	@Override
 	protected void onReset()
 	{
 		super.onReset();
-		PageChangingEvent.fire(this, NameTokens.getSeminaryEdit());
-		
 		setInSlot(SLOT_confirm, confirmPresenter);
-		setInSlot(SLOT_content, null);
+		setInSlot(SLOT_content, null);		
 		
 		confirmPresenter.getView().getSaveButton().addClickHandler(saveHandler);
 		
+		//getView().getAddTextBoxImg().addClickHandler(addTextBoxHandler);
+
 	}
 }

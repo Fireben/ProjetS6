@@ -5,10 +5,13 @@ import java.util.ArrayList;
 
 public class SeminaryHomeCategoryContent implements Serializable {
 
-	public static class CategoryContent {
+	public static class CategoryContent implements Serializable {
+
+		private static final long serialVersionUID = -1828187453368863687L;
 		private int id;
 		private String name;
 		private String description;
+		private String imageUrl;
 
 		public int getId() {
 			return id;
@@ -32,6 +35,14 @@ public class SeminaryHomeCategoryContent implements Serializable {
 
 		public void setDescription(String description) {
 			this.description = description;
+		}
+
+		public String getImageUrl() {
+			return imageUrl;
+		}
+
+		public void setImageUrl(String imageUrl) {
+			this.imageUrl = imageUrl;
 		}
 
 	}

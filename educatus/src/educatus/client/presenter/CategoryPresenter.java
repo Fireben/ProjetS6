@@ -1,9 +1,9 @@
 package educatus.client.presenter;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -19,6 +19,8 @@ import educatus.client.animation.FadeAnimation;
 import educatus.client.animation.ListFadeAnimation;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.factory.CategoryButtonFactory;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
 
 public class CategoryPresenter extends
 		PresenterWidget<CategoryPresenter.MyView>
@@ -48,22 +50,22 @@ public class CategoryPresenter extends
 		super.onReset();
 	}	
 	
-	public void animatePanelIn(int state) {	  
-	  if(state==1) {
-		  Button button = getView().getButton();
-		  button.setVisible(true);
-		  FadeAnimation buttonAnimation = new FadeAnimation(button, FadeAnimation.MIN_OPACITY, FadeAnimation.MEDIUM_OPACITY, FadeAnimation.QUICK);
-		  buttonAnimation.start();
-	  }
-	  
+	public void animatePanelIn() {	  
 	  Label label = getView().getLabel();
 	  label.setVisible(true);	  
 	  FadeAnimation labelAnimation = new FadeAnimation(label, FadeAnimation.MIN_OPACITY, FadeAnimation.MAX_OPACITY, FadeAnimation.QUICK);
 	  labelAnimation.start();
-	  
+
 	  listAnimation = new ListFadeAnimation<HasWidgets>(getView().getButtonPanel());	  
 	  listAnimation.start(FadeAnimation.VERY_QUICK, FadeAnimation.MIN_OPACITY, FadeAnimation.MEDIUM_OPACITY);
   	} 
+	
+	public void animateBackButtonIn() {
+		Button button = getView().getButton();
+		button.setVisible(true);
+		FadeAnimation buttonAnimation = new FadeAnimation(button, FadeAnimation.MIN_OPACITY, FadeAnimation.MEDIUM_OPACITY, FadeAnimation.QUICK);
+		buttonAnimation.start();
+	}
 	
 	public void clear() {
 		if(listAnimation != null) {
@@ -74,52 +76,37 @@ public class CategoryPresenter extends
   		getView().getLabel().setVisible(false);
 	}
   	
-    public void populateCategoryPanel(int state) {  
+    public void populateCategoryPanel(SeminaryHomeCategoryContent content) {  
     	FlowPanel buttonPanel = getView().getButtonPanel();
     	CustomButton button = null;
-    	int count = 0;
-    	if(state == 0) {    		
-			button = CategoryButtonFactory.get("Languages", "images/categories/language.png");
-			buttonPanel.add(button);
-			
-			button = CategoryButtonFactory.get("Databases", "images/categories/database.png");
-			buttonPanel.add(button);
-			
-			button = CategoryButtonFactory.get("Algorithms", "images/categories/algorithm.png");
-			buttonPanel.add(button);
-			
-			button = CategoryButtonFactory.get("Math", "images/categories/math.png");
-			buttonPanel.add(button);
-			count = 4;
-			getView().getLabel().setText("Seminaries");
+    	
+    	ArrayList<CategoryContent> categories = content.getCategoryChildren();
+    	for(CategoryContent category:categories) {
+    		button = CategoryButtonFactory.get(category.getName(), category.getImageUrl(), category.getId());
+    		buttonPanel.add(button);
     	}
-    	else if(state == 1) {
-			button = CategoryButtonFactory.get("Java", "images/langages/java.png");
-			buttonPanel.add(button);
-			
-			button = CategoryButtonFactory.get("C++", "images/langages/c++.png");
-			buttonPanel.add(button);
-			
-			button = CategoryButtonFactory.get("Javascript", "images/langages/javascript.png");
-			buttonPanel.add(button);
-			
-			//button = CategoryButtonFactory.get("C", "images/langages/c.png");
-			count=3;
-			getView().getLabel().setText("Languages");
-    	}	
+    	
+    	CategoryContent parent = content.getCommonParent();    	
+    	if(parent == null) {
+    		getView().getLabel().setText("Seminaries");
+    	}
+    	else {    		
+    		getView().getLabel().setText(parent.getName());
+    	}
+
     	//Le 4 représentent les margins left et right de 2px
-    	int buttonsWidth = count*(button.getOffsetWidth() + 4);
+    	int buttonsWidth = categories.size()*(button.getOffsetWidth() + 4);
     	getView().getCategoryPanel().setWidth(String.valueOf(buttonsWidth+2)+"px");
     }
     
-    public void initializeBackButton(final ClickHandler backClickHandler) {
+    public void registerBackButton(final ClickHandler backClickHandler) {
     	if(backRegisteredHandler == null) {
 	    	backRegisteredHandler = getView().getButton().addClickHandler(backClickHandler);
 	    	registerHandler(backRegisteredHandler);
     	}
     }
     
-	public void registerCategoryPanelHandlers(ClickHandler categoryClickHandler, int state) {
+	public void registerCategoryPanelHandlers(ClickHandler categoryClickHandler) {
 		Iterator<Widget> it = getView().getButtonPanel().iterator();
 		Widget widget;
 		while(it.hasNext()) {
@@ -130,15 +117,11 @@ public class CategoryPresenter extends
 		}
 	} 
 	
-	public void setAndAnimateCategoryPanel(final int state, final ClickHandler categoryClickHandler) {
+	public void setAndAnimateCategoryPanel(final ClickHandler categoryClickHandler, final SeminaryHomeCategoryContent content) {
 		clear();
-		Timer timer = new Timer() {
-			 public void run() {
-				 populateCategoryPanel(state);
-				 registerCategoryPanelHandlers(categoryClickHandler, state);
-				 animatePanelIn(state);
-			 };
-	 	};
-	 	timer.schedule(250);
+
+		populateCategoryPanel(content);
+		registerCategoryPanelHandlers(categoryClickHandler);
+		animatePanelIn();
 	}
 }

@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 
 	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
+	<ui:with field='res' type='educatus.resources.Resources' />
 	
 	<g:HTMLPanel>
 	   <div class="art-footer clearfix">
@@ -17,7 +18,15 @@
 								</p>
 							</div>
 							<div class="art-layout-cell layout-item-0" style="width: 50%">
-								<p style="float:right;">Copyright © 2013 All Rights Reserved. EducateUdeS Team.</p>
+								<div style="float:right;">
+								<g:PushButton ui:field='frenchButton' enabled='true' addStyleNames="languageButton">
+								   <g:upFace image='{res.frenchLanguageButton}' />
+								 </g:PushButton>
+								 <g:PushButton ui:field='englishButton' enabled='true' addStyleNames="languageButton" >
+								   <g:upFace image='{res.englishLanguageButton}' />
+								 </g:PushButton>
+								</div>
+								<p style="float:right; padding:7px 4px 0px 11px">Copyright © 2013 All Rights Reserved. EducateUdeS Team.</p>
 							</div>
 						</div>
 					</div>

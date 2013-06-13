@@ -34,9 +34,9 @@
 														<g:Image ui:field="userImage" url="images/icons/user_128.png"/>
 														<g:InlineHyperlink  text="Change Profil Picture"/>
 													</div>
-													<g:Label text="Name:"/>
-													<g:Label text="Surname"/>
-													<g:Label text="Email: "/>
+													<g:Label ui:field="profilNameLabel" text="Name:"/>
+													<g:Label ui:field="profilSurnameLabel" text="Surname: "/>
+													<g:Label ui:field="profilEmailLabel" text="Email: "/>
 													<g:FlowPanel ui:field="chartContainer">
 													</g:FlowPanel>
 			 									</div>
