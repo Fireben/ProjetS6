@@ -140,7 +140,7 @@ public class HomePageFactory {
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, FORUM_SECTION_LINK_TEXT);
 		forumsSection.setSectionLinkText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		content.setForumsSection(forumsSection);
-
+			
+		return content;
 	}
-
 }
