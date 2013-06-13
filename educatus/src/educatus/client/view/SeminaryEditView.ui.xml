@@ -153,6 +153,7 @@
 								</g:PushButton>
 							</div>
 						</div>
+							<g:FormPanel ui:field="imagePanel"/>
 							<g:HTMLPanel ui:field="confirmPanel" styleName='{style.confirmPanel}' />
 						</div>
 					</h4>	
