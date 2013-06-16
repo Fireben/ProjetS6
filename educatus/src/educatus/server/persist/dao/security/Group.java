@@ -23,7 +23,7 @@ public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "GROUPS_GROUID_GENERATOR", sequenceName = "security.loguserconnection_louc_id_seq")
+	@SequenceGenerator(name = "GROUPS_GROUID_GENERATOR", sequenceName = "security.groups_grou_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GROUPS_GROUID_GENERATOR")
 	@Column(name = "grou_id", unique = true, nullable = false)
 	private Integer id;
@@ -43,11 +43,11 @@ public class Group implements Serializable {
 	private List<Permission> permissions;
 
 	// bi-directional many-to-many association to User
-	@ManyToMany(mappedBy = "group")
+	@ManyToMany(mappedBy = "groups")
 	private List<User> users;
 
 	// bi-directional many-to-many association to UserType
-	@ManyToMany(mappedBy = "group")
+	@ManyToMany(mappedBy = "associatedGroups")
 	private List<UserType> usertypes;
 
 	public Group() {
@@ -100,5 +100,4 @@ public class Group implements Serializable {
 	public void setUsertypes(List<UserType> usertypes) {
 		this.usertypes = usertypes;
 	}
-
 }

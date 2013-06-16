@@ -68,7 +68,7 @@ public class User implements Serializable {
 	private List<Permission> permissions;
 
 	// bi-directional many-to-many association to UserType
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "associatedUsers")
 	private List<UserType> usertypes;
 
 	// bi-directional many-to-many association to Group

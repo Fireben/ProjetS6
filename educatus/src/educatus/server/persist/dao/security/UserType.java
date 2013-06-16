@@ -51,7 +51,12 @@ public class UserType implements Serializable {
 	// bi-directional many-to-many association to User
 	@ManyToMany
 	@JoinTable(name = "userusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
-	private List<User> users;
+	private List<User> associatedUsers;
+
+	// bi-directional many-to-many association to User
+	@ManyToMany
+	@JoinTable(name = "groupusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "grou_id") })
+	private List<Group> associatedGroups;
 
 	public UserType() {
 	}
@@ -89,11 +94,18 @@ public class UserType implements Serializable {
 	}
 
 	public List<User> getUsers() {
-		return this.users;
+		return this.associatedUsers;
 	}
 
 	public void setUsers(List<User> users) {
-		this.users = users;
+		this.associatedUsers = users;
 	}
 
+	public List<Group> getAssociatedGroups() {
+		return associatedGroups;
+	}
+
+	public void setAssociatedGroups(List<Group> associatedGroups) {
+		this.associatedGroups = associatedGroups;
+	}
 }
