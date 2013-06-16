@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -21,11 +23,18 @@ import javax.persistence.Table;
 import educatus.server.persist.dao.internationalization.Image;
 
 @Entity
-@Table(name = "security.user")
+@NamedQueries({
+	@NamedQuery(name = User.FIND_ALL, query = "SELECT u FROM User u"),
+	@NamedQuery(name = User.FIND_BY_CIP, query = "SELECT u FROM User u WHERE u.cip=:cip") })
+@Table(name = "security.users")
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
+	public static final String FIND_ALL = "USER.FIND_ALL";
+	public static final String FIND_BY_CIP = "USER.FIND_BY_CIP";
+	public static final String FIND_BY_CIP_PARAM_NAME = "cip";
+	
 	@Id
 	@SequenceGenerator(name = "USERS_USER_ID_GENERATOR", sequenceName = "security.users_user_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_USER_ID_GENERATOR")
