@@ -18,13 +18,10 @@ import javax.persistence.Table;
 
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
-/**
- * The persistent class for the permission database table.
- * 
- */
 @Entity
 @Table(name = "security.permission")
 public class Permission implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -44,24 +41,16 @@ public class Permission implements Serializable {
 	private TextContentEntry name;
 
 	// bi-directional many-to-many association to User
-	@ManyToMany(mappedBy = "permissions")
-	private List<User> users;
+	@ManyToMany(mappedBy = "associatedPermissionList")
+	private List<User> associatedUserList;
 
 	// bi-directional many-to-many association to Usertype
-	@ManyToMany(mappedBy = "permissions")
-	private List<UserType> usertypes;
+	@ManyToMany(mappedBy = "associatedPermissionList")
+	private List<UserType> associatedUserTypeList;
 
 	@ManyToMany
 	@JoinTable(name = "grouppermission", joinColumns = { @JoinColumn(name = "perm_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
-	private List<Group> groups;
-
-	public List<Group> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(List<Group> groups) {
-		this.groups = groups;
-	}
+	private List<Group> associatedGroupList;
 
 	public Permission() {
 	}
@@ -90,19 +79,27 @@ public class Permission implements Serializable {
 		this.name = name;
 	}
 
-	public List<User> getUsers() {
-		return this.users;
+	public List<User> getAssociatedUserList() {
+		return this.associatedUserList;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setAssociatedUserList(List<User> associatedUserList) {
+		this.associatedUserList = associatedUserList;
 	}
 
-	public List<UserType> getUsertypes() {
-		return this.usertypes;
+	public List<UserType> getAssociatedUserTypeList() {
+		return this.associatedUserTypeList;
 	}
 
-	public void setUsertypes(List<UserType> usertypes) {
-		this.usertypes = usertypes;
+	public void setAssociatedUserTypeList(List<UserType> associatedUserTypeList) {
+		this.associatedUserTypeList = associatedUserTypeList;
+	}
+	
+	public List<Group> getAssociatedGroupList() {
+		return associatedGroupList;
+	}
+
+	public void setAssociatedGroupList(List<Group> associatedGroupList) {
+		this.associatedGroupList = associatedGroupList;
 	}
 }

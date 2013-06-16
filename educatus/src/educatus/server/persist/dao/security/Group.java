@@ -20,6 +20,7 @@ import educatus.server.persist.dao.internationalization.TextContentEntry;
 @Entity
 @Table(name = "security.groups")
 public class Group implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -39,16 +40,16 @@ public class Group implements Serializable {
 	private TextContentEntry name;
 
 	// bi-directional many-to-many association to Permission
-	@ManyToMany(mappedBy = "groups")
-	private List<Permission> permissions;
+	@ManyToMany(mappedBy = "associatedGroupList")
+	private List<Permission> associatedPermissionList;
 
 	// bi-directional many-to-many association to User
-	@ManyToMany(mappedBy = "groups")
-	private List<User> users;
+	@ManyToMany(mappedBy = "associatedGroupList")
+	private List<User> associatedUserList;
 
 	// bi-directional many-to-many association to UserType
-	@ManyToMany(mappedBy = "associatedGroups")
-	private List<UserType> usertypes;
+	@ManyToMany(mappedBy = "associatedGroupList")
+	private List<UserType> associatedUserTypeList;
 
 	public Group() {
 	}
@@ -57,8 +58,8 @@ public class Group implements Serializable {
 		return this.id;
 	}
 
-	public void setId(Integer grouId) {
-		this.id = grouId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public TextContentEntry getDescription() {
@@ -77,27 +78,27 @@ public class Group implements Serializable {
 		this.name = name;
 	}
 
-	public List<Permission> getPermissions() {
-		return this.permissions;
+	public List<Permission> getAssociatedPermissions() {
+		return this.associatedPermissionList;
 	}
 
 	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
+		this.associatedPermissionList = permissions;
 	}
 
-	public List<User> getUsers() {
-		return this.users;
+	public List<User> getAssociatedUserList() {
+		return this.associatedUserList;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setAssociatedUserList(List<User> userList) {
+		this.associatedUserList = userList;
 	}
 
-	public List<UserType> getUsertypes() {
-		return this.usertypes;
+	public List<UserType> getAssociatedUserTypeList() {
+		return this.associatedUserTypeList;
 	}
 
-	public void setUsertypes(List<UserType> usertypes) {
-		this.usertypes = usertypes;
+	public void setAssociatedUserTypeList(List<UserType> associatedUserTypeList) {
+		this.associatedUserTypeList = associatedUserTypeList;
 	}
 }

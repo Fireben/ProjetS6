@@ -18,13 +18,10 @@ import javax.persistence.Table;
 
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
-/**
- * The persistent class for the usertype database table.
- * 
- */
 @Entity
 @Table(name = "security.usertype")
 public class UserType implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -46,17 +43,17 @@ public class UserType implements Serializable {
 	// bi-directional many-to-many association to Permission
 	@ManyToMany
 	@JoinTable(name = "usertypepermission", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "perm_id") })
-	private List<Permission> permissions;
+	private List<Permission> associatedPermissionList;
 
 	// bi-directional many-to-many association to User
 	@ManyToMany
 	@JoinTable(name = "userusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
-	private List<User> associatedUsers;
+	private List<User> associatedUserList;
 
 	// bi-directional many-to-many association to User
 	@ManyToMany
 	@JoinTable(name = "groupusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "grou_id") })
-	private List<Group> associatedGroups;
+	private List<Group> associatedGroupList;
 
 	public UserType() {
 	}
@@ -65,8 +62,8 @@ public class UserType implements Serializable {
 		return this.id;
 	}
 
-	public void setUstyId(Integer ustyId) {
-		this.id = ustyId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public TextContentEntry getDescription() {
@@ -85,27 +82,27 @@ public class UserType implements Serializable {
 		this.name = name;
 	}
 
-	public List<Permission> getPermissions() {
-		return this.permissions;
+	public List<Permission> getAssociatedPermissionList() {
+		return this.associatedPermissionList;
 	}
 
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
+	public void setAssociatedPermissionList(List<Permission> associatedPermissionList) {
+		this.associatedPermissionList = associatedPermissionList;
 	}
 
-	public List<User> getUsers() {
-		return this.associatedUsers;
+	public List<User> getAssociatedUserList() {
+		return this.associatedUserList;
 	}
 
-	public void setUsers(List<User> users) {
-		this.associatedUsers = users;
+	public void setAssociatedUserList(List<User> associatedUserList) {
+		this.associatedUserList = associatedUserList;
 	}
 
-	public List<Group> getAssociatedGroups() {
-		return associatedGroups;
+	public List<Group> getAssociatedGroupList() {
+		return associatedGroupList;
 	}
 
-	public void setAssociatedGroups(List<Group> associatedGroups) {
-		this.associatedGroups = associatedGroups;
+	public void setAssociatedGroupList(List<Group> associatedGroupList) {
+		this.associatedGroupList = associatedGroupList;
 	}
 }
