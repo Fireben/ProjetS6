@@ -1,11 +1,24 @@
 package educatus.server.persist.dao.security;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import educatus.server.persist.dao.internationalization.Image;
 
 /**
  * The persistent class for the users database table.
@@ -16,41 +29,52 @@ import java.util.List;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id	
+	@Id
 	@SequenceGenerator(name = "USERS_USER_ID_GENERATOR", sequenceName = "security.users_user_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_USER_ID_GENERATOR")
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private Integer id;
 
-	@Column(name="user_cip")
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "imag_avatar")
+	private Image avatar;
+	
+	@Column(name = "user_cip", nullable = false, length = 8)
 	private String cip;
 
-	@Column(name="user_datadeleted")
-	private Timestamp dateDeleted;
+	@Column(name = "user_datadeleted")
+	private Timestamp dataDeleted;
 
-	@Column(name="user_datejoined")
+	@Column(name = "user_datejoined", nullable = false)
 	private Timestamp dateJoined;
 
-	//bi-directional many-to-one association to Loguserconnection
-	@OneToMany(mappedBy="user")
-	private List<LogUserConnection> loguserconnections;
+	@Column(name = "user_lastname", length = 50)
+	private String lastName;
 
-	//bi-directional many-to-many association to Permission
+	@Column(name = "user_name", length = 50)
+	private String firstName;
+
+	@Column(name = "user_profileprivacy", nullable = false)
+	private Boolean profilePrivacy;
+
+	// bi-directional many-to-one association to LogUserConnection
+	@OneToMany(mappedBy = "user")
+	private List<LogUserConnection> logUserConnections;
+
+	// bi-directional many-to-many association to Permission
 	@ManyToMany
-	@JoinTable(
-		name="userpermission"
-		, joinColumns={
-			@JoinColumn(name="user_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="perm_id")
-			}
-		)
+	@JoinTable(name = "userpermission", joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "perm_id", nullable = false) })
 	private List<Permission> permissions;
 
-	//bi-directional many-to-many association to Usertype
-	@ManyToMany(mappedBy="users")
+	// bi-directional many-to-many association to UserType
+	@ManyToMany(mappedBy = "users")
 	private List<UserType> usertypes;
+
+	// bi-directional many-to-many association to Group
+	@ManyToMany
+	@JoinTable(name = "groupuser", joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
+	private List<Group> groups;
 
 	public User() {
 	}
@@ -63,6 +87,14 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
+	public Image getAvatar() {
+		return this.avatar;
+	}
+
+	public void setAvatar(Image avatar) {
+		this.avatar = avatar;
+	}
+
 	public String getCip() {
 		return this.cip;
 	}
@@ -72,11 +104,11 @@ public class User implements Serializable {
 	}
 
 	public Timestamp getDateDeleted() {
-		return this.dateDeleted;
+		return this.dataDeleted;
 	}
 
-	public void setDateDeleted(Timestamp dateDeleted) {
-		this.dateDeleted = dateDeleted;
+	public void setDataDeleted(Timestamp dataDeleted) {
+		this.dataDeleted = dataDeleted;
 	}
 
 	public Timestamp getDateJoined() {
@@ -87,25 +119,47 @@ public class User implements Serializable {
 		this.dateJoined = dateJoined;
 	}
 
-	public List<LogUserConnection> getLoguserconnections() {
-		return this.loguserconnections;
+	public String getLastName() {
+		return this.lastName;
 	}
 
-	public void setLoguserconnections(List<LogUserConnection> loguserconnections) {
-		this.loguserconnections = loguserconnections;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public LogUserConnection addLoguserconnection(LogUserConnection loguserconnection) {
-		getLoguserconnections().add(loguserconnection);
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public Boolean getProfilePrivacy() {
+		return this.profilePrivacy;
+	}
+
+	public void setProfilePrivacy(Boolean profilPrivacy) {
+		this.profilePrivacy = profilPrivacy;
+	}
+
+	public List<LogUserConnection> getLogUserConnections() {
+		return this.logUserConnections;
+	}
+
+	public void setLogUserConnections(List<LogUserConnection> logUserConnections) {
+		this.logUserConnections = logUserConnections;
+	}
+
+	public LogUserConnection addLogUserConnection(LogUserConnection loguserconnection) {
+		getLogUserConnections().add(loguserconnection);
 		loguserconnection.setUser(this);
-
 		return loguserconnection;
 	}
 
 	public LogUserConnection removeLoguserconnection(LogUserConnection loguserconnection) {
-		getLoguserconnections().remove(loguserconnection);
+		getLogUserConnections().remove(loguserconnection);
 		loguserconnection.setUser(null);
-
 		return loguserconnection;
 	}
 
@@ -125,4 +179,11 @@ public class User implements Serializable {
 		this.usertypes = usertypes;
 	}
 
+	public List<Group> getGroups() {
+		return this.groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
 }

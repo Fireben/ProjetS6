@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -32,13 +33,15 @@ public class Permission implements Serializable {
 	@Column(name = "perm_id")
 	private Integer id;
 
-	@Column(name = "tece_description")
-	private Integer description;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_description")
+	private TextContentEntry description;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tece_name")
-	private TextContentEntry textContentEntry;
+	private TextContentEntry name;
 
 	// bi-directional many-to-many association to User
 	@ManyToMany(mappedBy = "permissions")
@@ -47,6 +50,18 @@ public class Permission implements Serializable {
 	// bi-directional many-to-many association to Usertype
 	@ManyToMany(mappedBy = "permissions")
 	private List<UserType> usertypes;
+
+	@ManyToMany
+	@JoinTable(name = "grouppermission", joinColumns = { @JoinColumn(name = "perm_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
+	private List<Group> groups;
+
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
 
 	public Permission() {
 	}
@@ -59,20 +74,20 @@ public class Permission implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getDescription() {
+	public TextContentEntry getDescription() {
 		return this.description;
 	}
 
-	public void setDescription(Integer description) {
+	public void setDescription(TextContentEntry description) {
 		this.description = description;
 	}
 
-	public TextContentEntry getTextContentEntry() {
-		return this.textContentEntry;
+	public TextContentEntry getName() {
+		return this.name;
 	}
 
-	public void setTextContentEntry(TextContentEntry textContentEntry) {
-		this.textContentEntry = textContentEntry;
+	public void setName(TextContentEntry name) {
+		this.name = name;
 	}
 
 	public List<User> getUsers() {

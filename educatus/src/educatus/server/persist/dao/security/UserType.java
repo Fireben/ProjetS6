@@ -31,15 +31,17 @@ public class UserType implements Serializable {
 	@SequenceGenerator(name = "USERTYPE_USTY_ID_GENERATOR", sequenceName = "security.usertype_usty_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERTYPE_USTY_ID_GENERATOR")
 	@Column(name = "usty_id")
-	private Integer ustyId;
+	private Integer id;
 
-	@Column(name = "tece_description")
-	private Integer teceDescription;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_description")
+	private TextContentEntry description;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tece_name")
-	private TextContentEntry textContentEntry;
+	private TextContentEntry name;
 
 	// bi-directional many-to-many association to Permission
 	@ManyToMany
@@ -54,28 +56,28 @@ public class UserType implements Serializable {
 	public UserType() {
 	}
 
-	public Integer getUstyId() {
-		return this.ustyId;
+	public Integer getId() {
+		return this.id;
 	}
 
 	public void setUstyId(Integer ustyId) {
-		this.ustyId = ustyId;
+		this.id = ustyId;
 	}
 
-	public Integer getTeceDescription() {
-		return this.teceDescription;
+	public TextContentEntry getDescription() {
+		return this.description;
 	}
 
-	public void setTeceDescription(Integer teceDescription) {
-		this.teceDescription = teceDescription;
+	public void setDescription(TextContentEntry description) {
+		this.description = description;
 	}
 
-	public TextContentEntry getTextContentEntry() {
-		return this.textContentEntry;
+	public TextContentEntry getName() {
+		return this.name;
 	}
 
-	public void setTextContentEntry(TextContentEntry textContentEntry) {
-		this.textContentEntry = textContentEntry;
+	public void setName(TextContentEntry name) {
+		this.name = name;
 	}
 
 	public List<Permission> getPermissions() {
