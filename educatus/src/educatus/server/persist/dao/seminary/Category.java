@@ -52,7 +52,7 @@ public class Category implements Serializable {
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tex_tece_id", nullable = false, insertable = true, updatable = true)
+	@JoinColumn(name = "tece_description", nullable = false, insertable = true, updatable = true)
 	private TextContentEntry description;
 
 	// bi-directional many-to-one association to Image

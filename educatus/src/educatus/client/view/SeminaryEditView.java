@@ -1,15 +1,15 @@
 package educatus.client.view;
 
-import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewImpl;
 
 import educatus.client.presenter.SeminaryEditPresenter;
 
@@ -21,6 +21,8 @@ public class SeminaryEditView extends ViewImpl implements
 	HTMLPanel confirmPanel;
 	@UiField
 	HTMLPanel contentPanel;
+	@UiField
+	FormPanel imagePanel;
 	@UiField
 	Label semTitleLabel;
 	@UiField
@@ -117,4 +119,9 @@ public class SeminaryEditView extends ViewImpl implements
 	{
 		return addVideoButton;
 	}
+
+	public FormPanel getImagePanel() {
+		return imagePanel;
+	}
+
 }

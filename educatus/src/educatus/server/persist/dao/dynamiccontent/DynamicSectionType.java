@@ -12,10 +12,6 @@ import javax.persistence.Table;
 
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
-/**
- * The persistent class for the dynamicsectiontype database table.
- * 
- */
 @Entity
 @Table(name = "dynamic_content.dynamicsectiontype")
 public class DynamicSectionType implements Serializable {
@@ -27,7 +23,7 @@ public class DynamicSectionType implements Serializable {
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tece_name", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "tece_name", nullable = false)
 	private TextContentEntry name;
 
 	public DynamicSectionType() {

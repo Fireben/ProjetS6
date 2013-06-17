@@ -49,7 +49,7 @@ public class SeminaryHomeCategoryFactory {
 				
 			} else {
 				
-				Category parentCategory = semDao.findCategoryById(parentId);
+				Category parentCategory  = semDao.findCategoryById(parentId);
 				List<Category> childrenCategories = semDao.findChildrenCategories(parentCategory.getId());
 				
 				// We set common parent 

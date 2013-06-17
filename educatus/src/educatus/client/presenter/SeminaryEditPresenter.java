@@ -1,25 +1,31 @@
 package educatus.client.presenter;
 
-import com.gwtplatform.common.client.IndirectProvider;
-import com.gwtplatform.common.client.StandardProvider;
-import com.gwtplatform.mvp.client.Presenter;
-import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.annotations.NameToken;
-import educatus.client.NameTokens;
-import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.LocaleInfo;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FileUpload;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.common.client.IndirectProvider;
+import com.gwtplatform.common.client.StandardProvider;
+import com.gwtplatform.mvp.client.Presenter;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+
+import educatus.client.NameTokens;
 
 public class SeminaryEditPresenter extends
 		Presenter<SeminaryEditPresenter.MyView, SeminaryEditPresenter.MyProxy>
@@ -32,6 +38,8 @@ public class SeminaryEditPresenter extends
 		public PushButton getAddTextButton();
 		public PushButton getAddImageButton();
 		public PushButton getAddVideoButton();
+		
+		public FormPanel getImagePanel();
 		
 		//public Image getAddImageImg();
 	}
@@ -161,6 +169,18 @@ public class SeminaryEditPresenter extends
 		getView().getAddTextButton().addClickHandler(addTextBoxHandler);
 		getView().getAddImageButton().addClickHandler(addImageBoxHandler);
 		getView().getAddVideoButton().addClickHandler(addVideoBoxHandler);		
+		
+	    // Create a FileUpload widget.
+	    FileUpload upload = new FileUpload();
+	    upload.setName("uploadFormElement");
+	    getView().getImagePanel().add(upload);
+	    upload.addChangeHandler(new ChangeHandler() {
+    		public void onChange(ChangeEvent event) {
+    			FileUpload f = (FileUpload)event.getSource();
+    			String test = f.getFilename();
+    			getView().getImagePanel().add(new Image("images/javascript.png"));
+    		}
+	    });	    
 	}
 
 	@Override
