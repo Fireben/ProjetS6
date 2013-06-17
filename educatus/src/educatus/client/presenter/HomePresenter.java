@@ -126,7 +126,7 @@ public class HomePresenter extends
 		
 		HomePageContentRequest request = new HomePageContentRequest();
 		request.setCulture("CA");
-		request.setLanguage("en");
+		request.setLanguage("fr");
 		requestService.sendRequest(request , new AsyncCallback<AbstractResponse>() {
 			
 			@Override
