@@ -18,12 +18,12 @@ public class DynamicSectionText extends DynamicSection implements Serializable {
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tece_text", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "tece_text", nullable = false)
 	private TextContentEntry text;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tece_title", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "tece_title", nullable = false)
 	private TextContentEntry title;
 
 	public DynamicSectionText() {
