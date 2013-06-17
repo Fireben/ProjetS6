@@ -22,6 +22,7 @@ import javax.persistence.Table;
 @DiscriminatorColumn(name = "dyst_Type", discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "dynamic_content.vdynamicsection")
 public abstract class DynamicSection implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id

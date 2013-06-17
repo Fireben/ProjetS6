@@ -19,8 +19,8 @@ import educatus.client.animation.FadeAnimation;
 import educatus.client.animation.ListFadeAnimation;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.factory.CategoryButtonFactory;
+import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
 
 public class CategoryPresenter extends
 		PresenterWidget<CategoryPresenter.MyView>
@@ -80,13 +80,13 @@ public class CategoryPresenter extends
     	FlowPanel buttonPanel = getView().getButtonPanel();
     	CustomButton button = null;
     	
-    	ArrayList<CategoryContent> categories = content.getCategoryChildren();
-    	for(CategoryContent category:categories) {
+    	ArrayList<CategoryCoreContent> categories = content.getCategoryChildren();
+    	for(CategoryCoreContent category:categories) {
     		button = CategoryButtonFactory.get(category.getName(), category.getImageUrl(), category.getId());
     		buttonPanel.add(button);
     	}
     	
-    	CategoryContent parent = content.getCommonParent();    	
+    	CategoryCoreContent parent = content.getCommonParent();    	
     	if(parent == null) {
     		getView().getLabel().setText("Seminaries");
     	}

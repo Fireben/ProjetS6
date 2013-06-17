@@ -37,8 +37,8 @@ import educatus.client.animation.FadeAnimation;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.dataGrids.Seminary;
+import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -129,7 +129,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	};
 	
 	private void changeCategoryPanel(int id) {  		
-  		CategoryContent parentCategory = new CategoryContent();
+  		CategoryCoreContent parentCategory = new CategoryCoreContent();
   		parentCategory.setId(id);  		
   		
   		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
@@ -163,7 +163,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 				SeminaryHomeCategoryContent content = response.getContent();
 				if(content.getCategoryChildren().size() != 0) {
 					seminarCategoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
-					CategoryContent parent = content.getCommonParent();
+					CategoryCoreContent parent = content.getCommonParent();
 					if(parent != null) {
 						seminarCategoryPresenter.animateBackButtonIn();
 					}
