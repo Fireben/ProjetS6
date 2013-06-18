@@ -37,7 +37,7 @@
 														</a>
 														<span ui:field="modifiedDate"></span>
 													</h3>
-												 	<g:FlowPanel ui:field="textAreaContainer">
+												 	<g:FlowPanel ui:field="dynamicSectionContainer">
 													</g:FlowPanel>
 			 									</div>
 			 								</div>

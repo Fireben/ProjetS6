@@ -28,6 +28,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.shared.dto.HomePageContent;
@@ -41,8 +42,7 @@ import educatus.shared.services.requestservice.response.HomePageContentResponse;
 /**
  * @author Christian Goudreau
  */
-public class HomePresenter extends
-		Presenter<HomePresenter.MyView, HomePresenter.MyProxy> {
+public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter.MyProxy> {
 	/**
 	 * {@link HomePresenter}'s proxy.
 	 */
@@ -52,8 +52,7 @@ public class HomePresenter extends
 	}
 
 	// Create a remote service proxy to talk to the server-side service.
-	private final RequestServiceAsync requestService = GWT
-			.create(RequestService.class);
+	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
 
 	/**
 	 * {@link HomePresenter}'s view.
@@ -109,59 +108,63 @@ public class HomePresenter extends
 	}
 
 	@Inject
-	public HomePresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy) {
+	public HomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
 		super(eventBus, view, proxy);
 	}
 
+	@Inject
+	private EducatusLocale locale;
+
+	private HomePageContentRequest request = new HomePageContentRequest();
+
 	@Override
 	protected void revealInParent() {
-		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent,
-				this);
+		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
-		
-		HomePageContentRequest request = new HomePageContentRequest();
-		request.setCulture("CA");
-		request.setLanguage("en");
-		requestService.sendRequest(request , new AsyncCallback<AbstractResponse>() {
-			
-			@Override
-			public void onSuccess(AbstractResponse result) {
-				if (result.GetResponseType() == ResponseTypeEnum.HOME_PAGE_CONTENT_RESPONSE) {
-					HomePageContentResponse response = (HomePageContentResponse) result;
-					fillPageWithContent(response.getHomeContent());
-				}				
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+
 	}
 
 	@Override
 	protected void onReset() {
 		super.onReset();
 		PageChangingEvent.fire(this, NameTokens.getHomePage());
-		// getView().getHomePageTitle().setInnerText("Testing");
-		// getView().getHomePageFirstDescription().setInnerText("El Test");
+		
+		if(request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage())
+		{
+			request.setCulture(locale.getCulture());
+			request.setLanguage(locale.getLanguage());
+			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
+
+				@Override
+				public void onSuccess(AbstractResponse result) {
+					if (result.GetResponseType() == ResponseTypeEnum.HOME_PAGE_CONTENT_RESPONSE) {
+						HomePageContentResponse response = (HomePageContentResponse) result;
+						fillPageWithContent(response.getHomeContent());
+					}
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+		}
+		
 	}
-	
-	private void fillPageWithContent(HomePageContent content)
-	{
-		// Welcome 
+
+	private void fillPageWithContent(HomePageContent content) {
+		// Welcome
 		getView().getHomePageSecondTitle().setInnerText(content.getWelcomeTitle());
 		getView().getHomePageBulbImg().setAttribute("src", content.getWelcomeImage());
 		getView().getHomePageFirstDescription().setInnerText(content.getWelcomeDescription1());
 		getView().getHomePageFirstDescription2().setInnerText(content.getWelcomeDescription2());
 		getView().getHomePageFirstDescription3().setInnerText(content.getWelcomeDescription3());
-		
+
 		// Seminary section
 		getView().getHomePageFirstSectionTitle().setInnerText(content.getSeminarsSection().getSectionTitle());
 		getView().getHomePageFirstSectionText().setInnerText(content.getSeminarsSection().getSectionText());
@@ -175,7 +178,7 @@ public class HomePresenter extends
 		getView().getHomePageSecondSectionDescription().setInnerText(content.getProblemsSection().getSectionDescription());
 		getView().getHomePageSecondSectionLink().setInnerText(content.getProblemsSection().getSectionLinkText());
 		getView().getHomePageSecondSectionImg().setAttribute("src", content.getProblemsSection().getSectionImg());
-		
+
 		// Statistics section
 		getView().getHomePageThirdSectionTitle().setInnerText(content.getStatisticsSection().getSectionTitle());
 		getView().getHomePageThirdSectionText().setInnerText(content.getStatisticsSection().getSectionText());
@@ -188,6 +191,6 @@ public class HomePresenter extends
 		getView().getHomePageFourthSectionText().setInnerText(content.getForumsSection().getSectionText());
 		getView().getHomePageFourthSectionDescription().setInnerText(content.getForumsSection().getSectionDescription());
 		getView().getHomePageFourthSectionImg().setAttribute("src", content.getForumsSection().getSectionImg());
-		
+
 	}
 }

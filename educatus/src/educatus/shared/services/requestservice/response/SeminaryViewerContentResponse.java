@@ -3,13 +3,12 @@ package educatus.shared.services.requestservice.response;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 
-public class MainMenuContentResponse extends AbstractResponse {
+public class SeminaryViewerContentResponse extends AbstractResponse {
 
-	private static final long serialVersionUID = 9074719652068698255L;	
-	private static ResponseTypeEnum RESPONSE_TYPE = ResponseTypeEnum.MAIN_MENU_CONTENT_RESPONSE;
-	
+	private static final long serialVersionUID = 6780198980499684860L;
+
 	@Override
 	public ResponseTypeEnum GetResponseType() {
-		return RESPONSE_TYPE;
+		return ResponseTypeEnum.SEMINARY_VIEWER_CONTENT_RESPONSE;
 	}
 }

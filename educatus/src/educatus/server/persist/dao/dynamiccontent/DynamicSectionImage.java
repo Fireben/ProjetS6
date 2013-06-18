@@ -19,13 +19,13 @@ public class DynamicSectionImage extends DynamicSection implements Serializable 
 
 	// bi-directional many-to-one association to ImageContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "imce_image", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "imce_image", nullable = false)
 	private ImageContentEntry image;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
 	// changed tece_description to tece_descriptionimage
-	@JoinColumn(name = "tece_descriptionimage", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "tece_descriptionimage", nullable = false)
 	private TextContentEntry description;
 
 	public DynamicSectionImage() {

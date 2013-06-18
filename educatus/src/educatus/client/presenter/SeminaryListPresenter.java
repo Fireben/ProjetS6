@@ -2,7 +2,9 @@ package educatus.client.presenter;
 
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -16,11 +18,12 @@ public class SeminaryListPresenter extends
 {
 	public interface MyView extends View {
 		DataGrid<Seminary> getDataGrid();
+		Button getBackButton();
 	}
 
 	@Inject
 	public SeminaryListPresenter(final EventBus eventBus, final MyView view) {
-		super(eventBus, view);
+		super(eventBus, view);		
 	}
 
 	@Override
@@ -31,6 +34,10 @@ public class SeminaryListPresenter extends
 	@Override
 	protected void onReset() {
 		super.onReset();
+	}
+	
+	public void setBackButtonHandler(ClickHandler backClickHandler) {
+		getView().getBackButton().addClickHandler(backClickHandler);
 	}
 	
 	public void setData(List<Seminary> seminaries) {			

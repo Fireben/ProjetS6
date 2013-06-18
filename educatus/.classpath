@@ -19,5 +19,8 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-visualization.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.2.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtupload-0.6.6.jar" sourcepath="C:/Users/Nicolas/.m2/repository/com/googlecode/gwtupload/gwtupload/0.6.6/gwtupload-0.6.6-sources.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

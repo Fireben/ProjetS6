@@ -19,8 +19,10 @@ package educatus.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -31,9 +33,17 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
-import educatus.client.animation.FadeAnimation;
 import educatus.client.events.PageChangingEvent;
+import educatus.client.ui.CustomButton;
 import educatus.client.ui.dataGrids.Seminary;
+import educatus.shared.dto.seminary.CategoryCoreContent;
+import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
+import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 
 /**
  * @author Nicolas Michaud
@@ -47,9 +57,13 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
     }
     
-    private int state = 0;
+	// Create a remote service proxy to talk to the server-side service.
+	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
+	// Response handler
+	AbstractResponseHandler responseHandler = null;
     
     public static final Object SLOT_content = new Object();
+
     
 	@Inject
 	CategoryPresenter seminarCategoryPresenter;
@@ -76,55 +90,50 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   	@Override
   	protected void onBind() {
   		super.onBind();
-  		
+  		responseHandler = new AbstractResponseHandler();
   	}
   
 	@Override
 	protected void onReset() {
 	  super.onReset();      
 	  PageChangingEvent.fire(this, NameTokens.getSeminarHomePage());
-	  seminarCategoryPresenter.initializeBackButton(backClickHandler);
+	  seminarCategoryPresenter.registerBackButton(backClickHandler);
 	}
 	
 	@Override
-	protected void onReveal() {
-		state = 0;	  
-		setInSlot(SLOT_content, seminarCategoryPresenter);
-		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);			
+	protected void onReveal() {  	
+		seminarCategoryPresenter.clear(); 
+  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		requestService.sendRequest(request, responseHandler);
 	}
 	
 	private ClickHandler backClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			state--;
-			changeState();
+			SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+	  		request.setParentCategory(null);
+	  		requestService.sendRequest(request, responseHandler);		  					
 		}
 	};
 	
 	private ClickHandler categoryClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			state++;
-			changeState();
+			CustomButton buttonClicked = (CustomButton) event.getSource();
+			changeCategoryPanel(Integer.parseInt(buttonClicked.getElement().getId()));
 		}
 	};
 	
-	private void changeCategoryPanel() {		
-		seminarCategoryPresenter.setAndAnimateCategoryPanel(state, categoryClickHandler);
+	private void changeCategoryPanel(int id) {  		
+  		CategoryCoreContent parentCategory = new CategoryCoreContent();
+  		parentCategory.setId(id);  		
+  		
+  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		request.setParentCategory(parentCategory);
+  		requestService.sendRequest(request, responseHandler);
 	}
 	
-	private void changeState() {
-		
-		if(state < 2) {
-			changeCategoryPanel();
-		}
-		else {
-			setSeminaryList();
-		}
-	}
-	
-	private void setSeminaryList() {
-		setInSlot(SLOT_content, seminaryListPresenter);
+	private void setSeminaryList() {	
 		List<Seminary> seminaries = new ArrayList<Seminary>();
 		for(int i=1;i<=5;i++) {
 			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", "Marc-Andre Beaudry", null, 4));
@@ -133,9 +142,40 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 			seminaries.add(new Seminary(j, "Sauce Nuage", "Comment faire de la sauce nuage quand il fait beau?", "Nicolas Michaud", null, 2));
 		}
 		seminaryListPresenter.setData(seminaries);
-		FadeAnimation animation;
-		animation = new FadeAnimation(seminaryListPresenter.getView().getDataGrid(), FadeAnimation.MIN_OPACITY,
-										FadeAnimation.MAX_OPACITY, FadeAnimation.VERY_LONG);
-		animation.start();
+		seminaryListPresenter.setBackButtonHandler(backClickHandler);
 	}
+	
+	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
+		
+		@Override
+		public void onSuccess(AbstractResponse result) {
+			
+			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){	
+				setInSlot(SLOT_content, seminarCategoryPresenter);
+				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
+				SeminaryHomeCategoryContent content = response.getContent();
+				if(content.getCategoryChildren().size() != 0) {
+					seminarCategoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
+					CategoryCoreContent parent = content.getCommonParent();
+					if(parent != null) {
+						seminarCategoryPresenter.animateBackButtonIn();
+					}
+				}
+				else {
+					setInSlot(SLOT_content, seminaryListPresenter);	
+					setSeminaryList();
+				}
+				
+			} 
+			else {
+				// ERROR, not the response type we expected
+			}
+			
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+		}
+	};
+	
 }

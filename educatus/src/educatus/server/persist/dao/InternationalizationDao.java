@@ -12,6 +12,8 @@ import educatus.server.persist.dao.internationalization.Culture;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.ImageExternal;
+import educatus.server.persist.dao.internationalization.ImageType;
 import educatus.server.persist.dao.internationalization.Language;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
@@ -88,6 +90,20 @@ public class InternationalizationDao
 				.getResultList();
 
 		return (List<Image>) resultList;
+	}
+	
+	public ImageExternal findImageById(Integer id)
+	{
+		ImageExternal imageExternal = null;
+		try
+		{
+			imageExternal = (ImageExternal)entityManager.find(Image.class, id);
+		} catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return imageExternal; 
 	}
 
 	@SuppressWarnings("unchecked")
@@ -255,5 +271,23 @@ public class InternationalizationDao
 		entityManager.getTransaction().commit();
 
 		return tcte;
+	}
+	
+	public ImageExternal insertImageExternal(String externalUrl) throws Exception {
+
+		entityManager.getTransaction().begin();
+		
+		ImageType externalType = entityManager.find(ImageType.class, 2);
+		
+		ImageExternal imageExternal = new ImageExternal();
+		imageExternal.setUrl(externalUrl);
+		imageExternal.setType(externalType);
+		
+		// Insert Object
+		entityManager.persist(imageExternal);
+		// TODO check for rollback or throw exception higher ?
+		entityManager.getTransaction().commit();
+		
+		return imageExternal;
 	}
 }

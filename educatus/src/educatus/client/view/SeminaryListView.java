@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -26,6 +27,9 @@ SeminaryListPresenter.MyView {
 	
 	@UiField(provided=true) 
 	DataGrid<Seminary> dataGrid;
+	
+	@UiField
+	Button backButton;
 	
 	public interface Binder extends UiBinder<Widget, SeminaryListView> {
 	}
@@ -89,12 +93,16 @@ SeminaryListPresenter.MyView {
 		    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
 		        @Override 
 		        public Hyperlink getValue(Seminary seminary) {			    	  
-		        	Hyperlink link = new Hyperlink(seminary.getDescription(), NameTokens.getViewSeminary());
+		        	Hyperlink link = new Hyperlink(seminary.getDescription(), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
 		            link.setStyleName("dataGridHyperlink");
 		            return link; 
 		        }
 			};
 		dataGrid.addColumn(DescriptionColumn, "Description", "");
 		dataGrid.setColumnWidth(DescriptionColumn, 400, Unit.PX);
+	}
+
+	public Button getBackButton() {
+		return backButton;
 	}
 }

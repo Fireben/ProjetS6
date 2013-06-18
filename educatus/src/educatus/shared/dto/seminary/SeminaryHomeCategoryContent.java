@@ -5,56 +5,24 @@ import java.util.ArrayList;
 
 public class SeminaryHomeCategoryContent implements Serializable {
 
-	public static class CategoryContent {
-		private int id;
-		private String name;
-		private String description;
-
-		public int getId() {
-			return id;
-		}
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-
-		public void setDescription(String description) {
-			this.description = description;
-		}
-
-	}
-
 	private static final long serialVersionUID = 6160737635292640612L;
 
-	private CategoryContent commonParent;
-	private ArrayList<CategoryContent> categoryChildren = new ArrayList<CategoryContent>();
+	private CategoryCoreContent commonParent;
+	private ArrayList<CategoryCoreContent> categoryChildren = new ArrayList<CategoryCoreContent>();
 
-	public CategoryContent getCommonParent() {
+	public CategoryCoreContent getCommonParent() {
 		return commonParent;
 	}
 
-	public void setCommonParent(CategoryContent commonParent) {
+	public void setCommonParent(CategoryCoreContent commonParent) {
 		this.commonParent = commonParent;
 	}
 
-	public ArrayList<CategoryContent> getCategoryChildren() {
+	public ArrayList<CategoryCoreContent> getCategoryChildren() {
 		return categoryChildren;
 	}
 
-	public void setCategoryChildren(ArrayList<CategoryContent> categoryChildren) {
+	public void setCategoryChildren(ArrayList<CategoryCoreContent> categoryChildren) {
 		this.categoryChildren = categoryChildren;
 	}
-
 }

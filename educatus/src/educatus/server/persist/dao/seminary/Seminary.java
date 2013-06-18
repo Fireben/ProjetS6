@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
@@ -80,9 +79,23 @@ public class Seminary implements Serializable {
 	@JoinTable(name = "seminarycompetence", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "comp_id", nullable = false) })
 	private List<Competence> competences;
 
-	// bi-directional many-to-one association to UsersSminary
-	@OneToMany(mappedBy = "seminary")
-	private List<UsersSminary> userseminaries;
+	// bi-directional many-to-one association to UsersSeminary
+	@ManyToMany
+	@JoinTable(name = "userseminary", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) })
+	private List<User> completedSeminaryUsers;
+
+	// bi-directional many-to-one association to UsersSeminary
+	@ManyToMany
+	@JoinTable(name = "seminaryassociateduser", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) })
+	private List<User> seminaryEditUser;
+	
+	public List<User> getSeminaryEditUser() {
+		return seminaryEditUser;
+	}
+
+	public void setSeminaryEditUser(List<User> seminaryEditUser) {
+		this.seminaryEditUser = seminaryEditUser;
+	}
 
 	public Seminary() {
 	}
@@ -151,12 +164,12 @@ public class Seminary implements Serializable {
 		this.competences = competences;
 	}
 
-	public List<UsersSminary> getUserseminaries() {
-		return this.userseminaries;
+	public List<User> getCompletedSeminaryUsers() {
+		return this.completedSeminaryUsers;
 	}
 
-	public void setUserseminaries(List<UsersSminary> userseminaries) {
-		this.userseminaries = userseminaries;
+	public void setCompletedSeminaryUsers(List<User> userseminaries) {
+		this.completedSeminaryUsers = userseminaries;
 	}
 
 	public DynamicContent getDynamicContent() {
