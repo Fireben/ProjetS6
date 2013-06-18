@@ -18,21 +18,36 @@ package educatus.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * A simple menu that can be reused.
- *
+ * 
  * @author
  */
 public class Footer extends Composite {
-  interface FooterUiBinder extends UiBinder<Widget, Footer> {
-  }
+	interface FooterUiBinder extends UiBinder<Widget, Footer> {
+	}
 
-  private static FooterUiBinder uiBinder = GWT.create(FooterUiBinder.class);
+	private static FooterUiBinder uiBinder = GWT.create(FooterUiBinder.class);
 
-  public Footer() {
-    initWidget(uiBinder.createAndBindUi(this));
-  }
+	@UiField
+	PushButton frenchButton;
+	@UiField
+	PushButton englishButton;
+
+	public Footer() {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
+
+	public PushButton getFrenchButton() {
+		return frenchButton;
+	}
+
+	public PushButton getEnglishButton() {
+		return englishButton;
+	}
 }

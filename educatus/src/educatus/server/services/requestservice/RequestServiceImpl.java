@@ -9,11 +9,13 @@ import com.google.inject.Singleton;
 
 import educatus.server.businesslogic.profilmanager.UserProfilFactory;
 import educatus.server.businesslogic.uibuilder.HomePageFactory;
+import educatus.server.businesslogic.uibuilder.MainPageFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeListingFactory;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
 import educatus.shared.dto.HomePageContent;
+import educatus.shared.dto.MainPageContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 import educatus.shared.dto.seminary.SeminaryHomeListingContent;
 import educatus.shared.dto.user.UserProfilContent;
@@ -23,13 +25,13 @@ import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.RequestTypeEnum;
 import educatus.shared.services.requestservice.request.FooterContentRequest;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;
-import educatus.shared.services.requestservice.request.MainMenuContentRequest;
+import educatus.shared.services.requestservice.request.MainPageContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.UserProfilContentRequest;
 import educatus.shared.services.requestservice.response.FooterContentResponse;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
-import educatus.shared.services.requestservice.response.MainMenuContentResponse;
+import educatus.shared.services.requestservice.response.MainPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.UserProfilContentResponse;
@@ -40,7 +42,8 @@ import educatus.shared.services.requestservice.response.UserProfilContentRespons
 @SuppressWarnings("serial")
 @Singleton
 public class RequestServiceImpl extends RemoteServiceServlet implements RequestService {
-	
+
+	private MainPageFactory mainPageFactory;
 	private HomePageFactory homePageFactory;
 	private SeminaryHomeCategoryFactory seminaryHomeCategoryFactory;
 	private SeminaryHomeListingFactory seminaryHomeListingFactory;
@@ -55,6 +58,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		dbInjector.getInstance(JpaInitializer.class);
 		//dbInjector.getInstance(InternationalizationDao.class);
 		//dbInjector.getInstance(SeminaryDao.class);
+		mainPageFactory = dbInjector.getInstance(MainPageFactory.class);
 		homePageFactory = dbInjector.getInstance(HomePageFactory.class);
 		userProfilFactory = dbInjector.getInstance(UserProfilFactory.class);
 		seminaryHomeCategoryFactory = dbInjector.getInstance(SeminaryHomeCategoryFactory.class);
@@ -75,8 +79,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				case HOME_PAGE_CONTENT_REQUEST:
 					response = ProcessHomePageContentRequest((HomePageContentRequest) request);
 					break;				
-				case MAIN_MENU_CONTENT_REQUEST:
-					response = ProcessMainMenuContentRequest((MainMenuContentRequest) request);
+				case MAIN_PAGE_CONTENT_REQUEST:
+					response = ProcessMainMenuContentRequest((MainPageContentRequest) request);
 					break;	
 				case SEMINARY_HOME_PAGE_CATEGORY_CONTENT_REQUEST:
 					response = ProcessSeminaryHomePageCategoryContentRequest((SeminaryHomePageCategoryContentRequest) request);
@@ -103,9 +107,12 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 	
-	private MainMenuContentResponse ProcessMainMenuContentRequest(MainMenuContentRequest request)
+	private MainPageContentResponse ProcessMainMenuContentRequest(MainPageContentRequest request)
 	{
-		MainMenuContentResponse response = new MainMenuContentResponse();
+		MainPageContent content = mainPageFactory.createMainPageContent(request.getCulture(), request.getLanguage());
+		
+		MainPageContentResponse response = new MainPageContentResponse();
+		response.setMainPageContent(content);
 		
 		return response;
 	}
@@ -113,7 +120,6 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private HomePageContentResponse ProcessHomePageContentRequest(HomePageContentRequest request)
 	{
 		HomePageContent content = homePageFactory.createHomePageContent(request.getCulture(), request.getLanguage());
-		//HomePageContent content = homePageFactory.createHomePageContent("CA", "fr");
 		
 		HomePageContentResponse response = new HomePageContentResponse();
 		response.setHomeContent(content);
