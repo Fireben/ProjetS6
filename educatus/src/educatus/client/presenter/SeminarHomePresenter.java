@@ -33,12 +33,11 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
-import educatus.client.animation.FadeAnimation;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.dataGrids.Seminary;
+import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -64,6 +63,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	AbstractResponseHandler responseHandler = null;
     
     public static final Object SLOT_content = new Object();
+
     
 	@Inject
 	CategoryPresenter seminarCategoryPresenter;
@@ -103,8 +103,6 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	@Override
 	protected void onReveal() {  	
 		seminarCategoryPresenter.clear(); 
-		setInSlot(SLOT_content, seminarCategoryPresenter);
-  		// Parent category will be null, find all top level
   		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
   		requestService.sendRequest(request, responseHandler);
 	}
@@ -112,11 +110,9 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private ClickHandler backClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Adjustments on server for correct "back" behavior
-			// Back click returns to top level			
-	  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+			SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
 	  		request.setParentCategory(null);
-	  		requestService.sendRequest(request, responseHandler);
+	  		requestService.sendRequest(request, responseHandler);		  					
 		}
 	};
 	
@@ -129,7 +125,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	};
 	
 	private void changeCategoryPanel(int id) {  		
-  		CategoryContent parentCategory = new CategoryContent();
+  		CategoryCoreContent parentCategory = new CategoryCoreContent();
   		parentCategory.setId(id);  		
   		
   		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
@@ -137,8 +133,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   		requestService.sendRequest(request, responseHandler);
 	}
 	
-	private void setSeminaryList() {
-		setInSlot(SLOT_content, seminaryListPresenter);
+	private void setSeminaryList() {	
 		List<Seminary> seminaries = new ArrayList<Seminary>();
 		for(int i=1;i<=5;i++) {
 			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", "Marc-Andre Beaudry", null, 4));
@@ -147,10 +142,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 			seminaries.add(new Seminary(j, "Sauce Nuage", "Comment faire de la sauce nuage quand il fait beau?", "Nicolas Michaud", null, 2));
 		}
 		seminaryListPresenter.setData(seminaries);
-		FadeAnimation animation;
-		animation = new FadeAnimation(seminaryListPresenter.getView().getDataGrid(), FadeAnimation.MIN_OPACITY,
-										FadeAnimation.MAX_OPACITY, FadeAnimation.VERY_LONG);
-		animation.start();
+		seminaryListPresenter.setBackButtonHandler(backClickHandler);
 	}
 	
 	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
@@ -158,17 +150,19 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		@Override
 		public void onSuccess(AbstractResponse result) {
 			
-			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){				
+			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){	
+				setInSlot(SLOT_content, seminarCategoryPresenter);
 				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
 				SeminaryHomeCategoryContent content = response.getContent();
 				if(content.getCategoryChildren().size() != 0) {
 					seminarCategoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
-					CategoryContent parent = content.getCommonParent();
+					CategoryCoreContent parent = content.getCommonParent();
 					if(parent != null) {
 						seminarCategoryPresenter.animateBackButtonIn();
 					}
 				}
 				else {
+					setInSlot(SLOT_content, seminaryListPresenter);	
 					setSeminaryList();
 				}
 				
@@ -181,8 +175,6 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
 		}
 	};
 	

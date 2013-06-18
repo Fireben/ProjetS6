@@ -10,10 +10,21 @@
     	<servlet-name>requestservice</servlet-name>
     	<servlet-class>educatus.server.services.requestservice.RequestServiceImpl</servlet-class>
   	</servlet>
+  	
+  	<servlet>
+	    <servlet-name>uploadServlet</servlet-name>
+	    <!-- This is the default servlet, it puts files in session -->
+	    <servlet-class>gwtupload.server.UploadServlet</servlet-class>
+	</servlet>
   
   	<servlet-mapping>
     	<servlet-name>requestservice</servlet-name>
     	<url-pattern>/educatus/requestservice</url-pattern>
+  	</servlet-mapping>
+  	
+  	<servlet-mapping>
+	    <servlet-name>uploadServlet</servlet-name>
+	    <url-pattern>*.gupld</url-pattern>
   	</servlet-mapping>
   
 	<!-- Default page to serve -->
