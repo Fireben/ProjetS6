@@ -18,7 +18,7 @@ public class UserProfilFactory {
 		content.setLastName("Gravel");
 		content.setEmail("Jean-Sebastien.Gravel@usherbrooke.ca");
 		content.setPrivacyEnabled(true);
-		content.setProfilImageUrl("images/icons/user_128.png");
+		content.setProfilImageUrl("images/user_128.png");
 		content.setJoinedDate(new Date(2013, 6, 6));
 		
 		java.util.Date today = new java.util.Date();
