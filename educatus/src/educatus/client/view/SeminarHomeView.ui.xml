@@ -3,10 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:my="urn:import:educatus.client.ui"
 	>	
-	
-    <ui:style>
-	</ui:style>
-
 	<g:HTMLPanel>	
 		<g:HTMLPanel ui:field="contentPanel" height= "100%"/> 		    
 	</g:HTMLPanel>

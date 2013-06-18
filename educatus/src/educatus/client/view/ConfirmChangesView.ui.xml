@@ -5,9 +5,22 @@
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
+	
+    <ui:with field='res' type='educatus.resources.Resources' />
 
-	<g:HTMLPanel>
-		<g:Button ui:field="saveButton">Confirm</g:Button>
-		<g:Button ui:field="cancelButton">Cancel</g:Button>
+	<g:HTMLPanel ui:field="confirmPanel">
+	    <g:HorizontalPanel ui:field="addSectionPanel">
+			<g:PushButton ui:field="addTextButton" enabled='true'>
+				<g:upFace image='{res.addTextButton}' />
+			</g:PushButton>
+			<g:PushButton ui:field="addImageButton" enabled="true">
+				<g:upFace image='{res.addImageButton}' />
+			</g:PushButton>
+			<g:PushButton ui:field="addVideoButton" enabled="true">
+				<g:upFace image='{res.addVideoButton}' />
+			</g:PushButton>
+		</g:HorizontalPanel>
+			<g:Button ui:field="saveButton">Confirm</g:Button>
+			<g:Button ui:field="cancelButton">Cancel</g:Button>
 	</g:HTMLPanel>
 </ui:UiBinder>
