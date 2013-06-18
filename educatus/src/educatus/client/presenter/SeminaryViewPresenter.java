@@ -11,6 +11,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
@@ -107,4 +108,10 @@ public class SeminaryViewPresenter extends
 		PageChangingEvent.fire(this, NameTokens.getViewSeminary());
 	}
 	
+	@Override
+	public void prepareFromRequest(PlaceRequest placeRequest) {
+		super.prepareFromRequest(placeRequest);
+		String id = placeRequest.getParameter("id", "1");
+		System.out.println("Mon id est : " + id);
+	}
 }

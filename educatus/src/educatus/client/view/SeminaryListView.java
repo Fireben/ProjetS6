@@ -93,7 +93,7 @@ SeminaryListPresenter.MyView {
 		    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
 		        @Override 
 		        public Hyperlink getValue(Seminary seminary) {			    	  
-		        	Hyperlink link = new Hyperlink(seminary.getDescription(), NameTokens.getViewSeminary() + "?id=" + String.valueOf(5));
+		        	Hyperlink link = new Hyperlink(seminary.getDescription(), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
 		            link.setStyleName("dataGridHyperlink");
 		            return link; 
 		        }

@@ -23,7 +23,7 @@ public class SeminaryListPresenter extends
 
 	@Inject
 	public SeminaryListPresenter(final EventBus eventBus, final MyView view) {
-		super(eventBus, view);
+		super(eventBus, view);		
 	}
 
 	@Override
