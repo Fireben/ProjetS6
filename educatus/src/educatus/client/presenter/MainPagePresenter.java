@@ -16,9 +16,11 @@
 
 package educatus.client.presenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -39,6 +41,13 @@ import educatus.client.events.PageChangingEvent;
 import educatus.client.events.PageChangingEvent.PageChangeHandler;
 import educatus.client.ui.Footer;
 import educatus.client.ui.MainMenu;
+import educatus.shared.dto.MainPageContent;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.MainPageContentRequest;
+import educatus.shared.services.requestservice.response.MainPageContentResponse;
 
 /**
  * This is the top-level presenter of the hierarchy. Other presenters reveal
@@ -70,6 +79,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 		void showLoading(boolean visibile);
 	}
+	
+	// Create a remote service proxy to talk to the server-side service.
+	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
 
 	private class TranslateClickHandler implements ClickHandler {
 		private String culture;
@@ -103,6 +115,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	
 	@Inject
 	private EducatusLocale locale;
+	
+	private MainPageContentRequest request = new MainPageContentRequest();
 
 	@Override
 	protected void revealInParent() {
@@ -134,6 +148,40 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				setActiveMenuItem(event.getMessage());
 			}
 		});
+	}
+	
+	@Override 
+	protected void onReset() {
+		super.onReset();
+		
+		if(request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage())
+		{
+			request.setCulture(locale.getCulture());
+			request.setLanguage(locale.getLanguage());
+			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
+
+				@Override
+				public void onSuccess(AbstractResponse result) {
+					if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
+						MainPageContentResponse response = (MainPageContentResponse) result;
+						MainPageContent content = response.getMainPageContent();
+						
+						// Move this to dedicated method, as in the HomePresenter
+						getView().getMenuPanel().getMainMenuHomeButton().getElement().setInnerText(content.getMainMenuContent().getHomeItem().getName());
+						getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setInnerText(content.getMainMenuContent().getSeminaryItem().getName());
+						getView().getMenuPanel().getMainMenuProfilButton().getElement().setInnerText(content.getMainMenuContent().getProfilItem().getName());
+						getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setInnerText(content.getMainMenuContent().getViewerItem().getName());
+						getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setInnerText(content.getMainMenuContent().getEditorItem().getName());
+					}
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+		}
 	}
 
 	private void setActiveMenuItem(String name) {
