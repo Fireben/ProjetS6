@@ -1,6 +1,11 @@
 package educatus.client.presenter;
 
+import java.util.List;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -17,21 +22,47 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionFormula;
+import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
+import educatus.shared.dto.dynamiccontent.AbstractDynamicSection.DynamicSectionType;
+import educatus.shared.dto.dynamiccontent.DynamicSectionFormulaContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionVideoContent;
+import educatus.shared.dto.seminary.SeminaryContent;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.SeminaryContentRequest;
+import educatus.shared.services.requestservice.response.SeminaryContentResponse;
 
 public class SeminaryViewPresenter extends
-		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy>{
+		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy> {
 
 	public interface MyView extends View {
-		public Element getWrittenBy(); 
-		public Element getModifyBy(); 
+		public Element getWrittenBy();
+
+		public Element getModifyBy();
+
 		public Element getAuthor();
+
 		public Element getAuthorEmail();
-		public Element getModif(); 
+
+		public Element getModif();
+
 		public Element getModifEmail();
-		public Element getCreatedDate(); 
+
+		public Element getCreatedDate();
+
 		public Element getModifiedDate();
-		public void insertContent(Widget w);
+
+		public FlowPanel getDynamicSectionContainer();
 	}
+
+	// Create a remote service proxy to talk to the server-side service.
+	private final RequestServiceAsync requestService = GWT
+			.create(RequestService.class);
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.viewSeminary)
@@ -46,68 +77,115 @@ public class SeminaryViewPresenter extends
 
 	@Override
 	protected void revealInParent() {
-		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
+		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent,
+				this);
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
-		
+
+		/*
 		Label label = new Label();
 		label.setText("Label Text");
 		getView().insertContent(label);
-		
+
 		Image img = new Image();
 		img.setUrl("images/earth_puzzle_3.png");
 		getView().insertContent(img);
-		
+
 		String src = "http://www.youtube.com/embed/Gm-RO-cmsEQ?list=PL29DDDC847F63AF82";
-		HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src=" + src + " frameborder=\"0\" allowfullscreen></iframe>");
+		HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src="
+				+ src + " frameborder=\"0\" allowfullscreen></iframe>");
 		getView().insertContent(videoHtml);
-		
+
 		String srcVideo = "http://www.dailymotion.com/embed/video/xzfw9p";
-		HTML videoDailyMotion = new HTML("<iframe width=\"560\" height=\"315\" src=" + srcVideo + " frameborder=\"0\" allowfullscreen></iframe>");
+		HTML videoDailyMotion = new HTML(
+				"<iframe width=\"560\" height=\"315\" src=" + srcVideo
+						+ " frameborder=\"0\" allowfullscreen></iframe>");
 		getView().insertContent(videoDailyMotion);
-		
-		/*if(type == "text")
-		{
-			Label label = new Label();
-			label.setText(content);
-			getView().insertContent(label);
-		}
-		else if(type == "image")
-		{
-			Image img = new Image();
-			img.setUrl(url);
-			getView().insertContent(img);
-		}
-		else if(type == "video")
-		{
-			HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src=" + videoSrc + " frameborder=\"0\" allowfullscreen></iframe>");
-			getView().insertContent(videoHtml);
-		}*/
+		*/
+		/*
+		 * if(type == "text") { Label label = new Label();
+		 * label.setText(content); getView().insertContent(label); } else
+		 * if(type == "image") { Image img = new Image(); img.setUrl(url);
+		 * getView().insertContent(img); } else if(type == "video") { HTML
+		 * videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src=" +
+		 * videoSrc + " frameborder=\"0\" allowfullscreen></iframe>");
+		 * getView().insertContent(videoHtml); }
+		 */
 	}
 
 	@Override
 	protected void onReset() {
 		super.onReset();
-		
+
+		SeminaryContentRequest request = new SeminaryContentRequest();
+		request.setCulture("CA");
+		request.setLanguage("fr");
+		request.setSelectedSeminaryId(1);
+		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
+
+			@Override
+			public void onSuccess(AbstractResponse result) {
+				if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
+					SeminaryContentResponse response = (SeminaryContentResponse) result;
+					SeminaryContent seminaryContent = response
+							.getSeminaryContent();
+					populateSeminaryView(seminaryContent);
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		getView().getWrittenBy().setInnerHTML("written by");
 		getView().getAuthor().setInnerHTML("Author");
-		getView().getAuthorEmail().setPropertyString("href", "mailto:Prof@usherbrooke.qc.ca");
+		getView().getAuthorEmail().setPropertyString("href",
+				"mailto:Prof@usherbrooke.qc.ca");
 		getView().getCreatedDate().setInnerHTML("23/03/13");
 		getView().getModifyBy().setInnerHTML("modified by");
 		getView().getModif().setInnerHTML("Modif");
-		getView().getModifEmail().setPropertyString("href", "mailto:Modif@usherbrooke.qc.ca");
-		getView().getModifiedDate().setInnerHTML("25/03/13");		
+		getView().getModifEmail().setPropertyString("href",
+				"mailto:Modif@usherbrooke.qc.ca");
+		getView().getModifiedDate().setInnerHTML("25/03/13");
+
+	}
+
+	private void populateSeminaryView(SeminaryContent seminaryContent) {
+		List<AbstractDynamicSection> dynamicSectionList = seminaryContent
+				.getDynamicSectionList();
+		
+		for (AbstractDynamicSection abstractDynamicSection : dynamicSectionList) {
+			switch (abstractDynamicSection.getSectionType()) {			
+				case FORMULA_SECTION:
+					DynamicSectionFormulaContent content1 = (DynamicSectionFormulaContent) abstractDynamicSection;					
+					break;
+				case IMAGE_SECTION:
+					DynamicSectionImageContent content2 = (DynamicSectionImageContent) abstractDynamicSection;
+					break;
+				case TEXT_SECTION:
+					DynamicSectionTextContent textContent = (DynamicSectionTextContent) abstractDynamicSection;
+					getView().getDynamicSectionContainer().add(new Label(textContent.getTitle()));
+					getView().getDynamicSectionContainer().add(new Label(textContent.getText()));
+					break;
+				case VIDEO_SECTION:
+					DynamicSectionVideoContent content4 = (DynamicSectionVideoContent) abstractDynamicSection;
+					break;
+			}
+		}
 		
 	}
-	
+
 	@Override
 	protected void onReveal() {
 		PageChangingEvent.fire(this, NameTokens.getViewSeminary());
 	}
-	
+
 	@Override
 	public void prepareFromRequest(PlaceRequest placeRequest) {
 		super.prepareFromRequest(placeRequest);

@@ -11,24 +11,34 @@ import com.google.gwt.user.client.ui.Widget;
 import educatus.client.presenter.SeminaryViewPresenter.MyView;
 
 public class SeminaryViewView extends ViewImpl implements MyView {
-	  
-	interface SeminaryViewViewUiBinder extends UiBinder<Widget, SeminaryViewView> {
-	  }
 
-	  private static SeminaryViewViewUiBinder uiBinder = GWT.create(SeminaryViewViewUiBinder.class);
+	interface SeminaryViewViewUiBinder extends
+			UiBinder<Widget, SeminaryViewView> {
+	}
 
-	  private final Widget widget;
-	  
-	  @UiField FlowPanel textAreaContainer;
-	  @UiField Element writtenBy;
-	  @UiField Element modifyBy;
-	  @UiField Element author;
-	  @UiField Element authorEmail;
-	  @UiField Element modif;
-	  @UiField Element modifEmail;
-	  @UiField Element createdDate;
-	  @UiField Element modifiedDate;
+	private static SeminaryViewViewUiBinder uiBinder = GWT
+			.create(SeminaryViewViewUiBinder.class);
 
+	private final Widget widget;
+
+	@UiField
+	FlowPanel dynamicSectionContainer;
+	@UiField
+	Element writtenBy;
+	@UiField
+	Element modifyBy;
+	@UiField
+	Element author;
+	@UiField
+	Element authorEmail;
+	@UiField
+	Element modif;
+	@UiField
+	Element modifEmail;
+	@UiField
+	Element createdDate;
+	@UiField
+	Element modifiedDate;
 
 	public Element getWrittenBy() {
 		return writtenBy;
@@ -41,7 +51,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	public Element getAuthor() {
 		return author;
 	}
-	
+
 	public Element getAuthorEmail() {
 		return authorEmail;
 	}
@@ -49,7 +59,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	public Element getModif() {
 		return modif;
 	}
-	
+
 	public Element getModifEmail() {
 		return modifEmail;
 	}
@@ -60,19 +70,18 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 
 	public Element getModifiedDate() {
 		return modifiedDate;
-	}
-	
-	public void insertContent(Widget w)
-	{
-		textAreaContainer.add(w);
-	}
-	  
-	public SeminaryViewView() {
-	    widget = uiBinder.createAndBindUi(this);
-	  }
+	}	
 
-	  public Widget asWidget() {
-	    return widget;
-	  }
-	 
+	public FlowPanel getDynamicSectionContainer() {
+		return dynamicSectionContainer;
+	}
+
+	public SeminaryViewView() {
+		widget = uiBinder.createAndBindUi(this);
+	}
+
+	public Widget asWidget() {
+		return widget;
+	}
+
 }

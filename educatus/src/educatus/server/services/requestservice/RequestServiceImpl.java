@@ -6,8 +6,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import com.sun.xml.internal.ws.api.model.SEIModel;
 
 import educatus.server.businesslogic.profilmanager.UserProfilFactory;
+import educatus.server.businesslogic.seminarymanager.SeminaryContentFactory;
 import educatus.server.businesslogic.uibuilder.HomePageFactory;
 import educatus.server.businesslogic.uibuilder.MainPageFactory;
 import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
@@ -16,6 +18,7 @@ import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
 import educatus.shared.dto.HomePageContent;
 import educatus.shared.dto.MainPageContent;
+import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 import educatus.shared.dto.seminary.SeminaryHomeListingContent;
 import educatus.shared.dto.user.UserProfilContent;
@@ -26,12 +29,14 @@ import educatus.shared.services.requestservice.RequestTypeEnum;
 import educatus.shared.services.requestservice.request.FooterContentRequest;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.UserProfilContentRequest;
 import educatus.shared.services.requestservice.response.FooterContentResponse;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.UserProfilContentResponse;
@@ -47,6 +52,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private HomePageFactory homePageFactory;
 	private SeminaryHomeCategoryFactory seminaryHomeCategoryFactory;
 	private SeminaryHomeListingFactory seminaryHomeListingFactory;
+	private SeminaryContentFactory seminaryContentFactory;
 	private UserProfilFactory userProfilFactory;
 	
 	@Override
@@ -63,6 +69,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		userProfilFactory = dbInjector.getInstance(UserProfilFactory.class);
 		seminaryHomeCategoryFactory = dbInjector.getInstance(SeminaryHomeCategoryFactory.class);
 		seminaryHomeListingFactory = dbInjector.getInstance(SeminaryHomeListingFactory.class);
+		seminaryContentFactory = dbInjector.getInstance(SeminaryContentFactory.class);
 	}
 
 	@Override
@@ -88,8 +95,12 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
 					response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
 					break;
+				case SEMINARY_CONTENT_REQUEST: 
+					response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);		
+					break;
 				case PROFIL_PAGE_CONTENT_REQUEST:
 					response = ProcessUserProfilContentRequest((UserProfilContentRequest) request);
+					break;
 				default:
 					break;
 			}
@@ -100,6 +111,21 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 	
+	private SeminaryContentResponse ProcessSeminaryContentRequest(SeminaryContentRequest request) {
+		
+		SeminaryContentResponse response = new SeminaryContentResponse();
+		
+		SeminaryContent content = seminaryContentFactory.createSeminaryContent(
+				request.getSelectedSeminaryId(), 
+				request.getCulture(), 
+				request.getLanguage()
+		);
+		
+		response.setSeminaryContent(content);
+		
+		return response;
+	}
+
 	private FooterContentResponse ProcessFooterContentRequest(FooterContentRequest request)
 	{
 		FooterContentResponse response = new FooterContentResponse();
