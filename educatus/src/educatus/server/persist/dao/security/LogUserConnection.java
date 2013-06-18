@@ -14,13 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * The persistent class for the loguserconnection database table.
- * 
- */
 @Entity
 @Table(name = "security.loguserconnection")
 public class LogUserConnection implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id

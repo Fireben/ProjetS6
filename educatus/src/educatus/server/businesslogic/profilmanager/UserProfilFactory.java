@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import com.google.inject.Singleton;
 
+import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.user.UserProfilContent;
 
 @Singleton
@@ -13,18 +14,19 @@ public class UserProfilFactory {
 		
 		UserProfilContent content = new UserProfilContent();
 		
-		content.setCip(cip);
-		content.setFirstName("Jean-Sébastien");
-		content.setLastName("Gravel");
-		content.setEmail("Jean-Sebastien.Gravel@usherbrooke.ca");
-		content.setPrivacyEnabled(true);
-		content.setProfilImageUrl("images/icons/user_128.png");
-		content.setJoinedDate(new Date(2013, 6, 6));
+		UserCoreContent coreContent = new UserCoreContent();
+		coreContent.setCip(cip);
+		coreContent.setFirstName("Jean-Sébastien");
+		coreContent.setLastName("Gravel");
+		coreContent.setEmail("Jean-Sebastien.Gravel@usherbrooke.ca");
+		coreContent.setPrivacyEnabled(true);
 		
 		java.util.Date today = new java.util.Date();
-		content.setLastConnexion(new Date(today.getTime()));
-				
+		coreContent.setJoinedDate(new Date(today.getTime()));		
+		coreContent.setLastConnexion(new Date(today.getTime()));
+
+		content.setUserCoreContent(coreContent);
+		content.setProfilImageUrl("images/icons/user_128.png");
 		return content;		
 	}
-	
 }

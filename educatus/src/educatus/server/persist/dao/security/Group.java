@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -19,15 +18,15 @@ import javax.persistence.Table;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
 @Entity
-@Table(name = "security.usertype")
-public class UserType implements Serializable {
+@Table(name = "security.groups")
+public class Group implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "USERTYPE_USTY_ID_GENERATOR", sequenceName = "security.usertype_usty_id_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERTYPE_USTY_ID_GENERATOR")
-	@Column(name = "usty_id")
+	@SequenceGenerator(name = "GROUPS_GROUID_GENERATOR", sequenceName = "security.groups_grou_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GROUPS_GROUID_GENERATOR")
+	@Column(name = "grou_id", unique = true, nullable = false)
 	private Integer id;
 
 	// bi-directional many-to-one association to TextContentEntry
@@ -41,21 +40,18 @@ public class UserType implements Serializable {
 	private TextContentEntry name;
 
 	// bi-directional many-to-many association to Permission
-	@ManyToMany
-	@JoinTable(name = "usertypepermission", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "perm_id") })
+	@ManyToMany(mappedBy = "associatedGroupList")
 	private List<Permission> associatedPermissionList;
 
 	// bi-directional many-to-many association to User
-	@ManyToMany
-	@JoinTable(name = "userusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
+	@ManyToMany(mappedBy = "associatedGroupList")
 	private List<User> associatedUserList;
 
-	// bi-directional many-to-many association to User
-	@ManyToMany
-	@JoinTable(name = "groupusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "grou_id") })
-	private List<Group> associatedGroupList;
+	// bi-directional many-to-many association to UserType
+	@ManyToMany(mappedBy = "associatedGroupList")
+	private List<UserType> associatedUserTypeList;
 
-	public UserType() {
+	public Group() {
 	}
 
 	public Integer getId() {
@@ -67,7 +63,7 @@ public class UserType implements Serializable {
 	}
 
 	public TextContentEntry getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(TextContentEntry description) {
@@ -75,34 +71,34 @@ public class UserType implements Serializable {
 	}
 
 	public TextContentEntry getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(TextContentEntry name) {
 		this.name = name;
 	}
 
-	public List<Permission> getAssociatedPermissionList() {
+	public List<Permission> getAssociatedPermissions() {
 		return this.associatedPermissionList;
 	}
 
-	public void setAssociatedPermissionList(List<Permission> associatedPermissionList) {
-		this.associatedPermissionList = associatedPermissionList;
+	public void setPermissions(List<Permission> permissions) {
+		this.associatedPermissionList = permissions;
 	}
 
 	public List<User> getAssociatedUserList() {
 		return this.associatedUserList;
 	}
 
-	public void setAssociatedUserList(List<User> associatedUserList) {
-		this.associatedUserList = associatedUserList;
+	public void setAssociatedUserList(List<User> userList) {
+		this.associatedUserList = userList;
 	}
 
-	public List<Group> getAssociatedGroupList() {
-		return associatedGroupList;
+	public List<UserType> getAssociatedUserTypeList() {
+		return this.associatedUserTypeList;
 	}
 
-	public void setAssociatedGroupList(List<Group> associatedGroupList) {
-		this.associatedGroupList = associatedGroupList;
+	public void setAssociatedUserTypeList(List<UserType> associatedUserTypeList) {
+		this.associatedUserTypeList = associatedUserTypeList;
 	}
 }

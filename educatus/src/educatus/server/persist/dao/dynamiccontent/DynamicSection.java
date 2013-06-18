@@ -4,27 +4,35 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Inheritance
-@DiscriminatorColumn(name = "DYST_Type")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dyst_Type", discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "dynamic_content.vdynamicsection")
-public class DynamicSection implements Serializable {
+public abstract class DynamicSection implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "dynamicsection_dyse_id", sequenceName = "dynamic_content.dynamicsection_dyse_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dynamicsection_dyse_id")
 	@Column(name = "dyse_id", unique = true, nullable = false)
 	private Integer id;
 
 	@Column(name = "dyse_sequence", nullable = false)
-	private Integer sequence;
+	private Integer sequenceNumber;
 
 	// bi-directional many-to-one association to DynamicContent
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -52,12 +60,12 @@ public class DynamicSection implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getSequence() {
-		return this.sequence;
+	public Integer getSequenceNumber() {
+		return this.sequenceNumber;
 	}
 
-	public void setSequence(Integer sequence) {
-		this.sequence = sequence;
+	public void setSequenceNumber(Integer sequenceNumber) {
+		this.sequenceNumber = sequenceNumber;
 	}
 
 	public DynamicContent getDynamicContent() {

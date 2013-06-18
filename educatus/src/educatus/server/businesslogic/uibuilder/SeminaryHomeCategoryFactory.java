@@ -8,8 +8,8 @@ import com.google.inject.Singleton;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.seminary.Category;
+import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent.CategoryContent;
 
 @Singleton
 public class SeminaryHomeCategoryFactory {
@@ -34,7 +34,7 @@ public class SeminaryHomeCategoryFactory {
 				
 				for (Category category : categoryList) {
 					
-					CategoryContent content = new CategoryContent();
+					CategoryCoreContent content = new CategoryCoreContent();
 					// TODO We need to get the correct translation in the entries
 					content.setId(category.getId());
 					content.setName(category.getName().getTextContentTranslationEntries().get(0).getTcteTranslation());
@@ -49,11 +49,11 @@ public class SeminaryHomeCategoryFactory {
 				
 			} else {
 				
-				Category parentCategory = semDao.findCategoryById(parentId);
+				Category parentCategory  = semDao.findCategoryById(parentId);
 				List<Category> childrenCategories = semDao.findChildrenCategories(parentCategory.getId());
 				
 				// We set common parent 
-				CategoryContent commonParent = new CategoryContent();
+				CategoryCoreContent commonParent = new CategoryCoreContent();
 				commonParent.setId(parentCategory.getId());
 				commonParent.setName(parentCategory.getName().getTextContentTranslationEntries().get(0).getTcteTranslation());
 				commonParent.setDescription(parentCategory.getDescription().getTextContentTranslationEntries().get(0).getTcteTranslation());
@@ -64,7 +64,7 @@ public class SeminaryHomeCategoryFactory {
 				
 				for (Category category : childrenCategories) {
 					
-					CategoryContent content = new CategoryContent();
+					CategoryCoreContent content = new CategoryCoreContent();
 					// TODO We need to get the correct translation in the entries
 					content.setId(category.getId());
 					content.setName(category.getName().getTextContentTranslationEntries().get(0).getTcteTranslation());

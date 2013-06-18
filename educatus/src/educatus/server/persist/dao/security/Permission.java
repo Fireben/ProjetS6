@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -17,13 +18,10 @@ import javax.persistence.Table;
 
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
-/**
- * The persistent class for the permission database table.
- * 
- */
 @Entity
 @Table(name = "security.permission")
 public class Permission implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,21 +30,27 @@ public class Permission implements Serializable {
 	@Column(name = "perm_id")
 	private Integer id;
 
-	@Column(name = "tece_description")
-	private Integer description;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_description")
+	private TextContentEntry description;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tece_name")
-	private TextContentEntry textContentEntry;
+	private TextContentEntry name;
 
 	// bi-directional many-to-many association to User
-	@ManyToMany(mappedBy = "permissions")
-	private List<User> users;
+	@ManyToMany(mappedBy = "associatedPermissionList")
+	private List<User> associatedUserList;
 
 	// bi-directional many-to-many association to Usertype
-	@ManyToMany(mappedBy = "permissions")
-	private List<UserType> usertypes;
+	@ManyToMany(mappedBy = "associatedPermissionList")
+	private List<UserType> associatedUserTypeList;
+
+	@ManyToMany
+	@JoinTable(name = "grouppermission", joinColumns = { @JoinColumn(name = "perm_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
+	private List<Group> associatedGroupList;
 
 	public Permission() {
 	}
@@ -59,35 +63,43 @@ public class Permission implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getDescription() {
+	public TextContentEntry getDescription() {
 		return this.description;
 	}
 
-	public void setDescription(Integer description) {
+	public void setDescription(TextContentEntry description) {
 		this.description = description;
 	}
 
-	public TextContentEntry getTextContentEntry() {
-		return this.textContentEntry;
+	public TextContentEntry getName() {
+		return this.name;
 	}
 
-	public void setTextContentEntry(TextContentEntry textContentEntry) {
-		this.textContentEntry = textContentEntry;
+	public void setName(TextContentEntry name) {
+		this.name = name;
 	}
 
-	public List<User> getUsers() {
-		return this.users;
+	public List<User> getAssociatedUserList() {
+		return this.associatedUserList;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setAssociatedUserList(List<User> associatedUserList) {
+		this.associatedUserList = associatedUserList;
 	}
 
-	public List<UserType> getUsertypes() {
-		return this.usertypes;
+	public List<UserType> getAssociatedUserTypeList() {
+		return this.associatedUserTypeList;
 	}
 
-	public void setUsertypes(List<UserType> usertypes) {
-		this.usertypes = usertypes;
+	public void setAssociatedUserTypeList(List<UserType> associatedUserTypeList) {
+		this.associatedUserTypeList = associatedUserTypeList;
+	}
+	
+	public List<Group> getAssociatedGroupList() {
+		return associatedGroupList;
+	}
+
+	public void setAssociatedGroupList(List<Group> associatedGroupList) {
+		this.associatedGroupList = associatedGroupList;
 	}
 }

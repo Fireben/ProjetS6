@@ -79,8 +79,7 @@ public class ProfilPresenter extends
 				if (result.GetResponseType() == ResponseTypeEnum.PROFIL_PAGE_CONTENT_RESPONSE){
 					UserProfilContentResponse response = (UserProfilContentResponse) result;
 					
-					UserProfilContent content = response.getUserProfilContent();
-					content.getCip();					
+					UserProfilContent content = response.getUserProfilContent();					
 				}				
 			}
 			

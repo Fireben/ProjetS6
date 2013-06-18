@@ -58,6 +58,7 @@
 		<class>educatus.server.persist.dao.internationalization.VideoContentEntry</class>
 		<class>educatus.server.persist.dao.internationalization.VideoContentTranslationEntry</class>
 		<class>educatus.server.persist.dao.internationalization.VideoContentTranslationEntryPK</class>
+		<class>educatus.server.persist.dao.security.Group</class>
 		<class>educatus.server.persist.dao.security.LogUserConnection</class>
 		<class>educatus.server.persist.dao.security.Permission</class>
 		<class>educatus.server.persist.dao.security.User</class>
