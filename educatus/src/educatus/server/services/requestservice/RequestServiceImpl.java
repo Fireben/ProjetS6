@@ -113,7 +113,6 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private HomePageContentResponse ProcessHomePageContentRequest(HomePageContentRequest request)
 	{
 		HomePageContent content = homePageFactory.createHomePageContent(request.getCulture(), request.getLanguage());
-		//HomePageContent content = homePageFactory.createHomePageContent("CA", "fr");
 		
 		HomePageContentResponse response = new HomePageContentResponse();
 		response.setHomeContent(content);
