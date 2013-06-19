@@ -50,22 +50,35 @@ public class GenerateSeminary {
 			DynamicSectionAlignment alignment = manager.find(DynamicSectionAlignment.class, 1);
 			
 			TextContentTranslationEntry sectionTitle1 = internationalizationDao.insertTextContentTranslationEntry(
-					EN_LANG, CA_CULT, "Paragraph 1");
+					EN_LANG, CA_CULT, "Abstract Factory");
 			TextContentTranslationEntry sectionText1 = internationalizationDao.insertTextContentTranslationEntry(
-					EN_LANG, CA_CULT, "Sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage sauce nuage");
+					EN_LANG, CA_CULT, "Provides an interface for creating families of related or dependant objects without specifying their concrete classes.");
 			
 			dynamicContentDao.addDynamicSectionText(
 					seminaryDynamicContent.getId(), 
 					sectionTitle1.getTextcontententry().getId(), 
 					sectionText1.getTextcontententry().getId(),
-					alignment.getId());
+					alignment.getId(),
+					0);
+			
+			TextContentTranslationEntry sectionTitle2 = internationalizationDao.insertTextContentTranslationEntry(
+					EN_LANG, CA_CULT, "Factory Method");
+			TextContentTranslationEntry sectionText2 = internationalizationDao.insertTextContentTranslationEntry(
+					EN_LANG, CA_CULT, "Define an interface for creating an object, but let subclass defice which class to instanciate. Factory Method lets a class defer instantiation to the subclasses.");
+			
+			dynamicContentDao.addDynamicSectionText(
+					seminaryDynamicContent.getId(), 
+					sectionTitle2.getTextcontententry().getId(), 
+					sectionText2.getTextcontententry().getId(),
+					alignment.getId(),
+					1);
 			
 			User user = securityDao.findUserByCip("beam1711");
 			Difficulty difficulty = seminaryDao.findDifficultyByLevel(1);
 			TextContentTranslationEntry seminaryTitle = internationalizationDao.insertTextContentTranslationEntry(
-					EN_LANG, CA_CULT, "Title de sauce");
+					EN_LANG, CA_CULT, "Design patterns : Factory");
 			TextContentTranslationEntry seminaryDesc = internationalizationDao.insertTextContentTranslationEntry(
-					EN_LANG, CA_CULT, "De la sauce et des nuages");
+					EN_LANG, CA_CULT, "Basics of factory pattern");
 			
 			Seminary seminary = seminaryDao.insertSeminary(
 					seminaryDynamicContent.getId(), 

@@ -7,6 +7,7 @@ public class DynamicSectionImageContent extends AbstractDynamicSection implement
 	private static final long serialVersionUID = -5721041505698872988L;
 	
 	private String imageUrl;
+	private String imageDescription;
 	
 	@Override
 	public DynamicSectionType getSectionType() {
@@ -19,5 +20,11 @@ public class DynamicSectionImageContent extends AbstractDynamicSection implement
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}public String getImageDescription() {
+		return imageDescription;
+	}
+
+	public void setImageDescription(String imageDescription) {
+		this.imageDescription = imageDescription;
 	}
 }

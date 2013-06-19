@@ -37,18 +37,16 @@ public class DynamicContentDao {
 		return content;
 	}
 	
-	public void addDynamicSectionText(int dynamicContentId, int titleTextContentEntryId, int textTextContentEntryId, int dynamicSectionAlignmentId) throws Exception {
+	public void addDynamicSectionText(int dynamicContentId, int titleTextContentEntryId, int textTextContentEntryId, int dynamicSectionAlignmentId, int sequenceNumber) throws Exception {
 		
 		DynamicContent dynamicContent = entityManager.find(DynamicContent.class, dynamicContentId);
 		TextContentEntry titleTextContentEntry = entityManager.find(TextContentEntry.class, titleTextContentEntryId);
-		TextContentEntry textTextContentEntry = entityManager.find(TextContentEntry.class, titleTextContentEntryId);
+		TextContentEntry textTextContentEntry = entityManager.find(TextContentEntry.class, textTextContentEntryId);
 		DynamicSectionAlignment dynamicSectionAlignment = entityManager.find(DynamicSectionAlignment.class, dynamicSectionAlignmentId);
-		
-		int previousDynamicSectionListSize = dynamicContent.getDynamicSectionList().size();
-				
+						
 		DynamicSectionText dynamicSectionText = new DynamicSectionText();
 		dynamicSectionText.setDynamicContent(dynamicContent);
-		dynamicSectionText.setSequenceNumber(previousDynamicSectionListSize);
+		dynamicSectionText.setSequenceNumber(sequenceNumber);
 		dynamicSectionText.setTitle(titleTextContentEntry);
 		dynamicSectionText.setText(textTextContentEntry);	
 		dynamicSectionText.setDynamicSectionAlignment(dynamicSectionAlignment);
