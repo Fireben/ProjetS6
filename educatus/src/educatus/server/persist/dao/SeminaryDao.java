@@ -27,7 +27,6 @@ public class SeminaryDao {
 	
 	public Category createNewCategory(int nameTeceId, int descriptionTeceId, int imageId, Integer parent) throws Exception {
 		
-		entityManager.getTransaction().begin();
 		TextContentEntry nameTece = entityManager.find(TextContentEntry.class, nameTeceId);
 		TextContentEntry descriptionTece = entityManager.find(TextContentEntry.class, descriptionTeceId);		
 		Image image = entityManager.find(Image.class, imageId);
@@ -46,8 +45,6 @@ public class SeminaryDao {
 		
 		// Insert Object
 		entityManager.persist(category);		
-		// TODO check for rollback or throw exception higher ?
-		entityManager.getTransaction().commit();
 				
 		return category;
 	}	
@@ -61,23 +58,44 @@ public class SeminaryDao {
 	public List<Category> findChildrenCategories(Integer parentId) throws Exception {
 		
 		Category parentCategory = entityManager.find(Category.class, parentId);
-		List<?> resultList = entityManager.createNamedQuery(
-				Category.FIND_ALL_CHILDREN).setParameter(Category.FIND_ALL_CHILDREN_PARAM_NAME, parentCategory).getResultList();
+		List<?> resultList = entityManager.createNamedQuery(Category.FIND_ALL_CHILDREN)
+				.setParameter(Category.FIND_ALL_CHILDREN_PARAM_NAME, parentCategory)
+				.getResultList();
 
 		return (List<Category>) resultList;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Category> findTopLevelCategories() throws Exception {
-		List<?> resultList = entityManager.createNamedQuery(
-				Category.FIND_ALL_TOP_LEVEL).getResultList();
+		List<?> resultList = entityManager.createNamedQuery(Category.FIND_ALL_TOP_LEVEL)
+				.getResultList();
 		
 		return (List<Category>) resultList; 
 	}
 	
+	public Difficulty findDifficultyByLevel(int level) throws Exception {
+		Difficulty difficulty = entityManager.find(Difficulty.class, level);		
+		return difficulty; 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Difficulty> findAllDifficulty() throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(Difficulty.FIND_ALL)
+				.getResultList();
+		
+		return (List<Difficulty>) resultList; 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Seminary> findAllSeminary() throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(Seminary.FIND_ALL)
+				.getResultList();
+		
+		return (List<Seminary>) resultList; 
+	}
+	
 	public Seminary insertSeminary(int dynamicContentId, int titleTextContentEntryId, int descriptionTextContentEntryId, int authorId, int difficultyValue) throws Exception {
-
-		entityManager.getTransaction().begin();		
+	
 		DynamicContent dynamicContent = entityManager.find(DynamicContent.class, dynamicContentId);
 		TextContentEntry titleEntry = entityManager.find(TextContentEntry.class, titleTextContentEntryId);
 		TextContentEntry descriptionEntry = entityManager.find(TextContentEntry.class, descriptionTextContentEntryId);
@@ -99,8 +117,6 @@ public class SeminaryDao {
 		
 		// Insert Object
 		entityManager.persist(seminary);		
-		// TODO check for rollback or throw exception higher ?
-		entityManager.getTransaction().commit();
 		
 		return seminary;
 	}

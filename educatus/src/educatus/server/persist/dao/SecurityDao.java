@@ -17,7 +17,8 @@ public class SecurityDao {
 	public User findUserByCip(String cip) throws Exception {
 
 		List<?> resultList = entityManager.createNamedQuery(User.FIND_BY_CIP)
-				.setParameter(User.FIND_BY_CIP_PARAM_NAME, cip).getResultList();
+				.setParameter(User.FIND_BY_CIP_PARAM_NAME, cip)
+				.getResultList();
 
 		if (resultList.size() == 1) {
 			return (User) resultList.get(0);
@@ -36,9 +37,7 @@ public class SecurityDao {
 	}
 
 	public void updateUser(User user) throws Exception {
-
-		entityManager.getTransaction().begin();		
-		entityManager.merge(user);
-		entityManager.getTransaction().commit();		
+		
+		entityManager.merge(user);		
 	}
 }
