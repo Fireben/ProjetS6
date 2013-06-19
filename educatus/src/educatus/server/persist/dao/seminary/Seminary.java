@@ -83,22 +83,22 @@ public class Seminary implements Serializable {
 
 	// bi-directional many-to-many association to Category
 	@ManyToMany
-	@JoinTable(name = "seminarycategory", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "cate_id", nullable = false) })
+	@JoinTable(name = "seminary.seminarycategory", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "cate_id", nullable = false) })
 	private List<Category> categories = new ArrayList<Category>();
 
 	// bi-directional many-to-many association to Competence
 	@ManyToMany
-	@JoinTable(name = "seminarycompetence", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "comp_id", nullable = false) })
+	@JoinTable(name = "seminary.seminarycompetence", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "comp_id", nullable = false) })
 	private List<Competence> competences = new ArrayList<Competence>();
 
 	// bi-directional many-to-one association to UsersSeminary
 	@ManyToMany
-	@JoinTable(name = "userseminary", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) })
+	@JoinTable(name = "seminary.userseminary", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) })
 	private List<User> completedSeminaryUsers = new ArrayList<User>();
 
 	// bi-directional many-to-one association to UsersSeminary
 	@ManyToMany
-	@JoinTable(name = "seminaryassociateduser", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) })
+	@JoinTable(name = "seminary.seminaryassociateduser", joinColumns = { @JoinColumn(name = "semi_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) })
 	private List<User> seminaryEditUser = new ArrayList<User>();
 	
 	public List<User> getSeminaryEditUser() {
