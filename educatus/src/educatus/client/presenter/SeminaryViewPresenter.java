@@ -21,6 +21,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.widget.DescriptionEntry;
+import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
@@ -150,7 +151,7 @@ public class SeminaryViewPresenter extends
 		
 		descriptionContainer.add(new DescriptionEntry("Author", coreContent.getAuthor()));
 		descriptionContainer.add(new DescriptionEntry("Description", coreContent.getDescription()));
-		descriptionContainer.add(new DescriptionEntry("Difficulty", coreContent.getDifficulty()));
+		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
 		descriptionContainer.add(new DescriptionEntry("Created Date", coreContent.getCreatedDate()));		
 		
 		List<AbstractDynamicSection> dynamicSectionList = seminaryContent

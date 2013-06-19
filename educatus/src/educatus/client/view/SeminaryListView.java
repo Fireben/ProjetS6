@@ -40,7 +40,8 @@ SeminaryListPresenter.MyView {
 		dataGrid = new DataGrid<Seminary>(50, SeminaryDataGridRessources);
 		dataGrid.addStyleName("dataGridContainer");
 		InitializeColumns();
-		widget = binder.createAndBindUi(this);			
+		widget = binder.createAndBindUi(this);	
+		backButton.setStyleName("backButton");
 	}
 	
 	public Widget asWidget() {

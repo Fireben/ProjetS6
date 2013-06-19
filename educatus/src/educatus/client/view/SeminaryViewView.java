@@ -24,6 +24,9 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	FlowPanel descriptionContainer;
 	
 	@UiField
+	FlowPanel seminaryContainer;
+	
+	@UiField
 	Label titleLabel;
 
 	@Inject
@@ -32,6 +35,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		dynamicSectionContainer.setStyleName("dynamicSectionContainer");
 		descriptionContainer.setStyleName("descriptionContainer");
 		titleLabel.setStyleName("seminaryTitleLabel");
+		seminaryContainer.setStyleName("viewSeminaryContainer");
 	}
 	
 	public FlowPanel getDescriptionContainer() {

@@ -2307,7 +2307,7 @@ GWTUpld,table.GWTUpld td {
 .descriptionContainer {
 	color: rgb(200,200,200);
 	float: right;
-	margin-top: 20px;
+	margin-top: 50px;
 	margin-right: 20px;
 	width: 275px;
 	border: 1px;
@@ -2334,4 +2334,24 @@ GWTUpld,table.GWTUpld td {
 
 .title {
 	font-weight: bold;
+}
+
+.backButton {
+	background: none repeat scroll 0% 0% #202020;
+	opacity: 0.75;
+	border: 1px solid #3B3B3B;
+	width: 65px;
+	height: 35px;
+	color: rgb(180, 217, 230);
+	cursor: pointer;
+}
+
+.backButton:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;	
+}
+
+.viewSeminaryContainer {
+	margin-left: 300px;
+	margin-right: auto;
 }

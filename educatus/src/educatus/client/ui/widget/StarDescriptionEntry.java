@@ -1,32 +1,43 @@
 package educatus.client.ui.widget;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
-public class DescriptionEntry extends Composite {
+public class StarDescriptionEntry extends Composite {
 	private Label titleLabel;
-	private Label textLabel;
+	private FlowPanel starPanel;
 	private final HorizontalPanel panel;
-	
-	public DescriptionEntry(String title, String text) {
+
+	public StarDescriptionEntry(String title, int difficulty) {
 		super();
 		panel = new HorizontalPanel();
 		initWidget(panel);
 		titleLabel = new Label(title + ": ");
-		textLabel = new Label(text);
+		createStars(difficulty);
 		initPanel();
-	}	
-	
+	}
+
+	private void createStars(int difficulty) {
+		starPanel = new FlowPanel();
+		difficulty = difficulty/2;
+		for (int i = 0; i < difficulty; i++) {
+			Image starImage = new Image("images/star.png");
+			starImage.setSize("20px", "20px");
+			starPanel.add(starImage);
+		}		
+	}
+
 	private void initPanel() {
 		titleLabel.setStyleName("descriptionTitle");
 		panel.add(titleLabel);
+		panel.add(starPanel);
 		panel.setCellWidth(titleLabel, "120px");
-		panel.add(textLabel);
-		panel.setCellWidth(textLabel, "160px");
 		panel.setStyleName("seminaryTextEntry");
 	}
-	
+
 	public void setStyleName(String styleName) {
 		panel.setStyleName(styleName);
 	}
