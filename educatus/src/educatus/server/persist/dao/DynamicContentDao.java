@@ -8,7 +8,9 @@ import com.google.inject.Inject;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
+import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
 public class DynamicContentDao {
@@ -52,5 +54,22 @@ public class DynamicContentDao {
 		dynamicSectionText.setDynamicSectionAlignment(dynamicSectionAlignment);
 		
 		entityManager.merge(dynamicSectionText);
+	}
+	
+	public void addDynamicSectionImage(int dynamicContentId, int descriptionTextContentEntryId, int imageContentEntryId, int dynamicSectionAlignmentId, int sequenceNumber) throws Exception {
+		
+		DynamicContent dynamicContent = entityManager.find(DynamicContent.class, dynamicContentId);
+		TextContentEntry descriptionTextContentEntry = entityManager.find(TextContentEntry.class, descriptionTextContentEntryId);
+		ImageContentEntry imageContentEntry = entityManager.find(ImageContentEntry.class, imageContentEntryId);
+		DynamicSectionAlignment dynamicSectionAlignment = entityManager.find(DynamicSectionAlignment.class, dynamicSectionAlignmentId);
+		
+		DynamicSectionImage dynamicSectionImage = new DynamicSectionImage();
+		dynamicSectionImage.setDescription(descriptionTextContentEntry);
+		dynamicSectionImage.setDynamicContent(dynamicContent);
+		dynamicSectionImage.setDynamicSectionAlignment(dynamicSectionAlignment);
+		dynamicSectionImage.setSequenceNumber(sequenceNumber);
+		dynamicSectionImage.setImage(imageContentEntry);
+		
+		entityManager.merge(dynamicSectionImage);
 	}
 }

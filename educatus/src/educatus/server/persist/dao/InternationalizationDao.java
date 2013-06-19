@@ -12,6 +12,7 @@ import educatus.server.persist.dao.internationalization.Culture;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.ImageContentTranslationEntryPK;
 import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.ImageType;
 import educatus.server.persist.dao.internationalization.Language;
@@ -213,6 +214,37 @@ public class InternationalizationDao {
 		entityManager.persist(tcte);
 
 		return tcte;
+	}
+	
+	public ImageContentTranslationEntry insertImageTranslationEntry(String languageCode, String cultureCode, int imageId) throws Exception{
+
+		Language language = findLanguageByCode(languageCode);
+		Culture culture = findCultureByCode(cultureCode);
+
+		ImageContentEntry imce = new ImageContentEntry();
+		entityManager.persist(imce);
+		
+		Image image = entityManager.find(Image.class, imageId);
+
+		ImageContentTranslationEntry imte = new ImageContentTranslationEntry();
+
+		// Create a primary key
+		ImageContentTranslationEntryPK pk = new ImageContentTranslationEntryPK();
+		pk.setLanguageId(language.getId());
+		pk.setCultureId(culture.getId());
+		pk.setImageContentEntryId(imce.getId());
+
+		// Assign primary key and objects
+		imte.setId(pk);
+		imte.setCulture(culture);
+		imte.setLanguage(language);
+		imte.setImagecontententry(imce);
+		imte.setImage(image);
+
+		// Insert Object
+		entityManager.persist(imte);
+
+		return imte;		
 	}
 
 	public ImageExternal insertImageExternal(String externalUrl) throws Exception {

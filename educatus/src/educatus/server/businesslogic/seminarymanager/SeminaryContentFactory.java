@@ -31,7 +31,7 @@ public class SeminaryContentFactory {
 		
 		culture = "CA";
 		language = "en";
-		Seminary seminary = entityManager.find(Seminary.class, 6);
+		Seminary seminary = entityManager.find(Seminary.class, 7);
 		
 		SeminaryContent content = parseSeminary(seminary, culture, language);
 //		SeminaryContent content = new SeminaryContent();
@@ -119,7 +119,7 @@ public class SeminaryContentFactory {
 					
 					Image image = dynamicSectionImage.getImage().getImageContentTranslationEntries().get(0).getImage();
 					ImageExternal imageExternal = null;
-					if (image.getId() == 2){
+					if (image.getType().getId() == 2){
 						imageExternal = (ImageExternal) image;
 						dynamicSectionImageContent.setImageUrl(imageExternal.getUrl());
 						dynamicSectionImageContent.setImageDescription(InternationalizationUtility.getTranslationEntry(dynamicSectionImage.getDescription(), culture, language).getTcteTranslation());	

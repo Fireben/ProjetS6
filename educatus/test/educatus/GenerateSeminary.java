@@ -13,7 +13,9 @@ import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
-import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
+import educatus.server.persist.dao.internationalization.ImageContentEntry;
+import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
 import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Difficulty;
@@ -61,6 +63,18 @@ public class GenerateSeminary {
 					alignment.getId(),
 					0);
 			
+			TextContentTranslationEntry imageDescription3 = internationalizationDao.insertTextContentTranslationEntry(
+					EN_LANG, CA_CULT, "Factory Example");
+			ImageExternal imageExternal = internationalizationDao.insertImageExternal("images/abstractFactory.png");
+			ImageContentTranslationEntry imageEntry = internationalizationDao.insertImageTranslationEntry(EN_LANG, CA_CULT, imageExternal.getId());
+			
+			dynamicContentDao.addDynamicSectionImage(
+					seminaryDynamicContent.getId(), 
+					imageDescription3.getTextcontententry().getId(), 
+					imageEntry.getImagecontententry().getId(),
+					alignment.getId(),
+					1);	
+			
 			TextContentTranslationEntry sectionTitle2 = internationalizationDao.insertTextContentTranslationEntry(
 					EN_LANG, CA_CULT, "Factory Method");
 			TextContentTranslationEntry sectionText2 = internationalizationDao.insertTextContentTranslationEntry(
@@ -71,7 +85,7 @@ public class GenerateSeminary {
 					sectionTitle2.getTextcontententry().getId(), 
 					sectionText2.getTextcontententry().getId(),
 					alignment.getId(),
-					1);
+					2);			
 			
 			User user = securityDao.findUserByCip("beam1711");
 			Difficulty difficulty = seminaryDao.findDifficultyByLevel(1);
