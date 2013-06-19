@@ -33,6 +33,7 @@ public class GenerateCategories {
 		try {
 			
 			// We should remove all categories
+			manager.getTransaction().begin();
 			
 			// Computer engineering parent = null = top level categorys
 			TextContentTranslationEntry computerEngineeringCategoryName = internationalizationDao.insertTextContentTranslationEntry(EN_LANG, CA_CULT, "Computer Engineering");
@@ -106,6 +107,7 @@ public class GenerateCategories {
 			ImageExternal hardwareCategoryIcon = internationalizationDao.insertImageExternal("hardwareIcon");
 			Category hardwareCategory = seminaryDao.createNewCategory(hardwareCategoryName.getTextcontententry().getId(), hardwareCategoryDesc.getTextcontententry().getId(), hardwareCategoryIcon.getId(), computerEngineeringCategory.getId());
 						
+			manager.getTransaction().commit();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

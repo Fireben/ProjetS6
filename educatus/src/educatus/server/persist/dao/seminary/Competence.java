@@ -2,6 +2,7 @@ package educatus.server.persist.dao.seminary;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -11,6 +12,8 @@ public class Competence implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "competence_comp_id", sequenceName = "seminary.competence_comp_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "competence_comp_id")
 	@Column(name="comp_id", unique=true, nullable=false)
 	private Integer id;
 
