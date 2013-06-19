@@ -4,6 +4,7 @@ import com.google.inject.Singleton;
 
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment.AlignmentEnum;
+import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
@@ -38,6 +39,9 @@ public class SeminaryContentFactory {
 		paragraph1.setTitle("Abstract Factory");
 		paragraph1.setText("Provides an interface for creating families of related or dependant objects without specifying their concrete classes.");
 		
+		DynamicSectionImageContent image = new DynamicSectionImageContent();
+		image.setImageUrl("images/abstractFactory.png");
+		
 		DynamicSectionTextContent paragraph2 = new DynamicSectionTextContent();
 		paragraph2.setId(2);
 		paragraph2.setSequenceNumber(2);
@@ -46,6 +50,7 @@ public class SeminaryContentFactory {
 		paragraph2.setText("Define an interface for creating an object, but let subclass defice which class to instanciate. Factory Method lets a class defer instantiation to the subclasses.");
 		
 		content.getDynamicSectionList().add(paragraph1);
+		content.getDynamicSectionList().add(image);
 		content.getDynamicSectionList().add(paragraph2);
 		
 		return content;

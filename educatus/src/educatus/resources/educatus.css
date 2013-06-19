@@ -2296,3 +2296,43 @@ GWTUpld,table.GWTUpld td {
 	margin-right: auto;
 	display: block;
 }
+
+.dynamicSectionContainer {
+	color: rgb(200,200,200);
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 550px;
+}
+
+.descriptionContainer {
+	color: rgb(200,200,200);
+	float: right;
+	margin-top: 20px;
+	margin-right: 20px;
+	width: 275px;
+	border: 1px;
+	border-style: solid;
+	border-color: rgb(175,175,175);
+	padding: 20px 20px 20px 20px;
+	background: rgb(27,27,27);
+}
+
+.descriptionTitle {
+	font-weight: bold;
+	padding-right: 20px;
+}
+
+.seminaryTitleLabel {
+	padding-top: 20px;
+	color: #00a1d6;
+	font-size: 30px;	
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
+	width: 550px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.title {
+	font-weight: bold;
+}
