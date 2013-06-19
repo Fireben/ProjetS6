@@ -18,6 +18,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.widget.DescriptionEntry;
@@ -42,6 +43,9 @@ public class SeminaryViewPresenter extends
 		public FlowPanel getDynamicSectionContainer();
 		public Label getTitleLabel();
 	}
+    
+	@Inject
+	private EducatusLocale locale;
 
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT
@@ -105,30 +109,7 @@ public class SeminaryViewPresenter extends
 		
 		getView().getDynamicSectionContainer().clear();
 		getView().getDescriptionContainer().clear();
-
-		SeminaryContentRequest request = new SeminaryContentRequest();
-		request.setCulture("CA");
-		request.setLanguage("fr");
-		request.setSelectedSeminaryId(1);
-		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
-
-			@Override
-			public void onSuccess(AbstractResponse result) {
-				if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
-					SeminaryContentResponse response = (SeminaryContentResponse) result;
-					SeminaryContent seminaryContent = response
-							.getSeminaryContent();
-					populateSeminaryView(seminaryContent);
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
+		
 		/*
 		getView().getWrittenBy().setInnerHTML("written by");
 		getView().getAuthor().setInnerHTML("Author");
@@ -189,7 +170,31 @@ public class SeminaryViewPresenter extends
 	@Override
 	public void prepareFromRequest(PlaceRequest placeRequest) {
 		super.prepareFromRequest(placeRequest);
+
 		String id = placeRequest.getParameter("id", "1");
 		System.out.println("Mon id est : " + id);
+		
+		SeminaryContentRequest request = new SeminaryContentRequest();
+		request.setCulture(locale.getCulture());
+		request.setLanguage(locale.getLanguage());
+		request.setSelectedSeminaryId(Integer.parseInt(id));
+		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
+
+			@Override
+			public void onSuccess(AbstractResponse result) {
+				if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
+					SeminaryContentResponse response = (SeminaryContentResponse) result;
+					SeminaryContent seminaryContent = response
+							.getSeminaryContent();
+					populateSeminaryView(seminaryContent);
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 }

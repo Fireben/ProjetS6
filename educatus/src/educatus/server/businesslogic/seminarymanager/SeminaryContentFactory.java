@@ -29,9 +29,7 @@ public class SeminaryContentFactory {
 	
 	public SeminaryContent createSeminaryContent(int seminaryId, String culture, String language) {
 		
-		culture = "CA";
-		language = "en";
-		Seminary seminary = entityManager.find(Seminary.class, 7);
+		Seminary seminary = entityManager.find(Seminary.class, seminaryId);
 		
 		SeminaryContent content = parseSeminary(seminary, culture, language);
 //		SeminaryContent content = new SeminaryContent();

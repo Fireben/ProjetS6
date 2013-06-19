@@ -32,18 +32,22 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.dataGrids.Seminary;
 import educatus.shared.dto.seminary.CategoryCoreContent;
+import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 
 /**
  * @author Nicolas Michaud
@@ -57,10 +61,14 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
     }
     
+	@Inject
+	private EducatusLocale locale;
+    
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
+	
 	// Response handler
-	AbstractResponseHandler responseHandler = null;
+	private AbstractResponseHandler responseHandler = null;
     
     public static final Object SLOT_content = new Object();
 
@@ -104,6 +112,8 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	protected void onReveal() {  	
 		seminarCategoryPresenter.clear(); 
   		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
   		requestService.sendRequest(request, responseHandler);
 	}
 	
@@ -112,6 +122,8 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		public void onClick(ClickEvent event) {
 			SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
 	  		request.setParentCategory(null);
+	  		request.setCulture(locale.getCulture());
+	  		request.setLanguage(locale.getLanguage());
 	  		requestService.sendRequest(request, responseHandler);		  					
 		}
 	};
@@ -130,17 +142,33 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   		
   		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
   		request.setParentCategory(parentCategory);
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
   		requestService.sendRequest(request, responseHandler);
 	}
 	
-	private void setSeminaryList() {	
+	private void setSeminaryList(List<SeminaryCoreContent> seminaryCoreContentList) {	
+
 		List<Seminary> seminaries = new ArrayList<Seminary>();
-		for(int i=1;i<=5;i++) {
-			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", "Marc-Andre Beaudry", null, 4));
-		}	
-		for(int j=6;j<=15;j++) {
-			seminaries.add(new Seminary(j, "Sauce Nuage", "Comment faire de la sauce nuage quand il fait beau?", "Nicolas Michaud", null, 2));
+		
+		for (SeminaryCoreContent seminaryCoreContent : seminaryCoreContentList) {
+			Seminary seminary = new Seminary(
+					seminaryCoreContent.getId(), 
+					seminaryCoreContent.getTitle(), 
+					seminaryCoreContent.getDescription(), 
+					seminaryCoreContent.getAuthor(), 
+					seminaryCoreContent.getCreatedDate(), 
+					2
+			);
+			seminaries.add(seminary);
 		}
+		
+//		for(int i=1;i<=5;i++) {
+//			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", "Marc-Andre Beaudry", null, 4));
+//		}	
+//		for(int j=6;j<=15;j++) {
+//			seminaries.add(new Seminary(j, "Sauce Nuage", "Comment faire de la sauce nuage quand il fait beau?", "Nicolas Michaud", null, 2));
+//		}
 		seminaryListPresenter.setData(seminaries);
 		seminaryListPresenter.setBackButtonHandler(backClickHandler);
 	}
@@ -160,14 +188,23 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 					if(parent != null) {
 						seminarCategoryPresenter.animateBackButtonIn();
 					}
-				}
-				else {
-					setInSlot(SLOT_content, seminaryListPresenter);	
-					setSeminaryList();
+				} else {
+					// No childrens, ask for categories
+					CategoryCoreContent parentCategory = response.getContent().getCommonParent();		
+			  		
+			  		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
+			  		request.setSelectedCategory(parentCategory);
+			  		request.setCulture(locale.getCulture());
+			  		request.setLanguage(locale.getLanguage());
+			  		requestService.sendRequest(request, responseHandler);
 				}
 				
-			} 
-			else {
+			} else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE){
+				setInSlot(SLOT_content, seminaryListPresenter);	
+				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
+				List<SeminaryCoreContent> seminaryCoreContentList = response.getContent().getSeminariesChildren();
+				setSeminaryList(seminaryCoreContentList);
+			} else {
 				// ERROR, not the response type we expected
 			}
 			
