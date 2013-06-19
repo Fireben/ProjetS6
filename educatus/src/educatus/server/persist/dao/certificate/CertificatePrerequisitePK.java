@@ -3,10 +3,6 @@ package educatus.server.persist.dao.certificate;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * The primary key class for the certificateprerequisite database table.
- * 
- */
 @Embeddable
 public class CertificatePrerequisitePK implements Serializable {
 	//default serial version id, required for serializable classes.
