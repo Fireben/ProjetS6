@@ -3,10 +3,14 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
 
 	<g:HTMLPanel>	
-    	<g:Label ui:field="titleLabel">
-    	    Titre
-    	</g:Label>
-		<g:FlowPanel ui:field="descriptionContainer"/>
-		<g:FlowPanel ui:field="dynamicSectionContainer"/>			 									
+	    <g:HorizontalPanel width = "100%">
+		    <g:FlowPanel ui:field="seminaryContainer">
+		    	<g:Label ui:field="titleLabel">
+		    	    Titre
+		    	</g:Label>
+		    	<g:FlowPanel ui:field="dynamicSectionContainer"/>
+	    	</g:FlowPanel>
+			<g:FlowPanel ui:field="descriptionContainer"/>	
+		</g:HorizontalPanel>				 									
 	</g:HTMLPanel>
 </ui:UiBinder> 
