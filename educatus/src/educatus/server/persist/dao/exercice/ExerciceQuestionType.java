@@ -7,28 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-/**
- * The persistent class for the exercicequestiontype database table.
- * 
- */
 @Entity
-@Table(name="exercicequestiontype")
+@Table(name = "exercicequestiontype")
 public class ExerciceQuestionType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="exqt_id", unique=true, nullable=false)
+	@Column(name = "exqt_id", unique = true, nullable = false)
 	private Integer exqtId;
 
-	@Column(name="tece_description", nullable=false)
+	@Column(name = "tece_description", nullable = false)
 	private Integer teceDescription;
 
-	@Column(name="tece_name", nullable=false)
+	@Column(name = "tece_name", nullable = false)
 	private Integer teceName;
 
-    public ExerciceQuestionType() {
-    }
+	public ExerciceQuestionType() {
+	}
 
 	public Integer getExqtId() {
 		return this.exqtId;
