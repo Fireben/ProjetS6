@@ -7,6 +7,7 @@ import com.google.inject.Singleton;
 import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.user.UserProfilContent;
 
+
 @Singleton
 public class UserProfilFactory {
 
@@ -25,8 +26,9 @@ public class UserProfilFactory {
 		coreContent.setJoinedDate(new Date(today.getTime()));		
 		coreContent.setLastConnexion(new Date(today.getTime()));
 
+		content.setProfilImageUrl("images/user_128.png");
 		content.setUserCoreContent(coreContent);
-		content.setProfilImageUrl("images/icons/user_128.png");
 		return content;		
 	}
+	
 }

@@ -1592,7 +1592,8 @@ blockquote p,.art-postcontent blockquote p,.art-blockcontent blockquote p,.art-f
 }
 
 .art-footer {
-	background: #000000;
+	background: url('images/pageglare.png') top center no-repeat,
+		url('images/page.png') repeat-x, #121212;
 	border-top: 1px solid #2B2B2B;
 	position: relative;
 	color: #808080;
@@ -1634,7 +1635,6 @@ blockquote p,.art-postcontent blockquote p,.art-blockcontent blockquote p,.art-f
 
 .art-footer img {
 	border: none;
-	margin: 5px;
 }
 
 .art-footer-inner {
@@ -1888,7 +1888,6 @@ img.art-lightbox-image.active {
 
 .footer {
 	width: 100%;
-	height: 98px;
 	bottom: 0px;
 	left: 0px;
 	display: table-row;

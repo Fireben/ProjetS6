@@ -24,10 +24,10 @@ public interface Resources extends ClientBundle {
     @Source("alignRight.png")
     ImageResource alignRight();
     
-    @Source("french.png")
+    @Source("flag_french_32px.png")
     ImageResource frenchLanguageButton();
     
-    @Source("english.png")
+    @Source("flag_english_32px.png")
     ImageResource englishLanguageButton();
 
     @Source("addImage.png")
