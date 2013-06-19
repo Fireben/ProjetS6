@@ -42,17 +42,17 @@ public class UserType implements Serializable {
 
 	// bi-directional many-to-many association to Permission
 	@ManyToMany
-	@JoinTable(name = "usertypepermission", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "perm_id") })
+	@JoinTable(name = "security.usertypepermission", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "perm_id") })
 	private List<Permission> associatedPermissionList;
 
 	// bi-directional many-to-many association to User
 	@ManyToMany
-	@JoinTable(name = "userusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
+	@JoinTable(name = "security.userusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	private List<User> associatedUserList;
 
 	// bi-directional many-to-many association to User
 	@ManyToMany
-	@JoinTable(name = "groupusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "grou_id") })
+	@JoinTable(name = "security.groupusertype", joinColumns = { @JoinColumn(name = "usty_id") }, inverseJoinColumns = { @JoinColumn(name = "grou_id") })
 	private List<Group> associatedGroupList;
 
 	public UserType() {

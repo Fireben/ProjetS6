@@ -49,7 +49,7 @@ public class Permission implements Serializable {
 	private List<UserType> associatedUserTypeList;
 
 	@ManyToMany
-	@JoinTable(name = "grouppermission", joinColumns = { @JoinColumn(name = "perm_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
+	@JoinTable(name = "security.grouppermission", joinColumns = { @JoinColumn(name = "perm_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
 	private List<Group> associatedGroupList;
 
 	public Permission() {
