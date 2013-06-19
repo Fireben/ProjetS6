@@ -18,11 +18,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dyst_Type", discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "dynamic_content.vdynamicsection")
 public abstract class DynamicSection implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
