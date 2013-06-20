@@ -6,7 +6,7 @@
 	<g:HTMLPanel height= "100%">
 		<div class="wrapper">
 			<div class="header">
-				<npui:MainMenu ui:field="menuPanel" />
+				<g:FlowPanel ui:field="headerPanel"/>
 			</div>
 			<div class="content">
 				<g:FlowPanel ui:field="mainContentPanel" height= "100%" />
@@ -16,4 +16,4 @@
 			</div>
 		</div>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

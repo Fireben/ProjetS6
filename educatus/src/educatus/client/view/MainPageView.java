@@ -44,11 +44,13 @@ public class MainPageView extends ViewImpl implements MyView {
   public final Widget widget;
 
   @UiField
+  FlowPanel headerPanel;
+  
+  @UiField
   FlowPanel mainContentPanel;
   
-  @UiField 
-  MainMenu menuPanel;
-
+  MainMenu menuPanel = new MainMenu();
+  
   @UiField
   Footer footerPanel;
   
@@ -68,6 +70,7 @@ public class MainPageView extends ViewImpl implements MyView {
     }
   }
 
+  
   private void setMainContent(Widget content) {
     mainContentPanel.clear();
     
@@ -101,5 +104,13 @@ public class MainPageView extends ViewImpl implements MyView {
 	
 	public void setFooterPanel(Footer footerPanel) {
 		this.footerPanel = footerPanel;
+	}
+
+	public FlowPanel getHeaderPanel() {
+		return headerPanel;
+	}
+
+	public void setHeaderPanel(FlowPanel headerPanel) {
+		this.headerPanel = headerPanel;
 	}
 }
