@@ -125,7 +125,7 @@ public class SeminaryContentFactory {
 						
 						content.getDynamicSectionList().add(dynamicSectionImageContent);
 					}
-					
+										
 					break;
 				case 3:
 					DynamicSectionVideo dynamicSectionVideo = (DynamicSectionVideo) dynamicSection;					
