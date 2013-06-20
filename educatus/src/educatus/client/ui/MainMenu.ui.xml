@@ -1,7 +1,8 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:npui="urn:import:educatus.client.ui">	
+	
 	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
 	
 	<g:HTMLPanel>
@@ -22,6 +23,7 @@
 							<g:InlineHyperlink ui:field="mainMenuEditSeminaryButton" targetHistoryToken="{nameTokens.getSeminaryEdit}">Create Seminary</g:InlineHyperlink>			    
 						</li>
 					</ul>
+					<npui:LogIn ui:field="logInUi"/>	
 				</div>
 			</nav>
 		</div>

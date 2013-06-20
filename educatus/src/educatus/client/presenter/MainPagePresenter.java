@@ -20,8 +20,16 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -73,8 +81,10 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	public interface MyView extends View {
 		public FlowPanel getMainContentPanel();
 
+		public FlowPanel getHeaderPanel();
+		
 		public MainMenu getMenuPanel();
-
+		
 		public Footer getFooterPanel();
 
 		void showLoading(boolean visibile);
@@ -133,10 +143,25 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	public void onLockInteraction(LockInteractionEvent event) {
 		getView().showLoading(event.shouldLock());
 	}
-
+	
 	@Override
 	protected void onBind() {
 		super.onBind();
+		//getView().getMenuPanel().getLogInUi().getLogInLink().setInnerText("Changed");
+		getView().getMenuPanel().getLogInUi().getLogInLink().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				 final DialogBox dialogBox = createDialogBox();
+				    dialogBox.setGlassEnabled(true);
+				    dialogBox.setAnimationEnabled(true);
+				    dialogBox.center();
+		            dialogBox.show();
+			}
+		});
+		
+		
+		getView().getHeaderPanel().add(getView().getMenuPanel());
 		
 		getView().getFooterPanel().getEnglishButton().addClickHandler(new TranslateClickHandler("CA", "en"));
 		getView().getFooterPanel().getFrenchButton().addClickHandler(new TranslateClickHandler("CA", "fr"));
@@ -206,4 +231,66 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("active");
 		}
 	}
+	
+	/**
+	   * Create the dialog box for this example.
+	   *
+	   * @return the new dialog box
+	   */
+	  private DialogBox createDialogBox() {
+	    // Create a dialog box and set the caption text
+	    final DialogBox dialogBox = new DialogBox();
+	    dialogBox.ensureDebugId("cwDialogBox");
+	    dialogBox.setText("Log In ");
+
+	    // Create a table to layout the content
+	    VerticalPanel dialogContents = new VerticalPanel();
+	    dialogContents.setSpacing(5);
+	    dialogBox.setWidget(dialogContents);
+
+	    // Add some text to the top of the dialog
+	    HTML userName = new HTML("UserName");
+	    dialogContents.add(userName);
+	    dialogContents.setCellHorizontalAlignment(
+	    	userName, HasHorizontalAlignment.ALIGN_LEFT);
+
+	    // Add an box to the dialog
+	    TextBox boxUserName = new TextBox();
+	    dialogContents.add(boxUserName);
+	    dialogContents.setCellHorizontalAlignment(
+	    		boxUserName, HasHorizontalAlignment.ALIGN_CENTER);
+	    
+	    // Add some text to the top of the dialog
+	    HTML password = new HTML("Password");
+	    dialogContents.add(password);
+	    dialogContents.setCellHorizontalAlignment(
+	    		password, HasHorizontalAlignment.ALIGN_LEFT);
+
+	    // Add an box to the dialog
+	    PasswordTextBox boxPassword = new PasswordTextBox();
+	    boxPassword.setStyleName("boxPassword", true);
+	    dialogContents.add(boxPassword);
+	    dialogContents.setCellHorizontalAlignment(
+	    		boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
+
+	    // Add a close button at the bottom of the dialog
+	    Button closeButton = new Button(
+	        "Ok", new ClickHandler() {
+	          public void onClick(ClickEvent event) {
+	            dialogBox.hide();
+	          }
+	        });
+	    dialogContents.add(closeButton);
+	    if (LocaleInfo.getCurrentLocale().isRTL()) {
+	      dialogContents.setCellHorizontalAlignment(
+	          closeButton, HasHorizontalAlignment.ALIGN_LEFT);
+
+	    } else {
+	      dialogContents.setCellHorizontalAlignment(
+	          closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
+	    }
+
+	    // Return the dialog box
+	    return dialogBox;
+	  }
 }

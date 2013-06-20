@@ -36,7 +36,9 @@ public class MainMenu extends Composite
 
 	private static MainMenuUiBinder uiBinder = GWT
 			.create(MainMenuUiBinder.class);
-
+	
+	@UiField
+	LogIn logInUi;
 	@UiField
 	InlineHyperlink mainMenuHomeButton;
 	@UiField
@@ -82,6 +84,7 @@ public class MainMenu extends Composite
 	{
 		this.mainMenuProfilButton = mainMenuProfilButton;
 	}
+
 	
 	public InlineHyperlink getMainMenuEditSeminaryButton()
 	{
@@ -92,5 +95,15 @@ public class MainMenu extends Composite
 			InlineHyperlink mainMenuEditSeminaryButton)
 	{
 		this.mainMenuEditSeminaryButton = mainMenuEditSeminaryButton;
+	}
+
+
+	public LogIn getLogInUi() {
+		return logInUi;
+	}
+
+
+	public void setLogInUi(LogIn logInUi) {
+		this.logInUi = logInUi;
 	}
 }
