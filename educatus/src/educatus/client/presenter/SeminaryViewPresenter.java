@@ -43,7 +43,7 @@ public class SeminaryViewPresenter extends
 		public FlowPanel getDynamicSectionContainer();
 		public Label getTitleLabel();
 	}
-    
+
 	@Inject
 	private EducatusLocale locale;
 
@@ -71,130 +71,101 @@ public class SeminaryViewPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
-
-		/*
-		Label label = new Label();
-		label.setText("Label Text");
-		getView().insertContent(label);
-
-		Image img = new Image();
-		img.setUrl("images/earth_puzzle_3.png");
-		getView().insertContent(img);
-
-		String src = "http://www.youtube.com/embed/Gm-RO-cmsEQ?list=PL29DDDC847F63AF82";
-		HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src="
-				+ src + " frameborder=\"0\" allowfullscreen></iframe>");
-		getView().insertContent(videoHtml);
-
-		String srcVideo = "http://www.dailymotion.com/embed/video/xzfw9p";
-		HTML videoDailyMotion = new HTML(
-				"<iframe width=\"560\" height=\"315\" src=" + srcVideo
-						+ " frameborder=\"0\" allowfullscreen></iframe>");
-		getView().insertContent(videoDailyMotion);
-		*/
-		/*
-		 * if(type == "text") { Label label = new Label();
-		 * label.setText(content); getView().insertContent(label); } else
-		 * if(type == "image") { Image img = new Image(); img.setUrl(url);
-		 * getView().insertContent(img); } else if(type == "video") { HTML
-		 * videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src=" +
-		 * videoSrc + " frameborder=\"0\" allowfullscreen></iframe>");
-		 * getView().insertContent(videoHtml); }
-		 */
 	}
 
 	@Override
 	protected void onReset() {
 		super.onReset();
 		
+		//Clear the content to prevent having the data of a previous seminary
 		getView().getDynamicSectionContainer().clear();
 		getView().getDescriptionContainer().clear();
-		
-		/*
-		getView().getWrittenBy().setInnerHTML("written by");
-		getView().getAuthor().setInnerHTML("Author");
-		getView().getAuthorEmail().setPropertyString("href",
-				"mailto:Prof@usherbrooke.qc.ca");
-		getView().getCreatedDate().setInnerHTML("23/03/13");
-		getView().getModifyBy().setInnerHTML("modified by");
-		getView().getModif().setInnerHTML("Modif");
-		getView().getModifEmail().setPropertyString("href",
-				"mailto:Modif@usherbrooke.qc.ca");
-		getView().getModifiedDate().setInnerHTML("25/03/13");
-		*/
 	}
-
-	private void populateSeminaryView(SeminaryContent seminaryContent) {
-		FlowPanel descriptionContainer = getView().getDescriptionContainer();
-		SeminaryCoreContent coreContent = seminaryContent.getCoreContent();
-		
-		getView().getTitleLabel().setText(coreContent.getTitle());
-		
-		descriptionContainer.add(new DescriptionEntry("Author", coreContent.getAuthor()));
-		descriptionContainer.add(new DescriptionEntry("Description", coreContent.getDescription()));
-		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
-		descriptionContainer.add(new DescriptionEntry("Created Date", coreContent.getCreatedDate()));		
-		
-		List<AbstractDynamicSection> dynamicSectionList = seminaryContent
-				.getDynamicSectionList();
-		
-		for (AbstractDynamicSection abstractDynamicSection : dynamicSectionList) {
-			switch (abstractDynamicSection.getSectionType()) {			
-				case FORMULA_SECTION:
-					//DynamicSectionFormulaContent content1 = (DynamicSectionFormulaContent) abstractDynamicSection;					
-					break;
-				case IMAGE_SECTION:
-					DynamicSectionImageContent imageContent = (DynamicSectionImageContent) abstractDynamicSection;
-					getView().getDynamicSectionContainer().add(new Image(imageContent.getImageUrl()));
-					break;
-				case TEXT_SECTION:
-					DynamicSectionTextContent textContent = (DynamicSectionTextContent) abstractDynamicSection;					
-					Label titleLabel = new Label(textContent.getTitle());
-					titleLabel.setStyleName("title");
-					getView().getDynamicSectionContainer().add(titleLabel);
-					getView().getDynamicSectionContainer().add(new Label(textContent.getText()));
-					break;
-				case VIDEO_SECTION:
-					//DynamicSectionVideoContent content4 = (DynamicSectionVideoContent) abstractDynamicSection;
-					break;
-			}
-			getView().getDynamicSectionContainer().add(new HTML("<br/>"));
-		}			
-	}
-
+	
 	@Override
 	protected void onReveal() {
 		PageChangingEvent.fire(this, NameTokens.getViewSeminary());
 	}
 
+
+	private void populateSeminaryView(SeminaryContent seminaryContent) {
+		FlowPanel descriptionContainer = getView().getDescriptionContainer();
+		SeminaryCoreContent coreContent = seminaryContent.getCoreContent();
+
+		getView().getTitleLabel().setText(coreContent.getTitle());
+
+		descriptionContainer.add(new DescriptionEntry("Author", coreContent.getAuthor()));
+		descriptionContainer.add(new DescriptionEntry("Description", coreContent.getDescription()));
+		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
+		descriptionContainer.add(new DescriptionEntry("Created Date", coreContent.getCreatedDate()));
+
+		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
+		List<AbstractDynamicSection> dynamicSectionList = seminaryContent.getDynamicSectionList();
+
+		for (AbstractDynamicSection abstractDynamicSection : dynamicSectionList) {
+			switch (abstractDynamicSection.getSectionType()) {
+			case FORMULA_SECTION:
+				break;
+			case IMAGE_SECTION:
+				DynamicSectionImageContent imageContent = (DynamicSectionImageContent) abstractDynamicSection;
+				addImageSection(imageContent.getImageUrl());
+				break;
+			case TEXT_SECTION:
+				DynamicSectionTextContent textContent = (DynamicSectionTextContent) abstractDynamicSection;
+				addTextSection(textContent.getTitle(), textContent.getText());
+				break;
+			case VIDEO_SECTION:
+				/*
+				 * String src =
+				 * "http://www.youtube.com/embed/Gm-RO-cmsEQ?list=PL29DDDC847F63AF82";
+				 * HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src="
+				 * + src + " frameborder=\"0\" allowfullscreen></iframe>");
+				 */
+				break;
+			}
+			dynamicSectionContainer.add(new HTML("<br/>"));
+		}
+	}
+
+	private void addImageSection(String imageUrl) {
+		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
+		dynamicSectionContainer.add(new Image(imageUrl));
+	}
+
+	private void addTextSection(String title, String text) {
+		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
+		Label titleLabel = new Label(title);
+		titleLabel.setStyleName("title");
+		dynamicSectionContainer.add(titleLabel);
+		dynamicSectionContainer.add(new Label(text));		
+	}
+
 	@Override
 	public void prepareFromRequest(PlaceRequest placeRequest) {
 		super.prepareFromRequest(placeRequest);
-
 		String id = placeRequest.getParameter("id", "1");
-		System.out.println("Mon id est : " + id);
-		
+
 		SeminaryContentRequest request = new SeminaryContentRequest();
 		request.setCulture(locale.getCulture());
 		request.setLanguage(locale.getLanguage());
 		request.setSelectedSeminaryId(Integer.parseInt(id));
-		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
+		requestService.sendRequest(request,
+				new AsyncCallback<AbstractResponse>() {
+					@Override
+					public void onSuccess(AbstractResponse result) {
+						if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
+							SeminaryContentResponse response = (SeminaryContentResponse) result;
+							SeminaryContent seminaryContent = response
+									.getSeminaryContent();
+							populateSeminaryView(seminaryContent);
+						}
+					}
 
-			@Override
-			public void onSuccess(AbstractResponse result) {
-				if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
-					SeminaryContentResponse response = (SeminaryContentResponse) result;
-					SeminaryContent seminaryContent = response
-							.getSeminaryContent();
-					populateSeminaryView(seminaryContent);
-				}
-			}
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
 
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+					}
+				});
 	}
 }

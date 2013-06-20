@@ -111,20 +111,13 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	@Override
 	protected void onReveal() {  	
 		seminarCategoryPresenter.clear(); 
-  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
-  		request.setCulture(locale.getCulture());
-  		request.setLanguage(locale.getLanguage());
-  		requestService.sendRequest(request, responseHandler);
+		createAndSendCategoryRequest(null);
 	}
 	
 	private ClickHandler backClickHandler = new ClickHandler() {
 		@Override
-		public void onClick(ClickEvent event) {
-			SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
-	  		request.setParentCategory(null);
-	  		request.setCulture(locale.getCulture());
-	  		request.setLanguage(locale.getLanguage());
-	  		requestService.sendRequest(request, responseHandler);		  					
+		public void onClick(ClickEvent event) {	 
+			createAndSendCategoryRequest(null);
 		}
 	};
 	
@@ -139,12 +132,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private void changeCategoryPanel(int id) {  		
   		CategoryCoreContent parentCategory = new CategoryCoreContent();
   		parentCategory.setId(id);  		
-  		
-  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
-  		request.setParentCategory(parentCategory);
-  		request.setCulture(locale.getCulture());
-  		request.setLanguage(locale.getLanguage());
-  		requestService.sendRequest(request, responseHandler);
+  		createAndSendCategoryRequest(parentCategory);
 	}
 	
 	private void setSeminaryList(List<SeminaryCoreContent> seminaryCoreContentList) {	
@@ -161,14 +149,8 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 					2
 			);
 			seminaries.add(seminary);
+			break;
 		}
-		
-//		for(int i=1;i<=5;i++) {
-//			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", "Marc-Andre Beaudry", null, 4));
-//		}	
-//		for(int j=6;j<=15;j++) {
-//			seminaries.add(new Seminary(j, "Sauce Nuage", "Comment faire de la sauce nuage quand il fait beau?", "Nicolas Michaud", null, 2));
-//		}
 		seminaryListPresenter.setData(seminaries);
 		seminaryListPresenter.setBackButtonHandler(backClickHandler);
 	}
@@ -176,38 +158,37 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
 		
 		@Override
-		public void onSuccess(AbstractResponse result) {
-			
+		public void onSuccess(AbstractResponse result) {			
 			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){	
 				setInSlot(SLOT_content, seminarCategoryPresenter);
 				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
 				SeminaryHomeCategoryContent content = response.getContent();
+				
+				// Children, ask for categories
 				if(content.getCategoryChildren().size() != 0) {
 					seminarCategoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
 					CategoryCoreContent parent = content.getCommonParent();
 					if(parent != null) {
 						seminarCategoryPresenter.animateBackButtonIn();
-					}
-				} else {
-					// No childrens, ask for categories
+					}					
+				} 				
+				// No child, ask for list of seminaries
+				else {					
 					CategoryCoreContent parentCategory = response.getContent().getCommonParent();		
-			  		
-			  		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
-			  		request.setSelectedCategory(parentCategory);
-			  		request.setCulture(locale.getCulture());
-			  		request.setLanguage(locale.getLanguage());
-			  		requestService.sendRequest(request, responseHandler);
-				}
-				
-			} else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE){
+			  		createAndSendListingRequest(parentCategory);
+				}				
+			} 
+			
+			else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE){
 				setInSlot(SLOT_content, seminaryListPresenter);	
 				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
 				List<SeminaryCoreContent> seminaryCoreContentList = response.getContent().getSeminariesChildren();
 				setSeminaryList(seminaryCoreContentList);
-			} else {
-				// ERROR, not the response type we expected
-			}
+			} 
 			
+			else {
+				// ERROR, not the response type we expected
+			}			
 		}
 		
 		@Override
@@ -215,4 +196,19 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		}
 	};
 	
+	public void createAndSendCategoryRequest(CategoryCoreContent parentCategory) {
+		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		request.setParentCategory(parentCategory);
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(request, responseHandler);	
+	}
+	
+	public void createAndSendListingRequest(CategoryCoreContent parentCategory) {
+  		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
+  		request.setSelectedCategory(parentCategory);
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(request, responseHandler);
+	}
 }

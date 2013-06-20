@@ -4,9 +4,6 @@
 	xmlns:my="urn:import:educatus.client.ui"
 	>	
 	
-    <ui:style>
-	</ui:style>
-
 	<g:HTMLPanel height= "100%">	
 		<div class="categoryPanelParent" height= "100%">		
 			<g:FlowPanel ui:field="categoryPanel">

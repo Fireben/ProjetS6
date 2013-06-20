@@ -16,6 +16,9 @@ import educatus.client.ui.dataGrids.Seminary;
 public class SeminaryListPresenter extends
 		PresenterWidget<SeminaryListPresenter.MyView>
 {
+	
+	private final static int MIN_ELEMENTS = 12;
+	
 	public interface MyView extends View {
 		DataGrid<Seminary> getDataGrid();
 		Button getBackButton();
@@ -40,7 +43,13 @@ public class SeminaryListPresenter extends
 		getView().getBackButton().addClickHandler(backClickHandler);
 	}
 	
-	public void setData(List<Seminary> seminaries) {			
+	public void setData(List<Seminary> seminaries) {		
+		if(seminaries.size() < MIN_ELEMENTS) {
+			int nbEmptyRows= MIN_ELEMENTS - seminaries.size();
+			for(int i=0; i < nbEmptyRows; i++) {
+				seminaries.add(new Seminary(-1, null, null, null, null, -1));
+			}
+		}
 		DataGrid<Seminary> dataGrid = getView().getDataGrid();	
 		ListDataProvider<Seminary> dataProvider = new ListDataProvider<Seminary>();
 		dataProvider.addDataDisplay(dataGrid);

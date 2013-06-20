@@ -17,8 +17,7 @@ public class TextEditView extends ViewImpl implements TextEditPresenter.MyView {
 	}
 
 	@UiField
-	PushButton deleteBtn;
-	
+	PushButton deleteBtn;	
 	@UiField(provided=true)
 	Grid textAreaGrid;
 	
@@ -29,6 +28,7 @@ public class TextEditView extends ViewImpl implements TextEditPresenter.MyView {
 	public TextEditView(final Binder binder) {
 		textAreaGrid = new Grid(2,1);
 		widget = binder.createAndBindUi(this);
+		createTextContent();
 	}
 
 	@Override

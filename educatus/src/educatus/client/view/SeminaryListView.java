@@ -26,8 +26,7 @@ SeminaryListPresenter.MyView {
 	public final Widget widget;
 	
 	@UiField(provided=true) 
-	DataGrid<Seminary> dataGrid;
-	
+	DataGrid<Seminary> dataGrid;	
 	@UiField
 	Button backButton;
 	
@@ -37,9 +36,9 @@ SeminaryListPresenter.MyView {
 	@Inject
 	public SeminaryListView(final Binder binder) {
 		DataGrid.Resources SeminaryDataGridRessources = GWT.create(SeminaryDataGridCssRessource.class);
-		dataGrid = new DataGrid<Seminary>(50, SeminaryDataGridRessources);
+		dataGrid = new DataGrid<Seminary>(100,SeminaryDataGridRessources);
 		dataGrid.addStyleName("dataGridContainer");
-		InitializeColumns();
+		initializeColumns();
 		widget = binder.createAndBindUi(this);	
 		backButton.setStyleName("backButton");
 	}
@@ -52,11 +51,16 @@ SeminaryListPresenter.MyView {
 		return dataGrid;
 	}	
 	
-	public void InitializeColumns() {		
+	public void initializeColumns() {		
 		TextColumn<Seminary> IdColumn = new TextColumn<Seminary>() {
 		    @Override
 		    public String getValue(Seminary seminary) {
-		      return String.valueOf(seminary.getId());
+		    	if(seminary.getId() != -1) {
+		    		return String.valueOf(seminary.getId());
+		    	}
+		    	else {
+		    		return null;
+		    	}
 		    }
 		  };
 		dataGrid.addColumn(IdColumn, "Id", "");

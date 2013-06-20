@@ -9,7 +9,6 @@ import com.gwtplatform.mvp.client.View;
 public class TextEditPresenter extends PresenterWidget<TextEditPresenter.MyView> {
 	public interface MyView extends View {
 		public PushButton getDeleteBtn();
-		public void createTextContent();
 	}
 
 	@Inject
@@ -26,5 +25,4 @@ public class TextEditPresenter extends PresenterWidget<TextEditPresenter.MyView>
 	protected void onReset() {
 		super.onReset();
 	}
-
 }

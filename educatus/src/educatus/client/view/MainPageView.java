@@ -44,11 +44,9 @@ public class MainPageView extends ViewImpl implements MyView {
   public final Widget widget;
 
   @UiField
-  FlowPanel mainContentPanel;
-  
+  FlowPanel mainContentPanel;  
   @UiField 
   MainMenu menuPanel;
-
   @UiField
   Footer footerPanel;
   

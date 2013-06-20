@@ -50,41 +50,58 @@ public class RichTextToolbar extends Composite {
    * lot of HTTP requests, drastically improving startup time.
    */
   public interface Images extends ClientBundle {
-
+    @Source("../../resources/images/bold.gif")
     ImageResource bold();
 
+    @Source("../../resources/images/createLink.gif")
     ImageResource createLink();
 
+    @Source("../../resources/images/hr.gif")
     ImageResource hr();
 
+    @Source("../../resources/images/indent.gif")
     ImageResource indent();
 
+    @Source("../../resources/images/insertImage.gif")
     ImageResource insertImage();
 
+    @Source("../../resources/images/italic.gif")
     ImageResource italic();
 
+    @Source("../../resources/images/justifyCenter.gif")
     ImageResource justifyCenter();
 
+    @Source("../../resources/images/justifyLeft.gif")
     ImageResource justifyLeft();
 
+    @Source("../../resources/images/justifyRight.gif")
     ImageResource justifyRight();
 
+    @Source("../../resources/images/ol.gif")
     ImageResource ol();
 
+    @Source("../../resources/images/outdent.gif")
     ImageResource outdent();
 
+    @Source("../../resources/images/removeFormat.gif")
     ImageResource removeFormat();
 
+    @Source("../../resources/images/removeLink.gif")
     ImageResource removeLink();
 
+    @Source("../../resources/images/strikeThrough.gif")
     ImageResource strikeThrough();
 
+    @Source("../../resources/images/subscript.gif")
     ImageResource subscript();
 
+    @Source("../../resources/images/superscript.gif")
     ImageResource superscript();
 
+    @Source("../../resources/images/ul.gif")
     ImageResource ul();
 
+    @Source("../../resources/images/underline.gif")
     ImageResource underline();
   }
 

@@ -18,14 +18,11 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	private final Widget widget;
 
 	@UiField
-	FlowPanel dynamicSectionContainer;
-	
+	FlowPanel dynamicSectionContainer;	
 	@UiField
-	FlowPanel descriptionContainer;
-	
+	FlowPanel descriptionContainer;	
 	@UiField
-	FlowPanel seminaryContainer;
-	
+	FlowPanel seminaryContainer;	
 	@UiField
 	Label titleLabel;
 

@@ -2,9 +2,9 @@ package educatus.client.view;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
@@ -21,7 +21,7 @@ public class SeminaryEditView extends ViewImpl implements
 	@UiField
 	Label semTitleLabel;
 	@UiField
-	TextBox semTitleBox;
+	FlowPanel seminaryDescriptionContainer;
 
 	private final Widget widget;
 
@@ -37,7 +37,6 @@ public class SeminaryEditView extends ViewImpl implements
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (slot == SeminaryEditPresenter.SLOT_confirm) {
-
 			confirmPanel.clear();
 			if (content != null)
 				confirmPanel.add(content);
@@ -75,7 +74,7 @@ public class SeminaryEditView extends ViewImpl implements
 		return widget;
 	}
 
-	public TextBox getSemTitleBox() {
-		return semTitleBox;
-	}
+	public FlowPanel getSeminaryDescriptionContainer() {
+		return seminaryDescriptionContainer;
+	}	
 }
