@@ -18,7 +18,7 @@ import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
 
 @Singleton
-public class SeminaryEditorContentFactory {
+public class SeminaryEditorContentBuilder {
 
 	/* Text */
 	private static final int TITLE = -12000;
@@ -36,7 +36,7 @@ public class SeminaryEditorContentFactory {
 	@Inject
 	private SeminaryDao seminaryDao;
 
-	public SeminaryEditorContent createSeminaryEditorContent(String culture, String language) {
+	public SeminaryEditorContent buildSeminaryEditorContent(String culture, String language) {
 
 		int cultureId;
 		int languageId;
@@ -90,7 +90,7 @@ public class SeminaryEditorContentFactory {
 		return seminaryEditorContent;
 	}
 
-	public List<CategoryCoreContent> createCategoryCoreContentList(String culture, String language) throws Exception {
+	public List<CategoryCoreContent> buildCategoryCoreContentList(String culture, String language) throws Exception {
 
 		List<CategoryCoreContent> categoryCoreContentList = new ArrayList<CategoryCoreContent>();
 
@@ -116,7 +116,7 @@ public class SeminaryEditorContentFactory {
 		return categoryCoreContentList;
 	}
 	
-	public List<DifficultyContent> createDifficultyContentList(String culture, String language) throws Exception {
+	public List<DifficultyContent> buildDifficultyContentList(String culture, String language) throws Exception {
 	
 		List<DifficultyContent> difficultyContentLit = new ArrayList<DifficultyContent>();
 		

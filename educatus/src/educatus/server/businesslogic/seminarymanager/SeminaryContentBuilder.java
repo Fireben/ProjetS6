@@ -22,58 +22,19 @@ import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
 
 @Singleton
-public class SeminaryContentFactory {
+public class SeminaryContentBuilder {
 
 	@Inject
 	private EntityManager entityManager;
 	
-	public SeminaryContent createSeminaryContent(int seminaryId, String culture, String language) {
+	public SeminaryContent buildSeminaryContent(int seminaryId, String culture, String language) {
 		
-		Seminary seminary = entityManager.find(Seminary.class, seminaryId);
-		
-		SeminaryContent content = parseSeminary(seminary, culture, language);
-//		SeminaryContent content = new SeminaryContent();
-//		
-//		SeminaryCoreContent coreContent = new SeminaryCoreContent();
-//		coreContent.setId(1);
-//		coreContent.setTitle("Design patterns");
-//		coreContent.setDescription("Design patterns : Beginner");
-//		coreContent.setDifficulty("EASY");
-//		coreContent.setAuthor("Marc-André Beaudry");
-//		coreContent.setLastEditor("Marc-André Beaudry");
-//		coreContent.setCreatedDate("2013-06-18");
-//		coreContent.setEditedDate("2013-06-18");
-//		
-//		content.setCoreContent(coreContent);
-//
-//		DynamicSectionAlignment centered = new DynamicSectionAlignment();
-//		centered.setAlignmentEnum(AlignmentEnum.CENTER);
-//		centered.setAlignmentName("CENTER");
-//		
-//		DynamicSectionTextContent paragraph1 = new DynamicSectionTextContent();
-//		paragraph1.setId(1);
-//		paragraph1.setSequenceNumber(1);
-//		paragraph1.setAlignment(centered);
-//		paragraph1.setTitle("Abstract Factory");
-//		paragraph1.setText("Provides an interface for creating families of related or dependant objects without specifying their concrete classes.");
-//		
-//		DynamicSectionImageContent image = new DynamicSectionImageContent();
-//		image.setImageUrl("images/abstractFactory.png");
-//		
-//		DynamicSectionTextContent paragraph2 = new DynamicSectionTextContent();
-//		paragraph2.setId(2);
-//		paragraph2.setSequenceNumber(2);
-//		paragraph2.setAlignment(centered);
-//		paragraph2.setTitle("Factory Method");
-//		paragraph2.setText("Define an interface for creating an object, but let subclass defice which class to instanciate. Factory Method lets a class defer instantiation to the subclasses.");
-//		
-//		content.getDynamicSectionList().add(paragraph1);
-//		content.getDynamicSectionList().add(image);
-//		content.getDynamicSectionList().add(paragraph2);
-		
+		Seminary seminary = entityManager.find(Seminary.class, seminaryId);		
+		SeminaryContent content = parseSeminary(seminary, culture, language);		
 		return content;
 	}
 	
+	// TODO, move parse seminary 
 	private SeminaryContent parseSeminary(Seminary seminary, String culture, String language){
 		
 		SeminaryContent content = new SeminaryContent();

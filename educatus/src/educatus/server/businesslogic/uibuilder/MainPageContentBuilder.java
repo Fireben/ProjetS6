@@ -10,7 +10,7 @@ import educatus.shared.dto.MainPageContent.MainMenuContent;
 import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemContent;
 
 @Singleton
-public class MainPageFactory {
+public class MainPageContentBuilder {
 
 	/* Text */
 	private static final int HOME_MAIN_MENU_ITEM = -11000;
@@ -22,7 +22,7 @@ public class MainPageFactory {
 	@Inject
 	private InternationalizationDao interDao;
 
-	public MainPageContent createMainPageContent(String culture, String language) {
+	public MainPageContent buildMainPageContent(String culture, String language) {
 
 		int cultureId;
 		int languageId;

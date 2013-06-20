@@ -9,13 +9,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
-import educatus.server.businesslogic.profilmanager.UserProfilFactory;
-import educatus.server.businesslogic.seminarymanager.SeminaryContentFactory;
-import educatus.server.businesslogic.uibuilder.HomePageFactory;
-import educatus.server.businesslogic.uibuilder.MainPageFactory;
-import educatus.server.businesslogic.uibuilder.SeminaryEditorContentFactory;
-import educatus.server.businesslogic.uibuilder.SeminaryHomeCategoryFactory;
-import educatus.server.businesslogic.uibuilder.SeminaryHomeListingFactory;
+import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
+import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
+import educatus.server.businesslogic.seminarymanager.SeminaryHomeCategoryBuilder;
+import educatus.server.businesslogic.seminarymanager.SeminaryHomeListingBuilder;
+import educatus.server.businesslogic.uibuilder.HomePageContentBuilder;
+import educatus.server.businesslogic.uibuilder.MainPageContentBuilder;
+import educatus.server.businesslogic.uibuilder.SeminaryEditorContentBuilder;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
 import educatus.shared.dto.HomePageContent;
@@ -53,13 +53,13 @@ import educatus.shared.services.requestservice.response.UserProfilContentRespons
 @Singleton
 public class RequestServiceImpl extends RemoteServiceServlet implements RequestService {
 
-	private MainPageFactory mainPageFactory;
-	private HomePageFactory homePageFactory;
-	private SeminaryHomeCategoryFactory seminaryHomeCategoryFactory;
-	private SeminaryHomeListingFactory seminaryHomeListingFactory;
-	private SeminaryEditorContentFactory seminaryEditorContentFactory;
-	private SeminaryContentFactory seminaryContentFactory;
-	private UserProfilFactory userProfilFactory;
+	private MainPageContentBuilder mainPageContentBuilder;
+	private HomePageContentBuilder homePageContentBuilder;
+	private SeminaryHomeCategoryBuilder seminaryHomeCategoryBuilder;
+	private SeminaryHomeListingBuilder seminaryHomeListingBuilder;
+	private SeminaryEditorContentBuilder seminaryEditorContentBuilder;
+	private SeminaryContentBuilder seminaryContentBuilder;
+	private UserProfilBuilder userProfilBuilder;
 
 	@Override
 	public void init() throws ServletException {
@@ -70,13 +70,13 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		dbInjector.getInstance(JpaInitializer.class);
 		// dbInjector.getInstance(InternationalizationDao.class);
 		// dbInjector.getInstance(SeminaryDao.class);
-		mainPageFactory = dbInjector.getInstance(MainPageFactory.class);
-		homePageFactory = dbInjector.getInstance(HomePageFactory.class);
-		userProfilFactory = dbInjector.getInstance(UserProfilFactory.class);
-		seminaryHomeCategoryFactory = dbInjector.getInstance(SeminaryHomeCategoryFactory.class);
-		seminaryHomeListingFactory = dbInjector.getInstance(SeminaryHomeListingFactory.class);
-		seminaryContentFactory = dbInjector.getInstance(SeminaryContentFactory.class);
-		seminaryEditorContentFactory = dbInjector.getInstance(SeminaryEditorContentFactory.class); 
+		mainPageContentBuilder = dbInjector.getInstance(MainPageContentBuilder.class);
+		homePageContentBuilder = dbInjector.getInstance(HomePageContentBuilder.class);
+		userProfilBuilder = dbInjector.getInstance(UserProfilBuilder.class);
+		seminaryHomeCategoryBuilder = dbInjector.getInstance(SeminaryHomeCategoryBuilder.class);
+		seminaryHomeListingBuilder = dbInjector.getInstance(SeminaryHomeListingBuilder.class);
+		seminaryContentBuilder = dbInjector.getInstance(SeminaryContentBuilder.class);
+		seminaryEditorContentBuilder = dbInjector.getInstance(SeminaryEditorContentBuilder.class); 
 	}
 
 	@Override
@@ -122,11 +122,11 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		
 		SeminaryEditorContentResponse response = new SeminaryEditorContentResponse();
 		
-		SeminaryEditorContent seminary = seminaryEditorContentFactory.createSeminaryEditorContent(request.getCulture(), request.getLanguage());
+		SeminaryEditorContent seminary = seminaryEditorContentBuilder.buildSeminaryEditorContent(request.getCulture(), request.getLanguage());
 		
 		try {
-			List<CategoryCoreContent> categoryCoreContentList = seminaryEditorContentFactory.createCategoryCoreContentList(request.getCulture(), request.getLanguage());
-			List<DifficultyContent> difficultyContentList = seminaryEditorContentFactory.createDifficultyContentList(request.getCulture(), request.getLanguage());
+			List<CategoryCoreContent> categoryCoreContentList = seminaryEditorContentBuilder.buildCategoryCoreContentList(request.getCulture(), request.getLanguage());
+			List<DifficultyContent> difficultyContentList = seminaryEditorContentBuilder.buildDifficultyContentList(request.getCulture(), request.getLanguage());
 
 			response.setCategoryCoreContentList(categoryCoreContentList);
 			response.setDifficultyContentList(difficultyContentList);
@@ -143,7 +143,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 
 		SeminaryContentResponse response = new SeminaryContentResponse();
 
-		SeminaryContent content = seminaryContentFactory.createSeminaryContent(request.getSelectedSeminaryId(), request.getCulture(), request.getLanguage());
+		SeminaryContent content = seminaryContentBuilder.buildSeminaryContent(request.getSelectedSeminaryId(), request.getCulture(), request.getLanguage());
 
 		response.setSeminaryContent(content);
 
@@ -151,7 +151,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private MainPageContentResponse ProcessMainMenuContentRequest(MainPageContentRequest request) {
-		MainPageContent content = mainPageFactory.createMainPageContent(request.getCulture(), request.getLanguage());
+		MainPageContent content = mainPageContentBuilder.buildMainPageContent(request.getCulture(), request.getLanguage());
 
 		MainPageContentResponse response = new MainPageContentResponse();
 		response.setMainPageContent(content);
@@ -160,7 +160,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private HomePageContentResponse ProcessHomePageContentRequest(HomePageContentRequest request) {
-		HomePageContent content = homePageFactory.createHomePageContent(request.getCulture(), request.getLanguage());
+		HomePageContent content = homePageContentBuilder.buildHomePageContent(request.getCulture(), request.getLanguage());
 
 		HomePageContentResponse response = new HomePageContentResponse();
 		response.setHomeContent(content);
@@ -175,7 +175,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			parentCategoryId = request.getParentCategory().getId();
 		}
 
-		SeminaryHomeCategoryContent content = seminaryHomeCategoryFactory.createSeminaryHomeCategoryContent(parentCategoryId, request.getCulture(), request.getLanguage());
+		SeminaryHomeCategoryContent content = seminaryHomeCategoryBuilder.buildSeminaryHomeCategoryContent(parentCategoryId, request.getCulture(), request.getLanguage());
 
 		SeminaryHomePageCategoryContentResponse response = new SeminaryHomePageCategoryContentResponse();
 		response.setContent(content);
@@ -185,7 +185,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private SeminaryHomePageListingContentResponse ProcessSeminaryHomePageListingContentRequest(SeminaryHomePageListingContentRequest request) {
-		SeminaryHomeListingContent content = seminaryHomeListingFactory.createSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
+		SeminaryHomeListingContent content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
 
 		SeminaryHomePageListingContentResponse response = new SeminaryHomePageListingContentResponse();
 		response.setContent(content);
@@ -194,7 +194,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private UserProfilContentResponse ProcessUserProfilContentRequest(UserProfilContentRequest request) {
-		UserProfilContent content = userProfilFactory.createUserProfilContent(request.getUserCip());
+		UserProfilContent content = userProfilBuilder.buildUserProfilContent(request.getUserCip());
 
 		UserProfilContentResponse response = new UserProfilContentResponse();
 		response.setUserProfilContent(content);
