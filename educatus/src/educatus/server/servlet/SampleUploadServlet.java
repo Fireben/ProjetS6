@@ -34,8 +34,6 @@ public class SampleUploadServlet extends UploadAction {
 		
 		@SuppressWarnings("unused")
 		int cont = 0;
-		
-		String response = "";
 		for (FileItem item : sessionFiles) {
 			if (false == item.isFormField()) {
 				cont++;
@@ -47,10 +45,6 @@ public class SampleUploadServlet extends UploadAction {
 					receivedFiles.put(item.getFieldName(), file);
 					receivedContentTypes.put(item.getFieldName(),
 							item.getContentType());
-
-					// / Send a customized message to the client.
-					response += "File saved as " + file.getAbsolutePath();
-
 				} catch (Exception e) {
 					throw new UploadActionException(e);
 				}
@@ -59,9 +53,10 @@ public class SampleUploadServlet extends UploadAction {
 
 		// / Remove files from session because we have a copy of them
 		removeSessionFileItems(request);
+		
 
 		// / Send your customized message to the client.
-		return response;
+		return "allo";
 	}
 
 	/**

@@ -149,7 +149,6 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 					2
 			);
 			seminaries.add(seminary);
-			break;
 		}
 		seminaryListPresenter.setData(seminaries);
 		seminaryListPresenter.setBackButtonHandler(backClickHandler);
