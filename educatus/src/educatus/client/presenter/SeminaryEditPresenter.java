@@ -4,7 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
@@ -22,33 +22,12 @@ import educatus.client.NameTokens;
 public class SeminaryEditPresenter extends
 		Presenter<SeminaryEditPresenter.MyView, SeminaryEditPresenter.MyProxy> {
 	public interface MyView extends View {
-		public TextBox getSemTitleBox();
+		public FlowPanel getSeminaryDescriptionContainer();
 	}
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.seminaryEdit)
 	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter> {
-	}
-
-	private ClickHandler saveHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			Window.alert(getView().getSemTitleBox().getText());
-
-		}
-	};
-
-	private class DeleteClickHandler implements ClickHandler {
-		private TextEditPresenter presenterWidget;
-
-		public DeleteClickHandler(TextEditPresenter presenterWidget) {
-			this.presenterWidget = presenterWidget;
-		}
-
-		@Override
-		public void onClick(ClickEvent event) {
-			removeFromSlot(SLOT_content, this.presenterWidget);
-		}
 	}
 
 	private ClickHandler addTextHandler = new ClickHandler() {
@@ -59,11 +38,6 @@ public class SeminaryEditPresenter extends
 						@Override
 						public void onSuccess(TextEditPresenter result) {
 							addToSlot(SLOT_content, result);
-							result.getView().createTextContent();
-							result.getView()
-									.getDeleteBtn()
-									.addClickHandler(
-											new DeleteClickHandler(result));
 						}
 
 						@Override
@@ -91,7 +65,12 @@ public class SeminaryEditPresenter extends
 					});
 		}
 	};
-
+	
+	private ClickHandler saveHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+		}
+	};
 
 	@Inject
 	ConfirmChangesPresenter confirmPresenter;
@@ -112,8 +91,10 @@ public class SeminaryEditPresenter extends
 			Provider<TextEditPresenter> textEditFactory, Provider<ImageUploadPresenter> imageUploadFactory,
 			final MyProxy proxy) {
 		super(eventBus, view, proxy);
+		
 		this.textEditFactory = new StandardProvider<TextEditPresenter>(
 				textEditFactory);
+		
 		this.imageUploadFactory = new StandardProvider<ImageUploadPresenter>(
 				imageUploadFactory);
 	}

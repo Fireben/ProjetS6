@@ -16,15 +16,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@NamedQueries({
-	@NamedQuery(name = DynamicContent.FIND_ALL, query = "SELECT d FROM DynamicContent d")})
+@NamedQueries({ @NamedQuery(name = DynamicContent.FIND_ALL, query = "SELECT d FROM DynamicContent d") })
 @Table(name = "dynamic_content.dynamiccontent")
 public class DynamicContent implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String FIND_ALL = "DYNAMICCONTENT.FIND_ALL";
-	
+
 	@Id
 	@SequenceGenerator(name = "dynamiccontent_dyco_id", sequenceName = "dynamic_content.dynamiccontent_dyco_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dynamiccontent_dyco_id")

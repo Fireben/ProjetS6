@@ -9,16 +9,22 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = Difficulty.FIND_ALL, query = "SELECT d FROM Difficulty d")})
 @Table(name = "seminary.difficulty")
 public class Difficulty implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String FIND_ALL = "DIFFICULTY.FIND_ALL";
+	
 	@Id
 	@Column(name = "diff_value", unique = true, nullable = false)
 	private Integer difficultyValue;

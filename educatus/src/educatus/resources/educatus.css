@@ -2296,6 +2296,7 @@ GWTUpld,table.GWTUpld td {
 	display: block;
 }
 
+
 /* Gwt dialog Box Css */
 .gwt-DialogBox .Caption {
   background: #F1F1F1;
@@ -2380,6 +2381,7 @@ html>body .gwt-DialogBox {
 }
 .cw-DialogBox {
 }
+/*  end dialog box */
 
 .logInLink {
 	cursor: pointer;
@@ -2389,4 +2391,63 @@ html>body .gwt-DialogBox {
 	width: 84% !important;
 	padding-top: 0px !important;
 	padding-bottom: 4px !important;
+
+.dynamicSectionContainer {
+	color: rgb(200,200,200);
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 550px;
+}
+
+.descriptionContainer {
+	color: rgb(200,200,200);
+	float: right;
+	margin-top: 50px;
+	margin-right: 20px;
+	width: 275px;
+	border: 1px;
+	border-style: solid;
+	border-color: rgb(175,175,175);
+	padding: 20px 20px 20px 20px;
+	background: rgb(27,27,27);
+}
+
+.descriptionTitle {
+	font-weight: bold;
+	padding-right: 20px;
+}
+
+.seminaryTitleLabel {
+	padding-top: 20px;
+	color: #00a1d6;
+	font-size: 30px;	
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
+	width: 550px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.title {
+	font-weight: bold;
+}
+
+.backButton {
+	background: none repeat scroll 0% 0% #202020;
+	opacity: 0.75;
+	border: 1px solid #3B3B3B;
+	width: 65px;
+	height: 35px;
+	color: rgb(180, 217, 230);
+	cursor: pointer;
+}
+
+.backButton:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;	
+}
+
+.viewSeminaryContainer {
+	margin-left: 300px;
+	margin-right: auto;
 }

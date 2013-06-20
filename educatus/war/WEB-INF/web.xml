@@ -14,7 +14,7 @@
   	<servlet>
 	    <servlet-name>uploadServlet</servlet-name>
 	    <!-- This is the default servlet, it puts files in session -->
-	    <servlet-class>gwtupload.server.UploadServlet</servlet-class>
+	    <servlet-class>educatus.server.servlet.SampleUploadServlet</servlet-class>
 	</servlet>
   
   	<servlet-mapping>

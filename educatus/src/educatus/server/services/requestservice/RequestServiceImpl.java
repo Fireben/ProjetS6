@@ -162,8 +162,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		
 		SeminaryHomeCategoryContent content = seminaryHomeCategoryFactory.createSeminaryHomeCategoryContent(
 			parentCategoryId, 
-			"CA", 
-			"fr"
+			request.getCulture(),
+			request.getLanguage()
 		);
 		
 		SeminaryHomePageCategoryContentResponse response = new SeminaryHomePageCategoryContentResponse();
@@ -175,10 +175,10 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	
 	private SeminaryHomePageListingContentResponse ProcessSeminaryHomePageListingContentRequest(SeminaryHomePageListingContentRequest request){
 		SeminaryHomeListingContent content = seminaryHomeListingFactory.createSeminaryHomeListingContent(
-				request.getSelectedCategory().getId(), 
-				"CA", 
-				"fr"
-			);
+			request.getSelectedCategory().getId(), 
+			request.getCulture(),
+			request.getLanguage()
+		);
 			
 		SeminaryHomePageListingContentResponse response = new SeminaryHomePageListingContentResponse();
 		response.setContent(content);

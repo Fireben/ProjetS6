@@ -46,7 +46,7 @@
 				<div class="art-blockcontent">
 					<h4>
 						<div>
-							<g:FlowPanel styleName='{style.titleDesc}'>
+							<g:FlowPanel ui:field="seminaryDescriptionContainer" styleName='{style.titleDesc}'>
 								<g:Label ui:field="semTitleLabel" styleName='{style.titleLabel}'>Titre :</g:Label>
 								<g:TextBox name="semTitleBox" ui:field="semTitleBox"
 									styleName='{style.titleBox}' />

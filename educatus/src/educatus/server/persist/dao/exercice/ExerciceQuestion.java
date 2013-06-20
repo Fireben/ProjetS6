@@ -10,41 +10,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
-/**
- * The persistent class for the exercicequestion database table.
- * 
- */
 @Entity
-@Table(name="exercice.exercicequestion")
+@Table(name = "exercice.exercicequestion")
 public class ExerciceQuestion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="exqu_id", unique=true, nullable=false)
+	@Column(name = "exqu_id", unique = true, nullable = false)
 	private Integer exquId;
 
-	@Column(name="dyco_content", nullable=false)
+	@Column(name = "dyco_content", nullable = false)
 	private Integer dycoContent;
 
-	@Column(name="exqu_score", nullable=false)
+	@Column(name = "exqu_score", nullable = false)
 	private Integer exquScore;
 
-	@Column(name="exqu_sequence", nullable=false)
+	@Column(name = "exqu_sequence", nullable = false)
 	private Integer exquSequence;
 
-	//bi-directional many-to-one association to Exercice
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="exer_id", nullable=false)
+	// bi-directional many-to-one association to Exercice
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "exer_id", nullable = false)
 	private Exercice exercice;
 
-	//bi-directional many-to-one association to ExerciceQuestionType
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="exqt_type", unique=true, nullable=false)
+	// bi-directional many-to-one association to ExerciceQuestionType
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "exqt_type", unique = true, nullable = false)
 	private ExerciceQuestionType exercicequestiontype;
 
-    public ExerciceQuestion() {
-    }
+	public ExerciceQuestion() {
+	}
 
 	public Integer getExquId() {
 		return this.exquId;
@@ -77,7 +72,7 @@ public class ExerciceQuestion implements Serializable {
 	public void setExquSequence(Integer exquSequence) {
 		this.exquSequence = exquSequence;
 	}
-	
+
 	public Exercice getExercice() {
 		return this.exercice;
 	}
@@ -85,12 +80,13 @@ public class ExerciceQuestion implements Serializable {
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
-	
+
 	public ExerciceQuestionType getExercicequestiontype() {
 		return this.exercicequestiontype;
 	}
 
-	public void setExercicequestiontype(ExerciceQuestionType exercicequestiontype) {
+	public void setExercicequestiontype(
+			ExerciceQuestionType exercicequestiontype) {
 		this.exercicequestiontype = exercicequestiontype;
 	}
 }

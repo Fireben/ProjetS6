@@ -19,8 +19,7 @@
   <div class="art-sheet clearfix">
 				<div class="art-layout-wrapper clearfix">
 					<div class="art-content-layout">
-						<div class="art-content-layout-row">
-						    
+						<div class="art-content-layout-row">						    
 							<div class="art-layout-cell art-content clearfix">
 								<article class="art-post art-article">	    
 									<div class="art-postcontent art-postcontent-0 clearfix">
@@ -79,92 +78,14 @@
 													</div>
 												</div>
 											</div>
-										</div>
-										 
+										</div>										 
 									</div>	
-								</article>
-								
+								</article>								
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>		
-				
-<!--		    <div class="art-sheet clearfix">
-				<div class="art-layout-wrapper clearfix">
-					<div class="art-content-layout">
-						<div class="art-content-layout-row">
-						    
-							<div class="art-layout-cell art-content clearfix">
-								<article class="art-post art-article">	    
-									<div class="art-postcontent art-postcontent-0 clearfix">
-									    
-										<div class="art-content-layout-wrapper layout-item-0">
-											<div class="art-content-layout layout-item-1">
-												<div class="art-content-layout-row">
-													<div class="art-layout-cell layout-item-2" style="width: 100%" >
-														<p><img ui:field="homePageBulbImg" width="150" height="220" alt="" src="images/light_bulb.png" style="float: left; padding-top: 100px" class="bulbImg"/></p>
-														<h5 ui:field="homePageSecondTitle">Learn By Yourself</h5>
-														<h6 ui:field="homePageFirstDescription">Enhance your abilities in multiples categories.&nbsp;</h6>
-														<h6 ui:field="homePageFirstDescription2">In collaboration with Université de Sherbrooke, our team of 6 members do their best to offer you useful content in a unique motivating way.</h6>
-														<h6 ui:field="homePageFirstDescription3">Be the best and complete all the problems!</h6>
-														<p style="margin-left: 40px"><a ui:field="homePageButton" href="" class="art-button">Start</a></p>
-													</div>
-												</div>
-											</div>
-										</div>
-									
-										<div class="art-content-layout-wrapper layout-item-3">
-											<div class="art-content-layout">
-												<div class="art-content-layout-row">
-											    	<div class="art-layout-cell layout-item-4" style="width: 25%">
-														<h1 ui:field="homePageFirstSectionTitle">Seminars</h1>
-														<p><span ui:field="homePageFirstSectionText" style="font-style:italic;">Watch or read tutorial</span></p>
-														<p style="text-align: center;">
-														    <img ui:field="homePageFirstSectionImg" width="154" height="154" alt="" src="images/door_mind.png"></img>		        
-													    </p>
-														<p ui:field="homePageFirstSectionDescription">With these seminars, would learn all you need to know to successfully resolve the problems and to increase your knowledge.</p>
-														<p><a ui:field="homePageFirstSectionLink" href="#" >Start now!</a></p>
-													</div>
-													<div class="art-layout-cell layout-item-4" style="width: 25%" >
-														<h1 ui:field="homePageSecondSectionTitle">Problems</h1>
-														<p><span ui:field="homePageSecondSectionText" style="font-style:italic;">Test your knowledge.&nbsp;</span></p>
-														<p style="text-align: center;">
-														    <img ui:field="homePageSecondSectionImg" width="154" height="154" alt="" src="images/earth_puzzle_3.png" class=""></img>
-													    </p>
-														<p ui:field="homePageSecondSectionDescription">Resolve a multitude of exercises and success to be rewarded with Achievement. Push your skills and your knowledge to the limits.</p>
-														<p><a ui:field="homePageSecondSectionLink" href="#">Start now!</a></p>
-													</div>
-													<div class="art-layout-cell layout-item-5" style="width: 25%" >
-														<h1 ui:field="homePageThirdSectionTitle">Stats</h1>
-														<p><span ui:field="homePageThirdSectionText" style="font-style:italic;">See if you are good.</span></p>
-														<p style="text-align: center;">
-														    <img ui:field="homePageThirdSectionImg" width="154" height="154" alt="" src="images/pie_chart.png" class=""></img>
-														</p>
-														<p ui:field="homePageThirdSectionDescription">Watch the statistic of everybody. See if your friend have solved more problems than you and compare yourself with others.</p>
-														<p><a ui:field="homePageThirdSectionLink" href="#">Watch now!</a></p>
-													</div>
-													<div class="art-layout-cell layout-item-3" style="width: 25%; padding-right: 20px; padding-left: 20px;" >
-														<h1 ui:field="homePageFourthSectionTitle">Forums</h1>
-														<p><span ui:field="homePageFourthSectionText" style="font-style:italic;">Talk with others.</span></p>
-														<p style="text-align: center;">
-															<img ui:field="homePageFourthSectionImg" width="154" height="154" alt="" src="images/Forums.png"></img>			
-														</p>
-														<p ui:field="homePageFourthSectionDescription">Working on it ...&nbsp;</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										 
-									</div>	
-								</article>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>	 
-			 -->
 		</div>    		   
 	</g:HTMLPanel>
 </ui:UiBinder> 
