@@ -84,7 +84,6 @@ public class SeminaryViewPresenter extends
 	
 	@Override
 	protected void onReveal() {
-		PageChangingEvent.fire(this, NameTokens.getViewSeminary());
 	}
 
 
