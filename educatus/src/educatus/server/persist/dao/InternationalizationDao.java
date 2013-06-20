@@ -14,6 +14,7 @@ import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntryPK;
 import educatus.server.persist.dao.internationalization.ImageExternal;
+import educatus.server.persist.dao.internationalization.ImageInternal;
 import educatus.server.persist.dao.internationalization.ImageType;
 import educatus.server.persist.dao.internationalization.Language;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
@@ -259,5 +260,19 @@ public class InternationalizationDao {
 		entityManager.persist(imageExternal);
 
 		return imageExternal;
+	}
+	
+	public ImageInternal insertImageInternal(String imageName, byte[] content){
+		
+		ImageType internalType = entityManager.find(ImageType.class, 1);
+		
+		ImageInternal imageInternal = new ImageInternal();
+		imageInternal.setImageName(imageName);
+		imageInternal.setImageContent(content);
+		imageInternal.setType(internalType);
+		
+		entityManager.persist(imageInternal);
+		
+		return imageInternal;
 	}
 }
