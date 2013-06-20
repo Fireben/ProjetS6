@@ -22,6 +22,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -154,6 +155,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			public void onClick(ClickEvent event) {
 				 final DialogBox dialogBox = createDialogBox();
 				    dialogBox.setGlassEnabled(true);
+				    dialogBox.setModal(true);
 				    dialogBox.setAnimationEnabled(true);
 				    dialogBox.center();
 		            dialogBox.show();
@@ -251,7 +253,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	  private DialogBox createDialogBox() {
 	    // Create a dialog box and set the caption text
 	    final DialogBox dialogBox = new DialogBox();
-	    dialogBox.ensureDebugId("cwDialogBox");
 	    dialogBox.setText("Log In ");
 
 	    // Create a table to layout the content
@@ -259,6 +260,18 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	    dialogContents.setSpacing(5);
 	    dialogBox.setWidget(dialogContents);
 
+	    Anchor close = new Anchor("X");
+	    close.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+	            dialogBox.hide();
+			}
+		});
+	    close.setStyleName("logInClose");
+	    dialogContents.add(close);
+	    dialogContents.setCellHorizontalAlignment(
+	    		close, HasHorizontalAlignment.ALIGN_RIGHT);
+	    
 	    // Add some text to the top of the dialog
 	    HTML userName = new HTML("UserName");
 	    dialogContents.add(userName);
@@ -267,6 +280,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 	    // Add an box to the dialog
 	    TextBox boxUserName = new TextBox();
+	    boxUserName.setStyleName("logInBox", true);
 	    dialogContents.add(boxUserName);
 	    dialogContents.setCellHorizontalAlignment(
 	    		boxUserName, HasHorizontalAlignment.ALIGN_CENTER);
@@ -280,6 +294,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	    // Add an box to the dialog
 	    PasswordTextBox boxPassword = new PasswordTextBox();
 	    boxPassword.setStyleName("boxPassword", true);
+	    boxPassword.setStyleName("logInBox", true);
 	    dialogContents.add(boxPassword);
 	    dialogContents.setCellHorizontalAlignment(
 	    		boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
@@ -291,6 +306,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	            dialogBox.hide();
 	          }
 	        });
+	    closeButton.setStyleName("backButton", true);
 	    dialogContents.add(closeButton);
 	    if (LocaleInfo.getCurrentLocale().isRTL()) {
 	      dialogContents.setCellHorizontalAlignment(
