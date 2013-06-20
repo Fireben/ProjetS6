@@ -1,35 +1,44 @@
 package educatus.server.persist.dao.certificate;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-/**
- * The persistent class for the certificatesequencetype database table.
- * 
- */
+import educatus.server.persist.dao.internationalization.TextContentEntry;
+
 @Entity
-@Table(name="certificate.certificatesequencetype")
+@Table(name = "certificate.certificatesequencetype")
 public class CertificateSequenceType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="cest_id", unique=true, nullable=false)
+	@Column(name = "cest_id", unique = true, nullable = false)
 	private Integer cestId;
 
-	@Column(name="tece_description", nullable=false)
-	private Integer teceDescription;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_description", nullable = false, insertable = true, updatable = true)
+	private TextContentEntry description;
 
-	@Column(name="tece_name", nullable=false)
-	private Integer teceName;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_name", nullable = false, insertable = true, updatable = true)
+	private TextContentEntry name;
 
-	//bi-directional many-to-one association to CertificateSequence
-	@OneToMany(mappedBy="certificatesequencetype")
+	// bi-directional many-to-one association to CertificateSequence
+	@OneToMany(mappedBy = "certificatesequencetype")
 	private List<CertificateSequence> certificatesequences;
 
-    public CertificateSequenceType() {
-    }
+	public CertificateSequenceType() {
+	}
 
 	public Integer getCestId() {
 		return this.cestId;
@@ -39,28 +48,28 @@ public class CertificateSequenceType implements Serializable {
 		this.cestId = cestId;
 	}
 
-	public Integer getTeceDescription() {
-		return this.teceDescription;
-	}
-
-	public void setTeceDescription(Integer teceDescription) {
-		this.teceDescription = teceDescription;
-	}
-
-	public Integer getTeceName() {
-		return this.teceName;
-	}
-
-	public void setTeceName(Integer teceName) {
-		this.teceName = teceName;
-	}
-
 	public List<CertificateSequence> getCertificatesequences() {
 		return this.certificatesequences;
 	}
 
-	public void setCertificatesequences(List<CertificateSequence> certificatesequences) {
+	public void setCertificatesequences(
+			List<CertificateSequence> certificatesequences) {
 		this.certificatesequences = certificatesequences;
 	}
-	
+
+	public TextContentEntry getDescription() {
+		return description;
+	}
+
+	public void setDescription(TextContentEntry description) {
+		this.description = description;
+	}
+
+	public TextContentEntry getName() {
+		return name;
+	}
+
+	public void setName(TextContentEntry name) {
+		this.name = name;
+	}
 }

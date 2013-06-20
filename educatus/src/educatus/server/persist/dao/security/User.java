@@ -70,7 +70,7 @@ public class User implements Serializable {
 
 	// bi-directional many-to-many association to Permission
 	@ManyToMany
-	@JoinTable(name = "userpermission", joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "perm_id", nullable = false) })
+	@JoinTable(name = "security.userpermission", joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "perm_id", nullable = false) })
 	private List<Permission> associatedPermissionList;
 
 	// bi-directional many-to-many association to UserType
@@ -79,7 +79,7 @@ public class User implements Serializable {
 
 	// bi-directional many-to-many association to Group
 	@ManyToMany
-	@JoinTable(name = "groupuser", joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
+	@JoinTable(name = "security.groupuser", joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
 	private List<Group> associatedGroupList;
 
 	public User() {

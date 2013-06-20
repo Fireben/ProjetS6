@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the anwserchoice database table.
- * 
- */
 @Entity
 @Table(name="exercice.anwserchoice")
 public class AnwserChoice implements Serializable {

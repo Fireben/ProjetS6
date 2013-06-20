@@ -120,4 +120,19 @@ public class SeminaryDao {
 		
 		return seminary;
 	}
+	
+	public Seminary addCategoryToSeminary(int seminaryId, int categoryId) throws Exception {
+		
+		Seminary seminary = entityManager.find(Seminary.class, seminaryId);
+		Category category = entityManager.find(Category.class, categoryId);
+		
+		if (category == null) {
+			throw new Exception("Cannot add a null category to a Seminary");
+		}
+		
+		seminary.getCategories().add(category);
+		entityManager.merge(seminary);
+		
+		return seminary;
+	}
 }

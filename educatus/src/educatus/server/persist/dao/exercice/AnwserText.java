@@ -3,25 +3,20 @@ package educatus.server.persist.dao.exercice;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
-/**
- * The persistent class for the anwsertext database table.
- * 
- */
 @Entity
-@Table(name="exercice.anwsertext")
+@Table(name = "exercice.anwsertext")
 public class AnwserText implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="exqu_id", unique=true, nullable=false)
+	@Column(name = "exqu_id", unique = true, nullable = false)
 	private Integer exquId;
 
-	@Column(name="tece_value", nullable=false)
+	@Column(name = "tece_value", nullable = false)
 	private Integer teceValue;
 
-    public AnwserText() {
-    }
+	public AnwserText() {
+	}
 
 	public Integer getExquId() {
 		return this.exquId;
@@ -37,5 +32,5 @@ public class AnwserText implements Serializable {
 
 	public void setTeceValue(Integer teceValue) {
 		this.teceValue = teceValue;
-	}	
+	}
 }
