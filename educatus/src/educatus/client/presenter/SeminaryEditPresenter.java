@@ -18,6 +18,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
 
 public class SeminaryEditPresenter extends
 		Presenter<SeminaryEditPresenter.MyView, SeminaryEditPresenter.MyProxy> {
@@ -119,5 +120,11 @@ public class SeminaryEditPresenter extends
 		confirmPresenter.setSaveButtonHandler(saveHandler);
 		confirmPresenter.setAddTextHandler(addTextHandler);
 		confirmPresenter.setAddImageHandler(addImageHandler);
+	}
+	
+	@Override
+	protected void onReveal() {
+		super.onReveal();
+		PageChangingEvent.fire(this, NameTokens.getSeminaryEdit());
 	}
 }

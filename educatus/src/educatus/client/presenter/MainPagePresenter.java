@@ -207,7 +207,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 						getView().getMenuPanel().getMainMenuHomeButton().getElement().setInnerText(content.getMainMenuContent().getHomeItem().getName());
 						getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setInnerText(content.getMainMenuContent().getSeminaryItem().getName());
 						getView().getMenuPanel().getMainMenuProfilButton().getElement().setInnerText(content.getMainMenuContent().getProfilItem().getName());
-						getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setInnerText(content.getMainMenuContent().getViewerItem().getName());
 						getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setInnerText(content.getMainMenuContent().getEditorItem().getName());
 					}
 				}
@@ -226,31 +225,21 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("active");
 			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 		} else if (name == NameTokens.getProfil()) {
 			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("active");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 		} else if (name == NameTokens.getSeminarHomePage()) {
 			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("active");
 			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-		} else if (name == NameTokens.getViewSeminary()) {
-			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("active");
 			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 		} else if (name == NameTokens.getSeminaryEdit()) {
 			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
 			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("active");
 		}
 	}

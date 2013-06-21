@@ -1,4 +1,4 @@
-package educatus.server.businesslogic.uibuilder;
+package educatus.server.businesslogic.seminarymanager;
 
 import java.util.List;
 
@@ -12,13 +12,12 @@ import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 
 @Singleton
-public class SeminaryHomeCategoryFactory {
+public class SeminaryHomeCategoryBuilder {
 
 	@Inject
 	private SeminaryDao semDao;
 
-	public SeminaryHomeCategoryContent createSeminaryHomeCategoryContent(
-			Integer parentId, String culture, String language) {
+	public SeminaryHomeCategoryContent buildSeminaryHomeCategoryContent(Integer parentId, String culture, String language) {
 
 		SeminaryHomeCategoryContent pageContent = new SeminaryHomeCategoryContent();
 

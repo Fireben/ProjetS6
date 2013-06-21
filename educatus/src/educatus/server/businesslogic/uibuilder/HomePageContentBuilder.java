@@ -13,7 +13,7 @@ import educatus.shared.dto.HomePageContent.HomePageSection;
  * ligne 322 */
 
 @Singleton
-public class HomePageFactory {
+public class HomePageContentBuilder {
 	/* Text */
 	private static final int HOME_TITLE = -10000;
 	private static final int WELCOME_TITLE = -10001;
@@ -52,7 +52,7 @@ public class HomePageFactory {
 	@Inject
 	private InternationalizationDao interDao;
 
-	public HomePageContent createHomePageContent(String culture, String language) {
+	public HomePageContent buildHomePageContent(String culture, String language) {
 		int cultureId;
 		int languageId;
 		try {

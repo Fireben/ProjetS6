@@ -48,8 +48,6 @@ public class MainMenu extends Composite
 	@UiField
 	InlineHyperlink mainMenuProfilButton;
 	@UiField
-	InlineHyperlink mainMenuViewSeminaryButton;
-	@UiField
 	InlineHyperlink mainMenuEditSeminaryButton;
 
 	public MainMenu()
@@ -89,16 +87,6 @@ public class MainMenu extends Composite
 		this.mainMenuProfilButton = mainMenuProfilButton;
 	}
 
-	public InlineHyperlink getMainMenuViewSeminaryButton()
-	{
-		return mainMenuViewSeminaryButton;
-	}
-
-	public void setMainMenuViewSeminaryButton(
-			InlineHyperlink mainMenuViewSeminaryButton)
-	{
-		this.mainMenuViewSeminaryButton = mainMenuViewSeminaryButton;
-	}
 	
 	public InlineHyperlink getMainMenuEditSeminaryButton()
 	{

@@ -73,6 +73,14 @@ public class SeminaryDao {
 		return (List<Category>) resultList; 
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Category> findAllCategories() throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(Category.FIND_ALL)
+				.getResultList();
+		
+		return (List<Category>) resultList; 
+	}
+	
 	public Difficulty findDifficultyByLevel(int level) throws Exception {
 		Difficulty difficulty = entityManager.find(Difficulty.class, level);		
 		return difficulty; 
