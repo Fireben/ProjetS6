@@ -256,7 +256,7 @@ h1,h2,h3,h4,h5,h6,p,a,ul,ol,li {
 }
 
 .art-postcontent h6 {
-	color: #595959;
+	color: #c8c8c8;
 	margin: 10px 0 0 40px;
 	font-size: 16px;
 	font-family: 'Century Gothic', Arial, 'Arial Unicode MS', Helvetica,
@@ -2319,16 +2319,23 @@ GWTUpld,table.GWTUpld td {
  /* background: rgb(99, 99, 99);*/
  background: url(images/fondo_texture.png)
 }
+
 .gwt-DialogBox .dialogBottomCenter {
-  background: url(images/hborder.png) repeat-x 0px -2945px;
-  -background: url(images/hborder_ie6.png) repeat-x 0px -2144px;
+  /* background: url(images/hborder_dialog.png) repeat-x 0px -2945px;
+  -background: url(images/hborder_ie6.png) repeat-x 0px -2144px; */
+  background: none;
+  /*border-top: 5px solid #525e67;*/
 }
 .gwt-DialogBox .dialogMiddleLeft {
-  background: url(images/vborder.png) repeat-y -31px 0px;
+	background: none;
+	/*border-right: 5px solid #525e67;*/
+ /* background: url(images/vborder_dialog.png) repeat-y -31px 0px; */
 }
 .gwt-DialogBox .dialogMiddleRight {
-  background: url(images/vborder.png) repeat-y -32px 0px;
-  -background: url(images/vborder_ie6.png) repeat-y -32px 0px;
+	background: none;
+	/*border-left: 5px solid #525e67;*/
+  /* background: url(images/vborder_dialog.png) repeat-y -32px 0px;
+  -background: url(images/vborder_ie6.png) repeat-y -32px 0px;*/
 }
 .gwt-DialogBox .dialogTopLeftInner {
   width: 10px;
@@ -2349,22 +2356,35 @@ GWTUpld,table.GWTUpld td {
   height: 12px;
   zoom: 1;
 }
+
 .gwt-DialogBox .dialogTopLeft {
-  background: url(images/circles.png) no-repeat -20px 0px;
-  -background: url(images/circles_ie6.png) no-repeat -20px 0px;
+	background: none;
+	/*border-right: 5px solid #525e67;*/
+ /* background: url(images/circles_dialog.png) no-repeat -20px 0px;
+  -background: url(images/circles_ie6.png) no-repeat -20px 0px; */
 }
 .gwt-DialogBox .dialogTopRight {
-  background: url(images/circles.png) no-repeat -28px 0px;
-  -background: url(images/circles_ie6.png) no-repeat -28px 0px;
+	background: none;
+	/*border-left: 5px solid #525e67;*/
+ /* background: url(images/circles_dialog.png) no-repeat -28px 0px;
+  -background: url(images/circles_ie6.png) no-repeat -28px 0px; */
+}
+.gwt-DialogBox .dialogTopCenter {
+	background: none;
+	/*border-top: 5px solid #525e67;*/
 }
 .gwt-DialogBox .dialogBottomLeft {
-  background: url(images/circles.png) no-repeat 0px -36px;
-  -background: url(images/circles_ie6.png) no-repeat 0px -36px;
+	background: none;
+	/*border-right: 5px solid #525e67;*/
+  /* background: url(images/circles_dialog.png) no-repeat 0px -36px;
+  -background: url(images/circles_ie6.png) no-repeat 0px -36px; */
 }
 .gwt-DialogBox .dialogBottomRight {
-  background: url(images/circles.png) no-repeat -8px -36px;
-  -background: url(images/circles_ie6.png) no-repeat -8px -36px;
-}
+	background: none;
+	/*border-left: 5px solid #525e67;*/
+ /* background: url(images/circles_dialog.png) no-repeat -8px -36px;
+  -background: url(images/circles_ie6.png) no-repeat -8px -36px; */
+} 
 html>body .gwt-DialogBox {
 }
 * html .gwt-DialogBox .dialogTopLeftInner {
@@ -2459,7 +2479,7 @@ html>body .gwt-DialogBox {
 	border-radius: 5px;
 }
 
-.logInLink {
+.logInLink, .logOutLink {
 	cursor: pointer;
 }
 
@@ -2468,6 +2488,7 @@ html>body .gwt-DialogBox {
 	text-decoration: none;
 	margin-top: -33px;
 	display: block;
+	width: 10px
 }
 
 a:hover, .logInClose {
@@ -2478,4 +2499,9 @@ a:hover, .logInClose {
 	color: black;
 	width: 79% !important;
 	padding: 2px !important;
+}
+
+.logInProfilImg td {
+	border: none;
+	cursor: pointer;
 }

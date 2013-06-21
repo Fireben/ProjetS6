@@ -40,6 +40,8 @@ public class MainMenu extends Composite
 	@UiField
 	LogIn logInUi;
 	@UiField
+	LogInProfil logInProfilUi;
+	@UiField
 	InlineHyperlink mainMenuHomeButton;
 	@UiField
 	InlineHyperlink mainMenuSeminarsButton;
@@ -117,5 +119,15 @@ public class MainMenu extends Composite
 
 	public void setLogInUi(LogIn logInUi) {
 		this.logInUi = logInUi;
+	}
+
+
+	public LogInProfil getLogInProfilUi() {
+		return logInProfilUi;
+	}
+
+
+	public void setLogInProfilUi(LogInProfil logInProfilUi) {
+		this.logInProfilUi = logInProfilUi;
 	}
 }

@@ -26,7 +26,10 @@
 							<g:InlineHyperlink ui:field="mainMenuEditSeminaryButton" targetHistoryToken="{nameTokens.getSeminaryEdit}">Create Seminary</g:InlineHyperlink>			    
 						</li>
 					</ul>
-					<npui:LogIn ui:field="logInUi"/>	
+					<div style="float: right; width: 25%;">
+						<npui:LogIn ui:field="logInUi"/>
+						<npui:LogInProfil ui:field="logInProfilUi" />
+					</div>
 				</div>
 			</nav>
 		</div>

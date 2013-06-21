@@ -148,7 +148,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	@Override
 	protected void onBind() {
 		super.onBind();
-		//getView().getMenuPanel().getLogInUi().getLogInLink().setInnerText("Changed");
 		getView().getMenuPanel().getLogInUi().getLogInLink().addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -162,7 +161,18 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			}
 		});
 		
+		getView().getMenuPanel().getLogInProfilUi().getLogOutLink().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getView().getMenuPanel().getLogInProfilUi().setVisible(false);
+				getView().getMenuPanel().getLogInUi().setVisible(true);
+			}
+		});
+
 		
+		
+		getView().getMenuPanel().getLogInProfilUi().setVisible(false);
 		getView().getHeaderPanel().add(getView().getMenuPanel());
 		
 		getView().getFooterPanel().getEnglishButton().addClickHandler(new TranslateClickHandler("CA", "en"));
@@ -304,6 +314,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	        "Ok", new ClickHandler() {
 	          public void onClick(ClickEvent event) {
 	            dialogBox.hide();
+	            getView().getMenuPanel().getLogInUi().setVisible(false);
+	    		getView().getMenuPanel().getLogInProfilUi().setVisible(true);
 	          }
 	        });
 	    closeButton.setStyleName("backButton", true);
