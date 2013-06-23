@@ -6,6 +6,15 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 	
-	<g:HTMLPanel ui:field="imageUploadPanel" />
-
+	<g:HTMLPanel ui:field="editImageSection">
+		<g:HorizontalPanel ui:field="editTitle">
+		    <g:Label>
+		     	Title :    
+		    </g:Label>
+		    <g:TextBox width = "300px">    
+		    </g:TextBox>   
+		</g:HorizontalPanel>
+		<g:HTMLPanel ui:field="imageUploadPanel">
+		</g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder>

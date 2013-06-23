@@ -20,7 +20,6 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
-import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.widget.DescriptionEntry;
 import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;

@@ -3,6 +3,7 @@ package educatus.client.view;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -20,7 +21,8 @@ public class TextEditView extends ViewImpl implements TextEditPresenter.MyView {
 	PushButton deleteBtn;	
 	@UiField(provided=true)
 	Grid textAreaGrid;
-	
+	@UiField
+	HorizontalPanel editTitle;	
 
 	private final Widget widget;
 
@@ -29,6 +31,7 @@ public class TextEditView extends ViewImpl implements TextEditPresenter.MyView {
 		textAreaGrid = new Grid(2,1);
 		widget = binder.createAndBindUi(this);
 		createTextContent();
+		editTitle.setStyleName("editTitle");
 	}
 
 	@Override

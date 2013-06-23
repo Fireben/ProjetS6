@@ -13,12 +13,30 @@
 		margin-left : auto;
 		margin-right : auto;
 		}
+
 		.contentPanel {
-		padding-bottom:50px;
+		background: rgb(30,30,30);
+		width: 700px;
+		margin-left: auto;
+		margin-right: auto;
+		-webkit-border-radius: 20px;
+		-moz-border-radius: 20px;
+		border-radius: 20px;
+		padding-bottom: 50px;
+		padding-top: 50px;
+		margin-top: 50px;
+		margin-bottom: 50px;
 		}
 	</ui:style>
 
 	<g:HTMLPanel styleName='{style.contentPanel}'>
+		<g:HorizontalPanel ui:field="editTitle">
+			<g:Label>
+				Title :
+			</g:Label>
+			<g:TextBox width="300px">
+			</g:TextBox>
+		</g:HorizontalPanel>
 		<g:PushButton ui:field="deleteBtn" enabled='true'>
 			<g:upFace image='{res.deleteButton}' />
 		</g:PushButton>

@@ -51,4 +51,8 @@ public class ConfirmChangesPresenter extends
 			addTextHandlerRegistration = getView().getAddTextButton().addClickHandler(addTextBoxHandler);	
 		}
 	}
+
+	public void setConfirmHandler(ClickHandler confirmHandler) {
+		getView().getSaveButton().addClickHandler(confirmHandler);	
+	}
 }

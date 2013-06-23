@@ -1031,7 +1031,6 @@ input,select,textarea {
 		Sans-Serif;
 	font-weight: bold;
 	font-style: normal;
-	text-transform: uppercase;
 }
 
 .art-block select {
@@ -1101,7 +1100,6 @@ input[type="text"],input[type="password"],input[type="email"],input[type="url"],
 input[type="password"],input[type="email"],input[type="url"],textarea {
 	width: 100%;
 	padding: 8px 0;
-	color: #055976 !important;
 	font-size: 13px;
 	font-family: Verdana, Geneva, Arial, Helvetica, Sans-Serif;
 	font-weight: normal;
@@ -2168,8 +2166,8 @@ GWTUpld,table.GWTUpld td {
 
 .textArea {
 	background-color: rgb(255, 255, 255);
-	width: 750px;
-	height: 350px;
+	width: 550px;
+	height: 250px;
 }
 
 .hasRichTextToolbar {
@@ -2181,7 +2179,7 @@ GWTUpld,table.GWTUpld td {
 	border-bottom: 1px solid #BBBBBB;
 	padding: 3px;
 	margin: 0px;
-	width: 750px;
+	width: 550px;
 }
 
 .textToolbar .gwt-PushButton-up {
@@ -2424,7 +2422,6 @@ html>body .gwt-DialogBox {
 	font-size: 30px;	
 	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
 	width: 550px;
-	margin-left: auto;
 	margin-right: auto;
 }
 
@@ -2450,4 +2447,30 @@ html>body .gwt-DialogBox {
 .viewSeminaryContainer {
 	margin-left: 300px;
 	margin-right: auto;
+}
+
+.editTitle {
+	margin-left: auto;
+	margin-right: auto;
+	width: 550px;
+	padding-bottom: 10px
+}
+
+.editTitleTextArea {
+	width: 300px;
+	height: 3px;
+}
+
+.editSection {
+	background: rgb(30,30,30);
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	padding-bottom: 50px;
+	padding-top: 50px;
+	margin-top: 50px;
+	margin-bottom: 50px;
 }

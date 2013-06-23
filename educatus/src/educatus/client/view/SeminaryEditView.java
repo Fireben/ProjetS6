@@ -74,6 +74,10 @@ public class SeminaryEditView extends ViewImpl implements
 		return widget;
 	}
 
+	public HTMLPanel getContentPanel() {
+		return contentPanel;
+	}
+
 	public FlowPanel getSeminaryDescriptionContainer() {
 		return seminaryDescriptionContainer;
 	}	
