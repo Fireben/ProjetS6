@@ -9,9 +9,9 @@ import educatus.shared.dto.user.UserProfilContent;
 
 
 @Singleton
-public class UserProfilFactory {
+public class UserProfilBuilder {
 
-	public UserProfilContent createUserProfilContent(String cip){
+	public UserProfilContent buildUserProfilContent(String cip){
 		
 		UserProfilContent content = new UserProfilContent();
 		
