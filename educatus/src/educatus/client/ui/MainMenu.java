@@ -87,7 +87,7 @@ public class MainMenu extends Composite {
 		hyperLinkList.add(hyperlink);
 	}
 	
-	public void setActive(String activeNameToken){		
+	public void setActiveMenuItem(String activeNameToken){		
 		for (InlineHyperlink hyperlink : hyperLinkList) {
 			if (hyperlink.getTargetHistoryToken().equals(activeNameToken)){
 				hyperlink.getElement().setClassName(activeMenuItemClassName);

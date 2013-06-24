@@ -17,7 +17,6 @@
 package educatus.client.presenter;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -88,7 +87,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		// TODO, pourquoi un header panel, si on a accès direct au menuPanel ???
 		public FlowPanel getHeaderPanel();
 
-		public MainMenu getMenuPanel();
+		public MainMenu getMainMenu();
 
 		public Footer getFooterPanel();
 
@@ -152,7 +151,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	@Override
 	protected void onBind() {
 		super.onBind();
-		getView().getMenuPanel().getLogInUi().getLogInLink().addClickHandler(new ClickHandler() {
+		getView().getMainMenu().getLogInUi().getLogInLink().addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -165,17 +164,17 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			}
 		});
 
-		getView().getMenuPanel().getLogInProfilUi().getLogOutLink().addClickHandler(new ClickHandler() {
+		getView().getMainMenu().getLogInProfilUi().getLogOutLink().addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				getView().getMenuPanel().getLogInProfilUi().setVisible(false);
-				getView().getMenuPanel().getLogInUi().setVisible(true);
+				getView().getMainMenu().getLogInProfilUi().setVisible(false);
+				getView().getMainMenu().getLogInUi().setVisible(true);
 			}
 		});
 
-		getView().getMenuPanel().getLogInProfilUi().setVisible(false);
-		getView().getHeaderPanel().add(getView().getMenuPanel());
+		getView().getMainMenu().getLogInProfilUi().setVisible(false);
+		getView().getHeaderPanel().add(getView().getMainMenu());
 
 		getView().getFooterPanel().getEnglishButton().addClickHandler(new TranslateClickHandler("CA", "en"));
 		getView().getFooterPanel().getFrenchButton().addClickHandler(new TranslateClickHandler("CA", "fr"));
@@ -216,15 +215,15 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	
 	private void fillPageWithContent(MainPageContent content){
 		// We clear the MainMenuList
-		getView().getMenuPanel().clearMainMenuList();
+		getView().getMainMenu().clearMainMenuList();
 		
-		MainMenu mainMenu = getView().getMenuPanel();
+		MainMenu mainMenu = getView().getMainMenu();
 		// We fill the MainMenuList
 		for (MainMenuItemContent mainMenuItemContent : content.getMainMenuContent().getMainMenuItemContentList()) {
 			
 			String name = mainMenuItemContent.getName();
 			String nameToken = getNameTokenFromMenuItemType(mainMenuItemContent.getType());
-			
+			// Append to the MainMenu
 			mainMenu.appendMainMenuItem(name, nameToken);
 		}		
 	}
@@ -253,8 +252,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		return nameToken;
 	}
 
-	private void setActiveMenuItem(String name) {		
-		getView().getMenuPanel().setActive(name);
+	private void setActiveMenuItem(String name) {
+		// Delegate to the MainMenu
+		getView().getMainMenu().setActiveMenuItem(name);
 	}
 
 	private DialogBox createLoginDialogBox() {
@@ -305,8 +305,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		Button closeButton = new Button("Ok", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				dialogBox.hide();
-				getView().getMenuPanel().getLogInUi().setVisible(false);
-				getView().getMenuPanel().getLogInProfilUi().setVisible(true);
+				getView().getMainMenu().getLogInUi().setVisible(false);
+				getView().getMainMenu().getLogInProfilUi().setVisible(true);
 			}
 		});
 		closeButton.setStyleName("backButton", true);

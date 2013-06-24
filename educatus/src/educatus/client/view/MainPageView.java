@@ -89,7 +89,7 @@ public class MainPageView extends ViewImpl implements MyView {
 		this.mainContentPanel = mainContentPanel;
 	}
 
-	public MainMenu getMenuPanel() {
+	public MainMenu getMainMenu() {
 		return menuPanel;
 	}
 
