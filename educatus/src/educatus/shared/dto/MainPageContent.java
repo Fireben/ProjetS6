@@ -13,6 +13,10 @@ public class MainPageContent implements Serializable {
 
 	// Header - MainMenu
 	public static class MainMenuContent implements Serializable {
+		
+		public static enum MainMenuItemEnum {
+			HOME_ITEM
+		}
 
 		public static class MainMenuItemContent implements Serializable {
 

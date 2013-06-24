@@ -9,8 +9,8 @@
 	   <div id="art-main">
 			<nav class="art-nav clearfix">
 				<div class="art-nav-inner">
-					<ul class="art-hmenu">
-					    <li>
+					<ul ui:field="mainMenuList" class="art-hmenu">
+					    <!-- <li>
 							<g:InlineHyperlink ui:field="mainMenuHomeButton" targetHistoryToken="{nameTokens.getHomePage}">Home</g:InlineHyperlink>			    
 						</li>
 						<li>
@@ -21,7 +21,7 @@
 						</li>
 						<li>
 							<g:InlineHyperlink ui:field="mainMenuEditSeminaryButton" targetHistoryToken="{nameTokens.getSeminaryEdit}">Create Seminary</g:InlineHyperlink>			    
-						</li>
+						</li> -->
 					</ul>
 					<div style="float: right; width: 25%;">
 						<npui:LogIn ui:field="logInUi"/>
