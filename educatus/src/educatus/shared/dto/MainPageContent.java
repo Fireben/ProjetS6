@@ -1,6 +1,8 @@
 package educatus.shared.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPageContent implements Serializable {
 
@@ -13,21 +15,27 @@ public class MainPageContent implements Serializable {
 
 	// Header - MainMenu
 	public static class MainMenuContent implements Serializable {
-		
+
 		public static enum MainMenuItemEnum {
-			HOME_ITEM
+			HOME_ITEM, 
+			SEMINARS_HOME_ITEM, 
+			PROFILE_ITEM,
+			EXCERCICE_ITEM, 
+			CREATE_SEMINAR_ITEM
 		}
 
 		public static class MainMenuItemContent implements Serializable {
 
 			private static final long serialVersionUID = 4045539245689986636L;
-			private String name;
-			
+			private String name = null;
+			private MainMenuItemEnum type = null;
+
 			public MainMenuItemContent() {
 			}
-			
-			public MainMenuItemContent(String itemName){
+
+			public MainMenuItemContent(String itemName, MainMenuItemEnum type) {
 				this.name = itemName;
+				this.type = type;
 			}
 
 			public String getName() {
@@ -37,61 +45,33 @@ public class MainPageContent implements Serializable {
 			public void setName(String name) {
 				this.name = name;
 			}
+
+			public MainMenuItemEnum getType() {
+				return type;
+			}
+
+			public void setType(MainMenuItemEnum type) {
+				this.type = type;
+			}
 		}
 
 		private static final long serialVersionUID = 1285932975988695050L;
 
-		private MainMenuItemContent homeItem;
-		private MainMenuItemContent seminaryItem;
-		private MainMenuItemContent profilItem;
-		private MainMenuItemContent viewerItem;
-		private MainMenuItemContent editorItem;
+		private List<MainMenuItemContent> mainMenuItemContentList = new ArrayList<MainMenuItemContent>();
 
-		public MainMenuItemContent getHomeItem() {
-			return homeItem;
+		public List<MainMenuItemContent> getMainMenuItemContentList() {
+			return mainMenuItemContentList;
 		}
 
-		public void setHomeItem(MainMenuItemContent homeItem) {
-			this.homeItem = homeItem;
-		}
-
-		public MainMenuItemContent getSeminaryItem() {
-			return seminaryItem;
-		}
-
-		public void setSeminaryItem(MainMenuItemContent seminaryItem) {
-			this.seminaryItem = seminaryItem;
-		}
-
-		public MainMenuItemContent getProfilItem() {
-			return profilItem;
-		}
-
-		public void setProfilItem(MainMenuItemContent profilItem) {
-			this.profilItem = profilItem;
-		}
-
-		public MainMenuItemContent getViewerItem() {
-			return viewerItem;
-		}
-
-		public void setViewerItem(MainMenuItemContent viewerItem) {
-			this.viewerItem = viewerItem;
-		}
-
-		public MainMenuItemContent getEditorItem() {
-			return editorItem;
-		}
-
-		public void setEditorItem(MainMenuItemContent editorItem) {
-			this.editorItem = editorItem;
+		public void setMainMenuItemContentList(List<MainMenuItemContent> mainMenuItemContentList) {
+			this.mainMenuItemContentList = mainMenuItemContentList;
 		}
 
 	}
 
 	// MainPageContent - Begin
 	private static final long serialVersionUID = -3890304591665915449L;
-	
+
 	private MainMenuContent mainMenuContent;
 
 	public MainMenuContent getMainMenuContent() {

@@ -16,6 +16,9 @@
 
 package educatus.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -33,61 +36,28 @@ import com.google.gwt.user.client.ui.Widget;
 public class MainMenu extends Composite {
 	interface MainMenuUiBinder extends UiBinder<Widget, MainMenu> {
 	}
+	
+	private static String inactiveMenuItemClassName = "gwt-InlineHyperlink";
+	private static String activeMenuItemClassName = "active";
+	
+	private List<InlineHyperlink> hyperLinkList = new ArrayList<InlineHyperlink>();
 
 	private static MainMenuUiBinder uiBinder = GWT.create(MainMenuUiBinder.class);
+	
 	@UiField
 	UListElement mainMenuList;
 
 	@UiField
 	LogIn logInUi;
+	
 	@UiField
 	LogInProfil logInProfilUi;
-//	@UiField
-//	InlineHyperlink mainMenuHomeButton;
-//	@UiField
-//	InlineHyperlink mainMenuSeminarsButton;
-//	@UiField
-//	InlineHyperlink mainMenuProfilButton;
-//	@UiField
-//	InlineHyperlink mainMenuEditSeminaryButton;
 
 	public MainMenu() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-//	// Getter and Setter
-//	public InlineHyperlink getMainMenuHomeButton() {
-//		return mainMenuHomeButton;
-//	}
-//
-//	public void setMainMenuHomeButton(InlineHyperlink mainMenuHomeButton) {
-//		this.mainMenuHomeButton = mainMenuHomeButton;
-//	}
-//
-//	public InlineHyperlink getMainMenuSeminarsButton() {
-//		return mainMenuSeminarsButton;
-//	}
-//
-//	public void setMainMenuSeminarsButton(InlineHyperlink mainMenuSeminarsButton) {
-//		this.mainMenuSeminarsButton = mainMenuSeminarsButton;
-//	}
-//
-//	public InlineHyperlink getMainMenuProfilButton() {
-//		return mainMenuProfilButton;
-//	}
-//
-//	public void setMainMenuProfilButton(InlineHyperlink mainMenuProfilButton) {
-//		this.mainMenuProfilButton = mainMenuProfilButton;
-//	}
-//
-//	public InlineHyperlink getMainMenuEditSeminaryButton() {
-//		return mainMenuEditSeminaryButton;
-//	}
-//
-//	public void setMainMenuEditSeminaryButton(InlineHyperlink mainMenuEditSeminaryButton) {
-//		this.mainMenuEditSeminaryButton = mainMenuEditSeminaryButton;
-//	}
-
+	// Getter and Setter
 	public LogIn getLogInUi() {
 		return logInUi;
 	}
@@ -114,10 +84,17 @@ public class MainMenu extends Composite {
 		InlineHyperlink hyperlink = new InlineHyperlink(itemName, targetHistoryToken);
 		hyperLinkPanel.add(hyperlink);
 		mainMenuList.insertAfter(hyperLinkPanel.getElement(), null);
+		hyperLinkList.add(hyperlink);
 	}
 	
-	public void setActive(String activeNameToken){
-		
+	public void setActive(String activeNameToken){		
+		for (InlineHyperlink hyperlink : hyperLinkList) {
+			if (hyperlink.getTargetHistoryToken().equals(activeNameToken)){
+				hyperlink.getElement().setClassName(activeMenuItemClassName);
+			} else {
+				hyperlink.getElement().setClassName(inactiveMenuItemClassName);
+			}
+		}
 	}
 
 	public void clearMainMenuList() {
@@ -127,5 +104,6 @@ public class MainMenu extends Composite {
 				mainMenuList.removeChild(lastChild);				
 			}
 		}
+		hyperLinkList.clear();
 	}
 }

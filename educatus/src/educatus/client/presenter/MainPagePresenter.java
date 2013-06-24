@@ -28,9 +28,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -54,6 +52,8 @@ import educatus.client.events.PageChangingEvent.PageChangeHandler;
 import educatus.client.ui.Footer;
 import educatus.client.ui.MainMenu;
 import educatus.shared.dto.MainPageContent;
+import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemContent;
+import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemEnum;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -200,33 +200,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				@Override
 				public void onSuccess(AbstractResponse result) {
 					if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
-						MainPageContentResponse response = (MainPageContentResponse) result;
-						MainPageContent content = response.getMainPageContent();
-
-						getView().getMenuPanel().clearMainMenuList();
-						// Move this to dedicated method, as in the
-						// HomePresenter
-						getView().getMenuPanel().appendMainMenuItem(
-								content.getMainMenuContent().getHomeItem().getName(), 
-								NameTokens.getHomePage()
-						);
-						getView().getMenuPanel().appendMainMenuItem(
-								content.getMainMenuContent().getSeminaryItem().getName(), 
-								NameTokens.getSeminarHomePage()
-						);
-						getView().getMenuPanel().appendMainMenuItem(
-								content.getMainMenuContent().getProfilItem().getName(), 
-								NameTokens.getProfil()
-						);
-						getView().getMenuPanel().appendMainMenuItem(
-								content.getMainMenuContent().getEditorItem().getName(), 
-								NameTokens.getSeminaryEdit()
-						);
-						
-						//getView().getMenuPanel().getMainMenuHomeButton().getElement().setInnerText(content.getMainMenuContent().getHomeItem().getName());
-						//getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setInnerText(content.getMainMenuContent().getSeminaryItem().getName());
-						//getView().getMenuPanel().getMainMenuProfilButton().getElement().setInnerText(content.getMainMenuContent().getProfilItem().getName());
-						//getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setInnerText(content.getMainMenuContent().getEditorItem().getName());
+						MainPageContentResponse response = (MainPageContentResponse) result;						
+						fillPageWithContent(response.getMainPageContent());
 					}
 				}
 
@@ -238,29 +213,48 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			});
 		}
 	}
+	
+	private void fillPageWithContent(MainPageContent content){
+		// We clear the MainMenuList
+		getView().getMenuPanel().clearMainMenuList();
+		
+		MainMenu mainMenu = getView().getMenuPanel();
+		// We fill the MainMenuList
+		for (MainMenuItemContent mainMenuItemContent : content.getMainMenuContent().getMainMenuItemContentList()) {
+			
+			String name = mainMenuItemContent.getName();
+			String nameToken = getNameTokenFromMenuItemType(mainMenuItemContent.getType());
+			
+			mainMenu.appendMainMenuItem(name, nameToken);
+		}		
+	}
+	
+	private String getNameTokenFromMenuItemType(MainMenuItemEnum type){
+		String nameToken = null;
+		
+		switch (type) {
+			case HOME_ITEM:
+				nameToken = NameTokens.getHomePage();
+				break;
+			case SEMINARS_HOME_ITEM:
+				nameToken = NameTokens.getSeminarHomePage();
+				break;
+			case PROFILE_ITEM:
+				nameToken = NameTokens.getProfil();
+				break;
+			case CREATE_SEMINAR_ITEM:
+				nameToken = NameTokens.getSeminaryEdit();
+				break;
+			// Default Token leads to HomePage
+			default:
+				nameToken = NameTokens.getHomePage();
+				break;
+		}		
+		return nameToken;
+	}
 
-	private void setActiveMenuItem(String name) {
-//		if (name == NameTokens.getHomePage()) {
-//			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("active");
-//			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-//		} else if (name == NameTokens.getProfil()) {
-//			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("active");
-//			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-//		} else if (name == NameTokens.getSeminarHomePage()) {
-//			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("active");
-//			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-//		} else if (name == NameTokens.getSeminaryEdit()) {
-//			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-//			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("active");
-//		}
+	private void setActiveMenuItem(String name) {		
+		getView().getMenuPanel().setActive(name);
 	}
 
 	private DialogBox createLoginDialogBox() {

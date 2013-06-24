@@ -10,18 +10,7 @@
 			<nav class="art-nav clearfix">
 				<div class="art-nav-inner">
 					<ul ui:field="mainMenuList" class="art-hmenu">
-					    <!-- <li>
-							<g:InlineHyperlink ui:field="mainMenuHomeButton" targetHistoryToken="{nameTokens.getHomePage}">Home</g:InlineHyperlink>			    
-						</li>
-						<li>
-							<g:InlineHyperlink ui:field="mainMenuSeminarsButton" targetHistoryToken="{nameTokens.getSeminarHomePage}">Seminars</g:InlineHyperlink>				    
-						</li>
-					    <li>
-							<g:InlineHyperlink ui:field="mainMenuProfilButton" targetHistoryToken="{nameTokens.getProfil}">Profil</g:InlineHyperlink>			    
-						</li>
-						<li>
-							<g:InlineHyperlink ui:field="mainMenuEditSeminaryButton" targetHistoryToken="{nameTokens.getSeminaryEdit}">Create Seminary</g:InlineHyperlink>			    
-						</li> -->
+					    <!-- Add <li> element dynamically -->
 					</ul>
 					<div style="float: right; width: 25%;">
 						<npui:LogIn ui:field="logInUi"/>

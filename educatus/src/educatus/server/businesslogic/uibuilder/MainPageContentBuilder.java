@@ -8,6 +8,7 @@ import educatus.server.persist.dao.internationalization.TextContentTranslationEn
 import educatus.shared.dto.MainPageContent;
 import educatus.shared.dto.MainPageContent.MainMenuContent;
 import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemContent;
+import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemEnum;
 
 @Singleton
 public class MainPageContentBuilder {
@@ -16,7 +17,7 @@ public class MainPageContentBuilder {
 	private static final int HOME_MAIN_MENU_ITEM = -11000;
 	private static final int SEMINARS_MAIN_MENU_ITEM = -11001;
 	private static final int PROFILE_MAIN_MENU_ITEM = -11002;
-	private static final int VIEW_SEMINARY_MAIN_MENU_ITEM = -11003;
+	//private static final int VIEW_SEMINARY_MAIN_MENU_ITEM = -11003;
 	private static final int CREATE_SEMINARY_MAIN_MENU_ITEM = -11004;
 
 	@Inject
@@ -44,23 +45,19 @@ public class MainPageContentBuilder {
 
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, HOME_MAIN_MENU_ITEM);
 		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
-		mainMenuContent.setHomeItem(new MainMenuItemContent(text));
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.HOME_ITEM));
 
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, SEMINARS_MAIN_MENU_ITEM);
 		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
-		mainMenuContent.setSeminaryItem(new MainMenuItemContent(text));
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.SEMINARS_HOME_ITEM));
 
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, PROFILE_MAIN_MENU_ITEM);
 		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
-		mainMenuContent.setProfilItem(new MainMenuItemContent(text));
-
-		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, VIEW_SEMINARY_MAIN_MENU_ITEM);
-		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
-		mainMenuContent.setViewerItem(new MainMenuItemContent(text));
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.PROFILE_ITEM));
 
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, CREATE_SEMINARY_MAIN_MENU_ITEM);
 		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
-		mainMenuContent.setEditorItem(new MainMenuItemContent(text));
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.CREATE_SEMINAR_ITEM));
 
 		mainPageContent.setMainMenuContent(mainMenuContent);
 
