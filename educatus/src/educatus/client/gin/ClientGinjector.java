@@ -33,16 +33,21 @@ import educatus.client.presenter.SeminaryViewPresenter;
 /**
  * @author Christian Goudreau
  */
-@GinModules({ClientModule.class})
+@GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
-  EventBus getEventBus();
-  PlaceManager getPlaceManager();
+	EventBus getEventBus();
 
-  Provider<MainPagePresenter> getMainPagePresenter();
+	PlaceManager getPlaceManager();
 
-  AsyncProvider<HomePresenter> getHomePresenter();
-  AsyncProvider<ProfilPresenter> getProfilPresenter();  
-  AsyncProvider<SeminarHomePresenter> getSeminarHomePresenter();
-  AsyncProvider<SeminaryEditPresenter> getSeminaryEditPresenter();
-  AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();
+	Provider<MainPagePresenter> getMainPagePresenter();
+
+	AsyncProvider<HomePresenter> getHomePresenter();
+
+	AsyncProvider<ProfilPresenter> getProfilPresenter();
+
+	AsyncProvider<SeminarHomePresenter> getSeminarHomePresenter();
+
+	AsyncProvider<SeminaryEditPresenter> getSeminaryEditPresenter();
+
+	AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();
 }

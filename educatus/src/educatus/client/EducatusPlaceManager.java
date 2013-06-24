@@ -16,12 +16,11 @@
 
 package educatus.client;
 
+import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManagerImpl;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
-
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.inject.Inject;
 
 import educatus.client.gin.DefaultPlace;
 
@@ -29,17 +28,18 @@ import educatus.client.gin.DefaultPlace;
  * @author Christian Goudreau
  */
 public class EducatusPlaceManager extends PlaceManagerImpl {
-  private final PlaceRequest defaultPlaceRequest;
+	private final PlaceRequest defaultPlaceRequest;
 
-@Inject
-  public EducatusPlaceManager(final EventBus eventBus,
-      final TokenFormatter tokenFormatter, @DefaultPlace String defaultNameToken) {
-    super(eventBus, tokenFormatter);
+	@Inject
+	public EducatusPlaceManager(final EventBus eventBus,
+			final TokenFormatter tokenFormatter,
+			@DefaultPlace String defaultNameToken) {
+		super(eventBus, tokenFormatter);
 
-    this.defaultPlaceRequest = new PlaceRequest(NameTokens.getHomePage());
-  }
+		this.defaultPlaceRequest = new PlaceRequest(NameTokens.getHomePage());
+	}
 
-  public void revealDefaultPlace() {
-    revealPlace(defaultPlaceRequest);
-  }
+	public void revealDefaultPlace() {
+		revealPlace(defaultPlaceRequest);
+	}
 }
