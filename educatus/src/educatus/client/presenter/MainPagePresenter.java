@@ -42,6 +42,8 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.LockInteractionEvent;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
@@ -121,6 +123,31 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			ResetPresentersEvent.fire(MainPagePresenter.this);
 		}
 	}
+	
+	private class LogoutButtonClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			getView().getMainMenu().getLogInProfilUi().setVisible(false);
+			getView().getMainMenu().getLogInUi().setVisible(true);			
+		}
+	}
+	
+	private class AdminModeButtonClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO, Move to ADMIN mode
+		}
+	}
+	
+	private class ViewProfileButtonClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			placeManager.revealPlace(new PlaceRequest(NameTokens.getProfil()));			
+		}
+	}
 
 	/**
 	 * Use this in leaf presenters, inside their {@link #revealInParent} method.
@@ -129,15 +156,18 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 
 	@Inject
-	public MainPagePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
+	public MainPagePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager) {
 		super(eventBus, view, proxy);
+		this.placeManager = placeManager;
 	}
 
 	@Inject
 	private EducatusLocale locale;
 
-	private MainPageContentRequest request = new MainPageContentRequest();
+	private PlaceManager placeManager;
 
+	private MainPageContentRequest request = new MainPageContentRequest();
+	
 	@Override
 	protected void revealInParent() {
 		RevealRootContentEvent.fire(this, this);
@@ -170,14 +200,10 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			}
 		});
 
-		getView().getMainMenu().getLogInProfilUi().getLogOutLink().addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				getView().getMainMenu().getLogInProfilUi().setVisible(false);
-				getView().getMainMenu().getLogInUi().setVisible(true);
-			}
-		});
+		// Set click handlers for LogInProfilUi
+		getView().getMainMenu().getLogInProfilUi().getLogOutLink().addClickHandler(new LogoutButtonClickHandler());
+		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonHandler(new AdminModeButtonClickHandler());
+		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setProfilButtonHandler(new ViewProfileButtonClickHandler());
 
 		getView().getMainMenu().getLogInProfilUi().setVisible(false);
 		getView().getHeaderPanel().add(getView().getMainMenu());

@@ -131,7 +131,12 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		LoginResponse response = new LoginResponse();
 		
 		// TODO, check password with database
-		boolean passwordValid = true;
+		String providedPassword = request.getPassword();
+
+		boolean passwordValid = false;
+		if (providedPassword.equalsIgnoreCase("ADMIN")){
+			passwordValid = true;
+		}
 		
 		if (passwordValid) {
 			// Login successfull, generate sessionID
