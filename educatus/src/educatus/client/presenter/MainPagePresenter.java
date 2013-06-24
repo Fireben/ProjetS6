@@ -334,7 +334,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
 
 		// Add a confirm button at the bottom of the dialog
-		Button closeButton = new Button("Ok", new ClickHandler() {
+		Button confirmButton = new Button("Ok", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
 				LoginRequest loginRequest = new LoginRequest();
@@ -385,13 +385,13 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				});
 			}
 		});
-		closeButton.setStyleName("backButton", true);
-		dialogContents.add(closeButton);
+		confirmButton.setStyleName("backButton", true);
+		dialogContents.add(confirmButton);
 		if (LocaleInfo.getCurrentLocale().isRTL()) {
-			dialogContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_LEFT);
+			dialogContents.setCellHorizontalAlignment(confirmButton, HasHorizontalAlignment.ALIGN_LEFT);
 
 		} else {
-			dialogContents.setCellHorizontalAlignment(closeButton, HasHorizontalAlignment.ALIGN_RIGHT);
+			dialogContents.setCellHorizontalAlignment(confirmButton, HasHorizontalAlignment.ALIGN_RIGHT);
 		}
 
 		// Return the dialog box
