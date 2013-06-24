@@ -32,6 +32,7 @@ import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.RequestTypeEnum;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;
+import educatus.shared.services.requestservice.request.LoginRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryEditorContentRequest;
@@ -39,6 +40,8 @@ import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryC
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.UserProfilContentRequest;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
+import educatus.shared.services.requestservice.response.LoginResponse;
+import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryEditorContentResponse;
@@ -84,9 +87,15 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 
 		AbstractResponse response = null;
 		RequestTypeEnum requestType = request.GetRequestType();
+		String sessionID = request.getSessionID();
+		
+		System.out.println("SESSION ID : " + sessionID);
 
 		try {
 			switch (requestType) {
+			case LOGIN_REQUEST:
+				response = ProcessLoginRequest((LoginRequest) request);			
+				break;
 			case HOME_PAGE_CONTENT_REQUEST:
 				response = ProcessHomePageContentRequest((HomePageContentRequest) request);
 				break;
@@ -115,6 +124,25 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			e.printStackTrace();
 		}
 
+		return response;
+	}
+
+	private LoginResponse ProcessLoginRequest(LoginRequest request) {
+		LoginResponse response = new LoginResponse();
+		
+		// TODO, check password with database
+		boolean passwordValid = true;
+		
+		if (passwordValid) {
+			// Login successfull, generate sessionID
+			// TODO, store sessionID on server-side too
+			String generatedSessionID = "SAUCE";
+			response.setLoginStatus(LoginStatus.SUCCESS);
+			response.setSessionID(generatedSessionID);
+		} else {			
+			response.setLoginStatus(LoginStatus.FAILURE);
+		}
+		
 		return response;
 	}
 

@@ -16,11 +16,14 @@
 
 package educatus.client.presenter;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.i18n.client.LocaleInfo;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -57,7 +60,10 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.LoginRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
+import educatus.shared.services.requestservice.response.LoginResponse;
+import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 
 /**
@@ -284,7 +290,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(userName, HasHorizontalAlignment.ALIGN_LEFT);
 
 		// Add an box to the dialog
-		TextBox boxUserName = new TextBox();
+		final TextBox boxUserName = new TextBox();
 		boxUserName.setStyleName("logInBox", true);
 		dialogContents.add(boxUserName);
 		dialogContents.setCellHorizontalAlignment(boxUserName, HasHorizontalAlignment.ALIGN_CENTER);
@@ -295,18 +301,62 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(password, HasHorizontalAlignment.ALIGN_LEFT);
 
 		// Add an box to the dialog
-		PasswordTextBox boxPassword = new PasswordTextBox();
+		final PasswordTextBox boxPassword = new PasswordTextBox();
 		boxPassword.setStyleName("boxPassword", true);
 		boxPassword.setStyleName("logInBox", true);
 		dialogContents.add(boxPassword);
 		dialogContents.setCellHorizontalAlignment(boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
 
-		// Add a close button at the bottom of the dialog
+		// Add a confirm button at the bottom of the dialog
 		Button closeButton = new Button("Ok", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				dialogBox.hide();
-				getView().getMainMenu().getLogInUi().setVisible(false);
-				getView().getMainMenu().getLogInProfilUi().setVisible(true);
+				
+				LoginRequest loginRequest = new LoginRequest();
+				loginRequest.setUserName(boxUserName.getText());
+				loginRequest.setPassword(boxPassword.getText());
+				loginRequest.setSessionID(Cookies.getCookie("SessionID"));
+				requestService.sendRequest(loginRequest, new AsyncCallback<AbstractResponse>() {
+					
+					@Override
+					public void onSuccess(AbstractResponse result) {
+						
+						if (result.GetResponseType() == ResponseTypeEnum.LOGIN_RESPONSE){
+							LoginResponse response = (LoginResponse) result;
+							
+							if (response.getLoginStatus() == LoginStatus.SUCCESS){
+								// Login Sucessfull								
+								String sessionID = response.getSessionID();
+								
+								// Remember 30 minutes
+								Date expiration = new Date(System.currentTimeMillis() + 1000 * 60 * 30);								
+								// Set the sessionID cookie
+								Cookies.setCookie("SessionID", sessionID, expiration);
+								
+								dialogBox.hide();
+								getView().getMainMenu().getLogInUi().setVisible(false);
+								getView().getMainMenu().getLogInProfilUi().setVisible(true);
+								
+							} else  {
+								// Login not sucessfull, display error text in login dialog
+							}
+							
+						} else {
+							// Wrong response type, hide box, don't display LogInProfilUi
+							dialogBox.hide();
+							getView().getMainMenu().getLogInUi().setVisible(true);
+							getView().getMainMenu().getLogInProfilUi().setVisible(false);
+						}						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// On failure, hide box, don't display LogInProfilUi
+						dialogBox.hide();
+						getView().getMainMenu().getLogInUi().setVisible(true);
+						getView().getMainMenu().getLogInProfilUi().setVisible(false);
+						
+					}
+				});
 			}
 		});
 		closeButton.setStyleName("backButton", true);

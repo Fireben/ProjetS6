@@ -1,6 +1,8 @@
 package educatus.shared.services.requestservice;
 
 public enum ResponseTypeEnum {
+	LOGIN_RESPONSE,
+	
 	MAIN_PAGE_CONTENT_RESPONSE,
 	HOME_PAGE_CONTENT_RESPONSE,
 	

@@ -1,6 +1,8 @@
 package educatus.shared.services.requestservice;
 
 public enum RequestTypeEnum {
+	LOGIN_REQUEST,
+	
 	MAIN_PAGE_CONTENT_REQUEST,
 	HOME_PAGE_CONTENT_REQUEST,
 	
