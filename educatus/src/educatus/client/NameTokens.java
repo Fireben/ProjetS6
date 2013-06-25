@@ -40,6 +40,7 @@ public class NameTokens
 	public static final String seminaryEdit = "!seminaryEdit";
 	public static final String seminarHomePage = "!seminarHomePage";
 	public static final String viewSeminary = "!viewSeminary";
+	public static final String categoryAdministration = "!categoryAdministration";
 
 	public static String getHomePage()
 	{
@@ -64,5 +65,10 @@ public class NameTokens
 	public static String getViewSeminary()
 	{
 		return viewSeminary;
+	}
+	
+	public static String getCategoryAdministration()
+	{
+		return categoryAdministration;
 	}
 }

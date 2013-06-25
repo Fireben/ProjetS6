@@ -129,6 +129,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 		@Override
 		public void onClick(ClickEvent event) {
+			placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));	
 			getView().getMainMenu().getLogInProfilUi().setVisible(false);
 			getView().getMainMenu().getLogInUi().setVisible(true);			
 		}
@@ -295,6 +296,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				break;
 			case CREATE_SEMINAR_ITEM:
 				nameToken = NameTokens.getSeminaryEdit();
+				break;
+			case CATEGORY_ADMINISTRATION_ITEM:
+				nameToken = NameTokens.getCategoryAdministration();
 				break;
 			// Default Token leads to HomePage
 			default:

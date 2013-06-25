@@ -32,6 +32,7 @@ import educatus.client.presenter.SeminaryEditPresenter;
 import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
 import educatus.client.presenter.TextEditPresenter;
+import educatus.client.view.CategoryAdministrationView;
 import educatus.client.view.CategoryView;
 import educatus.client.view.ConfirmChangesView;
 import educatus.client.view.HomeView;
@@ -43,6 +44,7 @@ import educatus.client.view.SeminaryEditView;
 import educatus.client.view.SeminaryListView;
 import educatus.client.view.SeminaryViewView;
 import educatus.client.view.TextEditView;
+import educatus.client.presenter.CategoryAdministrationPresenter;
 
 /**
  * @author Christian Goudreau
@@ -93,5 +95,10 @@ public class ClientModule extends AbstractPresenterModule {
 		
 		bindPresenterWidget(ImageUploadPresenter.class,
 				ImageUploadPresenter.MyView.class, ImageUploadView.class);
-	}
+	
+		bindPresenter(CategoryAdministrationPresenter.class,
+				CategoryAdministrationPresenter.MyView.class,
+				CategoryAdministrationView.class,
+				CategoryAdministrationPresenter.MyProxy.class);
+}
 }

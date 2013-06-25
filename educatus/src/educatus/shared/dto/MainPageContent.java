@@ -21,7 +21,8 @@ public class MainPageContent implements Serializable {
 			SEMINARS_HOME_ITEM, 
 			PROFILE_ITEM,
 			EXCERCICE_ITEM, 
-			CREATE_SEMINAR_ITEM
+			CREATE_SEMINAR_ITEM,
+			CATEGORY_ADMINISTRATION_ITEM
 		}
 
 		public static class MainMenuItemContent implements Serializable {

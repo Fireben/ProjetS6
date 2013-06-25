@@ -29,6 +29,7 @@ import educatus.client.presenter.ProfilPresenter;
 import educatus.client.presenter.SeminarHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
+import educatus.client.presenter.CategoryAdministrationPresenter;
 
 /**
  * @author Christian Goudreau
@@ -50,4 +51,6 @@ public interface ClientGinjector extends Ginjector {
 	AsyncProvider<SeminaryEditPresenter> getSeminaryEditPresenter();
 
 	AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();
+
+	AsyncProvider<CategoryAdministrationPresenter> getCategoryAdministrationPresenter();
 }
