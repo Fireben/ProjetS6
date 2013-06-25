@@ -39,6 +39,7 @@ public class DropDown extends Composite implements ClickHandler {
 
 	private PushButton userImage;
 	private PushButton arrow;
+	private String adminButtonText = "Admin";
 
 	public DropDown() {
 
@@ -110,7 +111,8 @@ public class DropDown extends Composite implements ClickHandler {
 				HasHorizontalAlignment.ALIGN_RIGHT);
 
 		// Add a admin button at the bottom of the dialog
-		Button adminButton = new Button("Admin", new ClickHandler() {
+		// HACK, refactorer le dropdown, on expose l'admin button pour changer le texte à partir du MainPagePresenter
+		Button adminButton = new Button(adminButtonText, new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (adminButtonHandler != null) {
 					adminButtonHandler.onClick(event);					
@@ -141,5 +143,9 @@ public class DropDown extends Composite implements ClickHandler {
 
 	public void setProfilButtonHandler(ClickHandler profilButtonHandler) {
 		this.profilButtonHandler = profilButtonHandler;
+	}
+	
+	public void setAdminButtonText(String text) {
+		adminButtonText = text;
 	}
 }

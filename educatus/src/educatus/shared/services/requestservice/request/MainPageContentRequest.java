@@ -10,7 +10,7 @@ public class MainPageContentRequest extends AbstractRequest {
 
 	private String language = null;
 	private String culture = null;
-	private ViewModeEnum viewMode = ViewModeEnum.GUEST;
+	private ViewModeEnum viewMode = ViewModeEnum.USER;
 
 	@Override
 	public RequestTypeEnum GetRequestType() {

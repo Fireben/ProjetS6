@@ -58,6 +58,7 @@ import educatus.client.ui.MainMenu;
 import educatus.shared.dto.MainPageContent;
 import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemContent;
 import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemEnum;
+import educatus.shared.dto.ViewModeEnum;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -137,7 +138,14 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO, Move to ADMIN mode
+			// Comportement d'un toggle button ?
+			if (request.getViewMode() == ViewModeEnum.ADMIN){
+				request.setViewMode(ViewModeEnum.USER);
+				requestService.sendRequest(request, requestHandler);
+			} else {
+				request.setViewMode(ViewModeEnum.ADMIN);
+				requestService.sendRequest(request, requestHandler);
+			}
 		}
 	}
 	
@@ -146,6 +154,31 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		@Override
 		public void onClick(ClickEvent event) {
 			placeManager.revealPlace(new PlaceRequest(NameTokens.getProfil()));			
+		}
+	}
+	
+	private class AbstractRequestHandler implements AsyncCallback<AbstractResponse> {
+
+		@Override
+		public void onSuccess(AbstractResponse result) {
+			if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
+				MainPageContentResponse response = (MainPageContentResponse) result;						
+				fillPageWithContent(response.getMainPageContent());
+				
+				if (response.getViewMode() == ViewModeEnum.ADMIN) {
+					placeManager.revealPlace(new PlaceRequest(NameTokens.getSeminaryEdit()));
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("User");
+				} else {
+					placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("Admin");
+				}
+			}
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
 		}
 	}
 
@@ -167,6 +200,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	private PlaceManager placeManager;
 
 	private MainPageContentRequest request = new MainPageContentRequest();
+	
+	private AbstractRequestHandler requestHandler = new AbstractRequestHandler();
 	
 	@Override
 	protected void revealInParent() {
@@ -226,22 +261,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		if (request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage()) {
 			request.setCulture(locale.getCulture());
 			request.setLanguage(locale.getLanguage());
-			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
-
-				@Override
-				public void onSuccess(AbstractResponse result) {
-					if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
-						MainPageContentResponse response = (MainPageContentResponse) result;						
-						fillPageWithContent(response.getMainPageContent());
-					}
-				}
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-
-				}
-			});
+			requestService.sendRequest(request, requestHandler);
 		}
 	}
 	

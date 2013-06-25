@@ -184,10 +184,12 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private MainPageContentResponse ProcessMainMenuContentRequest(MainPageContentRequest request) {
-		MainPageContent content = mainPageContentBuilder.buildMainPageContent(request.getCulture(), request.getLanguage());
+		// TODO, validate if requested view mode is allowed
+		MainPageContent content = mainPageContentBuilder.buildMainPageContent(request.getCulture(), request.getLanguage(), request.getViewMode());
 
 		MainPageContentResponse response = new MainPageContentResponse();
 		response.setMainPageContent(content);
+		response.setViewMode(request.getViewMode());
 
 		return response;
 	}
