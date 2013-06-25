@@ -138,12 +138,16 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			passwordValid = true;
 		}
 		
-		if (passwordValid) {
+		String userName = request.getUserName();
+		UserProfilContent user = userProfilBuilder.buildUserProfilContent(userName);
+		
+		if (passwordValid && user != null) {
 			// Login successfull, generate sessionID
 			// TODO, store sessionID on server-side too
 			String generatedSessionID = "SAUCE";
 			response.setLoginStatus(LoginStatus.SUCCESS);
 			response.setSessionID(generatedSessionID);
+			response.setUserCoreContent(user.getUserCoreContent());
 		} else {			
 			response.setLoginStatus(LoginStatus.FAILURE);
 		}

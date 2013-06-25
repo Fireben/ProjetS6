@@ -58,6 +58,7 @@ import educatus.client.ui.MainMenu;
 import educatus.shared.dto.MainPageContent;
 import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemContent;
 import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemEnum;
+import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.ViewModeEnum;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
@@ -398,10 +399,18 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 								// Set the sessionID cookie
 								Cookies.setCookie("SessionID", sessionID, expiration);
 								
-								dialogBox.hide();
+								// User data
+								UserCoreContent userCoreContent = response.getUserCoreContent();
+								
+								getView().getMainMenu().getLogInProfilUi().getLogInName().setText(
+										userCoreContent.getFirstName() + " " + 
+										userCoreContent.getLastName()
+								);
+								
 								// Display the logged in profil Ui
 								displayLoginProfilUi();
 								
+								dialogBox.hide();								
 							} else  {
 								// Login not sucessfull, display error text in login dialog
 							}
