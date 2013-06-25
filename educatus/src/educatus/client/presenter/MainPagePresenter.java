@@ -130,6 +130,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		@Override
 		public void onClick(ClickEvent event) {
 			if (request.getViewMode() == ViewModeEnum.ADMIN || placeManager.getCurrentPlaceRequest().getNameToken() == NameTokens.getProfil()){
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
 				requestView(ViewModeEnum.USER);
 			}		
 			// Display the login Ui in the MainMenu
@@ -143,8 +144,10 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		public void onClick(ClickEvent event) {
 			// Comportement d'un toggle button ?
 			if (request.getViewMode() == ViewModeEnum.ADMIN){
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
 				requestView(ViewModeEnum.USER);
 			} else {
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getSeminaryEdit()));
 				requestView(ViewModeEnum.ADMIN);
 			}
 		}
@@ -167,10 +170,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				fillPageWithContent(response.getMainPageContent());
 				
 				if (response.getViewMode() == ViewModeEnum.ADMIN) {
-					placeManager.revealPlace(new PlaceRequest(NameTokens.getSeminaryEdit()));
 					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("User");
 				} else {
-					placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
 					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("Admin");
 				}
 			}
