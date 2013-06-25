@@ -129,9 +129,11 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 		@Override
 		public void onClick(ClickEvent event) {
-			placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));	
-			getView().getMainMenu().getLogInProfilUi().setVisible(false);
-			getView().getMainMenu().getLogInUi().setVisible(true);			
+			if (request.getViewMode() == ViewModeEnum.ADMIN || placeManager.getCurrentPlaceRequest().getNameToken() == NameTokens.getProfil()){
+				requestView(ViewModeEnum.USER);
+			}		
+			// Display the login Ui in the MainMenu
+			displayLoginUi();		
 		}
 	}
 	
@@ -141,11 +143,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		public void onClick(ClickEvent event) {
 			// Comportement d'un toggle button ?
 			if (request.getViewMode() == ViewModeEnum.ADMIN){
-				request.setViewMode(ViewModeEnum.USER);
-				requestService.sendRequest(request, requestHandler);
+				requestView(ViewModeEnum.USER);
 			} else {
-				request.setViewMode(ViewModeEnum.ADMIN);
-				requestService.sendRequest(request, requestHandler);
+				requestView(ViewModeEnum.ADMIN);
 			}
 		}
 	}
@@ -179,7 +179,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-
 		}
 	}
 
@@ -241,7 +240,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonHandler(new AdminModeButtonClickHandler());
 		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setProfilButtonHandler(new ViewProfileButtonClickHandler());
 
-		getView().getMainMenu().getLogInProfilUi().setVisible(false);
+		// Default -> display Login
+		displayLoginUi();
 		getView().getHeaderPanel().add(getView().getMainMenu());
 
 		getView().getFooterPanel().getEnglishButton().addClickHandler(new TranslateClickHandler("CA", "en"));
@@ -264,6 +264,21 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			request.setLanguage(locale.getLanguage());
 			requestService.sendRequest(request, requestHandler);
 		}
+	}
+	
+	private void requestView(ViewModeEnum viewMode) {
+		request.setViewMode(viewMode);
+		requestService.sendRequest(request, requestHandler);
+	}
+	
+	private void displayLoginUi(){
+		getView().getMainMenu().getLogInProfilUi().setVisible(false);
+		getView().getMainMenu().getLogInUi().setVisible(true);	
+	}
+	
+	private void displayLoginProfilUi(){
+		getView().getMainMenu().getLogInProfilUi().setVisible(true);
+		getView().getMainMenu().getLogInUi().setVisible(false);	
 	}
 	
 	private void fillPageWithContent(MainPageContent content){
@@ -383,8 +398,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 								Cookies.setCookie("SessionID", sessionID, expiration);
 								
 								dialogBox.hide();
-								getView().getMainMenu().getLogInUi().setVisible(false);
-								getView().getMainMenu().getLogInProfilUi().setVisible(true);
+								// Display the logged in profil Ui
+								displayLoginProfilUi();
 								
 							} else  {
 								// Login not sucessfull, display error text in login dialog
@@ -393,18 +408,13 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 						} else {
 							// Wrong response type, hide box, don't display LogInProfilUi
 							dialogBox.hide();
-							getView().getMainMenu().getLogInUi().setVisible(true);
-							getView().getMainMenu().getLogInProfilUi().setVisible(false);
 						}						
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
 						// On failure, hide box, don't display LogInProfilUi
-						dialogBox.hide();
-						getView().getMainMenu().getLogInUi().setVisible(true);
-						getView().getMainMenu().getLogInProfilUi().setVisible(false);
-						
+						dialogBox.hide();						
 					}
 				});
 			}
