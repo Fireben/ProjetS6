@@ -7,7 +7,8 @@ import educatus.shared.services.requestservice.ResponseTypeEnum;
 public class LoginResponse extends AbstractResponse {
 
 	public static enum LoginStatus {
-		SUCCESS, FAILURE
+		SUCCESS,
+		FAILURE
 	}
 
 	private static final long serialVersionUID = -1783165567804879562L;
@@ -16,7 +17,7 @@ public class LoginResponse extends AbstractResponse {
 	private String sessionID;
 	private LoginStatus loginStatus = LoginStatus.FAILURE;
 	private UserCoreContent userCoreContent = null;
-	
+
 	@Override
 	public ResponseTypeEnum GetResponseType() {
 		return ResponseTypeEnum.LOGIN_RESPONSE;

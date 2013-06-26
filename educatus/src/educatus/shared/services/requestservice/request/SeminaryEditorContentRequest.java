@@ -6,10 +6,10 @@ import educatus.shared.services.requestservice.RequestTypeEnum;
 public class SeminaryEditorContentRequest extends AbstractRequest {
 
 	private static final long serialVersionUID = 8608209058559071854L;
-	
+
 	private String language;
 	private String culture;
-	
+
 	@Override
 	public RequestTypeEnum GetRequestType() {
 		return RequestTypeEnum.SEMINARY_EDITOR_CONTENT_REQUEST;

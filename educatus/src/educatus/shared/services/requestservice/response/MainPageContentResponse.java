@@ -8,14 +8,13 @@ import educatus.shared.services.requestservice.ResponseTypeEnum;
 public class MainPageContentResponse extends AbstractResponse {
 
 	private static final long serialVersionUID = 9074719652068698255L;
-	private static ResponseTypeEnum RESPONSE_TYPE = ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE;
 
 	private ViewModeEnum viewMode;
 	private MainPageContent mainPageContent;
 
 	@Override
 	public ResponseTypeEnum GetResponseType() {
-		return RESPONSE_TYPE;
+		return ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE;
 	}
 
 	public MainPageContent getMainPageContent() {
