@@ -3,7 +3,8 @@ package educatus.client.presenter;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
@@ -20,8 +21,9 @@ public class SeminaryListPresenter extends
 	private final static int MIN_ELEMENTS = 12;
 	
 	public interface MyView extends View {
-		DataGrid<Seminary> getDataGrid();
+		CellTable<Seminary> getDataGrid();
 		Button getBackButton();
+		SimplePager getPager();
 	}
 
 	@Inject
@@ -50,9 +52,9 @@ public class SeminaryListPresenter extends
 				seminaries.add(new Seminary(-1, null, null, null, null, -1));
 			}
 		}
-		DataGrid<Seminary> dataGrid = getView().getDataGrid();	
+		CellTable<Seminary> dataGrid = getView().getDataGrid();	
 		ListDataProvider<Seminary> dataProvider = new ListDataProvider<Seminary>();
 		dataProvider.addDataDisplay(dataGrid);
-		dataProvider.setList(seminaries);		
+		dataProvider.setList(seminaries);	
 	}
 }

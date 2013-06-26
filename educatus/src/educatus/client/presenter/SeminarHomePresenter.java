@@ -29,10 +29,13 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
+import educatus.client.EducatusPlaceManager;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
@@ -56,6 +59,9 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     /**
      * {@link SeminarHomePresenter}'s proxy.
      */
+	
+	private PlaceManager placeManager; 
+	
     @ProxyCodeSplit
     @NameToken(NameTokens.seminarHomePage)
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
@@ -86,8 +92,9 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     }
 
     @Inject
-    public SeminarHomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
+    public SeminarHomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager) {
       super(eventBus, view, proxy);
+      this.placeManager = placeManager;
     }
 
   	@Override
@@ -110,6 +117,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	
 	@Override
 	protected void onReveal() {  	
+		setInSlot(SLOT_content, null);
 		seminarCategoryPresenter.clear(); 
 		createAndSendCategoryRequest(null);
 	}

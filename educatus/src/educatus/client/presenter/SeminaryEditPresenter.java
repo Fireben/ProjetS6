@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
@@ -151,7 +150,7 @@ public class SeminaryEditPresenter extends
 	
 	public void submitSeminary() {
 		List<AbstractDynamicSection> dynamicSectionList = new ArrayList<AbstractDynamicSection>();
-		List<DynamicSectionTextContent> dynamicSectionTextContents = getTextContents();
+		//List<DynamicSectionTextContent> dynamicSectionTextContents = getTextContents();
 		SeminaryContent seminaryContent= new SeminaryContent();
 		seminaryContent.setDynamicSectionList(dynamicSectionList);
 	}

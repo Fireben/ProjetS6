@@ -1,9 +1,9 @@
 package educatus.resources;
-import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.CellTable;
 
-public interface SeminaryDataGridCssRessource extends DataGrid.Resources {
-@Source({DataGrid.Style.DEFAULT_CSS, "seminaryDataGrid.css"})
-DataGridStyle dataGridStyle();
+public interface SeminaryDataGridCssRessource extends CellTable.Resources {
+@Source({CellTable.Style.DEFAULT_CSS, "seminaryDataGrid.css"})
+CellTableStyle cellTableStyle();
  
-interface DataGridStyle extends DataGrid.Style {}
+interface CellTableStyle extends CellTable.Style {}
 }

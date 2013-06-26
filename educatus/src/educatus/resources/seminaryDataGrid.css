@@ -1,13 +1,29 @@
-@external .dataGrid*;
-.dataGridFirstColumn {
+@external .cellTable*;
+@external .disabledButton;
+@external .button;
+@external .pageDetails;
+
+.disabledButton {
+	display: none;
+}
+
+.button {
+	cursor: pointer;
+}
+
+.pageDetails {
+	display: none;
+}
+
+.cellTableFirstColumn {
   
 }
 
-.dataGridLastColumn {
+.cellTableLastColumn {
   
 }
 
-.dataGridFooter {
+.cellTableFooter {
 	padding: 0;
 	color: rgb(95, 221, 216);
 	text-align: center;
@@ -19,17 +35,17 @@
 	text-shadow: none;
 }
 
-.dataGridFirstColumnHeader {
+.cellTableFirstColumnHeader {
 	-moz-border-radius-topleft: 5px;
 	-webkit-border-top-left-radius: 5px;
 }
 
-.dataGridLastColumnHeader {
+.cellTableLastColumnHeader {
 	-moz-border-radius-topright: 5px;
 	-webkit-border-top-right-radius: 5px;
 }
 
-.dataGridHeader {
+.cellTableHeader {
 	padding: 0;
 	color: rgb(95, 221, 216);
 	text-align: center;
@@ -42,86 +58,88 @@
 	text-shadow: none;
 }
 
-.dataGridCell {
+.cellTableCell {
     padding: 2px 15px;
     overflow: hidden;
 	color:rgb(228, 228, 228);
 }
 
-.dataGridFirstColumnFooter {
+.cellTableFirstColumnFooter {
 	-moz-border-radius-bottomleft: 5px;
 	-webkit-border-bottom-left-radius: 5px;
 }
 
-.dataGridLastColumnFooter {
+.cellTableLastColumnFooter {
   	-moz-border-radius-bottomright: 5px;
 	-webkit-border-bottom-right-radius: 5px;
 }
 
-.dataGridSortableHeader {
+.cellTableSortableHeader {
 	cursor: pointer;
 	cursor: hand;
 }
 
-.dataGridSortableHeader:hover {
+.cellTableSortableHeader:hover {
 	color: #6c6b6b;
 }
 
-.dataGridSortedHeaderAscending {
+.cellTableSortedHeaderAscending {
   
 }
 
-.dataGridSortedHeaderDescending {
+.cellTableSortedHeaderDescending {
   
 }
 
-.dataGridEvenRow {
+.cellTableEvenRow {
 	background: rgb(90, 90, 90);
 	height:28px;
 }
 
-.dataGridEvenRowCell {
+.cellTableEvenRowCell {
 	border: none;
 }
 
-.dataGridOddRow {
+.cellTableOddRow {
 	background: #313131;
 	height:28px;
 }
 
-.dataGridOddRowCell {
+.cellTableOddRowCell {
 	border: none;
 }
 
-.dataGridHoveredRow {
+.cellTableHoveredRow {
 }
 
-.dataGridHoveredRowCell {
+.cellTableHoveredRowCell {
 	border: none;
 }
 
-.dataGridKeyboardSelectedRow {
+.cellTableKeyboardSelectedRow {
 }
 
-.dataGridKeyboardSelectedRowCell {
+.cellTableKeyboardSelectedRowCell {
 	border: none;
 }
 
-.dataGridSelectedRow {
+.cellTableSelectedRow {
 }
 
-.dataGridSelectedRowCell {
+.cellTableSelectedRowCell {
 	border: none;
 }
 
 /**
  * The keyboard selected cell is visible over selection.
  */
-.dataGridKeyboardSelectedCell {
+.cellTableKeyboardSelectedCell {
 	border: none;
 }
 
-.dataGridHyperlink>a {
+.cellTableHyperlink>a {
 	color:rgb(228, 228, 228);
 	text-decoration : none;
 }
+
+ 

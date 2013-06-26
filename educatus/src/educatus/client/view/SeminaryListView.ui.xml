@@ -9,7 +9,8 @@
 
 	<g:HTMLPanel height= "100%">
 	    <div class="dataGridParent" height= "100%">		
-	    	 <c:DataGrid ui:field='dataGrid' />	
+	    	 <c:CellTable ui:field='dataGrid' />	
+	    	 <c:SimplePager ui:field='pager' />
 	    	 <br/>
 	    	 <g:Button ui:field='backButton'>
 	    	     Back

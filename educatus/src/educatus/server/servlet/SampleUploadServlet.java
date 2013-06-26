@@ -51,12 +51,12 @@ public class SampleUploadServlet extends UploadAction {
 			}
 		}
 
-		// / Remove files from session because we have a copy of them
+		// / Remove files from session because we have a copy of the
 		removeSessionFileItems(request);
 		
 
-		// / Send your customized message to the client.
-		return "allo";
+		//Send your customized message to the client.
+		return "";
 	}
 
 	/**

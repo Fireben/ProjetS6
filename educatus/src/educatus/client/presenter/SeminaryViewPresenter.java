@@ -40,6 +40,7 @@ public class SeminaryViewPresenter extends
 	public interface MyView extends View {
 		public FlowPanel getDescriptionContainer();
 		public FlowPanel getDynamicSectionContainer();
+		public FlowPanel getSeminaryContainer();
 		public Label getTitleLabel();
 	}
 
@@ -123,6 +124,9 @@ public class SeminaryViewPresenter extends
 			}
 			dynamicSectionContainer.add(new HTML("<br/>"));
 		}
+		
+		getView().getSeminaryContainer().setVisible(true);
+		descriptionContainer.setVisible(true);
 	}
 
 	private void addImageSection(String imageUrl) {
