@@ -1,7 +1,6 @@
 package educatus.shared.dto.user;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class UserCoreContent implements Serializable {
 
@@ -12,8 +11,8 @@ public class UserCoreContent implements Serializable {
 	private String lastName;
 	private String email;
 	
-	private Date joinedDate;
-	private Date lastConnexion;
+	private String joinedDate;
+	private String lastConnexion;
 	
 	private Boolean privacyEnabled;
 	
@@ -49,19 +48,19 @@ public class UserCoreContent implements Serializable {
 		this.email = email;
 	}
 
-	public Date getJoinedDate() {
+	public String getJoinedDate() {
 		return joinedDate;
 	}
 
-	public void setJoinedDate(Date joinedDate) {
+	public void setJoinedDate(String joinedDate) {
 		this.joinedDate = joinedDate;
 	}
 
-	public Date getLastConnexion() {
+	public String getLastConnexion() {
 		return lastConnexion;
 	}
 
-	public void setLastConnexion(Date lastConnexion) {
+	public void setLastConnexion(String lastConnexion) {
 		this.lastConnexion = lastConnexion;
 	}
 

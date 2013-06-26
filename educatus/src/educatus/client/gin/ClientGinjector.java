@@ -29,20 +29,28 @@ import educatus.client.presenter.ProfilPresenter;
 import educatus.client.presenter.SeminarHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
+import educatus.client.presenter.CategoryAdministrationPresenter;
 
 /**
  * @author Christian Goudreau
  */
-@GinModules({ClientModule.class})
+@GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
-  EventBus getEventBus();
-  PlaceManager getPlaceManager();
+	EventBus getEventBus();
 
-  Provider<MainPagePresenter> getMainPagePresenter();
+	PlaceManager getPlaceManager();
 
-  AsyncProvider<HomePresenter> getHomePresenter();
-  AsyncProvider<ProfilPresenter> getProfilPresenter();  
-  AsyncProvider<SeminarHomePresenter> getSeminarHomePresenter();
-  AsyncProvider<SeminaryEditPresenter> getSeminaryEditPresenter();
-  AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();
+	Provider<MainPagePresenter> getMainPagePresenter();
+
+	AsyncProvider<HomePresenter> getHomePresenter();
+
+	AsyncProvider<ProfilPresenter> getProfilPresenter();
+
+	AsyncProvider<SeminarHomePresenter> getSeminarHomePresenter();
+
+	AsyncProvider<SeminaryEditPresenter> getSeminaryEditPresenter();
+
+	AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();
+
+	AsyncProvider<CategoryAdministrationPresenter> getCategoryAdministrationPresenter();
 }

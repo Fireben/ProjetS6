@@ -30,18 +30,19 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DropDown extends Composite implements ClickHandler
-{
-	interface DropDownUiBinder extends UiBinder<Widget, DropDown>
-	{
+public class DropDown extends Composite implements ClickHandler {
+	interface DropDownUiBinder extends UiBinder<Widget, DropDown> {
 	}
 
-    private PushButton userImage;
-    private PushButton arrow;
+	private ClickHandler adminButtonHandler;
+	private ClickHandler profilButtonHandler;
 
+	private PushButton userImage;
+	private PushButton arrow;
+	private String adminButtonText = "Admin";
 
-	public DropDown()
-	{
+	public DropDown() {
+
 		Image img = new Image("images/user_128.png");
 		Image imgArrow = new Image("images/arrow_down.png");
 		img.setPixelSize(32, 32);
@@ -55,71 +56,96 @@ public class DropDown extends Composite implements ClickHandler
 		userImage.removeStyleName("gwt-PushButton");
 		arrow.removeStyleName("gwt-PushButton");
 
-        HorizontalPanel panel = new HorizontalPanel();
-        panel.setStyleName("logInProfilImg", true);
-        panel.add(userImage);
-        panel.add(arrow);
+		HorizontalPanel panel = new HorizontalPanel();
+		panel.setStyleName("logInProfilImg", true);
+		panel.add(userImage);
+		panel.add(arrow);
 
-
-        // All composites must call initWidget() in their constructors.
-        initWidget(panel);
-		//initWidget(uiBinder.createAndBindUi(this));
+		// All composites must call initWidget() in their constructors.
+		initWidget(panel);
+		// initWidget(uiBinder.createAndBindUi(this));
 	}
-	
+
 	@Override
-    public void onClick(ClickEvent event) {
-		final DialogBox dialogBox = createDialogBox();
-	    dialogBox.setGlassEnabled(false);
-	    dialogBox.setStyleName("logInProfilDialogBox");
-	    dialogBox.setModal(false);
-	    dialogBox.setAnimationEnabled(true);
-	    dialogBox.setAutoHideEnabled(true);
-	    dialogBox.setPopupPositionAndShow(new PositionCallback() {
-			
+	public void onClick(ClickEvent event) {
+		final DialogBox dialogBox = createOptionDropDown();
+		dialogBox.setGlassEnabled(false);
+		dialogBox.setStyleName("logInProfilDialogBox");
+		dialogBox.setModal(false);
+		dialogBox.setAnimationEnabled(true);
+		dialogBox.setAutoHideEnabled(true);
+		dialogBox.setPopupPositionAndShow(new PositionCallback() {
+
 			@Override
 			public void setPosition(int offsetWidth, int offsetHeight) {
 				dialogBox.showRelativeTo(userImage);
 			}
 		});
-	   // dialogBox.setPopupPosition(getAbsoluteLeft()-300, getAbsoluteTop()+50);
-        dialogBox.show();
-    }
+		// dialogBox.setPopupPosition(getAbsoluteLeft()-300,
+		// getAbsoluteTop()+50);
+		dialogBox.show();
+	}
+
+	private DialogBox createOptionDropDown() {
+		// Create a dialog box and set the caption text
+		final DialogBox dialogBox = new DialogBox();
+		// dialogBox.setText("Log In ");
+
+		// Create a table to layout the content
+		VerticalPanel dialogContents = new VerticalPanel();
+		dialogContents.setSpacing(5);
+		dialogBox.setWidget(dialogContents);
+
+		// Add a profil button at the bottom of the dialog
+		Button profilButton = new Button("Profil", new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (profilButtonHandler != null) {
+					profilButtonHandler.onClick(event);					
+				}
+				dialogBox.hide();
+			}
+		});
+		profilButton.setStyleName("backButton", true);
+		dialogContents.add(profilButton);
+		dialogContents.setCellHorizontalAlignment(profilButton,
+				HasHorizontalAlignment.ALIGN_RIGHT);
+
+		// Add a admin button at the bottom of the dialog
+		// HACK, refactorer le dropdown, on expose l'admin button pour changer le texte à partir du MainPagePresenter
+		Button adminButton = new Button(adminButtonText, new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (adminButtonHandler != null) {
+					adminButtonHandler.onClick(event);					
+				}
+				dialogBox.hide();
+			}
+		});
+		adminButton.setStyleName("backButton", true);
+		dialogContents.add(adminButton);
+		dialogContents.setCellHorizontalAlignment(adminButton,
+				HasHorizontalAlignment.ALIGN_RIGHT);
+
+		// Return the dialog box
+		return dialogBox;
+	}
+
+	public ClickHandler getAdminButtonHandler() {
+		return adminButtonHandler;
+	}
+
+	public void setAdminButtonHandler(ClickHandler adminButtonHandler) {
+		this.adminButtonHandler = adminButtonHandler;
+	}
+
+	public ClickHandler getProfilButtonHandler() {
+		return profilButtonHandler;
+	}
+
+	public void setProfilButtonHandler(ClickHandler profilButtonHandler) {
+		this.profilButtonHandler = profilButtonHandler;
+	}
 	
-	private DialogBox createDialogBox() {
-	    // Create a dialog box and set the caption text
-	    final DialogBox dialogBox = new DialogBox();
-	    //dialogBox.setText("Log In ");
-
-	    // Create a table to layout the content
-	    VerticalPanel dialogContents = new VerticalPanel();
-	    dialogContents.setSpacing(5);
-	    dialogBox.setWidget(dialogContents);
-
-	    // Add a profil button at the bottom of the dialog
-	    Button profilButton = new Button(
-	        "Profil", new ClickHandler() {
-	          public void onClick(ClickEvent event) {
-	            dialogBox.hide();
-	          }
-	        });
-	    profilButton.setStyleName("backButton", true);
-	    dialogContents.add(profilButton);
-	    dialogContents.setCellHorizontalAlignment(
-	    		profilButton, HasHorizontalAlignment.ALIGN_RIGHT);
-	    
-	    // Add a admin button at the bottom of the dialog
-	    Button adminButton = new Button(
-	        "Admin", new ClickHandler() {
-	          public void onClick(ClickEvent event) {
-	            dialogBox.hide();
-	          }
-	        });
-	    adminButton.setStyleName("backButton", true);
-	    dialogContents.add(adminButton);
-	    dialogContents.setCellHorizontalAlignment(
-	    	adminButton, HasHorizontalAlignment.ALIGN_RIGHT);
-
-	    // Return the dialog box
-	    return dialogBox;
-	  }
+	public void setAdminButtonText(String text) {
+		adminButtonText = text;
+	}
 }
