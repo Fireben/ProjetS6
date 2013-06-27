@@ -3,11 +3,12 @@ package educatus.server.businesslogic.profilmanager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import educatus.server.businesslogic.LDAPManager;
+import educatus.server.businesslogic.LDAPUser;
 import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.security.User;
 import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.user.UserProfilContent;
-
 
 @Singleton
 public class UserProfilBuilder {
@@ -21,14 +22,21 @@ public class UserProfilBuilder {
 				
 		try {
 			User user = securityDao.findUserByCip(cip);
+			LDAPUser ldapUser = LDAPManager.getInstance().findUser(cip);	
 			
 			UserCoreContent coreContent = new UserCoreContent();
-			coreContent.setCip(user.getCip());
-			coreContent.setFirstName(user.getFirstName());
-			coreContent.setLastName(user.getLastName());
+			coreContent.setCip(ldapUser.getCip());
+			coreContent.setFirstName(ldapUser.getFirstName());
+			coreContent.setLastName(ldapUser.getLastName());
+			coreContent.setEmail(ldapUser.getEmail());
+			coreContent.setPhone(ldapUser.getPhone());
+			coreContent.setTitle(ldapUser.getTitle());
+			coreContent.setUnity(ldapUser.getUnity());
+			coreContent.setRoom(ldapUser.getRoom());
+			coreContent.setFax(ldapUser.getFax());
+			coreContent.setStatus(ldapUser.getStatus());
+			coreContent.setFullName(ldapUser.getFullName());
 			
-			// TODO, fetch e-mail from LDAP or add column to database
-			coreContent.setEmail("");
 			coreContent.setPrivacyEnabled(true);
 			
 			coreContent.setJoinedDate(user.getDateJoined().toString());
@@ -44,7 +52,6 @@ public class UserProfilBuilder {
 			e.printStackTrace();
 			return null;
 		}
-		
 		return content;		
 	}	
 }

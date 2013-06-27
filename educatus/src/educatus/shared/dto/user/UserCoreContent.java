@@ -10,6 +10,13 @@ public class UserCoreContent implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String phone;
+	private String title;
+	private String unity;
+	private String room;
+	private String fax;
+	private String status;
+	private String fullName;
 	
 	private String joinedDate;
 	private String lastConnexion;
@@ -70,5 +77,61 @@ public class UserCoreContent implements Serializable {
 
 	public void setPrivacyEnabled(Boolean privacyEnabled) {
 		this.privacyEnabled = privacyEnabled;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getUnity() {
+		return unity;
+	}
+
+	public void setUnity(String unity) {
+		this.unity = unity;
+	}
+
+	public String getRoom() {
+		return room;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 }
