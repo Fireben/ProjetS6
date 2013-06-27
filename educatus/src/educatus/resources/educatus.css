@@ -2544,3 +2544,30 @@ a:hover, .logInClose {
 	width: 35px;
 	height: 35px;
 }
+
+.editCore {
+	width: 750px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:50px;
+}
+
+.editContent {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.editDescriptionBox {
+	width: 350px;
+	resize: none;
+	margin-bottom: 10px;
+}
+
+.editTitleBox {
+	width: 200px;
+	margin-bottom: 10px !important;
+}
+
+.editDifficultyBox {
+	margin-bottom: 10px;
+}

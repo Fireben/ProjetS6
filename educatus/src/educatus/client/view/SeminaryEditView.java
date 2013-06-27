@@ -4,7 +4,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -22,16 +21,12 @@ public class SeminaryEditView extends ViewImpl implements
 	@UiField
 	FlowPanel contentPanel;
 	@UiField
-	Label semTitleLabel;
-	@UiField
 	FlowPanel seminaryDescriptionContainer;
 	
-	@UiField 
-	TextBox semTitleBox;	
-	@UiField 
-	TextArea semDescBox;	
-	@UiField 
-	ListBox semDiffBox;
+	TextBox titleBox = new TextBox();	
+	TextArea descriptionBox = new TextArea();	
+	ListBox difficultyBox = new ListBox();
+	ListBox categoryBox = new ListBox();
 
 	private final Widget widget;
 
@@ -42,6 +37,10 @@ public class SeminaryEditView extends ViewImpl implements
 	@Inject
 	public SeminaryEditView(final Binder binder) {
 		widget = binder.createAndBindUi(this);
+		seminaryDescriptionContainer.setStyleName("editCore");
+		titleBox.setStyleName("editTitleBox");
+		descriptionBox.setStyleName("editDescriptionBox");
+		difficultyBox.setStyleName("editDifficultyBox");
 	}
 
 	@Override
@@ -68,15 +67,19 @@ public class SeminaryEditView extends ViewImpl implements
 		return seminaryDescriptionContainer;
 	}
 
-	public TextBox getSemTitleBox() {
-		return semTitleBox;
+	public TextBox getTitleBox() {
+		return titleBox;
 	}
 
-	public TextArea getSemDescBox() {
-		return semDescBox;
+	public TextArea getDescriptionBox() {
+		return descriptionBox;
 	}
 
-	public ListBox getSemDiffBox() {
-		return semDiffBox;
-	}	
+	public ListBox getDifficultyBox() {
+		return difficultyBox;
+	}
+	
+	public ListBox getCategoryBox() {
+		return categoryBox;
+	}
 }

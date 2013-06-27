@@ -8,69 +8,19 @@
 
 	<ui:with field='res' type='educatus.resources.Resources' />
 
-	<ui:style>
-		.titleDesc {
-		width: 750px;
-		margin-left:auto;
-		margin-right:auto;
-		margin-bottom:50px;
-		}
-
-		.titleLabel {
-		padding-top : 10px;
-		}
-
-		.titleBox {
-		width: 200px;
-		}
-
-		.descBox {
-		width: 350px;
-		resize: none;
-		}
-
-		.difficultyList {
-		margin-top: 5px;
-		vertical-align: top;
-		}
-
-		.contentPanel {
-		margin-left:auto;
-		margin-right:auto;
-		}
-	</ui:style>
-
 	<g:HTMLPanel>
 		<div id="art-mainPage">
 			<form>
 				<div class="art-blockcontent">
 					<h4>
 						<div>
-							<g:FlowPanel ui:field="seminaryDescriptionContainer" styleName='{style.titleDesc}'>
-								<g:Label ui:field="semTitleLabel" styleName='{style.titleLabel}'>Titre :</g:Label>
-								<g:TextBox name="semTitleBox" ui:field="semTitleBox"
-									styleName='{style.titleBox}' />
-								<g:Label ui:field="semDescLabel" styleName='{style.titleLabel}'>Description :</g:Label>
-								<g:TextArea name="semDescBox" ui:field="semDescBox"
-									styleName='{style.descBox}' />
-								<g:Label styleName='{style.titleLabel}'>Difficulty :</g:Label>
-								<g:ListBox ui:field="semDiffBox" styleName='{style.difficultyList}'>
-									<g:item>
-										easy
-									</g:item>
-									<g:item>
-										hard
-									</g:item>
-								</g:ListBox>
-							</g:FlowPanel>
-
-							<g:FlowPanel ui:field="contentPanel" styleName="{style.contentPanel}" />
+							<g:FlowPanel ui:field="seminaryDescriptionContainer"/>
+							<g:FlowPanel ui:field="contentPanel"/>
 							<g:HTMLPanel ui:field="confirmPanel"/>
 						</div>
 					</h4>
 				</div>
 			</form>
 		</div>
-
 	</g:HTMLPanel>
 </ui:UiBinder>
