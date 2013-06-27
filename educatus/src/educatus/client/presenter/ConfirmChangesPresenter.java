@@ -15,6 +15,8 @@ public class ConfirmChangesPresenter extends
 	HandlerRegistration saveHandlerRegistration = null;
 	HandlerRegistration addImageHandlerRegistration = null;
 	HandlerRegistration addTextHandlerRegistration = null;
+	HandlerRegistration confirmHandlerRegistration = null;
+	HandlerRegistration cancelHandlerRegistration = null;
 
 	public interface MyView extends View {
 		public Button getSaveButton();
@@ -53,6 +55,14 @@ public class ConfirmChangesPresenter extends
 	}
 
 	public void setConfirmHandler(ClickHandler confirmHandler) {
-		getView().getSaveButton().addClickHandler(confirmHandler);	
+		if(confirmHandlerRegistration == null) {
+			confirmHandlerRegistration = getView().getSaveButton().addClickHandler(confirmHandler);	
+		}
+	}
+
+	public void setCancelHandler(ClickHandler cancelHandler) {
+		if(cancelHandlerRegistration == null) {
+			cancelHandlerRegistration = getView().getCancelButton().addClickHandler(cancelHandler);	
+		}
 	}
 }
