@@ -72,7 +72,7 @@ public class HomePageContentBuilder {
 
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, HOME_TITLE);
 		content.setTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		imageExternal = interDao.findImageById(WELCOME_IMAGE);
+		imageExternal = interDao.findImageExternalById(WELCOME_IMAGE);
 		content.setWelcomeImage(imageExternal == null ? "" : imageExternal.getUrl());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, WELCOME_TITLE);
 		content.setWelcomeTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
@@ -91,7 +91,7 @@ public class HomePageContentBuilder {
 		seminarsSection.setSectionTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, SEMINAR_SECTION_TEXT);
 		seminarsSection.setSectionText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		imageExternal = interDao.findImageById(SEMINAR_SECTION_IMAGE);
+		imageExternal = interDao.findImageExternalById(SEMINAR_SECTION_IMAGE);
 		seminarsSection.setSectionImg(imageExternal == null ? "" : imageExternal.getUrl());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, SEMINAR_SECTION_DESCRIPTION);
 		seminarsSection.setSectionDescription(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
@@ -105,7 +105,7 @@ public class HomePageContentBuilder {
 		problemsSection.setSectionTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, PROBLEM_SECTION_TEXT);
 		problemsSection.setSectionText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		imageExternal = interDao.findImageById(PROBLEM_SECTION_IMAGE);
+		imageExternal = interDao.findImageExternalById(PROBLEM_SECTION_IMAGE);
 		problemsSection.setSectionImg(imageExternal == null ? "" : imageExternal.getUrl());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, PROBLEM_SECTION_DESCRIPTION);
 		problemsSection.setSectionDescription(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
@@ -119,7 +119,7 @@ public class HomePageContentBuilder {
 		statisticsSection.setSectionTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, STATS_SECTION_TEXT);
 		statisticsSection.setSectionText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		imageExternal = interDao.findImageById(STATS_SECTION_IMAGE);
+		imageExternal = interDao.findImageExternalById(STATS_SECTION_IMAGE);
 		statisticsSection.setSectionImg(imageExternal == null ? "" : imageExternal.getUrl());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, STATS_SECTION_DESCRIPTION);
 		statisticsSection.setSectionDescription(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
@@ -133,7 +133,7 @@ public class HomePageContentBuilder {
 		forumsSection.setSectionTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, FORUM_SECTION_TEXT);
 		forumsSection.setSectionText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		imageExternal = interDao.findImageById(FORUM_SECTION_IMAGE);
+		imageExternal = interDao.findImageExternalById(FORUM_SECTION_IMAGE);
 		forumsSection.setSectionImg(imageExternal == null ? "" : imageExternal.getUrl());
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, FORUM_SECTION_DESCRIPTION);
 		forumsSection.setSectionDescription(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());

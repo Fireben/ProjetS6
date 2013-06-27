@@ -85,11 +85,16 @@ public class SeminaryContentBuilder {
 						dynamicSectionImageContent.setImageDescription(InternationalizationUtility.getTranslationEntry(dynamicSectionImage.getDescription(), culture, language).getTcteTranslation());	
 						dynamicSectionImageContent.setAlignment(alignment);
 						
-						content.getDynamicSectionList().add(dynamicSectionImageContent);
 					} else if (image.getType().getId() == 1){
 						ImageInternal imageInternal = (ImageInternal) image;
+						
+						String internalUrl = "/internalImageServlet?id=" + imageInternal.getId();
+						
+						dynamicSectionImageContent.setImageUrl(internalUrl);
+						dynamicSectionImageContent.setImageDescription(imageInternal.getImageName());
+						dynamicSectionImageContent.setAlignment(alignment);
 					}
-										
+					content.getDynamicSectionList().add(dynamicSectionImageContent);										
 					break;
 				case 3:
 					DynamicSectionVideo dynamicSectionVideo = (DynamicSectionVideo) dynamicSection;					

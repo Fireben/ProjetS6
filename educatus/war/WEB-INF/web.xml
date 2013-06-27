@@ -17,6 +17,11 @@
 	    <servlet-class>educatus.server.servlet.FileUploadServlet</servlet-class>
 	</servlet>
 	
+	<servlet>
+    	<servlet-name>imageServlet</servlet-name>
+    	<servlet-class>educatus.server.servlet.ImageServlet</servlet-class>
+	</servlet>
+	
   <context-param>
     <!-- max size of the upload request -->
     <param-name>maxSize</param-name>
@@ -34,6 +39,11 @@
 	    <servlet-name>uploadServlet</servlet-name>
 	    <url-pattern>*.gupld</url-pattern>
   	</servlet-mapping>
+  	
+	<servlet-mapping>
+	    <servlet-name>imageServlet</servlet-name>
+	    <url-pattern>/internalImageServlet/*</url-pattern>
+	</servlet-mapping>
   
 	<!-- Default page to serve -->
 	<welcome-file-list>
