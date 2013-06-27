@@ -14,9 +14,17 @@
   	<servlet>
 	    <servlet-name>uploadServlet</servlet-name>
 	    <!-- This is the default servlet, it puts files in session -->
-	    <servlet-class>educatus.server.servlet.SampleUploadServlet</servlet-class>
+	    <servlet-class>educatus.server.servlet.FileUploadServlet</servlet-class>
 	</servlet>
-  
+	
+  <context-param>
+    <!-- max size of the upload request -->
+    <param-name>maxSize</param-name>
+    <!-- 3 Mo max -->
+    <param-value>3145728</param-value>
+  </context-param>
+  	
+  	
   	<servlet-mapping>
     	<servlet-name>requestservice</servlet-name>
     	<url-pattern>/educatus/requestservice</url-pattern>
