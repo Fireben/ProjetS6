@@ -137,9 +137,11 @@ public class SeminaryEditPresenter extends
 				dynamicSectionList.add(dynamicSectionTextContent);
 			}
 			else if(currentWidget instanceof ImageEdit) {
-				String id = ((ImageEdit)currentWidget).getImageId();
+				ImageEdit imageEdit = ((ImageEdit)currentWidget);
+				String id = imageEdit.getImageId();
 				DynamicSectionImageContent dynamicSectionImageContent = new DynamicSectionImageContent();
 				dynamicSectionImageContent.setImageUrl(id);
+				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
 			}
 		}
