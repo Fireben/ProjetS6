@@ -10,6 +10,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
+import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryHomeCategoryBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryHomeListingBuilder;
@@ -18,14 +19,14 @@ import educatus.server.businesslogic.uibuilder.MainPageContentBuilder;
 import educatus.server.businesslogic.uibuilder.SeminaryEditorContentBuilder;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
-import educatus.shared.dto.HomePageContent;
-import educatus.shared.dto.MainPageContent;
-import educatus.shared.dto.SeminaryEditorContent;
+import educatus.shared.dto.pagecontent.HomePageContent;
+import educatus.shared.dto.pagecontent.MainPageContent;
+import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
+import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
+import educatus.shared.dto.pagecontent.SeminaryHomePageListingContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
 import educatus.shared.dto.seminary.SeminaryContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.dto.seminary.SeminaryHomeListingContent;
 import educatus.shared.dto.user.UserProfilContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
@@ -34,20 +35,23 @@ import educatus.shared.services.requestservice.RequestTypeEnum;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;
 import educatus.shared.services.requestservice.request.LoginRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest.SeminaryAdministractionAction;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryContentRequest;
-import educatus.shared.services.requestservice.request.SeminaryEditorContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
-import educatus.shared.services.requestservice.request.UserProfilContentRequest;
+import educatus.shared.services.requestservice.request.UserProfilPageContentRequest;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.LoginResponse;
 import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryAdministrationActionResponse;
+import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryContentResponse;
-import educatus.shared.services.requestservice.response.SeminaryEditorContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
-import educatus.shared.services.requestservice.response.UserProfilContentResponse;
+import educatus.shared.services.requestservice.response.UserProfilPageContentResponse;
 
 /**
  * The server side implementation of the RPC service.
@@ -63,6 +67,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private SeminaryEditorContentBuilder seminaryEditorContentBuilder;
 	private SeminaryContentBuilder seminaryContentBuilder;
 	private UserProfilBuilder userProfilBuilder;
+	private SeminaryAdministrationManager seminaryAdministrationManager;
 
 	@Override
 	public void init() throws ServletException {
@@ -80,6 +85,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		seminaryHomeListingBuilder = dbInjector.getInstance(SeminaryHomeListingBuilder.class);
 		seminaryContentBuilder = dbInjector.getInstance(SeminaryContentBuilder.class);
 		seminaryEditorContentBuilder = dbInjector.getInstance(SeminaryEditorContentBuilder.class); 
+		
+		seminaryAdministrationManager = dbInjector.getInstance(SeminaryAdministrationManager.class);
 	}
 
 	@Override
@@ -93,38 +100,55 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 
 		try {
 			switch (requestType) {
-			case LOGIN_REQUEST:
-				response = ProcessLoginRequest((LoginRequest) request);			
-				break;
-			case HOME_PAGE_CONTENT_REQUEST:
-				response = ProcessHomePageContentRequest((HomePageContentRequest) request);
-				break;
-			case MAIN_PAGE_CONTENT_REQUEST:
-				response = ProcessMainMenuContentRequest((MainPageContentRequest) request);
-				break;
-			case SEMINARY_HOME_PAGE_CATEGORY_CONTENT_REQUEST:
-				response = ProcessSeminaryHomePageCategoryContentRequest((SeminaryHomePageCategoryContentRequest) request);
-				break;
-			case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
-				response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
-				break;
-			case SEMINARY_EDITOR_CONTENT_REQUEST:
-				response = ProcessSeminaryEditorContentRequest((SeminaryEditorContentRequest) request);
-				break;
-			case SEMINARY_CONTENT_REQUEST:
-				response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);
-				break;
-			case PROFIL_PAGE_CONTENT_REQUEST:
-				response = ProcessUserProfilContentRequest((UserProfilContentRequest) request);
-				break;
-			default:
-				break;
+				case LOGIN_REQUEST:
+					response = ProcessLoginRequest((LoginRequest) request);			
+					break;
+				case HOME_PAGE_CONTENT_REQUEST:
+					response = ProcessHomePageContentRequest((HomePageContentRequest) request);
+					break;
+				case MAIN_PAGE_CONTENT_REQUEST:
+					response = ProcessMainMenuContentRequest((MainPageContentRequest) request);
+					break;
+				case SEMINARY_HOME_PAGE_CATEGORY_CONTENT_REQUEST:
+					response = ProcessSeminaryHomePageCategoryContentRequest((SeminaryHomePageCategoryContentRequest) request);
+					break;
+				case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
+					response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
+					break;
+				case PROFIL_PAGE_CONTENT_REQUEST:
+					response = ProcessUserProfilContentRequest((UserProfilPageContentRequest) request);
+					break;
+				case SEMINARY_ADMINISTRATION_PAGE_CONTENT_REQUEST:
+					response = ProcessSeminaryAdministrationPageContentRequest((SeminaryAdministrationPageContentRequest) request);
+					break;
+				case SEMINARY_ADMINISTRATION_ACTION_REQUEST:
+					response = ProcessSeminaryAdministrationActionRequest((SeminaryAdministrationActionRequest) request);
+					break;
+				case SEMINARY_CONTENT_REQUEST:
+					response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);
+					break;			
+				default:
+					break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return response;
+	}
+
+	private SeminaryAdministrationActionResponse ProcessSeminaryAdministrationActionRequest(SeminaryAdministrationActionRequest request) {
+		SeminaryAdministrationActionResponse reponse = new SeminaryAdministrationActionResponse();
+
+		if (request.getAction() == SeminaryAdministractionAction.INSERT) {
+			try {
+				seminaryAdministrationManager.insertSeminary(request.getSeminaryContent());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return reponse;
 	}
 
 	private LoginResponse ProcessLoginRequest(LoginRequest request) {
@@ -138,12 +162,16 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			passwordValid = true;
 		}
 		
-		if (passwordValid) {
+		String userName = request.getUserName();
+		UserProfilContent user = userProfilBuilder.buildUserProfilContent(userName);
+		
+		if (passwordValid && user != null) {
 			// Login successfull, generate sessionID
 			// TODO, store sessionID on server-side too
 			String generatedSessionID = "SAUCE";
 			response.setLoginStatus(LoginStatus.SUCCESS);
 			response.setSessionID(generatedSessionID);
+			response.setUserCoreContent(user.getUserCoreContent());
 		} else {			
 			response.setLoginStatus(LoginStatus.FAILURE);
 		}
@@ -151,11 +179,11 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 
-	private SeminaryEditorContentResponse ProcessSeminaryEditorContentRequest(SeminaryEditorContentRequest request) {
+	private SeminaryAdministrationPageContentResponse ProcessSeminaryAdministrationPageContentRequest(SeminaryAdministrationPageContentRequest request) {
 		
-		SeminaryEditorContentResponse response = new SeminaryEditorContentResponse();
+		SeminaryAdministrationPageContentResponse response = new SeminaryAdministrationPageContentResponse();
 		
-		SeminaryEditorContent seminary = seminaryEditorContentBuilder.buildSeminaryEditorContent(request.getCulture(), request.getLanguage());
+		SeminaryAdministrationPageContent seminary = seminaryEditorContentBuilder.buildSeminaryEditorContent(request.getCulture(), request.getLanguage());
 		
 		try {
 			List<CategoryCoreContent> categoryCoreContentList = seminaryEditorContentBuilder.buildCategoryCoreContentList(request.getCulture(), request.getLanguage());
@@ -184,10 +212,12 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private MainPageContentResponse ProcessMainMenuContentRequest(MainPageContentRequest request) {
-		MainPageContent content = mainPageContentBuilder.buildMainPageContent(request.getCulture(), request.getLanguage());
+		// TODO, validate if requested view mode is allowed
+		MainPageContent content = mainPageContentBuilder.buildMainPageContent(request.getCulture(), request.getLanguage(), request.getViewMode());
 
 		MainPageContentResponse response = new MainPageContentResponse();
 		response.setMainPageContent(content);
+		response.setViewMode(request.getViewMode());
 
 		return response;
 	}
@@ -208,7 +238,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			parentCategoryId = request.getParentCategory().getId();
 		}
 
-		SeminaryHomeCategoryContent content = seminaryHomeCategoryBuilder.buildSeminaryHomeCategoryContent(parentCategoryId, request.getCulture(), request.getLanguage());
+		SeminaryHomePageCategoryContent content = seminaryHomeCategoryBuilder.buildSeminaryHomeCategoryContent(parentCategoryId, request.getCulture(), request.getLanguage());
 
 		SeminaryHomePageCategoryContentResponse response = new SeminaryHomePageCategoryContentResponse();
 		response.setContent(content);
@@ -218,7 +248,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private SeminaryHomePageListingContentResponse ProcessSeminaryHomePageListingContentRequest(SeminaryHomePageListingContentRequest request) {
-		SeminaryHomeListingContent content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
+		SeminaryHomePageListingContent content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
 
 		SeminaryHomePageListingContentResponse response = new SeminaryHomePageListingContentResponse();
 		response.setContent(content);
@@ -226,10 +256,10 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 
-	private UserProfilContentResponse ProcessUserProfilContentRequest(UserProfilContentRequest request) {
+	private UserProfilPageContentResponse ProcessUserProfilContentRequest(UserProfilPageContentRequest request) {
 		UserProfilContent content = userProfilBuilder.buildUserProfilContent(request.getUserCip());
 
-		UserProfilContentResponse response = new UserProfilContentResponse();
+		UserProfilPageContentResponse response = new UserProfilPageContentResponse();
 		response.setUserProfilContent(content);
 
 		return response;

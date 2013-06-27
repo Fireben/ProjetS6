@@ -1,6 +1,6 @@
 package educatus.shared.services.requestservice.request;
 
-import educatus.shared.dto.ViewModeEnum;
+import educatus.shared.dto.pagecontent.ViewModeEnum;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.RequestTypeEnum;
 
@@ -10,7 +10,7 @@ public class MainPageContentRequest extends AbstractRequest {
 
 	private String language = null;
 	private String culture = null;
-	private ViewModeEnum viewMode = ViewModeEnum.GUEST;
+	private ViewModeEnum viewMode = ViewModeEnum.USER;
 
 	@Override
 	public RequestTypeEnum GetRequestType() {

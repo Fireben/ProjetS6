@@ -1031,7 +1031,6 @@ input,select,textarea {
 		Sans-Serif;
 	font-weight: bold;
 	font-style: normal;
-	text-transform: uppercase;
 }
 
 .art-block select {
@@ -1101,7 +1100,6 @@ input[type="text"],input[type="password"],input[type="email"],input[type="url"],
 input[type="password"],input[type="email"],input[type="url"],textarea {
 	width: 100%;
 	padding: 8px 0;
-	color: #055976 !important;
 	font-size: 13px;
 	font-family: Verdana, Geneva, Arial, Helvetica, Sans-Serif;
 	font-weight: normal;
@@ -1936,30 +1934,18 @@ img.art-lightbox-image.active {
 	text-align: center;
 }
 
-.dataGridParent>button .{
-	background: none repeat scroll 0% 0% #202020;
-	opacity: 0.75;
-	border: 1px solid #3B3B3B;
-	margin-right: 2px;
-	margin-top: 5px;
-	width: 65px;
-	height: 35px;
-	color: rgb(180, 217, 230);
-	float: right;
-}
-
 .dataGridParent>button:hover:enabled {
 	border: 1px solid #4B4B4B;
 	opacity: 1 !important;
 }
 
 .dataGridContainer {
-	padding-bottom: 3%;
-	padding-top: 3%;
 	margin: auto;
 	display: inline-block;
-	width: 1050px;
-	height: 290px;
+}
+
+.dataGridHyperlink {
+	color:rgb(228, 228, 228) !important;
 }
 
 .buttonPanel>button {
@@ -2169,8 +2155,8 @@ GWTUpld,table.GWTUpld td {
 
 .textArea {
 	background-color: rgb(255, 255, 255);
-	width: 750px;
-	height: 350px;
+	width: 550px;
+	height: 250px;
 }
 
 .hasRichTextToolbar {
@@ -2182,7 +2168,7 @@ GWTUpld,table.GWTUpld td {
 	border-bottom: 1px solid #BBBBBB;
 	padding: 3px;
 	margin: 0px;
-	width: 750px;
+	width: 550px;
 }
 
 .textToolbar .gwt-PushButton-up {
@@ -2285,8 +2271,7 @@ GWTUpld,table.GWTUpld td {
 }
 
 .imageUploadPanel {
-	padding-bottom: 50px;
-	width: 750px;
+	width: 550px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -2432,7 +2417,7 @@ html>body .gwt-DialogBox {
 	border-style: solid;
 	border-color: rgb(175,175,175);
 	padding: 20px 20px 20px 20px;
-	background: rgb(27,27,27);
+	background: rgb(40,40,40);
 }
 
 .descriptionTitle {
@@ -2504,4 +2489,39 @@ a:hover, .logInClose {
 .logInProfilImg td {
 	border: none;
 	cursor: pointer;
+}
+
+.editTitle {
+	margin-left: auto;
+	margin-right: auto;
+	width: 550px;
+	padding-bottom: 10px
+}
+
+.editTitleTextBox {
+	width: 300px;
+}
+
+.pager {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.editSection {
+	background: rgb(30,30,30);
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	padding-bottom: 50px;
+	padding-top: 50px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.textAreaGrid {
+	margin-left: auto;
+	margin-right: auto;
 }

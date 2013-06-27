@@ -8,8 +8,8 @@ import com.google.inject.Singleton;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.seminary.Category;
+import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 
 @Singleton
 public class SeminaryHomeCategoryBuilder {
@@ -17,9 +17,9 @@ public class SeminaryHomeCategoryBuilder {
 	@Inject
 	private SeminaryDao semDao;
 
-	public SeminaryHomeCategoryContent buildSeminaryHomeCategoryContent(Integer parentId, String culture, String language) {
+	public SeminaryHomePageCategoryContent buildSeminaryHomeCategoryContent(Integer parentId, String culture, String language) {
 
-		SeminaryHomeCategoryContent pageContent = new SeminaryHomeCategoryContent();
+		SeminaryHomePageCategoryContent pageContent = new SeminaryHomePageCategoryContent();
 
 		try {
 			

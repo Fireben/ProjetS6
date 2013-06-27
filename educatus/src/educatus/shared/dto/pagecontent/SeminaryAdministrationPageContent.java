@@ -1,8 +1,8 @@
-package educatus.shared.dto;
+package educatus.shared.dto.pagecontent;
 
 import java.io.Serializable;
 
-public class SeminaryEditorContent implements Serializable {
+public class SeminaryAdministrationPageContent implements Serializable {
 
 	private static final long serialVersionUID = 2851914737482481079L;
 

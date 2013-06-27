@@ -13,7 +13,7 @@ import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Difficulty;
-import educatus.shared.dto.SeminaryEditorContent;
+import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
 
@@ -36,7 +36,7 @@ public class SeminaryEditorContentBuilder {
 	@Inject
 	private SeminaryDao seminaryDao;
 
-	public SeminaryEditorContent buildSeminaryEditorContent(String culture, String language) {
+	public SeminaryAdministrationPageContent buildSeminaryEditorContent(String culture, String language) {
 
 		int cultureId;
 		int languageId;
@@ -50,7 +50,7 @@ public class SeminaryEditorContentBuilder {
 			return null;
 		}
 
-		SeminaryEditorContent seminaryEditorContent = new SeminaryEditorContent();
+		SeminaryAdministrationPageContent seminaryEditorContent = new SeminaryAdministrationPageContent();
 
 		TextContentTranslationEntry textContentTranslationEntry = null;
 		String text = "";

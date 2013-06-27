@@ -29,10 +29,14 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	@Inject
 	public SeminaryViewView(final Binder binder) {
 		widget = binder.createAndBindUi(this);
-		dynamicSectionContainer.setStyleName("dynamicSectionContainer");
+		
+		descriptionContainer.setVisible(false);
+		seminaryContainer.setVisible(false);
+		
 		descriptionContainer.setStyleName("descriptionContainer");
+		dynamicSectionContainer.setStyleName("dynamicSectionContainer");		
 		titleLabel.setStyleName("seminaryTitleLabel");
-		seminaryContainer.setStyleName("viewSeminaryContainer");
+		seminaryContainer.setStyleName("viewSeminaryContainer");		
 	}
 	
 	public FlowPanel getDescriptionContainer() {
@@ -41,7 +45,11 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 
 	public FlowPanel getDynamicSectionContainer() {
 		return dynamicSectionContainer;
-	}	
+	}		
+
+	public FlowPanel getSeminaryContainer() {
+		return seminaryContainer;
+	}
 
 	public Label getTitleLabel() {
 		return titleLabel;

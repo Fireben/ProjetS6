@@ -21,28 +21,26 @@ import com.gwtplatform.mvp.client.gin.DefaultModule;
 
 import educatus.client.EducatusPlaceManager;
 import educatus.client.NameTokens;
+import educatus.client.presenter.CategoryAdministrationPresenter;
 import educatus.client.presenter.CategoryPresenter;
 import educatus.client.presenter.ConfirmChangesPresenter;
 import educatus.client.presenter.HomePresenter;
-import educatus.client.presenter.ImageUploadPresenter;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.presenter.ProfilPresenter;
 import educatus.client.presenter.SeminarHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
 import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
-import educatus.client.presenter.TextEditPresenter;
+import educatus.client.view.CategoryAdministrationView;
 import educatus.client.view.CategoryView;
 import educatus.client.view.ConfirmChangesView;
 import educatus.client.view.HomeView;
-import educatus.client.view.ImageUploadView;
 import educatus.client.view.MainPageView;
 import educatus.client.view.ProfilView;
 import educatus.client.view.SeminarHomeView;
 import educatus.client.view.SeminaryEditView;
 import educatus.client.view.SeminaryListView;
 import educatus.client.view.SeminaryViewView;
-import educatus.client.view.TextEditView;
 
 /**
  * @author Christian Goudreau
@@ -87,11 +85,10 @@ public class ClientModule extends AbstractPresenterModule {
 		bindPresenter(SeminaryViewPresenter.class,
 				SeminaryViewPresenter.MyView.class, SeminaryViewView.class,
 				SeminaryViewPresenter.MyProxy.class);
-		
-		bindPresenterWidget(TextEditPresenter.class,
-				TextEditPresenter.MyView.class, TextEditView.class);
-		
-		bindPresenterWidget(ImageUploadPresenter.class,
-				ImageUploadPresenter.MyView.class, ImageUploadView.class);
-	}
+	
+		bindPresenter(CategoryAdministrationPresenter.class,
+				CategoryAdministrationPresenter.MyView.class,
+				CategoryAdministrationView.class,
+				CategoryAdministrationPresenter.MyProxy.class);
+}
 }

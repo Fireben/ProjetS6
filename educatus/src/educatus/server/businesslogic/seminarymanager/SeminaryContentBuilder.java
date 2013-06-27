@@ -13,6 +13,7 @@ import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageExternal;
+import educatus.server.persist.dao.internationalization.ImageInternal;
 import educatus.server.persist.dao.seminary.Seminary;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment.AlignmentEnum;
@@ -77,16 +78,23 @@ public class SeminaryContentBuilder {
 					dynamicSectionImageContent.setSequenceNumber(dynamicSectionImage.getSequenceNumber());
 					
 					Image image = dynamicSectionImage.getImage().getImageContentTranslationEntries().get(0).getImage();
-					ImageExternal imageExternal = null;
+					
 					if (image.getType().getId() == 2){
-						imageExternal = (ImageExternal) image;
+						ImageExternal imageExternal = (ImageExternal) image;
 						dynamicSectionImageContent.setImageUrl(imageExternal.getUrl());
 						dynamicSectionImageContent.setImageDescription(InternationalizationUtility.getTranslationEntry(dynamicSectionImage.getDescription(), culture, language).getTcteTranslation());	
 						dynamicSectionImageContent.setAlignment(alignment);
 						
-						content.getDynamicSectionList().add(dynamicSectionImageContent);
+					} else if (image.getType().getId() == 1){
+						ImageInternal imageInternal = (ImageInternal) image;
+						
+						String internalUrl = "/internalImageServlet?id=" + imageInternal.getId();
+						
+						dynamicSectionImageContent.setImageUrl(internalUrl);
+						dynamicSectionImageContent.setImageDescription(imageInternal.getImageName());
+						dynamicSectionImageContent.setAlignment(alignment);
 					}
-										
+					content.getDynamicSectionList().add(dynamicSectionImageContent);										
 					break;
 				case 3:
 					DynamicSectionVideo dynamicSectionVideo = (DynamicSectionVideo) dynamicSection;					

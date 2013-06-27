@@ -1,4 +1,4 @@
-package educatus.shared.dto;
+package educatus.shared.dto.pagecontent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +21,8 @@ public class MainPageContent implements Serializable {
 			SEMINARS_HOME_ITEM, 
 			PROFILE_ITEM,
 			EXCERCICE_ITEM, 
-			CREATE_SEMINAR_ITEM
+			CREATE_SEMINAR_ITEM,
+			CATEGORY_ADMINISTRATION_ITEM
 		}
 
 		public static class MainMenuItemContent implements Serializable {

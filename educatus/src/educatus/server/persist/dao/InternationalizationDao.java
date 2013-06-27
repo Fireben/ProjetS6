@@ -78,7 +78,7 @@ public class InternationalizationDao {
 		return (List<Image>) resultList;
 	}
 
-	public ImageExternal findImageById(Integer id) {
+	public ImageExternal findImageExternalById(Integer id) {
 		ImageExternal imageExternal = null;
 		try {
 			imageExternal = (ImageExternal) entityManager.find(Image.class, id);
@@ -87,6 +87,17 @@ public class InternationalizationDao {
 			return null;
 		}
 		return imageExternal;
+	}
+	
+	public ImageInternal findImageInternalById(Integer id) {
+		ImageInternal imageInternal = null;
+		try {
+			imageInternal = (ImageInternal) entityManager.find(Image.class, id);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return imageInternal;
 	}
 
 	@SuppressWarnings("unchecked")

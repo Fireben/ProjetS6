@@ -13,7 +13,6 @@ import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
-import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
 import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
@@ -44,6 +43,8 @@ public class GenerateSeminary {
 		securityDao = dbInjector.getInstance(SecurityDao.class);
 		dynamicContentDao = dbInjector.getInstance(DynamicContentDao.class);
 		manager = dbInjector.getInstance(EntityManager.class);
+		
+		
 		
 		try {
 			manager.getTransaction().begin();
@@ -101,6 +102,8 @@ public class GenerateSeminary {
 					user.getId(), 
 					difficulty.getDifficultyValue()
 				);
+			
+			seminary = seminaryDao.addCategoryToSeminary(seminary.getSemiId(), 47);
 
 			manager.getTransaction().commit();
 		

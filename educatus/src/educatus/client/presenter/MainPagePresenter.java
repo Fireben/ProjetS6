@@ -59,9 +59,11 @@ import educatus.client.events.PageChangingEvent;
 import educatus.client.events.PageChangingEvent.PageChangeHandler;
 import educatus.client.ui.Footer;
 import educatus.client.ui.MainMenu;
-import educatus.shared.dto.MainPageContent;
-import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemContent;
-import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemEnum;
+import educatus.shared.dto.pagecontent.MainPageContent;
+import educatus.shared.dto.pagecontent.ViewModeEnum;
+import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemContent;
+import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemEnum;
+import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -132,8 +134,12 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 		@Override
 		public void onClick(ClickEvent event) {
-			getView().getMainMenu().getLogInProfilUi().setVisible(false);
-			getView().getMainMenu().getLogInUi().setVisible(true);			
+			if (request.getViewMode() == ViewModeEnum.ADMIN || placeManager.getCurrentPlaceRequest().getNameToken() == NameTokens.getProfil()){
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
+				requestView(ViewModeEnum.USER);
+			}		
+			// Display the login Ui in the MainMenu
+			displayLoginUi();		
 		}
 	}
 	
@@ -141,7 +147,14 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO, Move to ADMIN mode
+			// Comportement d'un toggle button ?
+			if (request.getViewMode() == ViewModeEnum.ADMIN){
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
+				requestView(ViewModeEnum.USER);
+			} else {
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getSeminaryEdit()));
+				requestView(ViewModeEnum.ADMIN);
+			}
 		}
 	}
 
@@ -150,6 +163,28 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		@Override
 		public void onClick(ClickEvent event) {
 			placeManager.revealPlace(new PlaceRequest(NameTokens.getProfil()));			
+		}
+	}
+	
+	private class AbstractRequestHandler implements AsyncCallback<AbstractResponse> {
+
+		@Override
+		public void onSuccess(AbstractResponse result) {
+			if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
+				MainPageContentResponse response = (MainPageContentResponse) result;						
+				fillPageWithContent(response.getMainPageContent());
+				
+				if (response.getViewMode() == ViewModeEnum.ADMIN) {
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("User");
+				} else {
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("Admin");
+				}
+			}
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
 		}
 	}
 
@@ -192,6 +227,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	        }
 	    }
 	}
+
+	private AbstractRequestHandler requestHandler = new AbstractRequestHandler();
 	
 	@Override
 	protected void revealInParent() {
@@ -230,7 +267,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonHandler(new AdminModeButtonClickHandler());
 		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setProfilButtonHandler(new ViewProfileButtonClickHandler());
 
-		getView().getMainMenu().getLogInProfilUi().setVisible(false);
+		// Default -> display Login
+		displayLoginUi();
 		getView().getHeaderPanel().add(getView().getMainMenu());
 
 		getView().getFooterPanel().getEnglishButton().addClickHandler(new TranslateClickHandler("CA", "en"));
@@ -251,23 +289,23 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		if (request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage()) {
 			request.setCulture(locale.getCulture());
 			request.setLanguage(locale.getLanguage());
-			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
-
-				@Override
-				public void onSuccess(AbstractResponse result) {
-					if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
-						MainPageContentResponse response = (MainPageContentResponse) result;						
-						fillPageWithContent(response.getMainPageContent());
-					}
-				}
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-
-				}
-			});
+			requestService.sendRequest(request, requestHandler);
 		}
+	}
+	
+	private void requestView(ViewModeEnum viewMode) {
+		request.setViewMode(viewMode);
+		requestService.sendRequest(request, requestHandler);
+	}
+	
+	private void displayLoginUi(){
+		getView().getMainMenu().getLogInProfilUi().setVisible(false);
+		getView().getMainMenu().getLogInUi().setVisible(true);	
+	}
+	
+	private void displayLoginProfilUi(){
+		getView().getMainMenu().getLogInProfilUi().setVisible(true);
+		getView().getMainMenu().getLogInUi().setVisible(false);	
 	}
 	
 	private void fillPageWithContent(MainPageContent content){
@@ -300,6 +338,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				break;
 			case CREATE_SEMINAR_ITEM:
 				nameToken = NameTokens.getSeminaryEdit();
+				break;
+			case CATEGORY_ADMINISTRATION_ITEM:
+				nameToken = NameTokens.getCategoryAdministration();
 				break;
 			// Default Token leads to HomePage
 			default:
@@ -384,10 +425,18 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 								// Set the sessionID cookie
 								Cookies.setCookie("SessionID", sessionID, expiration);
 								
-								dialogBox.hide();
-								getView().getMainMenu().getLogInUi().setVisible(false);
-								getView().getMainMenu().getLogInProfilUi().setVisible(true);
+								// User data
+								UserCoreContent userCoreContent = response.getUserCoreContent();
 								
+								getView().getMainMenu().getLogInProfilUi().getLogInName().setText(
+										userCoreContent.getFirstName() + " " + 
+										userCoreContent.getLastName()
+								);
+								
+								// Display the logged in profil Ui
+								displayLoginProfilUi();
+								
+								dialogBox.hide();								
 							} else  {
 								// Login not sucessfull, display error text in login dialog
 								Window.alert("Please Try Again");
@@ -396,18 +445,13 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 						} else {
 							// Wrong response type, hide box, don't display LogInProfilUi
 							dialogBox.hide();
-							getView().getMainMenu().getLogInUi().setVisible(true);
-							getView().getMainMenu().getLogInProfilUi().setVisible(false);
 						}						
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
 						// On failure, hide box, don't display LogInProfilUi
-						dialogBox.hide();
-						getView().getMainMenu().getLogInUi().setVisible(true);
-						getView().getMainMenu().getLogInProfilUi().setVisible(false);
-						
+						dialogBox.hide();						
 					}
 				});
 			}

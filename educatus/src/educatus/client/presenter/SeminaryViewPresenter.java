@@ -20,7 +20,6 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
-import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.widget.DescriptionEntry;
 import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
@@ -41,6 +40,7 @@ public class SeminaryViewPresenter extends
 	public interface MyView extends View {
 		public FlowPanel getDescriptionContainer();
 		public FlowPanel getDynamicSectionContainer();
+		public FlowPanel getSeminaryContainer();
 		public Label getTitleLabel();
 	}
 
@@ -124,6 +124,9 @@ public class SeminaryViewPresenter extends
 			}
 			dynamicSectionContainer.add(new HTML("<br/>"));
 		}
+		
+		getView().getSeminaryContainer().setVisible(true);
+		descriptionContainer.setVisible(true);
 	}
 
 	private void addImageSection(String imageUrl) {

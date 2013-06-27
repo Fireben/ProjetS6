@@ -1,9 +1,11 @@
-package educatus.shared.dto.seminary;
+package educatus.shared.dto.pagecontent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SeminaryHomeCategoryContent implements Serializable {
+import educatus.shared.dto.seminary.CategoryCoreContent;
+
+public class SeminaryHomePageCategoryContent implements Serializable {
 
 	private static final long serialVersionUID = 6160737635292640612L;
 

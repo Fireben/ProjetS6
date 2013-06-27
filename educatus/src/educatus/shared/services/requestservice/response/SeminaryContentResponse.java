@@ -9,7 +9,7 @@ public class SeminaryContentResponse extends AbstractResponse {
 	private static final long serialVersionUID = -7374501950617557773L;
 
 	private SeminaryContent seminaryContent;
-	
+
 	@Override
 	public ResponseTypeEnum GetResponseType() {
 		return ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE;

@@ -37,9 +37,9 @@ import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.dataGrids.Seminary;
+import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -56,6 +56,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     /**
      * {@link SeminarHomePresenter}'s proxy.
      */
+	
     @ProxyCodeSplit
     @NameToken(NameTokens.seminarHomePage)
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
@@ -110,6 +111,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	
 	@Override
 	protected void onReveal() {  	
+		setInSlot(SLOT_content, null);
 		seminarCategoryPresenter.clear(); 
 		createAndSendCategoryRequest(null);
 	}
@@ -161,7 +163,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){	
 				setInSlot(SLOT_content, seminarCategoryPresenter);
 				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
-				SeminaryHomeCategoryContent content = response.getContent();
+				SeminaryHomePageCategoryContent content = response.getContent();
 				
 				// Children, ask for categories
 				if(content.getCategoryChildren().size() != 0) {
