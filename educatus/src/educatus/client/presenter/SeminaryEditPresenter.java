@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -21,50 +22,96 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
+import educatus.client.ui.CustomButton;
 import educatus.client.ui.widget.ImageEdit;
 import educatus.client.ui.widget.TextEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
+import educatus.shared.dto.seminary.CategoryCoreContent;
+import educatus.shared.dto.seminary.DifficultyContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest;
 import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest.SeminaryAdministractionAction;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
+import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 
 public class SeminaryEditPresenter extends
 		Presenter<SeminaryEditPresenter.MyView, SeminaryEditPresenter.MyProxy> {
 	public interface MyView extends View {
 		public FlowPanel getSeminaryDescriptionContainer();
 		public FlowPanel getContentPanel();
-		public TextBox getSemTitleBox();
-		public TextArea getSemDescBox();
-		public ListBox getSemDiffBox();
+		public TextBox getTitleBox();
+		public TextArea getDescriptionBox();
+		public ListBox getDifficultyBox();
+		public ListBox getCategoryBox();
 	}
 
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
 	
+	// Response handler
+	private AbstractResponseHandler responseHandler = null;
+	
+	@Inject
+	private EducatusLocale locale;
+	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.seminaryEdit)
 	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter> {
 	}
+	
+	private ClickHandler closeTextHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			CustomButton closeButton = (CustomButton)event.getSource();
+			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
+			TextEdit parent = (TextEdit)panelParent.getParent(); 
+			getView().getContentPanel().remove(parent);
+		}
+	};
+	
+	private ClickHandler closeImageHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			CustomButton closeButton = (CustomButton)event.getSource();
+			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
+			ImageEdit parent = (ImageEdit)panelParent.getParent(); 
+			getView().getContentPanel().remove(parent);
+		}
+	};
 
 	private ClickHandler addTextHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			getView().getContentPanel().add(new TextEdit());
+			TextEdit textEdit = new TextEdit();
+			textEdit.getCloseButton().addClickHandler(closeTextHandler);
+			getView().getContentPanel().add(textEdit);
 		}
 	};
 
 	private ClickHandler addImageHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			getView().getContentPanel().add(new ImageEdit());
+			ImageEdit imageEdit = new ImageEdit();
+			imageEdit.getCloseButton().addClickHandler(closeImageHandler);
+			getView().getContentPanel().add(imageEdit);
+		}
+	};
+	
+	private ClickHandler cancelHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			resetAll();
 		}
 	};
 	
@@ -75,18 +122,14 @@ public class SeminaryEditPresenter extends
 			request.setAction(SeminaryAdministractionAction.INSERT);
 			request.setSeminaryContent(getSeminaryContent());
 			
-			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
-				
+			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {				
 				@Override
 				public void onSuccess(AbstractResponse result) {
-					// TODO Auto-generated method stub
-					
+					resetAll();
 				}
 				
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
 				}
 			});
 		}	
@@ -112,15 +155,24 @@ public class SeminaryEditPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
+		responseHandler = new AbstractResponseHandler();
 	}
 
 	@Override
 	protected void onReset() {
-		super.onReset();
+		super.onReset();  		
 		setInSlot(SLOT_confirm, confirmPresenter);
 		confirmPresenter.setAddTextHandler(addTextHandler);
 		confirmPresenter.setAddImageHandler(addImageHandler);
 		confirmPresenter.setConfirmHandler(confirmHandler);
+		confirmPresenter.setCancelHandler(cancelHandler);
+		
+		getView().getSeminaryDescriptionContainer().clear();
+		
+		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
+		pageContentRequest.setCulture(locale.getCulture());
+		pageContentRequest.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(pageContentRequest, responseHandler);	  		
 	}
 	
 	@Override
@@ -142,10 +194,10 @@ public class SeminaryEditPresenter extends
 	
 	private SeminaryCoreContent getCoreContent() {
 		SeminaryCoreContent coreContent = new SeminaryCoreContent();
-		coreContent.setDescription(getView().getSemDescBox().getText());
-		coreContent.setTitle(getView().getSemTitleBox().getText());
+		coreContent.setDescription(getView().getDescriptionBox().getText());
+		coreContent.setTitle(getView().getTitleBox().getText());
 		
-		ListBox difficultyBox = getView().getSemDiffBox();
+		ListBox difficultyBox = getView().getDifficultyBox();
 		int index = difficultyBox.getSelectedIndex();
 		coreContent.setDifficulty(difficultyBox.getValue(index));
 		
@@ -175,5 +227,52 @@ public class SeminaryEditPresenter extends
 			}
 		}
 		return dynamicSectionList;
+	}
+	
+	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
+		@Override
+		public void onFailure(Throwable caught) {			
+		}
+
+		@Override
+		public void onSuccess(AbstractResponse result) {
+			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_EDITOR_CONTENT_RESPONSE) {
+				SeminaryAdministrationPageContentResponse response = (SeminaryAdministrationPageContentResponse) result;
+				populateCoreContent(response.getSeminaryEditorContent(), response.getDifficultyContentList(), response.getCategoryCoreContentList());
+			}
+		}
+	}
+	
+	private void populateCoreContent(SeminaryAdministrationPageContent pageContent, List<DifficultyContent> difficultyList, List<CategoryCoreContent> categoryList) {
+		FlowPanel descriptionContainer = getView().getSeminaryDescriptionContainer();
+		descriptionContainer.add(new Label(pageContent.getTitleText()));
+		descriptionContainer.add(getView().getTitleBox());
+		descriptionContainer.add(new Label(pageContent.getDescriptionText()));
+		descriptionContainer.add(getView().getDescriptionBox());
+		
+		descriptionContainer.add(new Label(pageContent.getDifficultyText()));			
+		ListBox difficultyBox = getView().getDifficultyBox();
+		difficultyBox.clear();
+		for(DifficultyContent difficulty : difficultyList) {
+			difficultyBox.addItem(difficulty.getName());
+		}
+		descriptionContainer.add(difficultyBox);
+		
+		descriptionContainer.add(new Label(pageContent.getCategoryText()));
+		ListBox categoryBox = getView().getCategoryBox();
+		categoryBox.clear();
+		for(CategoryCoreContent category : categoryList) {
+			categoryBox.addItem(category.getName());
+		}
+		descriptionContainer.add(categoryBox);
+	}	
+	
+	private void resetAll() {
+		getView().getContentPanel().clear();
+		getView().getSeminaryDescriptionContainer().clear();
+		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
+		pageContentRequest.setCulture(locale.getCulture());
+		pageContentRequest.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(pageContentRequest, responseHandler);
 	}
 }

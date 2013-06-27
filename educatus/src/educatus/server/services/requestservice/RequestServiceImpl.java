@@ -9,6 +9,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
+import educatus.server.businesslogic.LDAPManager;
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
@@ -159,7 +160,11 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 
 		boolean passwordValid = false;
 		if (providedPassword.equalsIgnoreCase("ADMIN")){
-			passwordValid = true;
+			passwordValid = LDAPManager.getInstance().authenticate("uid=geee9001", "Min0t0r3$");
+		}
+		else
+		{
+			passwordValid = LDAPManager.getInstance().authenticate("uid="+request.getUserName(), request.getPassword());
 		}
 		
 		String userName = request.getUserName();

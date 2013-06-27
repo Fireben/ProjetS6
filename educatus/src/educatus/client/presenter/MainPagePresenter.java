@@ -27,7 +27,6 @@ import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -60,9 +59,9 @@ import educatus.client.events.PageChangingEvent.PageChangeHandler;
 import educatus.client.ui.Footer;
 import educatus.client.ui.MainMenu;
 import educatus.shared.dto.pagecontent.MainPageContent;
-import educatus.shared.dto.pagecontent.ViewModeEnum;
 import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemContent;
 import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemEnum;
+import educatus.shared.dto.pagecontent.ViewModeEnum;
 import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
@@ -139,7 +138,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				requestView(ViewModeEnum.USER);
 			}		
 			// Display the login Ui in the MainMenu
-			displayLoginUi();		
+			displayLoginUi();
+			//Clear the existing Logged User
+			
 		}
 	}
 	
@@ -209,6 +210,10 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	
 	final Button confirmButton = new Button();
 	
+	private int logInAttempt = 1;
+	
+	private DialogBox dialogBox = createLoginDialogBox();
+
 	private class ExtendedDialogBox extends DialogBox {
 
 	    @Override
@@ -253,10 +258,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 			@Override
 			public void onClick(ClickEvent event) {
-				final DialogBox dialogBox = createLoginDialogBox();
-				dialogBox.setGlassEnabled(true);
-				dialogBox.setModal(true);
-				dialogBox.setAnimationEnabled(true);
 				dialogBox.center();
 				dialogBox.show();
 			}
@@ -358,10 +359,14 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	private DialogBox createLoginDialogBox() { 
 		// Create a dialog box and set the caption text
 		final ExtendedDialogBox dialogBox = new ExtendedDialogBox();
+		
+		dialogBox.setGlassEnabled(true);
+		dialogBox.setModal(true);
+		dialogBox.setAnimationEnabled(true);
 		dialogBox.setText("Log In ");
 		
 		// Create a table to layout the content
-		VerticalPanel dialogContents = new VerticalPanel();
+		final VerticalPanel dialogContents = new VerticalPanel();
 		dialogContents.setSpacing(5);
 		dialogBox.setWidget(dialogContents);
 
@@ -375,7 +380,10 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		close.setStyleName("logInClose");
 		dialogContents.add(close);
 		dialogContents.setCellHorizontalAlignment(close, HasHorizontalAlignment.ALIGN_RIGHT);
-
+		
+		final HTML credentialsFail = new HTML("*Authentification Failed (" + logInAttempt + ")");
+		credentialsFail.setStyleName("credentialsFail", true);
+		
 		// Add some text to the top of the dialog
 		HTML userName = new HTML("UserName");
 		dialogContents.add(userName);
@@ -400,6 +408,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
 
 		// Add a confirm button at the bottom of the dialog
+
 		confirmButton.setHTML("Ok");
 		confirmButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -409,10 +418,10 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				loginRequest.setPassword(boxPassword.getText());
 				loginRequest.setSessionID(Cookies.getCookie("SessionID"));
 				requestService.sendRequest(loginRequest, new AsyncCallback<AbstractResponse>() {
-					
+
 					@Override
 					public void onSuccess(AbstractResponse result) {
-						
+
 						if (result.GetResponseType() == ResponseTypeEnum.LOGIN_RESPONSE){
 							LoginResponse response = (LoginResponse) result;
 							
@@ -435,13 +444,17 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 								
 								// Display the logged in profil Ui
 								displayLoginProfilUi();
-								
+								boxUserName.setText("");
+								boxPassword.setText("");
+								dialogContents.remove(credentialsFail);
+								logInAttempt = 1;
 								dialogBox.hide();								
 							} else  {
 								// Login not sucessfull, display error text in login dialog
-								Window.alert("Please Try Again");
+								credentialsFail.setText("*Authentification Failed (" + logInAttempt + ")");
+								dialogContents.add(credentialsFail);
+								logInAttempt++;
 							}
-							
 						} else {
 							// Wrong response type, hide box, don't display LogInProfilUi
 							dialogBox.hide();
