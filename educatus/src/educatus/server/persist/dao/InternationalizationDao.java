@@ -12,7 +12,9 @@ import educatus.server.persist.dao.internationalization.Culture;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.ImageContentTranslationEntryPK;
 import educatus.server.persist.dao.internationalization.ImageExternal;
+import educatus.server.persist.dao.internationalization.ImageInternal;
 import educatus.server.persist.dao.internationalization.ImageType;
 import educatus.server.persist.dao.internationalization.Language;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
@@ -23,59 +25,44 @@ import educatus.server.persist.dao.internationalization.VideoContentEntry;
 import educatus.server.persist.dao.internationalization.VideoContentTranslationEntry;
 
 @Singleton
-public class InternationalizationDao
-{
+public class InternationalizationDao {
 	@Inject
 	private EntityManager entityManager;
 
-	public Culture findCultureByCode(String code) throws Exception
-	{
-
-		List<?> resultList = entityManager
-				.createNamedQuery(Culture.FIND_BY_CODE)
+	public Culture findCultureByCode(String code) throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(Culture.FIND_BY_CODE)
 				.setParameter(Culture.FIND_BY_CODE_PARAM_NAME, code)
 				.getResultList();
 
-		if (resultList.size() == 1)
-		{
+		if (resultList.size() == 1) {
 			return (Culture) resultList.get(0);
-		} else
-		{
+		} else {
 			throw new EntityNotFoundException();
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Culture> findAllCulture() throws Exception
-	{
-
+	public List<Culture> findAllCulture() throws Exception {
 		List<?> resultList = entityManager.createNamedQuery(Culture.FIND_ALL)
 				.getResultList();
 
 		return (List<Culture>) resultList;
 	}
 
-	public Language findLanguageByCode(String code) throws Exception
-	{
-
-		List<?> resultList = entityManager
-				.createNamedQuery(Language.FIND_BY_CODE)
+	public Language findLanguageByCode(String code) throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(Language.FIND_BY_CODE)
 				.setParameter(Language.FIND_BY_CODE_PARAM_NAME, code)
 				.getResultList();
 
-		if (resultList.size() == 1)
-		{
+		if (resultList.size() == 1) {
 			return (Language) resultList.get(0);
-		} else
-		{
+		} else {
 			throw new EntityNotFoundException();
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Language> findAllLanguage() throws Exception
-	{
-
+	public List<Language> findAllLanguage() throws Exception {
 		List<?> resultList = entityManager.createNamedQuery(Language.FIND_ALL)
 				.getResultList();
 
@@ -83,72 +70,69 @@ public class InternationalizationDao
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Image> findAllImage() throws Exception
-	{
+	public List<Image> findAllImage() throws Exception {
 
 		List<?> resultList = entityManager.createNamedQuery(Image.FIND_ALL)
 				.getResultList();
 
 		return (List<Image>) resultList;
 	}
-	
-	public ImageExternal findImageById(Integer id)
-	{
+
+	public ImageExternal findImageExternalById(Integer id) {
 		ImageExternal imageExternal = null;
-		try
-		{
-			imageExternal = (ImageExternal)entityManager.find(Image.class, id);
-		} catch (IllegalArgumentException e)
-		{
+		try {
+			imageExternal = (ImageExternal) entityManager.find(Image.class, id);
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return imageExternal; 
+		return imageExternal;
+	}
+	
+	public ImageInternal findImageInternalById(Integer id) {
+		ImageInternal imageInternal = null;
+		try {
+			imageInternal = (ImageInternal) entityManager.find(Image.class, id);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return imageInternal;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ImageContentEntry> findAllImageContentEntry() throws Exception
-	{
+	public List<ImageContentEntry> findAllImageContentEntry() throws Exception {
 
-		List<?> resultList = entityManager.createNamedQuery(
-				ImageContentEntry.FIND_ALL).getResultList();
+		List<?> resultList = entityManager.createNamedQuery(ImageContentEntry.FIND_ALL)
+				.getResultList();
 
 		return (List<ImageContentEntry>) resultList;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ImageContentTranslationEntry> findAllImageContentTranslationEntry()
-			throws Exception
-	{
+	public List<ImageContentTranslationEntry> findAllImageContentTranslationEntry() throws Exception {
 
-		List<?> resultList = entityManager.createNamedQuery(
-				ImageContentTranslationEntry.FIND_ALL).getResultList();
+		List<?> resultList = entityManager.createNamedQuery(ImageContentTranslationEntry.FIND_ALL)
+				.getResultList();
 
 		return (List<ImageContentTranslationEntry>) resultList;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<TextContentEntry> findAllTextContentEntry() throws Exception
-	{
+	public List<TextContentEntry> findAllTextContentEntry() throws Exception {
 
-		List<?> resultList = entityManager.createNamedQuery(
-				TextContentEntry.FIND_ALL).getResultList();
+		List<?> resultList = entityManager.createNamedQuery(TextContentEntry.FIND_ALL)
+				.getResultList();
 
 		return (List<TextContentEntry>) resultList;
 	}
 
-	public TextContentTranslationEntry findTextContentTranslationEntryById(
-			Integer languageId, Integer cultureId, Integer textContentEntryId)
-	{
+	public TextContentTranslationEntry findTextContentTranslationEntryById(Integer languageId, Integer cultureId, Integer textContentEntryId) {
 		TextContentTranslationEntry textContentTranslationEntry;
-		try
-		{
-			TextContentTranslationEntryPK contentEntryPk = new TextContentTranslationEntryPK(
-					languageId, cultureId, textContentEntryId);
-			textContentTranslationEntry = entityManager.find(
-					TextContentTranslationEntry.class, contentEntryPk);
-		} catch (IllegalArgumentException e)
-		{
+		try {
+			TextContentTranslationEntryPK contentEntryPk = new TextContentTranslationEntryPK(languageId, cultureId, textContentEntryId);
+			textContentTranslationEntry = entityManager.find(TextContentTranslationEntry.class, contentEntryPk);
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -156,19 +140,16 @@ public class InternationalizationDao
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<TextContentTranslationEntry> findAllTextContentTranslationEntry()
-			throws Exception
-	{
+	public List<TextContentTranslationEntry> findAllTextContentTranslationEntry() throws Exception {
 
-		List<?> resultList = entityManager.createNamedQuery(
-				TextContentTranslationEntry.FIND_ALL).getResultList();
+		List<?> resultList = entityManager.createNamedQuery(TextContentTranslationEntry.FIND_ALL)
+				.getResultList();
 
 		return (List<TextContentTranslationEntry>) resultList;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Video> findAllVideo() throws Exception
-	{
+	public List<Video> findAllVideo() throws Exception {
 
 		List<?> resultList = entityManager.createNamedQuery(Video.FIND_ALL)
 				.getResultList();
@@ -177,39 +158,23 @@ public class InternationalizationDao
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<VideoContentEntry> findAllVideoContentEntry() throws Exception
-	{
-
-		List<?> resultList = entityManager.createNamedQuery(
-				VideoContentEntry.FIND_ALL).getResultList();
+	public List<VideoContentEntry> findAllVideoContentEntry() throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(VideoContentEntry.FIND_ALL)
+				.getResultList();
 
 		return (List<VideoContentEntry>) resultList;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<VideoContentTranslationEntry> findAllVideoContentTranslationEntry()
-			throws Exception
-	{
-
-		List<?> resultList = entityManager.createNamedQuery(
-				VideoContentTranslationEntry.FIND_ALL).getResultList();
+	public List<VideoContentTranslationEntry> findAllVideoContentTranslationEntry() throws Exception {
+		List<?> resultList = entityManager.createNamedQuery(VideoContentTranslationEntry.FIND_ALL)
+				.getResultList();
 
 		return (List<VideoContentTranslationEntry>) resultList;
 	}
 
-	public TextContentTranslationEntry getTextContentTranslationEntry(
-			TextContentTranslationEntryPK id)
-	{
+	public TextContentTranslationEntry insertTextContentTranslationEntry(String languageCode, String cultureCode, String translation) throws Exception {
 
-		return null;
-	}
-
-	public TextContentTranslationEntry insertTextContentTranslationEntry(
-			String languageCode, String cultureCode, String translation)
-			throws Exception
-	{
-
-		entityManager.getTransaction().begin();
 		Language language = findLanguageByCode(languageCode);
 		Culture culture = findCultureByCode(cultureCode);
 
@@ -233,22 +198,14 @@ public class InternationalizationDao
 
 		// Insert Object
 		entityManager.persist(tcte);
-		// TODO check for rollback or throw exception higher ?
-		entityManager.getTransaction().commit();
 
 		return tcte;
 	}
 
-	public TextContentTranslationEntry insertTextContentTranslationEntry(
-			String languageCode, String cultureCode, String translation,
-			int textContentEntryId) throws Exception
-	{
-
-		entityManager.getTransaction().begin();
+	public TextContentTranslationEntry insertTextContentTranslationEntry(String languageCode, String cultureCode, String translation, int textContentEntryId) throws Exception {
 		Language language = findLanguageByCode(languageCode);
 		Culture culture = findCultureByCode(cultureCode);
-		TextContentEntry tece = entityManager.find(TextContentEntry.class,
-				textContentEntryId);
+		TextContentEntry tece = entityManager.find(TextContentEntry.class, textContentEntryId);
 
 		TextContentTranslationEntry tcte = new TextContentTranslationEntry();
 
@@ -267,27 +224,66 @@ public class InternationalizationDao
 
 		// Insert Object
 		entityManager.persist(tcte);
-		// TODO check for rollback or throw exception higher ?
-		entityManager.getTransaction().commit();
 
 		return tcte;
 	}
 	
+	public ImageContentTranslationEntry insertImageTranslationEntry(String languageCode, String cultureCode, int imageId) throws Exception{
+
+		Language language = findLanguageByCode(languageCode);
+		Culture culture = findCultureByCode(cultureCode);
+
+		ImageContentEntry imce = new ImageContentEntry();
+		entityManager.persist(imce);
+		
+		Image image = entityManager.find(Image.class, imageId);
+
+		ImageContentTranslationEntry imte = new ImageContentTranslationEntry();
+
+		// Create a primary key
+		ImageContentTranslationEntryPK pk = new ImageContentTranslationEntryPK();
+		pk.setLanguageId(language.getId());
+		pk.setCultureId(culture.getId());
+		pk.setImageContentEntryId(imce.getId());
+
+		// Assign primary key and objects
+		imte.setId(pk);
+		imte.setCulture(culture);
+		imte.setLanguage(language);
+		imte.setImagecontententry(imce);
+		imte.setImage(image);
+
+		// Insert Object
+		entityManager.persist(imte);
+
+		return imte;		
+	}
+
 	public ImageExternal insertImageExternal(String externalUrl) throws Exception {
 
-		entityManager.getTransaction().begin();
-		
 		ImageType externalType = entityManager.find(ImageType.class, 2);
-		
+
 		ImageExternal imageExternal = new ImageExternal();
 		imageExternal.setUrl(externalUrl);
 		imageExternal.setType(externalType);
-		
+
 		// Insert Object
 		entityManager.persist(imageExternal);
-		// TODO check for rollback or throw exception higher ?
-		entityManager.getTransaction().commit();
-		
+
 		return imageExternal;
+	}
+	
+	public ImageInternal insertImageInternal(String imageName, byte[] content){
+		
+		ImageType internalType = entityManager.find(ImageType.class, 1);
+		
+		ImageInternal imageInternal = new ImageInternal();
+		imageInternal.setImageName(imageName);
+		imageInternal.setImageContent(content);
+		imageInternal.setType(internalType);
+		
+		entityManager.persist(imageInternal);
+		
+		return imageInternal;
 	}
 }

@@ -32,74 +32,84 @@ import educatus.client.ui.MainMenu;
  * This is the top-level view of the application. Every time another presenter
  * wants to reveal itself, {@link MainPageView} will add its content of the
  * target inside the {@code mainContantPanel}.
- *
+ * 
  * @author Christian Goudreau
  */
 public class MainPageView extends ViewImpl implements MyView {
-  interface MainPageViewUiBinder extends UiBinder<Widget, MainPageView> {
-  }
+	interface MainPageViewUiBinder extends UiBinder<Widget, MainPageView> {
+	}
 
-  private static MainPageViewUiBinder uiBinder = GWT.create(MainPageViewUiBinder.class);
+	private static MainPageViewUiBinder uiBinder = GWT.create(MainPageViewUiBinder.class);
+	
+	private final Widget widget;
 
-  public final Widget widget;
+	@UiField
+	FlowPanel headerPanel;
 
-  @UiField
-  FlowPanel mainContentPanel;
-  
-  @UiField 
-  MainMenu menuPanel;
+	@UiField
+	FlowPanel mainContentPanel;
 
-  @UiField
-  Footer footerPanel;
-  
-  public MainPageView() {
-    widget = uiBinder.createAndBindUi(this);
-  }
+	private MainMenu menuPanel = new MainMenu();
 
-  public Widget asWidget() {
-    return widget;
-  }
+	@UiField
+	Footer footerPanel;
 
-  public void setInSlot(Object slot, Widget content) {
-    if (slot == MainPagePresenter.TYPE_SetMainContent) {
-      setMainContent(content);
-    } else {
-      super.setInSlot(slot, content);
-    }
-  }
+	public MainPageView() {
+		widget = uiBinder.createAndBindUi(this);
+	}
 
-  private void setMainContent(Widget content) {
-    mainContentPanel.clear();
-    
-    if (content != null) {
-      mainContentPanel.add(content);
-    }
-  }
+	public Widget asWidget() {
+		return widget;
+	}
 
-  public void showLoading(boolean visibile) {
-  }
-  
-  public FlowPanel getMainContentPanel() {
-	return mainContentPanel;
-  }
+	public void setInSlot(Object slot, Widget content) {
+		if (slot == MainPagePresenter.TYPE_SetMainContent) {
+			setMainContent(content);
+		} else {
+			super.setInSlot(slot, content);
+		}
+	}
+
+	private void setMainContent(Widget content) {
+		mainContentPanel.clear();
+
+		if (content != null) {
+			mainContentPanel.add(content);
+		}
+	}
+
+	public void showLoading(boolean visibile) {
+	}
+
+	public FlowPanel getMainContentPanel() {
+		return mainContentPanel;
+	}
 
 	public void setMainContentPanel(FlowPanel mainContentPanel) {
 		this.mainContentPanel = mainContentPanel;
 	}
-	
-	public MainMenu getMenuPanel() {
+
+	public MainMenu getMainMenu() {
 		return menuPanel;
 	}
-	
+
 	public void setMenuPanel(MainMenu menuPanel) {
 		this.menuPanel = menuPanel;
 	}
-	
+
 	public Footer getFooterPanel() {
 		return footerPanel;
 	}
-	
+
 	public void setFooterPanel(Footer footerPanel) {
 		this.footerPanel = footerPanel;
+	}
+
+	public FlowPanel getHeaderPanel() {
+		return headerPanel;
+	}
+
+	public void setHeaderPanel(FlowPanel headerPanel) {
+		this.headerPanel = headerPanel;
 	}
 }

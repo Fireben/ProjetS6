@@ -2,53 +2,14 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
 
-<g:HTMLPanel>
-	   <style>
-			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
-			.art-content .art-postcontent-0 .layout-item-1 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-color:#FAFAFA; color: #DEDEDE; background: ;  }
-			.art-content .art-postcontent-0 .layout-item-2 { color: #FFFFFF; background: ; padding: 0px;  }
-			.art-content .art-postcontent-0 .layout-item-3 { margin-top: 20px;margin-bottom: 20px;  }
-			.art-content .art-postcontent-0 .layout-item-4 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
-			.art-content .art-postcontent-0 .layout-item-5 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
-			.ie7 .post .layout-cell {border:none !important; padding:0 !important; }
-			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
-		</style> 	
-	<div id="art-mainPage">		
-			<div class="art-sheet clearfix">
-				<div class="art-layout-wrapper clearfix">
-					<div class="art-content-layout">
-						<div class="art-content-layout-row">						    
-							<div class="art-layout-cell art-content clearfix">
-								<article class="art-post art-article">	    
-									<div class="art-postcontent art-postcontent-0 clearfix">	    
-										<div class="art-content-layout-wrapper layout-item-3">
-											<div class="art-content-layout">
-												<div class="art-content-layout-row">
-													<h3 style="float: right;">
-														<span ui:field="writtenBy"></span>
-														<a class="art-postheader" ui:field="authorEmail" href="">
-															<span ui:field="author"></span>
-														</a> 
-														<span ui:field="createdDate"></span>
-														 <br/>
-														<span ui:field="modifyBy"></span>
-														<a class="art-postheader" ui:field= "modifEmail" href="">
-															<span ui:field="modif"></span>
-														</a>
-														<span ui:field="modifiedDate"></span>
-													</h3>
-												 	<g:FlowPanel ui:field="dynamicSectionContainer">
-													</g:FlowPanel>
-			 									</div>
-			 								</div>
-			 							</div>
-			 						</div>
-			 					</article>
-			 				</div>
-			 			</div>
-			 		</div>
-			 	</div> 
-			 </div>
-		</div> 
+	<g:HTMLPanel>	
+	    <g:HorizontalPanel width = "100%">
+		    <g:FlowPanel ui:field="seminaryContainer">
+		    	<g:Label ui:field="titleLabel">
+		    	</g:Label>
+		    	<g:FlowPanel ui:field="dynamicSectionContainer"/>
+	    	</g:FlowPanel>
+			<g:FlowPanel ui:field="descriptionContainer"/>	
+		</g:HorizontalPanel>				 									
 	</g:HTMLPanel>
 </ui:UiBinder> 

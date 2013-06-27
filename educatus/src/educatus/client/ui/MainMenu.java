@@ -16,10 +16,15 @@
 
 package educatus.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -28,82 +33,77 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Christian Goudreau
  */
-public class MainMenu extends Composite
-{
-	interface MainMenuUiBinder extends UiBinder<Widget, MainMenu>
-	{
+public class MainMenu extends Composite {
+	interface MainMenuUiBinder extends UiBinder<Widget, MainMenu> {
 	}
+	
+	private static String inactiveMenuItemClassName = "gwt-InlineHyperlink";
+	private static String activeMenuItemClassName = "active";
+	
+	private List<InlineHyperlink> hyperLinkList = new ArrayList<InlineHyperlink>();
 
-	private static MainMenuUiBinder uiBinder = GWT
-			.create(MainMenuUiBinder.class);
+	private static MainMenuUiBinder uiBinder = GWT.create(MainMenuUiBinder.class);
+	
+	@UiField
+	UListElement mainMenuList;
 
 	@UiField
-	InlineHyperlink mainMenuHomeButton;
+	LogIn logInUi;
+	
 	@UiField
-	InlineHyperlink mainMenuSeminarsButton;
-	@UiField
-	InlineHyperlink mainMenuProfilButton;
-	@UiField
-	InlineHyperlink mainMenuViewSeminaryButton;
-	@UiField
-	InlineHyperlink mainMenuEditSeminaryButton;
+	LogInProfil logInProfilUi;
 
-	public MainMenu()
-	{
+	public MainMenu() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-
 	// Getter and Setter
-	public InlineHyperlink getMainMenuHomeButton()
-	{
-		return mainMenuHomeButton;
+	public LogIn getLogInUi() {
+		return logInUi;
 	}
 
-	public void setMainMenuHomeButton(InlineHyperlink mainMenuHomeButton)
-	{
-		this.mainMenuHomeButton = mainMenuHomeButton;
+	public void setLogInUi(LogIn logInUi) {
+		this.logInUi = logInUi;
 	}
 
-	public InlineHyperlink getMainMenuSeminarsButton()
-	{
-		return mainMenuSeminarsButton;
+	public LogInProfil getLogInProfilUi() {
+		return logInProfilUi;
 	}
 
-	public void setMainMenuSeminarsButton(InlineHyperlink mainMenuSeminarsButton)
-	{
-		this.mainMenuSeminarsButton = mainMenuSeminarsButton;
+	public void setLogInProfilUi(LogInProfil logInProfilUi) {
+		this.logInProfilUi = logInProfilUi;
 	}
 
-	public InlineHyperlink getMainMenuProfilButton()
-	{
-		return mainMenuProfilButton;
+	public UListElement getMainMenuList() {
+		return mainMenuList;
 	}
 
-	public void setMainMenuProfilButton(InlineHyperlink mainMenuProfilButton)
-	{
-		this.mainMenuProfilButton = mainMenuProfilButton;
-	}
+	public void appendMainMenuItem(String itemName, String targetHistoryToken) {
 
-	public InlineHyperlink getMainMenuViewSeminaryButton()
-	{
-		return mainMenuViewSeminaryButton;
-	}
-
-	public void setMainMenuViewSeminaryButton(
-			InlineHyperlink mainMenuViewSeminaryButton)
-	{
-		this.mainMenuViewSeminaryButton = mainMenuViewSeminaryButton;
+		HTMLPanel hyperLinkPanel = new HTMLPanel("li", "");
+		InlineHyperlink hyperlink = new InlineHyperlink(itemName, targetHistoryToken);
+		hyperLinkPanel.add(hyperlink);
+		mainMenuList.insertAfter(hyperLinkPanel.getElement(), null);
+		hyperLinkList.add(hyperlink);
 	}
 	
-	public InlineHyperlink getMainMenuEditSeminaryButton()
-	{
-		return mainMenuEditSeminaryButton;
+	public void setActiveMenuItem(String activeNameToken){		
+		for (InlineHyperlink hyperlink : hyperLinkList) {
+			if (hyperlink.getTargetHistoryToken().equals(activeNameToken)){
+				hyperlink.getElement().setClassName(activeMenuItemClassName);
+			} else {
+				hyperlink.getElement().setClassName(inactiveMenuItemClassName);
+			}
+		}
 	}
 
-	public void setMainMenuEditSeminaryButton(
-			InlineHyperlink mainMenuEditSeminaryButton)
-	{
-		this.mainMenuEditSeminaryButton = mainMenuEditSeminaryButton;
+	public void clearMainMenuList() {
+		while (mainMenuList.getChildCount() > 0) {
+			com.google.gwt.dom.client.Node lastChild = mainMenuList.getLastChild();
+			if (lastChild != null){
+				mainMenuList.removeChild(lastChild);				
+			}
+		}
+		hyperLinkList.clear();
 	}
 }

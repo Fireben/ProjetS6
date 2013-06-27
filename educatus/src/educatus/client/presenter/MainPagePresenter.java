@@ -16,12 +16,24 @@
 
 package educatus.client.presenter;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.i18n.client.LocaleInfo;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -30,6 +42,8 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.LockInteractionEvent;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
@@ -41,12 +55,19 @@ import educatus.client.events.PageChangingEvent;
 import educatus.client.events.PageChangingEvent.PageChangeHandler;
 import educatus.client.ui.Footer;
 import educatus.client.ui.MainMenu;
-import educatus.shared.dto.MainPageContent;
+import educatus.shared.dto.pagecontent.MainPageContent;
+import educatus.shared.dto.pagecontent.ViewModeEnum;
+import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemContent;
+import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemEnum;
+import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.LoginRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
+import educatus.shared.services.requestservice.response.LoginResponse;
+import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 
 /**
@@ -73,13 +94,16 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	public interface MyView extends View {
 		public FlowPanel getMainContentPanel();
 
-		public MainMenu getMenuPanel();
+		// TODO, pourquoi un header panel, si on a accès direct au menuPanel ???
+		public FlowPanel getHeaderPanel();
+
+		public MainMenu getMainMenu();
 
 		public Footer getFooterPanel();
 
 		void showLoading(boolean visibile);
 	}
-	
+
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
 
@@ -96,12 +120,70 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		public void onClick(ClickEvent event) {
 			locale.setCulture(this.culture);
 			locale.setLanguage(this.language);
-			
-			//TODO Modify behavior 
+
+			// TODO Modify behavior
 			ResetPresentersEvent.fire(MainPagePresenter.this);
 		}
 	}
 	
+	private class LogoutButtonClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (request.getViewMode() == ViewModeEnum.ADMIN || placeManager.getCurrentPlaceRequest().getNameToken() == NameTokens.getProfil()){
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
+				requestView(ViewModeEnum.USER);
+			}		
+			// Display the login Ui in the MainMenu
+			displayLoginUi();		
+		}
+	}
+	
+	private class AdminModeButtonClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// Comportement d'un toggle button ?
+			if (request.getViewMode() == ViewModeEnum.ADMIN){
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
+				requestView(ViewModeEnum.USER);
+			} else {
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getSeminaryEdit()));
+				requestView(ViewModeEnum.ADMIN);
+			}
+		}
+	}
+	
+	private class ViewProfileButtonClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			placeManager.revealPlace(new PlaceRequest(NameTokens.getProfil()));			
+		}
+	}
+	
+	private class AbstractRequestHandler implements AsyncCallback<AbstractResponse> {
+
+		@Override
+		public void onSuccess(AbstractResponse result) {
+			if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
+				MainPageContentResponse response = (MainPageContentResponse) result;						
+				fillPageWithContent(response.getMainPageContent());
+				
+				if (response.getViewMode() == ViewModeEnum.ADMIN) {
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("User");
+				} else {
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("Admin");
+				}
+			}
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+		}
+	}
+
 	/**
 	 * Use this in leaf presenters, inside their {@link #revealInParent} method.
 	 */
@@ -109,15 +191,20 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 
 	@Inject
-	public MainPagePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
+	public MainPagePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager) {
 		super(eventBus, view, proxy);
+		this.placeManager = placeManager;
 	}
-	
+
 	@Inject
 	private EducatusLocale locale;
-	
-	private MainPageContentRequest request = new MainPageContentRequest();
 
+	private PlaceManager placeManager;
+
+	private MainPageContentRequest request = new MainPageContentRequest();
+	
+	private AbstractRequestHandler requestHandler = new AbstractRequestHandler();
+	
 	@Override
 	protected void revealInParent() {
 		RevealRootContentEvent.fire(this, this);
@@ -137,11 +224,31 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	@Override
 	protected void onBind() {
 		super.onBind();
-		
+		getView().getMainMenu().getLogInUi().getLogInLink().addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				final DialogBox dialogBox = createLoginDialogBox();
+				dialogBox.setGlassEnabled(true);
+				dialogBox.setModal(true);
+				dialogBox.setAnimationEnabled(true);
+				dialogBox.center();
+				dialogBox.show();
+			}
+		});
+
+		// Set click handlers for LogInProfilUi
+		getView().getMainMenu().getLogInProfilUi().getLogOutLink().addClickHandler(new LogoutButtonClickHandler());
+		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonHandler(new AdminModeButtonClickHandler());
+		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setProfilButtonHandler(new ViewProfileButtonClickHandler());
+
+		// Default -> display Login
+		displayLoginUi();
+		getView().getHeaderPanel().add(getView().getMainMenu());
+
 		getView().getFooterPanel().getEnglishButton().addClickHandler(new TranslateClickHandler("CA", "en"));
 		getView().getFooterPanel().getFrenchButton().addClickHandler(new TranslateClickHandler("CA", "fr"));
-		
-		
+
 		addRegisteredHandler(PageChangingEvent.getType(), new PageChangeHandler() {
 			@Override
 			public void onPageChange(PageChangingEvent event) {
@@ -149,72 +256,189 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			}
 		});
 	}
-	
-	@Override 
+
+	@Override
 	protected void onReset() {
 		super.onReset();
-		
-		if(request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage())
-		{
+
+		if (request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage()) {
 			request.setCulture(locale.getCulture());
 			request.setLanguage(locale.getLanguage());
-			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
-
-				@Override
-				public void onSuccess(AbstractResponse result) {
-					if (result.GetResponseType() == ResponseTypeEnum.MAIN_PAGE_CONTENT_RESPONSE) {
-						MainPageContentResponse response = (MainPageContentResponse) result;
-						MainPageContent content = response.getMainPageContent();
-						
-						// Move this to dedicated method, as in the HomePresenter
-						getView().getMenuPanel().getMainMenuHomeButton().getElement().setInnerText(content.getMainMenuContent().getHomeItem().getName());
-						getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setInnerText(content.getMainMenuContent().getSeminaryItem().getName());
-						getView().getMenuPanel().getMainMenuProfilButton().getElement().setInnerText(content.getMainMenuContent().getProfilItem().getName());
-						getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setInnerText(content.getMainMenuContent().getViewerItem().getName());
-						getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setInnerText(content.getMainMenuContent().getEditorItem().getName());
-					}
-				}
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-
-				}
-			});
+			requestService.sendRequest(request, requestHandler);
 		}
+	}
+	
+	private void requestView(ViewModeEnum viewMode) {
+		request.setViewMode(viewMode);
+		requestService.sendRequest(request, requestHandler);
+	}
+	
+	private void displayLoginUi(){
+		getView().getMainMenu().getLogInProfilUi().setVisible(false);
+		getView().getMainMenu().getLogInUi().setVisible(true);	
+	}
+	
+	private void displayLoginProfilUi(){
+		getView().getMainMenu().getLogInProfilUi().setVisible(true);
+		getView().getMainMenu().getLogInUi().setVisible(false);	
+	}
+	
+	private void fillPageWithContent(MainPageContent content){
+		// We clear the MainMenuList
+		getView().getMainMenu().clearMainMenuList();
+		
+		MainMenu mainMenu = getView().getMainMenu();
+		// We fill the MainMenuList
+		for (MainMenuItemContent mainMenuItemContent : content.getMainMenuContent().getMainMenuItemContentList()) {
+			
+			String name = mainMenuItemContent.getName();
+			String nameToken = getNameTokenFromMenuItemType(mainMenuItemContent.getType());
+			// Append to the MainMenu
+			mainMenu.appendMainMenuItem(name, nameToken);
+		}		
+	}
+	
+	private String getNameTokenFromMenuItemType(MainMenuItemEnum type){
+		String nameToken = null;
+		
+		switch (type) {
+			case HOME_ITEM:
+				nameToken = NameTokens.getHomePage();
+				break;
+			case SEMINARS_HOME_ITEM:
+				nameToken = NameTokens.getSeminarHomePage();
+				break;
+			case PROFILE_ITEM:
+				nameToken = NameTokens.getProfil();
+				break;
+			case CREATE_SEMINAR_ITEM:
+				nameToken = NameTokens.getSeminaryEdit();
+				break;
+			case CATEGORY_ADMINISTRATION_ITEM:
+				nameToken = NameTokens.getCategoryAdministration();
+				break;
+			// Default Token leads to HomePage
+			default:
+				nameToken = NameTokens.getHomePage();
+				break;
+		}		
+		return nameToken;
 	}
 
 	private void setActiveMenuItem(String name) {
-		if (name == NameTokens.getHomePage()) {
-			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("active");
-			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-		} else if (name == NameTokens.getProfil()) {
-			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("active");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-		} else if (name == NameTokens.getSeminarHomePage()) {
-			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("active");
-			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-		} else if (name == NameTokens.getViewSeminary()) {
-			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("active");
-			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-		} else if (name == NameTokens.getSeminaryEdit()) {
-			getView().getMenuPanel().getMainMenuHomeButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuSeminarsButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuProfilButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuViewSeminaryButton().getElement().setClassName("gwt-InlineHyperlink");
-			getView().getMenuPanel().getMainMenuEditSeminaryButton().getElement().setClassName("active");
+		// Delegate to the MainMenu
+		getView().getMainMenu().setActiveMenuItem(name);
+	}
+
+	private DialogBox createLoginDialogBox() {
+		// Create a dialog box and set the caption text
+		final DialogBox dialogBox = new DialogBox();
+		dialogBox.setText("Log In ");
+
+		// Create a table to layout the content
+		VerticalPanel dialogContents = new VerticalPanel();
+		dialogContents.setSpacing(5);
+		dialogBox.setWidget(dialogContents);
+
+		Anchor close = new Anchor("X");
+		close.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				dialogBox.hide();
+			}
+		});
+		close.setStyleName("logInClose");
+		dialogContents.add(close);
+		dialogContents.setCellHorizontalAlignment(close, HasHorizontalAlignment.ALIGN_RIGHT);
+
+		// Add some text to the top of the dialog
+		HTML userName = new HTML("UserName");
+		dialogContents.add(userName);
+		dialogContents.setCellHorizontalAlignment(userName, HasHorizontalAlignment.ALIGN_LEFT);
+
+		// Add an box to the dialog
+		final TextBox boxUserName = new TextBox();
+		boxUserName.setStyleName("logInBox", true);
+		dialogContents.add(boxUserName);
+		dialogContents.setCellHorizontalAlignment(boxUserName, HasHorizontalAlignment.ALIGN_CENTER);
+
+		// Add some text to the top of the dialog
+		HTML password = new HTML("Password");
+		dialogContents.add(password);
+		dialogContents.setCellHorizontalAlignment(password, HasHorizontalAlignment.ALIGN_LEFT);
+
+		// Add an box to the dialog
+		final PasswordTextBox boxPassword = new PasswordTextBox();
+		boxPassword.setStyleName("boxPassword", true);
+		boxPassword.setStyleName("logInBox", true);
+		dialogContents.add(boxPassword);
+		dialogContents.setCellHorizontalAlignment(boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
+
+		// Add a confirm button at the bottom of the dialog
+		Button confirmButton = new Button("Ok", new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				LoginRequest loginRequest = new LoginRequest();
+				loginRequest.setUserName(boxUserName.getText());
+				loginRequest.setPassword(boxPassword.getText());
+				loginRequest.setSessionID(Cookies.getCookie("SessionID"));
+				requestService.sendRequest(loginRequest, new AsyncCallback<AbstractResponse>() {
+					
+					@Override
+					public void onSuccess(AbstractResponse result) {
+						
+						if (result.GetResponseType() == ResponseTypeEnum.LOGIN_RESPONSE){
+							LoginResponse response = (LoginResponse) result;
+							
+							if (response.getLoginStatus() == LoginStatus.SUCCESS){
+								// Login Sucessfull								
+								String sessionID = response.getSessionID();
+								
+								// Remember 30 minutes
+								Date expiration = new Date(System.currentTimeMillis() + 1000 * 60 * 30);								
+								// Set the sessionID cookie
+								Cookies.setCookie("SessionID", sessionID, expiration);
+								
+								// User data
+								UserCoreContent userCoreContent = response.getUserCoreContent();
+								
+								getView().getMainMenu().getLogInProfilUi().getLogInName().setText(
+										userCoreContent.getFirstName() + " " + 
+										userCoreContent.getLastName()
+								);
+								
+								// Display the logged in profil Ui
+								displayLoginProfilUi();
+								
+								dialogBox.hide();								
+							} else  {
+								// Login not sucessfull, display error text in login dialog
+							}
+							
+						} else {
+							// Wrong response type, hide box, don't display LogInProfilUi
+							dialogBox.hide();
+						}						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// On failure, hide box, don't display LogInProfilUi
+						dialogBox.hide();						
+					}
+				});
+			}
+		});
+		confirmButton.setStyleName("backButton", true);
+		dialogContents.add(confirmButton);
+		if (LocaleInfo.getCurrentLocale().isRTL()) {
+			dialogContents.setCellHorizontalAlignment(confirmButton, HasHorizontalAlignment.ALIGN_LEFT);
+
+		} else {
+			dialogContents.setCellHorizontalAlignment(confirmButton, HasHorizontalAlignment.ALIGN_RIGHT);
 		}
+
+		// Return the dialog box
+		return dialogBox;
 	}
 }

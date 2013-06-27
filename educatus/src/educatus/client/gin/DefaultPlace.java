@@ -27,14 +27,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used in {@link EducatusPlaceManager} and is bind
- * in {@link ClientModule}. It's purpose is to bind the default place to a
- * default presenter.
- *
+ * This annotation is used in {@link EducatusPlaceManager} and is bind in
+ * {@link ClientModule}. It's purpose is to bind the default place to a default
+ * presenter.
+ * 
  * @author Christian Goudreau
  */
 @BindingAnnotation
-@Target({FIELD, PARAMETER, METHOD})
+@Target({ FIELD, PARAMETER, METHOD })
 @Retention(RUNTIME)
 public @interface DefaultPlace {
 }

@@ -10,15 +10,14 @@
 				<div class="art-footer-inner">
 					<div class="art-content-layout">
 						<div class="art-content-layout-row">
-							<div class="art-layout-cell layout-item-0" style="width: 50%">
-								<p style="float:left;">
-									<a href="#"><img width="32" height="32" alt="" src="images/rss_32-2.png"/></a>
-									<a href="https://www.facebook.com/Educateudes" target="_blank"><img width="32" height="32" alt="" src="images/facebook_32-2.png" class=""/></a>
-									<a href="#"><img width="32" height="32" alt="" src="images/twitter_32-2.png" class=""/></a>
+							<div class="art-layout-cell layout-item-0" style="width: 50%; padding: 0px">
+								<p style="float:left;padding: 8px 0px 0px 0px;">
+									<a href="#"><img width="32" height="32" alt="" src="images/1370648521_social_rss_box_orange.png"/></a>
+									<a href="https://www.facebook.com/Educateudes" target="_blank"><img width="32" height="32" alt="" src="images/1370648476_social_facebook_box_blue.png" class=""/></a>
 								</p>
 							</div>
-							<div class="art-layout-cell layout-item-0" style="width: 50%">
-								<div style="float:right;">
+							<div class="art-layout-cell layout-item-0" style="width: 50%; padding: 0px">
+								<div style="float:right; padding: 4px 0px 0px 0px;">
 								<g:PushButton ui:field='frenchButton' enabled='true' addStyleNames="languageButton">
 								   <g:upFace image='{res.frenchLanguageButton}' />
 								 </g:PushButton>
@@ -26,12 +25,12 @@
 								   <g:upFace image='{res.englishLanguageButton}' />
 								 </g:PushButton>
 								</div>
-								<p style="float:right; padding:7px 4px 0px 11px">Copyright © 2013 All Rights Reserved. EducateUdeS Team.</p>
 							</div>
 						</div>
 					</div>
 					<p class="art-page-footer">
-						<span id="art-footnote-links">Created with <a href="http://www.artisteer.com/" target="_blank">Artisteer</a>, modified by EducateUdeS Team</span>
+						<span id="art-footnote-links" style="padding-right: 120px;">Created with <a href="http://www.artisteer.com/" target="_blank">Artisteer</a>, modified by EducateUdeS Team</span>
+						<span id="art-footnote-links">Copyright © 2013 All Rights Reserved. EducateUdeS Team. </span>
 					</p>
 				</div>
 			</div>

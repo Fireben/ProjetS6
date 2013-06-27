@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
+	
+	<g:HTMLPanel>
+	    <div id="art-mainPage" style="top: 17px;left: 220px;background: none">		
+  			<div class="art-sheet clearfix" style="background: none">
+				<div class="art-layout-wrapper clearfix">
+					<div class="art-content-layout">
+						<div class="art-content-layout-row">
+						    
+							<div class="art-layout-cell art-content clearfix">
+								<article class="art-post art-article">	    
+									<div class="art-postcontent art-postcontent-0 clearfix">
+										<g:Anchor ui:field="logInLink" text="Log In" styleName="logInLink"/>
+									</div>	
+								</article>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</g:HTMLPanel>
+</ui:UiBinder>

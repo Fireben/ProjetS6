@@ -46,7 +46,7 @@
 				<div class="art-blockcontent">
 					<h4>
 						<div>
-							<g:FlowPanel styleName='{style.titleDesc}'>
+							<g:FlowPanel ui:field="seminaryDescriptionContainer" styleName='{style.titleDesc}'>
 								<g:Label ui:field="semTitleLabel" styleName='{style.titleLabel}'>Titre :</g:Label>
 								<g:TextBox name="semTitleBox" ui:field="semTitleBox"
 									styleName='{style.titleBox}' />
@@ -54,7 +54,7 @@
 								<g:TextArea name="semDescBox" ui:field="semDescBox"
 									styleName='{style.descBox}' />
 								<g:Label styleName='{style.titleLabel}'>Difficulty :</g:Label>
-								<g:ListBox styleName='{style.difficultyList}'>
+								<g:ListBox ui:field="semDiffBox" styleName='{style.difficultyList}'>
 									<g:item>
 										easy
 									</g:item>
@@ -64,7 +64,7 @@
 								</g:ListBox>
 							</g:FlowPanel>
 
-							<g:HTMLPanel ui:field="contentPanel" styleName="{style.contentPanel}" />
+							<g:FlowPanel ui:field="contentPanel" styleName="{style.contentPanel}" />
 							<g:HTMLPanel ui:field="confirmPanel"/>
 						</div>
 					</h4>

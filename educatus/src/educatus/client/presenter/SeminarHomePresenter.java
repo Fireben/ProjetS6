@@ -32,18 +32,22 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.dataGrids.Seminary;
+import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
+import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 
 /**
  * @author Nicolas Michaud
@@ -52,15 +56,20 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
     /**
      * {@link SeminarHomePresenter}'s proxy.
      */
+	
     @ProxyCodeSplit
     @NameToken(NameTokens.seminarHomePage)
     public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
     }
     
+	@Inject
+	private EducatusLocale locale;
+    
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
+	
 	// Response handler
-	AbstractResponseHandler responseHandler = null;
+	private AbstractResponseHandler responseHandler = null;
     
     public static final Object SLOT_content = new Object();
 
@@ -102,17 +111,15 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	
 	@Override
 	protected void onReveal() {  	
+		setInSlot(SLOT_content, null);
 		seminarCategoryPresenter.clear(); 
-  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
-  		requestService.sendRequest(request, responseHandler);
+		createAndSendCategoryRequest(null);
 	}
 	
 	private ClickHandler backClickHandler = new ClickHandler() {
 		@Override
-		public void onClick(ClickEvent event) {
-			SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
-	  		request.setParentCategory(null);
-	  		requestService.sendRequest(request, responseHandler);		  					
+		public void onClick(ClickEvent event) {	 
+			createAndSendCategoryRequest(null);
 		}
 	};
 	
@@ -127,19 +134,23 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private void changeCategoryPanel(int id) {  		
   		CategoryCoreContent parentCategory = new CategoryCoreContent();
   		parentCategory.setId(id);  		
-  		
-  		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
-  		request.setParentCategory(parentCategory);
-  		requestService.sendRequest(request, responseHandler);
+  		createAndSendCategoryRequest(parentCategory);
 	}
 	
-	private void setSeminaryList() {	
+	private void setSeminaryList(List<SeminaryCoreContent> seminaryCoreContentList) {	
+
 		List<Seminary> seminaries = new ArrayList<Seminary>();
-		for(int i=1;i<=5;i++) {
-			seminaries.add(new Seminary(i, "Sauce", "Comment faire de la sauce ?", "Marc-Andre Beaudry", null, 4));
-		}	
-		for(int j=6;j<=15;j++) {
-			seminaries.add(new Seminary(j, "Sauce Nuage", "Comment faire de la sauce nuage quand il fait beau?", "Nicolas Michaud", null, 2));
+		
+		for (SeminaryCoreContent seminaryCoreContent : seminaryCoreContentList) {
+			Seminary seminary = new Seminary(
+					seminaryCoreContent.getId(), 
+					seminaryCoreContent.getTitle(), 
+					seminaryCoreContent.getDescription(), 
+					seminaryCoreContent.getAuthor(), 
+					seminaryCoreContent.getCreatedDate(), 
+					2
+			);
+			seminaries.add(seminary);
 		}
 		seminaryListPresenter.setData(seminaries);
 		seminaryListPresenter.setBackButtonHandler(backClickHandler);
@@ -148,29 +159,37 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
 		
 		@Override
-		public void onSuccess(AbstractResponse result) {
-			
+		public void onSuccess(AbstractResponse result) {			
 			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){	
 				setInSlot(SLOT_content, seminarCategoryPresenter);
 				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
-				SeminaryHomeCategoryContent content = response.getContent();
+				SeminaryHomePageCategoryContent content = response.getContent();
+				
+				// Children, ask for categories
 				if(content.getCategoryChildren().size() != 0) {
 					seminarCategoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
 					CategoryCoreContent parent = content.getCommonParent();
 					if(parent != null) {
 						seminarCategoryPresenter.animateBackButtonIn();
-					}
-				}
-				else {
-					setInSlot(SLOT_content, seminaryListPresenter);	
-					setSeminaryList();
-				}
-				
+					}					
+				} 				
+				// No child, ask for list of seminaries
+				else {					
+					CategoryCoreContent parentCategory = response.getContent().getCommonParent();		
+			  		createAndSendListingRequest(parentCategory);
+				}				
 			} 
+			
+			else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE){
+				setInSlot(SLOT_content, seminaryListPresenter);	
+				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
+				List<SeminaryCoreContent> seminaryCoreContentList = response.getContent().getSeminariesChildren();
+				setSeminaryList(seminaryCoreContentList);
+			} 
+			
 			else {
 				// ERROR, not the response type we expected
-			}
-			
+			}			
 		}
 		
 		@Override
@@ -178,4 +197,19 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		}
 	};
 	
+	public void createAndSendCategoryRequest(CategoryCoreContent parentCategory) {
+		SeminaryHomePageCategoryContentRequest request = new SeminaryHomePageCategoryContentRequest();
+  		request.setParentCategory(parentCategory);
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(request, responseHandler);	
+	}
+	
+	public void createAndSendListingRequest(CategoryCoreContent parentCategory) {
+  		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
+  		request.setSelectedCategory(parentCategory);
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(request, responseHandler);
+	}
 }

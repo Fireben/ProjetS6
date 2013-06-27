@@ -31,7 +31,7 @@
 												<div class="art-content-layout-row">
 													<h5></h5>
 													<div id="imageProfil">
-														<g:Image ui:field="userImage" url="images/icons/user_128.png"/>
+														<g:Image ui:field="userImage" url="images/user_128.png"/>
 														<g:InlineHyperlink  text="Change Profil Picture"/>
 													</div>
 													<g:Label ui:field="profilNameLabel" text="Name:"/>

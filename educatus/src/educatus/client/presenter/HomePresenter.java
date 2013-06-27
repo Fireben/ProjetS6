@@ -31,7 +31,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
-import educatus.shared.dto.HomePageContent;
+import educatus.shared.dto.pagecontent.HomePageContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
