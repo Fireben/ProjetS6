@@ -15,10 +15,10 @@ public class DescriptionEntry extends Composite {
 		initWidget(panel);
 		titleLabel = new Label(title + ": ");
 		textLabel = new Label(text);
-		initPanel();
+		InitPanel();
 	}	
 	
-	private void initPanel() {
+	private void InitPanel() {
 		titleLabel.setStyleName("descriptionTitle");
 		panel.add(titleLabel);
 		panel.setCellWidth(titleLabel, "120px");

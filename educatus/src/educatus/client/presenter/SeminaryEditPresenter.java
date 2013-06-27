@@ -5,19 +5,13 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.common.client.IndirectProvider;
-import com.gwtplatform.common.client.StandardProvider;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -27,15 +21,22 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
+import educatus.client.ui.widget.ImageEdit;
+import educatus.client.ui.widget.TextEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
+import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.seminary.SeminaryContent;
+import educatus.shared.dto.seminary.SeminaryCoreContent;
 
 public class SeminaryEditPresenter extends
 		Presenter<SeminaryEditPresenter.MyView, SeminaryEditPresenter.MyProxy> {
 	public interface MyView extends View {
 		public FlowPanel getSeminaryDescriptionContainer();
-		public HTMLPanel getContentPanel();
+		public FlowPanel getContentPanel();
+		public TextBox getSemTitleBox();
+		public TextArea getSemDescBox();
+		public ListBox getSemDiffBox();
 	}
 	
 	@ProxyCodeSplit
@@ -46,42 +47,14 @@ public class SeminaryEditPresenter extends
 	private ClickHandler addTextHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			textEditFactory
-					.get(new AsyncCallback<TextEditPresenter>() {
-						@Override
-						public void onSuccess(TextEditPresenter result) {
-							addToSlot(SLOT_content, result);
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Error while creating a text content seminary section");
-						}
-					});
+			getView().getContentPanel().add(new TextEdit());
 		}
 	};
 
 	private ClickHandler addImageHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			imageUploadFactory
-					.get(new AsyncCallback<ImageUploadPresenter>() {
-						@Override
-						public void onSuccess(ImageUploadPresenter result) {
-							addToSlot(SLOT_content, result);
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Error while creating a text content seminary section");
-						}
-					});
-		}
-	};
-	
-	private ClickHandler saveHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
+			getView().getContentPanel().add(new ImageEdit());
 		}
 	};
 	
@@ -95,28 +68,12 @@ public class SeminaryEditPresenter extends
 	@Inject
 	ConfirmChangesPresenter confirmPresenter;
 
-	@Inject
-	TextEditPresenter textEditPresenter;
-	private IndirectProvider<TextEditPresenter> textEditFactory;
-	
-	@Inject
-	ImageUploadPresenter imageUploadPresenter;
-	private IndirectProvider<ImageUploadPresenter> imageUploadFactory;
-
 	public static final Object SLOT_confirm = new Object();
-	public static final Object SLOT_content = new Object();	
 
 	@Inject
 	public SeminaryEditPresenter(final EventBus eventBus, final MyView view,
-			Provider<TextEditPresenter> textEditFactory, Provider<ImageUploadPresenter> imageUploadFactory,
 			final MyProxy proxy) {
 		super(eventBus, view, proxy);
-		
-		this.textEditFactory = new StandardProvider<TextEditPresenter>(
-				textEditFactory);
-		
-		this.imageUploadFactory = new StandardProvider<ImageUploadPresenter>(
-				imageUploadFactory);
 	}
 
 	@Override
@@ -128,15 +85,12 @@ public class SeminaryEditPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
-
 	}
 
 	@Override
 	protected void onReset() {
 		super.onReset();
 		setInSlot(SLOT_confirm, confirmPresenter);
-		setInSlot(SLOT_content, null);
-		confirmPresenter.setSaveButtonHandler(saveHandler);
 		confirmPresenter.setAddTextHandler(addTextHandler);
 		confirmPresenter.setAddImageHandler(addImageHandler);
 		confirmPresenter.setConfirmHandler(confirmHandler);
@@ -149,42 +103,46 @@ public class SeminaryEditPresenter extends
 	}
 	
 	public void submitSeminary() {
-		List<AbstractDynamicSection> dynamicSectionList = new ArrayList<AbstractDynamicSection>();
-		//List<DynamicSectionTextContent> dynamicSectionTextContents = getTextContents();
+		List<AbstractDynamicSection> dynamicSectionList = getDynamicContentList();
+		SeminaryCoreContent coreContent = getCoreContent();
+		
 		SeminaryContent seminaryContent= new SeminaryContent();
+		seminaryContent.setCoreContent(coreContent);
 		seminaryContent.setDynamicSectionList(dynamicSectionList);
 	}
 	
-	public List<DynamicSectionTextContent> getTextContents() {
-		HTMLPanel contentPanel = getView().getContentPanel();
-		HTMLPanel rootPanel;
-		Grid grid;
-		RichTextArea richTextArea;
-		TextBox textBox;
+	private SeminaryCoreContent getCoreContent() {
+		SeminaryCoreContent coreContent = new SeminaryCoreContent();
+		coreContent.setDescription(getView().getSemDescBox().getText());
+		coreContent.setTitle(getView().getSemTitleBox().getText());
 		
-		List<DynamicSectionTextContent> textContents = new ArrayList<DynamicSectionTextContent>(); 
-					
-		for(int i=0; i<contentPanel.getWidgetCount();i++) {
-			DynamicSectionTextContent dynamicSectionTextContent= new DynamicSectionTextContent();	
-			rootPanel = (HTMLPanel)contentPanel.getWidget(i);
-			for(int j=0; j<rootPanel.getWidgetCount(); j++) {			
-				if(rootPanel.getWidget(j) instanceof HorizontalPanel) {
-					HorizontalPanel horizontalPanel = (HorizontalPanel)rootPanel.getWidget(j);
-					for(int k=0; k < horizontalPanel.getWidgetCount(); k++) {
-						if(horizontalPanel.getWidget(k) instanceof TextBox) {
-							textBox = (TextBox)horizontalPanel.getWidget(k);
-							dynamicSectionTextContent.setTitle(textBox.getText());
-						}
-					}
-				}
-				if(rootPanel.getWidget(j) instanceof Grid) {
-					grid = (Grid)rootPanel.getWidget(j);
-					richTextArea = (RichTextArea) grid.getWidget(1, 0);
-					dynamicSectionTextContent.setText(richTextArea.getText());
-				}
+		ListBox difficultyBox = getView().getSemDiffBox();
+		int index = difficultyBox.getSelectedIndex();
+		coreContent.setDifficulty(difficultyBox.getValue(index));
+		
+		return coreContent;
+	}
+
+	public List<AbstractDynamicSection> getDynamicContentList() {
+		List<AbstractDynamicSection> dynamicSectionList = new ArrayList<AbstractDynamicSection>();
+		FlowPanel contentPanel = getView().getContentPanel();
+		Widget currentWidget;
+		for(int i=0; i<contentPanel.getWidgetCount(); i++) {
+			currentWidget = contentPanel.getWidget(i);
+			if(currentWidget instanceof TextEdit) {
+				TextEdit textEdit = ((TextEdit)currentWidget);
+				DynamicSectionTextContent dynamicSectionTextContent = new DynamicSectionTextContent();
+				dynamicSectionTextContent.setText(textEdit.getText());
+				dynamicSectionTextContent.setTitle(textEdit.getTitle());
+				dynamicSectionList.add(dynamicSectionTextContent);
 			}
-			textContents.add(dynamicSectionTextContent);
+			else if(currentWidget instanceof ImageEdit) {
+				String id = ((ImageEdit)currentWidget).getImageId();
+				DynamicSectionImageContent dynamicSectionImageContent = new DynamicSectionImageContent();
+				dynamicSectionImageContent.setImageUrl(id);
+				dynamicSectionList.add(dynamicSectionImageContent);
+			}
 		}
-		return textContents;
+		return dynamicSectionList;
 	}
 }
