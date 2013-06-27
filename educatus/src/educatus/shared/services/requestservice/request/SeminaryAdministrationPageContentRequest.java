@@ -12,7 +12,7 @@ public class SeminaryAdministrationPageContentRequest extends AbstractRequest {
 
 	@Override
 	public RequestTypeEnum GetRequestType() {
-		return RequestTypeEnum.SEMINARY_ADMINISTRATION_CONTENT_REQUEST;
+		return RequestTypeEnum.SEMINARY_ADMINISTRATION_PAGE_CONTENT_REQUEST;
 	}
 
 	public String getLanguage() {

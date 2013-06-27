@@ -12,7 +12,7 @@ public class CategoryAdministrationPageContentRequest extends AbstractRequest {
 
 	@Override
 	public RequestTypeEnum GetRequestType() {
-		return RequestTypeEnum.CATEGORY_ADMINISTRATION_CONTENT_REQUEST;
+		return RequestTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_REQUEST;
 	}
 
 	public String getLanguage() {

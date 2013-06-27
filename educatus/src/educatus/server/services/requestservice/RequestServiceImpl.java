@@ -10,6 +10,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
+import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryHomeCategoryBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryHomeListingBuilder;
@@ -34,8 +35,10 @@ import educatus.shared.services.requestservice.RequestTypeEnum;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;
 import educatus.shared.services.requestservice.request.LoginRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
-import educatus.shared.services.requestservice.request.SeminaryContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest.SeminaryAdministractionAction;
 import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.UserProfilPageContentRequest;
@@ -43,8 +46,9 @@ import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.LoginResponse;
 import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
-import educatus.shared.services.requestservice.response.SeminaryContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.UserProfilPageContentResponse;
@@ -63,6 +67,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private SeminaryEditorContentBuilder seminaryEditorContentBuilder;
 	private SeminaryContentBuilder seminaryContentBuilder;
 	private UserProfilBuilder userProfilBuilder;
+	private SeminaryAdministrationManager seminaryAdministrationManager;
 
 	@Override
 	public void init() throws ServletException {
@@ -80,6 +85,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		seminaryHomeListingBuilder = dbInjector.getInstance(SeminaryHomeListingBuilder.class);
 		seminaryContentBuilder = dbInjector.getInstance(SeminaryContentBuilder.class);
 		seminaryEditorContentBuilder = dbInjector.getInstance(SeminaryEditorContentBuilder.class); 
+		
+		seminaryAdministrationManager = dbInjector.getInstance(SeminaryAdministrationManager.class);
 	}
 
 	@Override
@@ -93,38 +100,55 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 
 		try {
 			switch (requestType) {
-			case LOGIN_REQUEST:
-				response = ProcessLoginRequest((LoginRequest) request);			
-				break;
-			case HOME_PAGE_CONTENT_REQUEST:
-				response = ProcessHomePageContentRequest((HomePageContentRequest) request);
-				break;
-			case MAIN_PAGE_CONTENT_REQUEST:
-				response = ProcessMainMenuContentRequest((MainPageContentRequest) request);
-				break;
-			case SEMINARY_HOME_PAGE_CATEGORY_CONTENT_REQUEST:
-				response = ProcessSeminaryHomePageCategoryContentRequest((SeminaryHomePageCategoryContentRequest) request);
-				break;
-			case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
-				response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
-				break;
-			case SEMINARY_ADMINISTRATION_CONTENT_REQUEST:
-				response = ProcessSeminaryEditorContentRequest((SeminaryAdministrationPageContentRequest) request);
-				break;
-			case SEMINARY_CONTENT_REQUEST:
-				response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);
-				break;
-			case PROFIL_PAGE_CONTENT_REQUEST:
-				response = ProcessUserProfilContentRequest((UserProfilPageContentRequest) request);
-				break;
-			default:
-				break;
+				case LOGIN_REQUEST:
+					response = ProcessLoginRequest((LoginRequest) request);			
+					break;
+				case HOME_PAGE_CONTENT_REQUEST:
+					response = ProcessHomePageContentRequest((HomePageContentRequest) request);
+					break;
+				case MAIN_PAGE_CONTENT_REQUEST:
+					response = ProcessMainMenuContentRequest((MainPageContentRequest) request);
+					break;
+				case SEMINARY_HOME_PAGE_CATEGORY_CONTENT_REQUEST:
+					response = ProcessSeminaryHomePageCategoryContentRequest((SeminaryHomePageCategoryContentRequest) request);
+					break;
+				case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
+					response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
+					break;
+				case PROFIL_PAGE_CONTENT_REQUEST:
+					response = ProcessUserProfilContentRequest((UserProfilPageContentRequest) request);
+					break;
+				case SEMINARY_ADMINISTRATION_PAGE_CONTENT_REQUEST:
+					response = ProcessSeminaryAdministrationPageContentRequest((SeminaryAdministrationPageContentRequest) request);
+					break;
+				case SEMINARY_ADMINISTRATION_ACTION_REQUEST:
+					response = ProcessSeminaryAdministrationActionRequest((SeminaryAdministrationActionRequest) request);
+					break;
+				case SEMINARY_CONTENT_REQUEST:
+					response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);
+					break;			
+				default:
+					break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return response;
+	}
+
+	private SeminaryAdministrationActionResponse ProcessSeminaryAdministrationActionRequest(SeminaryAdministrationActionRequest request) {
+		SeminaryAdministrationActionResponse reponse = new SeminaryAdministrationActionResponse();
+
+		if (request.getAction() == SeminaryAdministractionAction.INSERT) {
+			try {
+				seminaryAdministrationManager.insertSeminary(request.getSeminaryContent());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return reponse;
 	}
 
 	private LoginResponse ProcessLoginRequest(LoginRequest request) {
@@ -155,7 +179,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 
-	private SeminaryAdministrationPageContentResponse ProcessSeminaryEditorContentRequest(SeminaryAdministrationPageContentRequest request) {
+	private SeminaryAdministrationPageContentResponse ProcessSeminaryAdministrationPageContentRequest(SeminaryAdministrationPageContentRequest request) {
 		
 		SeminaryAdministrationPageContentResponse response = new SeminaryAdministrationPageContentResponse();
 		

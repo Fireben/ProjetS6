@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -96,8 +97,9 @@ public class SeminaryDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Seminary> findAllSeminary() throws Exception {
-		List<?> resultList = entityManager.createNamedQuery(Seminary.FIND_ALL)
-				.getResultList();
+		Query query = entityManager.createNamedQuery(Seminary.FIND_ALL);
+		query.setHint("javax.persistence.cache.retrieveMode", "REFRESH");
+		List<?> resultList = query.getResultList();
 		
 		return (List<Seminary>) resultList; 
 	}

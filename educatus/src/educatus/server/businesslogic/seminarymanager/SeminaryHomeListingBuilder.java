@@ -34,8 +34,7 @@ public class SeminaryHomeListingBuilder {
 			commonParent.setDescription(InternationalizationUtility.getTranslationEntry(parentCategory.getDescription(), culture, language).getTcteTranslation());
 			pageContent.setCommonParent(commonParent);
 			
-			// TODO get actual childrens
-			
+			// TODO get actual childrens			
 			List<Seminary> seminaryList = semDao.findAllSeminary();
 			
 			for (Seminary seminary : seminaryList) {

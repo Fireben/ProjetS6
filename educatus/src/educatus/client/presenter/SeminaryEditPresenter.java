@@ -3,8 +3,10 @@ package educatus.client.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
@@ -28,6 +30,11 @@ import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest.SeminaryAdministractionAction;
 
 public class SeminaryEditPresenter extends
 		Presenter<SeminaryEditPresenter.MyView, SeminaryEditPresenter.MyProxy> {
@@ -38,6 +45,9 @@ public class SeminaryEditPresenter extends
 		public TextArea getSemDescBox();
 		public ListBox getSemDiffBox();
 	}
+
+	// Create a remote service proxy to talk to the server-side service.
+	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.seminaryEdit)
@@ -61,7 +71,24 @@ public class SeminaryEditPresenter extends
 	private ClickHandler confirmHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			submitSeminary();
+			SeminaryAdministrationActionRequest request = new SeminaryAdministrationActionRequest();
+			request.setAction(SeminaryAdministractionAction.INSERT);
+			request.setSeminaryContent(getSeminaryContent());
+			
+			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
+				
+				@Override
+				public void onSuccess(AbstractResponse result) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 		}	
 	};
 
@@ -102,13 +129,15 @@ public class SeminaryEditPresenter extends
 		PageChangingEvent.fire(this, NameTokens.getSeminaryEdit());
 	}
 	
-	public void submitSeminary() {
+	private SeminaryContent getSeminaryContent() {
 		List<AbstractDynamicSection> dynamicSectionList = getDynamicContentList();
 		SeminaryCoreContent coreContent = getCoreContent();
 		
 		SeminaryContent seminaryContent= new SeminaryContent();
 		seminaryContent.setCoreContent(coreContent);
 		seminaryContent.setDynamicSectionList(dynamicSectionList);
+		
+		return seminaryContent;
 	}
 	
 	private SeminaryCoreContent getCoreContent() {
