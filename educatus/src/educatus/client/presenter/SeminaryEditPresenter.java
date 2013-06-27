@@ -23,6 +23,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
+import educatus.client.ui.CustomButton;
 import educatus.client.ui.widget.ImageEdit;
 import educatus.client.ui.widget.TextEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
@@ -53,18 +54,42 @@ public class SeminaryEditPresenter extends
 	@NameToken(NameTokens.seminaryEdit)
 	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter> {
 	}
+	
+	private ClickHandler closeTextHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			CustomButton closeButton = (CustomButton)event.getSource();
+			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
+			TextEdit parent = (TextEdit)panelParent.getParent(); 
+			getView().getContentPanel().remove(parent);
+		}
+	};
+	
+	private ClickHandler closeImageHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			CustomButton closeButton = (CustomButton)event.getSource();
+			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
+			ImageEdit parent = (ImageEdit)panelParent.getParent(); 
+			getView().getContentPanel().remove(parent);
+		}
+	};
 
 	private ClickHandler addTextHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			getView().getContentPanel().add(new TextEdit());
+			TextEdit textEdit = new TextEdit();
+			textEdit.getCloseButton().addClickHandler(closeTextHandler);
+			getView().getContentPanel().add(textEdit);
 		}
 	};
 
 	private ClickHandler addImageHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			getView().getContentPanel().add(new ImageEdit());
+			ImageEdit imageEdit = new ImageEdit();
+			imageEdit.getCloseButton().addClickHandler(closeImageHandler);
+			getView().getContentPanel().add(imageEdit);
 		}
 	};
 	

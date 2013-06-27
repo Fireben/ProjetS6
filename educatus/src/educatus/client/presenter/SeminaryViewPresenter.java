@@ -165,8 +165,6 @@ public class SeminaryViewPresenter extends
 
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
 					}
 				});
 	}
