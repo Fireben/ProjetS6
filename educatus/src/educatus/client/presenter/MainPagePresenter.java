@@ -21,9 +21,13 @@ import java.util.Date;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -153,7 +157,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			}
 		}
 	}
-	
+
 	private class ViewProfileButtonClickHandler implements ClickHandler {
 
 		@Override
@@ -203,6 +207,27 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 	private MainPageContentRequest request = new MainPageContentRequest();
 	
+	final Button confirmButton = new Button();
+	
+	private class ExtendedDialogBox extends DialogBox {
+
+	    @Override
+	    protected void onPreviewNativeEvent(NativePreviewEvent event) {
+	        super.onPreviewNativeEvent(event);
+
+	        switch (event.getTypeInt()) {
+        	
+	            case Event.ONKEYDOWN:
+	                if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ESCAPE) {
+	                    hide();
+	                } else if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
+	                	confirmButton.click();
+	                }
+	                break;
+	        }
+	    }
+	}
+
 	private AbstractRequestHandler requestHandler = new AbstractRequestHandler();
 	
 	@Override
@@ -236,7 +261,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				dialogBox.show();
 			}
 		});
-
+		
 		// Set click handlers for LogInProfilUi
 		getView().getMainMenu().getLogInProfilUi().getLogOutLink().addClickHandler(new LogoutButtonClickHandler());
 		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonHandler(new AdminModeButtonClickHandler());
@@ -329,12 +354,12 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		// Delegate to the MainMenu
 		getView().getMainMenu().setActiveMenuItem(name);
 	}
-
-	private DialogBox createLoginDialogBox() {
+	
+	private DialogBox createLoginDialogBox() { 
 		// Create a dialog box and set the caption text
-		final DialogBox dialogBox = new DialogBox();
+		final ExtendedDialogBox dialogBox = new ExtendedDialogBox();
 		dialogBox.setText("Log In ");
-
+		
 		// Create a table to layout the content
 		VerticalPanel dialogContents = new VerticalPanel();
 		dialogContents.setSpacing(5);
@@ -375,7 +400,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
 
 		// Add a confirm button at the bottom of the dialog
-		Button confirmButton = new Button("Ok", new ClickHandler() {
+		confirmButton.setHTML("Ok");
+		confirmButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
 				LoginRequest loginRequest = new LoginRequest();
@@ -413,6 +439,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 								dialogBox.hide();								
 							} else  {
 								// Login not sucessfull, display error text in login dialog
+								Window.alert("Please Try Again");
 							}
 							
 						} else {
@@ -429,14 +456,17 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				});
 			}
 		});
+		
 		confirmButton.setStyleName("backButton", true);
 		dialogContents.add(confirmButton);
+		
 		if (LocaleInfo.getCurrentLocale().isRTL()) {
 			dialogContents.setCellHorizontalAlignment(confirmButton, HasHorizontalAlignment.ALIGN_LEFT);
 
 		} else {
 			dialogContents.setCellHorizontalAlignment(confirmButton, HasHorizontalAlignment.ALIGN_RIGHT);
 		}
+		
 
 		// Return the dialog box
 		return dialogBox;
