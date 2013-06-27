@@ -2526,6 +2526,11 @@ a:hover, .logInClose {
 	margin-right: auto;
 }
 
+.credentialsFail {
+	width: 167px;
+	color: #ce0707 !important
+}
+
 .editCloseButton {
 	background: transparent;
 	border: none;
