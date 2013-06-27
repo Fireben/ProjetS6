@@ -18,6 +18,7 @@ public class ImageEdit extends Composite {
 	private FlowPanel panel;
 	private FlowPanel imageUploadPanel;
 	private HorizontalPanel titlePanel;
+	private TextBox titleBox;
 	private SingleUploader defaultUploader;
 	private String imageId = null;
 	
@@ -39,9 +40,9 @@ public class ImageEdit extends Composite {
 	private void createTitle() {
 		titlePanel = new HorizontalPanel();
 		titlePanel.add(new Label("Title : "));
-		TextBox textBox = new TextBox();
-		textBox.setStyleName("editTitleTextBox");
-		titlePanel.add(textBox);		
+		titleBox = new TextBox();
+		titleBox.setStyleName("editTitleTextBox");
+		titlePanel.add(titleBox);		
 		titlePanel.setStyleName("editTitle");
 	}
 	
@@ -57,6 +58,10 @@ public class ImageEdit extends Composite {
 	
 	public String getImageId() {
 		return imageId;
+	}
+	
+	public String getTitle() {
+		return titleBox.getText();
 	}
 	
 	private IUploader.OnFinishUploaderHandler onFinishUploaderHandler = new IUploader.OnFinishUploaderHandler() {
