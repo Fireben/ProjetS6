@@ -2525,3 +2525,8 @@ a:hover, .logInClose {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.credentialsFail {
+	width: 167px;
+	color: #ce0707 !important
+}
