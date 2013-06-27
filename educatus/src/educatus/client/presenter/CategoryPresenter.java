@@ -19,8 +19,8 @@ import educatus.client.animation.FadeAnimation;
 import educatus.client.animation.ListFadeAnimation;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.factory.CategoryButtonFactory;
+import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
 
 public class CategoryPresenter extends
 		PresenterWidget<CategoryPresenter.MyView>
@@ -76,7 +76,7 @@ public class CategoryPresenter extends
   		getView().getLabel().setVisible(false);
 	}
   	
-    public void populateCategoryPanel(SeminaryHomeCategoryContent content) {  
+    public void populateCategoryPanel(SeminaryHomePageCategoryContent content) {  
     	FlowPanel buttonPanel = getView().getButtonPanel();
     	CustomButton button = null;
     	
@@ -117,7 +117,7 @@ public class CategoryPresenter extends
 		}
 	} 
 	
-	public void setAndAnimateCategoryPanel(final ClickHandler categoryClickHandler, final SeminaryHomeCategoryContent content) {
+	public void setAndAnimateCategoryPanel(final ClickHandler categoryClickHandler, final SeminaryHomePageCategoryContent content) {
 		clear();
 
 		populateCategoryPanel(content);

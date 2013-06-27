@@ -4,7 +4,7 @@ import educatus.shared.dto.user.UserProfilContent;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 
-public class UserProfilContentResponse extends AbstractResponse {
+public class UserProfilPageContentResponse extends AbstractResponse {
 
 	private static final long serialVersionUID = 8030280063344228522L;
 

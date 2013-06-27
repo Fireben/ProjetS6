@@ -9,9 +9,9 @@ import educatus.server.businesslogic.InternationalizationUtility;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Seminary;
+import educatus.shared.dto.pagecontent.SeminaryHomePageListingContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
-import educatus.shared.dto.seminary.SeminaryHomeListingContent;
 
 @Singleton
 public class SeminaryHomeListingBuilder {
@@ -19,9 +19,9 @@ public class SeminaryHomeListingBuilder {
 	@Inject
 	private SeminaryDao semDao;
 	
-	public SeminaryHomeListingContent buildSeminaryHomeListingContent(int parentId, String culture, String language) {
+	public SeminaryHomePageListingContent buildSeminaryHomeListingContent(int parentId, String culture, String language) {
 		
-		SeminaryHomeListingContent pageContent = new SeminaryHomeListingContent();
+		SeminaryHomePageListingContent pageContent = new SeminaryHomePageListingContent();
 		
 		try {
 			

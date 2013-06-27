@@ -1,4 +1,4 @@
-package educatus.shared.dto;
+package educatus.shared.dto.pagecontent;
 
 import java.io.Serializable;
 import java.util.ArrayList;

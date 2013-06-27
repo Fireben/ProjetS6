@@ -6,8 +6,8 @@ import com.google.inject.Singleton;
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
-import educatus.shared.dto.HomePageContent;
-import educatus.shared.dto.HomePageContent.HomePageSection;
+import educatus.shared.dto.pagecontent.HomePageContent;
+import educatus.shared.dto.pagecontent.HomePageContent.HomePageSection;
 
 /* http://code.google.com/p/google-web-toolkit/source/browse/trunk/samples/showcase/src/com/google/gwt/sample/showcase/client/ShowcaseShell.java?r=9045
  * ligne 322 */

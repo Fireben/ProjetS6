@@ -3,7 +3,7 @@ package educatus.shared.services.requestservice.request;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.RequestTypeEnum;
 
-public class UserProfilContentRequest extends AbstractRequest {
+public class UserProfilPageContentRequest extends AbstractRequest {
 
 	private static final long serialVersionUID = 1057230778906255977L;
 

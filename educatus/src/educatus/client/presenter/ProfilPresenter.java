@@ -30,8 +30,8 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
-import educatus.shared.services.requestservice.request.UserProfilContentRequest;
-import educatus.shared.services.requestservice.response.UserProfilContentResponse;
+import educatus.shared.services.requestservice.request.UserProfilPageContentRequest;
+import educatus.shared.services.requestservice.response.UserProfilPageContentResponse;
 
 
 public class ProfilPresenter extends
@@ -70,14 +70,14 @@ public class ProfilPresenter extends
 	protected void onBind() {
 		super.onBind();
 		
-		UserProfilContentRequest request = new UserProfilContentRequest();
+		UserProfilPageContentRequest request = new UserProfilPageContentRequest();
 		request.setUserCip("graj2308");
 		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
 			
 			@Override
 			public void onSuccess(AbstractResponse result) {
 				if (result.GetResponseType() == ResponseTypeEnum.PROFIL_PAGE_CONTENT_RESPONSE){
-					UserProfilContentResponse response = (UserProfilContentResponse) result;
+					UserProfilPageContentResponse response = (UserProfilPageContentResponse) result;
 					
 					UserProfilContent content = response.getUserProfilContent();					
 				}				

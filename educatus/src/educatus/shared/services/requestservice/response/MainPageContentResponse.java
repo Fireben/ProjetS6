@@ -1,7 +1,7 @@
 package educatus.shared.services.requestservice.response;
 
-import educatus.shared.dto.MainPageContent;
-import educatus.shared.dto.ViewModeEnum;
+import educatus.shared.dto.pagecontent.MainPageContent;
+import educatus.shared.dto.pagecontent.ViewModeEnum;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 

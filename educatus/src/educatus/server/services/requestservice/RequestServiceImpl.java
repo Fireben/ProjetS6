@@ -18,14 +18,14 @@ import educatus.server.businesslogic.uibuilder.MainPageContentBuilder;
 import educatus.server.businesslogic.uibuilder.SeminaryEditorContentBuilder;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
-import educatus.shared.dto.HomePageContent;
-import educatus.shared.dto.MainPageContent;
-import educatus.shared.dto.SeminaryEditorContent;
+import educatus.shared.dto.pagecontent.HomePageContent;
+import educatus.shared.dto.pagecontent.MainPageContent;
+import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
+import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
+import educatus.shared.dto.pagecontent.SeminaryHomePageListingContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
 import educatus.shared.dto.seminary.SeminaryContent;
-import educatus.shared.dto.seminary.SeminaryHomeCategoryContent;
-import educatus.shared.dto.seminary.SeminaryHomeListingContent;
 import educatus.shared.dto.user.UserProfilContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
@@ -35,19 +35,19 @@ import educatus.shared.services.requestservice.request.HomePageContentRequest;
 import educatus.shared.services.requestservice.request.LoginRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryContentRequest;
-import educatus.shared.services.requestservice.request.SeminaryEditorContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
-import educatus.shared.services.requestservice.request.UserProfilContentRequest;
+import educatus.shared.services.requestservice.request.UserProfilPageContentRequest;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.LoginResponse;
 import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryContentResponse;
-import educatus.shared.services.requestservice.response.SeminaryEditorContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
-import educatus.shared.services.requestservice.response.UserProfilContentResponse;
+import educatus.shared.services.requestservice.response.UserProfilPageContentResponse;
 
 /**
  * The server side implementation of the RPC service.
@@ -108,14 +108,14 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
 				response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
 				break;
-			case SEMINARY_EDITOR_CONTENT_REQUEST:
-				response = ProcessSeminaryEditorContentRequest((SeminaryEditorContentRequest) request);
+			case SEMINARY_ADMINISTRATION_CONTENT_REQUEST:
+				response = ProcessSeminaryEditorContentRequest((SeminaryAdministrationPageContentRequest) request);
 				break;
 			case SEMINARY_CONTENT_REQUEST:
 				response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);
 				break;
 			case PROFIL_PAGE_CONTENT_REQUEST:
-				response = ProcessUserProfilContentRequest((UserProfilContentRequest) request);
+				response = ProcessUserProfilContentRequest((UserProfilPageContentRequest) request);
 				break;
 			default:
 				break;
@@ -155,11 +155,11 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 
-	private SeminaryEditorContentResponse ProcessSeminaryEditorContentRequest(SeminaryEditorContentRequest request) {
+	private SeminaryAdministrationPageContentResponse ProcessSeminaryEditorContentRequest(SeminaryAdministrationPageContentRequest request) {
 		
-		SeminaryEditorContentResponse response = new SeminaryEditorContentResponse();
+		SeminaryAdministrationPageContentResponse response = new SeminaryAdministrationPageContentResponse();
 		
-		SeminaryEditorContent seminary = seminaryEditorContentBuilder.buildSeminaryEditorContent(request.getCulture(), request.getLanguage());
+		SeminaryAdministrationPageContent seminary = seminaryEditorContentBuilder.buildSeminaryEditorContent(request.getCulture(), request.getLanguage());
 		
 		try {
 			List<CategoryCoreContent> categoryCoreContentList = seminaryEditorContentBuilder.buildCategoryCoreContentList(request.getCulture(), request.getLanguage());
@@ -214,7 +214,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			parentCategoryId = request.getParentCategory().getId();
 		}
 
-		SeminaryHomeCategoryContent content = seminaryHomeCategoryBuilder.buildSeminaryHomeCategoryContent(parentCategoryId, request.getCulture(), request.getLanguage());
+		SeminaryHomePageCategoryContent content = seminaryHomeCategoryBuilder.buildSeminaryHomeCategoryContent(parentCategoryId, request.getCulture(), request.getLanguage());
 
 		SeminaryHomePageCategoryContentResponse response = new SeminaryHomePageCategoryContentResponse();
 		response.setContent(content);
@@ -224,7 +224,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private SeminaryHomePageListingContentResponse ProcessSeminaryHomePageListingContentRequest(SeminaryHomePageListingContentRequest request) {
-		SeminaryHomeListingContent content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
+		SeminaryHomePageListingContent content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
 
 		SeminaryHomePageListingContentResponse response = new SeminaryHomePageListingContentResponse();
 		response.setContent(content);
@@ -232,10 +232,10 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 
-	private UserProfilContentResponse ProcessUserProfilContentRequest(UserProfilContentRequest request) {
+	private UserProfilPageContentResponse ProcessUserProfilContentRequest(UserProfilPageContentRequest request) {
 		UserProfilContent content = userProfilBuilder.buildUserProfilContent(request.getUserCip());
 
-		UserProfilContentResponse response = new UserProfilContentResponse();
+		UserProfilPageContentResponse response = new UserProfilPageContentResponse();
 		response.setUserProfilContent(content);
 
 		return response;

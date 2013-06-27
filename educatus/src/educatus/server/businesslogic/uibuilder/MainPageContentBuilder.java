@@ -5,11 +5,11 @@ import com.google.inject.Singleton;
 
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
-import educatus.shared.dto.MainPageContent;
-import educatus.shared.dto.MainPageContent.MainMenuContent;
-import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemContent;
-import educatus.shared.dto.MainPageContent.MainMenuContent.MainMenuItemEnum;
-import educatus.shared.dto.ViewModeEnum;
+import educatus.shared.dto.pagecontent.MainPageContent;
+import educatus.shared.dto.pagecontent.ViewModeEnum;
+import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent;
+import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemContent;
+import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemEnum;
 
 @Singleton
 public class MainPageContentBuilder {
