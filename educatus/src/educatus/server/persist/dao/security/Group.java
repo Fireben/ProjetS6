@@ -78,7 +78,7 @@ public class Group implements Serializable {
 		this.name = name;
 	}
 
-	public List<Permission> getAssociatedPermissions() {
+	public List<Permission> getAssociatedPermissionList() {
 		return this.associatedPermissionList;
 	}
 

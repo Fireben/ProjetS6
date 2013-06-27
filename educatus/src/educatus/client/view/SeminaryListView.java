@@ -60,17 +60,15 @@ SeminaryListPresenter.MyView {
 	}	
 	
 	public void initializeColumns() {		
-		TextColumn<Seminary> IdColumn = new TextColumn<Seminary>() {
-		    @Override
-		    public String getValue(Seminary seminary) {
-		    	if(seminary.getId() != -1) {
-		    		return String.valueOf(seminary.getId());
-		    	}
-		    	else {
-		    		return null;
-		    	}
-		    }
-		  };
+		Column<Seminary, Hyperlink> IdColumn = 
+			    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
+			        @Override 
+			        public Hyperlink getValue(Seminary seminary) {			    	  
+			        	Hyperlink link = new Hyperlink(String.valueOf(seminary.getId()), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
+			            link.setStyleName("cellTableHyperlink");
+			            return link; 
+			        }
+				};
 		dataGrid.addColumn(IdColumn, "Id", "");
 		dataGrid.setColumnWidth(IdColumn, 100, Unit.PX);
 		
