@@ -1,5 +1,6 @@
 package educatus.client.ui.widget;
 
+import educatus.client.ui.CustomButton;
 import gwtupload.client.IUploader;
 import gwtupload.client.PreloadedImage;
 import gwtupload.client.SingleUploader;
@@ -10,6 +11,7 @@ import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -21,6 +23,7 @@ public class ImageEdit extends Composite {
 	private TextBox titleBox;
 	private SingleUploader defaultUploader;
 	private String imageId = null;
+	private CustomButton closeButton;
 	
 	public ImageEdit() {
 		super();
@@ -32,10 +35,19 @@ public class ImageEdit extends Composite {
 	private void createPanel() {
 		createUploader();
 		createTitle();
+		createCloseButton();
+		
+		panel.add(closeButton);
 		panel.add(titlePanel);
 		panel.add(imageUploadPanel);		
 		panel.setStyleName("editSection");
 	}	
+	
+	private void createCloseButton() {
+		closeButton = new CustomButton();
+		closeButton.add(new Image("images/closeButton.png"));
+		closeButton.setStyleName("editCloseButton");
+	}
 	
 	private void createTitle() {
 		titlePanel = new HorizontalPanel();
@@ -62,6 +74,10 @@ public class ImageEdit extends Composite {
 	
 	public String getTitle() {
 		return titleBox.getText();
+	}
+	
+	public CustomButton getCloseButton() {
+		return closeButton;
 	}
 	
 	private IUploader.OnFinishUploaderHandler onFinishUploaderHandler = new IUploader.OnFinishUploaderHandler() {
