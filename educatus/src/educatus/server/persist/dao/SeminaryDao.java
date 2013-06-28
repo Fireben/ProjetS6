@@ -126,7 +126,7 @@ public class SeminaryDao {
 		seminary.setDateModified(new Timestamp(date.getTime()));
 		
 		// Insert Object
-		entityManager.persist(seminary);		
+		entityManager.persist(seminary);
 		
 		return seminary;
 	}
@@ -141,7 +141,7 @@ public class SeminaryDao {
 		}
 		
 		seminary.getCategories().add(category);
-		entityManager.merge(seminary);
+		seminary = entityManager.merge(seminary);
 		
 		return seminary;
 	}

@@ -14,7 +14,9 @@ import educatus.server.persist.dao.internationalization.TextContentEntry;
 @DiscriminatorValue("1")
 // DYNAMIC SECTION TYPE = 1
 public class DynamicSectionText extends DynamicSection implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 3689224806633936604L;
+	public static final int DYNAMIC_SECTION_TYPE_VALUE = 1;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)

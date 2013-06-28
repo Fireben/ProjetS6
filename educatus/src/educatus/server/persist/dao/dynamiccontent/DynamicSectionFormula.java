@@ -9,10 +9,11 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("4")
 // DYNAMIC SECTION TYPE = 4
-public class DynamicSectionFormula extends DynamicSection implements
-		Serializable {
-	private static final long serialVersionUID = 1L;
+public class DynamicSectionFormula extends DynamicSection implements Serializable {
 
+	private static final long serialVersionUID = -9202759163770617301L;
+	public static final int DYNAMIC_SECTION_TYPE_VALUE = 4;
+	
 	@Column(name = "dysf_formula", nullable = false, length = 2147483647)
 	private String formula;
 

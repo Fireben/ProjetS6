@@ -15,7 +15,9 @@ import educatus.server.persist.dao.internationalization.VideoContentEntry;
 @DiscriminatorValue("3")
 // DYNAMIC SECTION TYPE = 3
 public class DynamicSectionVideo extends DynamicSection implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 7988700524253032200L;
+	public static final int DYNAMIC_SECTION_TYPE_VALUE = 3;
 
 	// bi-directional many-to-one association to TextContentEntry
 	@ManyToOne(fetch = FetchType.LAZY)
