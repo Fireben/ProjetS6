@@ -8,10 +8,10 @@ import javax.persistence.EntityManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.security.Group;
 import educatus.server.persist.dao.security.Permission;
 import educatus.server.persist.dao.security.User;
-import educatus.server.persist.dao.security.UserType;
 
 @Singleton
 public class PermissionManager {
@@ -47,33 +47,6 @@ public class PermissionManager {
 
 		return toReturnValue;
 	}
-	
-	public boolean AddRoleToUser(User user, UserType role) {
-		boolean toReturnValue = false;
-
-		entityManager.getTransaction().begin();
-		if (!user.getAssociatedUserTypeList().contains(role)) {
-			toReturnValue= user.getAssociatedUserTypeList().add(role);			
-		}
-		entityManager.merge(user);
-		entityManager.getTransaction().commit();
-
-		this.UpdatePermissionSet(user);
-
-		return toReturnValue;
-	}
-	public boolean RemoveRoleFromUser(User user, UserType role) {
-		boolean toReturnValue = false;
-
-		entityManager.getTransaction().begin();
-		toReturnValue = user.getAssociatedUserTypeList().remove(role);			
-		entityManager.merge(user);
-		entityManager.getTransaction().commit();
-
-		this.UpdatePermissionSet(user);
-
-		return toReturnValue;
-	}
 
 	public boolean UserAddPermission(User user, Permission permission) {
 		boolean toReturnValue = false;
@@ -87,6 +60,9 @@ public class PermissionManager {
 
 		return toReturnValue;
 	}
+	public boolean UserAddPermission(User user, PermissionConstant permission) {
+		return this.UserAddPermission(user, entityManager.find(Permission.class, permission.getId()));
+	}
 	public boolean UserRemovePermission(User user, Permission permission) {
 		boolean toReturnValue = false;
 
@@ -98,6 +74,9 @@ public class PermissionManager {
 		this.UpdatePermissionSet(user);
 
 		return toReturnValue;
+	}
+	public boolean UserRemovePermission(User user, PermissionConstant permission) {
+		return this.UserRemovePermission(user, entityManager.find(Permission.class, permission.getId()));
 	}
 	public boolean UserAddPermission(User user, Permission[] permissions) {
 		boolean toReturnValue = false;
@@ -164,14 +143,6 @@ public class PermissionManager {
 		for (Permission permission : user.getAssociatedPermissionList()) {
 			if (!permissionSet.contains(permission.getId())) {
 				permissionSet.add(permission.getId());
-			}
-		}
-
-		for (UserType userType : user.getAssociatedUserTypeList()) {
-			for (Permission permission : userType.getAssociatedPermissionList()) {
-				if (!permissionSet.contains(permission.getId())) {
-					permissionSet.add(permission.getId());
-				}
 			}
 		}
 
