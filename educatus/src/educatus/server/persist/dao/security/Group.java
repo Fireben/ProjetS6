@@ -47,10 +47,6 @@ public class Group implements Serializable {
 	@ManyToMany(mappedBy = "associatedGroupList")
 	private List<User> associatedUserList;
 
-	// bi-directional many-to-many association to UserType
-	@ManyToMany(mappedBy = "associatedGroupList")
-	private List<UserType> associatedUserTypeList;
-
 	public Group() {
 	}
 
@@ -92,13 +88,5 @@ public class Group implements Serializable {
 
 	public void setAssociatedUserList(List<User> userList) {
 		this.associatedUserList = userList;
-	}
-
-	public List<UserType> getAssociatedUserTypeList() {
-		return this.associatedUserTypeList;
-	}
-
-	public void setAssociatedUserTypeList(List<UserType> associatedUserTypeList) {
-		this.associatedUserTypeList = associatedUserTypeList;
 	}
 }
