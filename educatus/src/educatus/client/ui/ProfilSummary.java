@@ -18,8 +18,6 @@ public class ProfilSummary extends Composite {
 	@UiField
 	Image profilImage;
 	@UiField
-	Label profilPictureLabel;
-	@UiField
 	VerticalPanel userDescriptionVerticalPanel;
 	
 	interface ProfilSummaryUiBinder extends UiBinder<Widget, ProfilSummary> {
@@ -27,6 +25,9 @@ public class ProfilSummary extends Composite {
 
 	public ProfilSummary() {
 		initWidget(uiBinder.createAndBindUi(this));
+		profilSummaryLabel.setStyleName("profilSummaryLabel");
+		profilImage.setStyleName("profilImage");
+		userDescriptionVerticalPanel.setStyleName("userDescriptionVerticalPanel");
 	}
 	public Label getProfilSummaryLabel() {
 		return profilSummaryLabel;
@@ -42,14 +43,6 @@ public class ProfilSummary extends Composite {
 
 	public void setProfilImage(Image profilImage) {
 		this.profilImage = profilImage;
-	}
-
-	public Label getProfilPictureLabel() {
-		return profilPictureLabel;
-	}
-
-	public void setProfilPictureLabel(Label profilPictureLabel) {
-		this.profilPictureLabel = profilPictureLabel;
 	}
 
 	public VerticalPanel getUserDescriptionVerticalPanel() {

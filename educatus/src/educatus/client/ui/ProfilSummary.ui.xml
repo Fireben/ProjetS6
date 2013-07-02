@@ -10,7 +10,6 @@
 			<g:HorizontalPanel width="100%" height="100%">
 				<g:VerticalPanel width="50%" height="100%">
 					<g:Image url="images/user_128.png" ui:field="profilImage"/>
-					<g:Label text="Profil picture" ui:field="profilPictureLabel"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel ui:field="userDescriptionVerticalPanel"/>
 			</g:HorizontalPanel>
