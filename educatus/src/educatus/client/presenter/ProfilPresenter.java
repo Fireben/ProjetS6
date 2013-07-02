@@ -1,19 +1,8 @@
 package educatus.client.presenter;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.visualization.client.AbstractDataTable;
-import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
-import com.google.gwt.visualization.client.DataTable;
-import com.google.gwt.visualization.client.Selection;
-import com.google.gwt.visualization.client.VisualizationUtils;
-import com.google.gwt.visualization.client.events.SelectHandler;
-import com.google.gwt.visualization.client.visualizations.corechart.Options;
-import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -24,7 +13,10 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.NameTokens;
-import educatus.client.events.PageChangingEvent;
+import educatus.client.ui.ProfilNewsfeed;
+import educatus.client.ui.ProfilSummary;
+import educatus.client.ui.widget.DescriptionEntry;
+import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.user.UserProfilContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
@@ -38,10 +30,9 @@ public class ProfilPresenter extends
 		Presenter<ProfilPresenter.MyView, ProfilPresenter.MyProxy> {
 
 	public interface MyView extends View {
-		public Image getUserImage();
-		public FlowPanel getChartContainer();
-		public void insertChart(Widget w);
-		public void removeChart(Widget w);
+		public VerticalPanel getProfilVerticalPanel();
+		public ProfilSummary getProfilSummary();
+		public ProfilNewsfeed getProfilNewsfeed();
 	}
 	
 
@@ -79,7 +70,34 @@ public class ProfilPresenter extends
 				if (result.GetResponseType() == ResponseTypeEnum.PROFIL_PAGE_CONTENT_RESPONSE){
 					UserProfilPageContentResponse response = (UserProfilPageContentResponse) result;
 					
-					UserProfilContent content = response.getUserProfilContent();					
+					UserProfilContent content = response.getUserProfilContent();
+					UserCoreContent coreContent = content.getUserCoreContent();
+					
+					getView().getProfilSummary().getUserDescriptionVerticalPanel().clear();
+					getView().getProfilSummary().getUserDescriptionVerticalPanel().add(new DescriptionEntry(
+							"Fullname", 
+							coreContent.getFullName())
+					);
+					getView().getProfilSummary().getUserDescriptionVerticalPanel().add(new DescriptionEntry(
+							"CIP", 
+							coreContent.getCip())
+					);
+					getView().getProfilSummary().getUserDescriptionVerticalPanel().add(new DescriptionEntry(
+							"Email", 
+							coreContent.getEmail())
+					);					
+					getView().getProfilSummary().getUserDescriptionVerticalPanel().add(new DescriptionEntry(
+							"Unity", 
+							coreContent.getUnity())
+					);
+					getView().getProfilSummary().getUserDescriptionVerticalPanel().add(new DescriptionEntry(
+							"Joined Date", 
+							coreContent.getJoinedDate())
+					);
+					getView().getProfilSummary().getUserDescriptionVerticalPanel().add(new DescriptionEntry(
+							"Last Connexion", 
+							coreContent.getLastConnexion())
+					);
 				}				
 			}
 			
@@ -90,7 +108,7 @@ public class ProfilPresenter extends
 			}
 		});
 	}
-	
+	/*
 	private PieChart pie;
 	@Override
 	protected void onReset() {
@@ -172,5 +190,5 @@ public class ProfilPresenter extends
         data.setValue(1, 0, "Sleep");
         data.setValue(1, 1, 10);
         return data;
-      }
+      }*/
 }

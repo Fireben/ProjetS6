@@ -1,7 +1,7 @@
 package educatus.server.businesslogic;
 
 public class LDAPUser {
-	private static final long serialVersionUID = 1L;
+	
 	private String cip;
 	private String lastName;
 	private String firstName;
