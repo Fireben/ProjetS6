@@ -270,6 +270,10 @@ public class SeminaryEditPresenter extends
 	private void resetAll() {
 		getView().getContentPanel().clear();
 		getView().getSeminaryDescriptionContainer().clear();
+		getView().getDescriptionBox().setValue("");
+		getView().getCategoryBox().clear();
+		getView().getDifficultyBox().clear();
+		getView().getTitleBox().setValue("");
 		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
 		pageContentRequest.setCulture(locale.getCulture());
 		pageContentRequest.setLanguage(locale.getLanguage());

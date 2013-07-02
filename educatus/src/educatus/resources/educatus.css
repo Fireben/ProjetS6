@@ -16,21 +16,16 @@ a,a:visited,a:hover {
 }
 
 #art-main {
-	background: #121212 url('images/page.png') repeat-x scroll;
 	background: url('images/pageglare.png') top center no-repeat,
 		url('images/page.png') repeat-x, #121212;
-	margin: 0 auto;
 	font-size: 12px;
 	font-family: Verdana, Geneva, Arial, Helvetica, Sans-Serif;
 	font-weight: normal;
 	font-style: normal;
 	position: relative;
-	width: 100%;
-	min-height: 100%;
-	left: 0;
-	top: 0;
 	cursor: default;
 	overflow: hidden;
+	border-bottom: 1px solid #2B2B2B;	
 }
 
 #art-mainPage {
@@ -2400,11 +2395,19 @@ html>body .gwt-DialogBox {
 
 
 .dynamicSectionContainer {
-	color: rgb(200,200,200);
+	color: rgb(0, 0, 0);;
 	margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
 	width: 550px;
+	text-align: justify;
+	font-family: calibri;
+}
+
+.dynamicSectionContainer>img {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
 
 .descriptionContainer {
@@ -2427,7 +2430,7 @@ html>body .gwt-DialogBox {
 
 .seminaryTitleLabel {
 	padding-top: 20px;
-	color: #00a1d6;
+	color: #3b5998;
 	font-size: 30px;	
 	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
 	width: 550px;
@@ -2437,6 +2440,8 @@ html>body .gwt-DialogBox {
 
 .title {
 	font-weight: bold;
+	font-size: 15px;
+	border-bottom: solid 1px;
 }
 
 .backButton {
@@ -2455,8 +2460,13 @@ html>body .gwt-DialogBox {
 }
 
 .viewSeminaryContainer {
-	margin-left: 300px;
+	width: 700px;
+	margin-left: 370px;
 	margin-right: auto;
+	background-color: rgb(255,255,255);
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
 }
 
 .logInBox {
@@ -2495,7 +2505,7 @@ a:hover, .logInClose {
 	margin-left: auto;
 	margin-right: auto;
 	width: 550px;
-	padding-bottom: 10px
+	padding-bottom: 10px;
 }
 
 .editTitleTextBox {
