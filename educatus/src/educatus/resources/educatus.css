@@ -2617,3 +2617,9 @@ a:hover, .logInClose {
 	margin-left:10px;
 	margin-right:10px;
 }
+
+.newsfeedTable {
+	padding-bottom: 6%;
+	padding-top: 6%;
+	text-align: center;
+}
