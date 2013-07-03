@@ -9,8 +9,6 @@ public class SeminaryHomePageListingContentRequest extends AbstractRequest {
 	private static final long serialVersionUID = -5804623818759076508L;
 
 	private CategoryCoreContent selectedCategory = null;
-	private String language;
-	private String culture;
 
 	@Override
 	public RequestTypeEnum GetRequestType() {
@@ -24,21 +22,4 @@ public class SeminaryHomePageListingContentRequest extends AbstractRequest {
 	public void setSelectedCategory(CategoryCoreContent selectedCategory) {
 		this.selectedCategory = selectedCategory;
 	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public String getCulture() {
-		return culture;
-	}
-
-	public void setCulture(String culture) {
-		this.culture = culture;
-	}
-
 }

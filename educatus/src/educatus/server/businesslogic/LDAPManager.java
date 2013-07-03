@@ -11,18 +11,19 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
 public class LDAPManager {
+
 	private static final String url = "ldaps://ldap.usherbrooke.ca:636";
 	private static final String initial = "com.sun.jndi.ldap.LdapCtxFactory";
-	private static LDAPManager instance = new LDAPManager();
 
-	public static LDAPManager getInstance() {
-		return instance;
-	}
+	private static LDAPManager instance = new LDAPManager();
 
 	private LdapContext ldapContext = null;
 
 	private LDAPManager() {
+	}
 
+	public static LDAPManager getInstance() {
+		return instance;
 	}
 
 	public boolean authenticate(String cip, String password) {
@@ -30,7 +31,7 @@ public class LDAPManager {
 			Hashtable<String, String> env = new Hashtable<String, String>();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, initial);
 			env.put(Context.PROVIDER_URL, url);
-			env.put(Context.SECURITY_PRINCIPAL, cip);
+			env.put(Context.SECURITY_PRINCIPAL, "uid=" + cip);
 			env.put(Context.SECURITY_CREDENTIALS, password);
 			ldapContext = new InitialLdapContext(env, null);
 			return true;
