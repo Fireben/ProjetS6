@@ -2417,7 +2417,6 @@ html>body .gwt-DialogBox {
 
 .descriptionContainer {
 	color: rgb(200,200,200);
-	float: right;
 	margin-top: 100px;
 	margin-right: 20px;
 	width: 275px;
@@ -2463,11 +2462,10 @@ html>body .gwt-DialogBox {
 
 .viewSeminaryContainer {
 	width: 700px;
-	margin-left: 370px;
-	margin-right: auto;
 	margin-top: 20px;
 	margin-bottom: 40px;
 	border-radius: 10px;
+	float: right;
 }
 
 .logInBox {
@@ -2633,4 +2631,8 @@ a:hover, .logInClose {
 	padding-bottom: 6%;
 	padding-top: 6%;
 	text-align: center;
+}
+
+.seminarySpacer {
+	min-width:100px;
 }

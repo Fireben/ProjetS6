@@ -9,6 +9,7 @@
 		    	</g:Label>
 		    	<g:FlowPanel ui:field="dynamicSectionContainer"/>
 	    	</g:FlowPanel>
+	    	<g:FlowPanel ui:field="spacer"/>	
 			<g:FlowPanel ui:field="descriptionContainer"/>	
 		</g:HorizontalPanel>				 									
 	</g:HTMLPanel>
