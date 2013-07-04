@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = Culture.FIND_ALL, query = "SELECT c FROM Culture c"),
-		@NamedQuery(name = Culture.FIND_BY_CODE, query = "SELECT c FROM Culture c WHERE c.code=:code") })
+		@NamedQuery(name = Culture.FIND_BY_CODE, query = "SELECT c FROM Culture c WHERE lower(c.code)=lower(:code)") })
 @Table(name = "internationalization.culture")
 public class Culture implements Serializable {
 	private static final long serialVersionUID = 1L;

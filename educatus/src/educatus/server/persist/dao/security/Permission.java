@@ -39,6 +39,11 @@ public class Permission implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tece_name")
 	private TextContentEntry name;
+	
+	// bi-directional many-to-one association to PermissionType
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pety_type")
+	private PermissionType permissionType;
 
 	// bi-directional many-to-many association to User
 	@ManyToMany(mappedBy = "associatedPermissionList")
@@ -70,11 +75,19 @@ public class Permission implements Serializable {
 	public TextContentEntry getName() {
 		return this.name;
 	}
-
+	
 	public void setName(TextContentEntry name) {
 		this.name = name;
 	}
 
+	public PermissionType getPermissionType() {
+		return this.permissionType;
+	}
+	
+	public void setPermissionType(PermissionType permissionType){
+		this.permissionType = permissionType;
+	}
+	
 	public List<User> getAssociatedUserList() {
 		return this.associatedUserList;
 	}
