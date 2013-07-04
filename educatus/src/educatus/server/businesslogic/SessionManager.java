@@ -6,18 +6,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.zip.DataFormatException;
 
 import javax.persistence.EntityManager;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 
 import educatus.server.persist.dao.DaoModule;
 import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.security.LogUserConnection;
 import educatus.server.persist.dao.security.User;
 
+@Singleton
 public class SessionManager {
 		
 	private class SessionEntry{
@@ -48,23 +51,27 @@ public class SessionManager {
 	
 	@Inject
 	private EntityManager entityManager;
+	@Inject
+	private SecurityDao securityDao;
 	
 	private static SessionManager instance;	
 	
 	private Map<String,SessionEntry> sessionMap;
+	private Map<UUID, String> uuidCipMap;
 	
-	private SessionManager()
+	public SessionManager()
 	{
 		this.sessionMap  = new HashMap<String,SessionEntry>();
+		this.uuidCipMap = new HashMap<UUID,String>();
 	}
 	
-	public static SessionManager getInstance()
-	{	
-		if(SessionManager.instance == null){
-			SessionManager.instance = new SessionManager();
-		}
-		return SessionManager.instance;
-	}
+//	public static SessionManager getInstance()
+//	{	
+//		if(SessionManager.instance == null){
+//			SessionManager.instance = new SessionManager();
+//		}
+//		return SessionManager.instance;
+//	}
 	
 	public boolean userCanLog(String cip)
 	{
@@ -101,12 +108,11 @@ public class SessionManager {
 		
 		// Log of the connection attempt.
 		//TODO - A verifier
-		Injector dbInjector = Guice.createInjector(new DaoModule("db-manager-localhost"));
-		
+				
 		User user = null;
 		try
 		{
-			user = dbInjector.getInstance(SecurityDao.class).findUserByCip(cip);
+			user = securityDao.findUserByCip(cip);
 		}
 		catch(Exception e)
 		{		
@@ -132,14 +138,38 @@ public class SessionManager {
 	}
 	
 	public UUID generateSessionUUID(String cip, String ip){
-		SessionEntry sessionEntry = this.sessionMap.get(cip);			
+		
+		UUID tempuuid = null;		
+		do
+		{
+			tempuuid = UUID.randomUUID();
+		}
+		while(this.uuidCipMap.containsKey(tempuuid));		
+		
+		this.uuidCipMap.put(tempuuid, cip);
+		
+		// Retrieving the sessionentry associated with the cip.
+		SessionEntry sessionEntry = this.sessionMap.get(cip);		
+		// If an UUID already exist in the sessionEntry, we free the UUID from the mapping UUID-CIP.
+		if(sessionEntry.uuid != null)
+		{
+			this.uuidCipMap.remove(cip);
+		}
+		
 		sessionEntry.ip = ip;
-		sessionEntry.uuid = UUID.randomUUID(); 
+		sessionEntry.uuid = tempuuid;
 		return sessionEntry.uuid;
 	}
 	
-	public boolean isSessionStillValid(String cip, String ip, UUID uuid){
+	public boolean isSessionStillValid(String stringUUID, String ip) throws IllegalArgumentException{
+		
+		// Generate the UUID from a string representation.
+		UUID uuid = UUID.fromString(stringUUID);
+		// Get the cip with the generated uuid from the mapping uuid-cip.		
+		String cip = this.getSessionAssociatedCip(stringUUID);
+		// Retrieve the sessionEntry from the cip.
 		SessionEntry sessionEntry = this.sessionMap.get(cip);
+		
 		try
 		{
 		// Session with this User doesn't exist.
@@ -179,5 +209,12 @@ public class SessionManager {
 			return null;
 		else
 			return sessionEntry.uuid;
+	}
+	public String getSessionAssociatedCip(String stringUUID) throws IllegalArgumentException{
+		
+		// Generate the UUID from a string representation.
+		UUID uuid = UUID.fromString(stringUUID);
+		// Get the cip with the generated uuid from the mapping uuid-cip.
+		return this.uuidCipMap.get(uuid);				
 	}
 }

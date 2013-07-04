@@ -10,6 +10,8 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 import educatus.server.businesslogic.LDAPManager;
+import educatus.server.businesslogic.PermissionManager;
+import educatus.server.businesslogic.SessionManager;
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
@@ -69,6 +71,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private SeminaryContentBuilder seminaryContentBuilder;
 	private UserProfilBuilder userProfilBuilder;
 	private SeminaryAdministrationManager seminaryAdministrationManager;
+	private SessionManager sessionManager;
+	private PermissionManager permissionManager;
 
 	@Override
 	public void init() throws ServletException {
@@ -87,7 +91,9 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		seminaryContentBuilder = dbInjector.getInstance(SeminaryContentBuilder.class);
 		seminaryEditorContentBuilder = dbInjector.getInstance(SeminaryEditorContentBuilder.class); 
 		
-		seminaryAdministrationManager = dbInjector.getInstance(SeminaryAdministrationManager.class);
+		seminaryAdministrationManager = dbInjector.getInstance(SeminaryAdministrationManager.class);		
+		sessionManager = dbInjector.getInstance(SessionManager.class);
+		permissionManager = dbInjector.getInstance(PermissionManager.class);
 	}
 
 	@Override
@@ -153,41 +159,53 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private LoginResponse ProcessLoginRequest(LoginRequest request) {
-		LoginResponse response = new LoginResponse();
 		
-		// TODO, check password with database
+		String providedUsername = request.getUserName();
 		String providedPassword = request.getPassword();
-
-		boolean passwordValid = false;
-		if (providedPassword.equalsIgnoreCase("ADMIN")){
-			passwordValid = LDAPManager.getInstance().authenticate("geee9001", "Min0t0r3$");
-		}
-		else
+		String providedIp = "";
+		boolean passwordIsValid = false;
+		
+		try
 		{
-			passwordValid = LDAPManager.getInstance().authenticate(request.getUserName(), request.getPassword());
+			LoginResponse response = new LoginResponse();
+			
+			// Attempt to validate the credential
+			passwordIsValid = LDAPManager.getInstance().authenticate(providedUsername, providedPassword);
+			
+			// The user cannot connect to the application --> NbFailedConnectionAttempt exceed
+			if(!sessionManager.userCanLog(providedUsername))
+			{
+				response.setLoginStatus(LoginStatus.LOCKED);
+				// Force the password invalid even if it is valid since the NbFailedConnectionAttempt have been reach.
+				passwordIsValid = false;
+				return response;
+			}			
+					
+			// Attempt to retrieve user's information.
+			UserProfilContent user = null;
+			try {
+				user = userProfilBuilder.buildUserProfilContent(providedUsername, request.getCulture(), request.getLanguage());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if (passwordIsValid && user != null) {
+				// Login successfull, generate sessionID
+				response.setLoginStatus(LoginStatus.SUCCESS);
+				response.setSessionID(sessionManager.generateSessionUUID(providedUsername,providedIp).toString());
+				response.setUserCoreContent(user.getUserCoreContent());
+			} else {			
+				response.setLoginStatus(LoginStatus.FAILURE);
+			}
+			
+			return response;
 		}
-		
-		String userName = request.getUserName();
-		UserProfilContent user = null;
-		try {
-			user = userProfilBuilder.buildUserProfilContent(userName, request.getCulture(), request.getLanguage());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if (passwordValid && user != null) {
-			// Login successfull, generate sessionID
-			// TODO, store sessionID on server-side too
-			String generatedSessionID = "SAUCE";
-			response.setLoginStatus(LoginStatus.SUCCESS);
-			response.setSessionID(generatedSessionID);
-			response.setUserCoreContent(user.getUserCoreContent());
-		} else {			
-			response.setLoginStatus(LoginStatus.FAILURE);
-		}
-		
-		return response;
+		finally
+		{
+			// Log each Login attempt, even if the user is locked.
+			sessionManager.logConnectionAttempt(providedUsername, passwordIsValid);
+		}		
 	}
 
 	private SeminaryAdministrationPageContentResponse ProcessSeminaryAdministrationPageContentRequest(SeminaryAdministrationPageContentRequest request) {
