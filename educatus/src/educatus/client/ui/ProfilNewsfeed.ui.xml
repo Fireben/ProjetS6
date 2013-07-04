@@ -1,10 +1,14 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:c='urn:import:com.google.gwt.user.cellview.client'>
 	<ui:style>
 		
 	</ui:style>
 	<g:HTMLPanel>
-	    <g:Label>Latest News</g:Label>
+		<g:VerticalPanel ui:field="newsfeedVerticalPanel">
+		    <g:Label ui:field="newsfeedTitleLabel">Latest News</g:Label>
+		    <c:CellTable ui:field="newsfeedTable"/>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

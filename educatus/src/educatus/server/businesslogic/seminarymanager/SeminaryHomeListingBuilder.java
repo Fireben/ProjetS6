@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import educatus.server.businesslogic.InternationalizationUtility;
+import educatus.server.businesslogic.SeminaryAdapter;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Seminary;
@@ -28,34 +28,20 @@ public class SeminaryHomeListingBuilder {
 			Category parentCategory = semDao.findCategoryById(parentId);
 			
 			// We set common parent 
-			CategoryCoreContent commonParent = new CategoryCoreContent();
-			commonParent.setId(parentCategory.getId());
-			commonParent.setName(InternationalizationUtility.getTranslationEntry(parentCategory.getName(), culture, language).getTcteTranslation());
-			commonParent.setDescription(InternationalizationUtility.getTranslationEntry(parentCategory.getDescription(), culture, language).getTcteTranslation());
+			CategoryCoreContent commonParent = SeminaryAdapter.categoryToCategoryCoreContent(parentCategory, culture, language);
 			pageContent.setCommonParent(commonParent);
 			
 			// TODO get actual childrens			
 			List<Seminary> seminaryList = semDao.findAllSeminary();
 			
 			for (Seminary seminary : seminaryList) {
-				
-				// Copy-paste from SeminaryContentFactory, we need to remove duplicate code, create a utility parser ?
-				SeminaryCoreContent coreContent = new SeminaryCoreContent();
-				coreContent.setId(seminary.getSemiId());
-				coreContent.setTitle(InternationalizationUtility.getTranslationEntry(seminary.getTitle(), culture, language).getTcteTranslation());
-				coreContent.setDescription(InternationalizationUtility.getTranslationEntry(seminary.getDescription(), culture, language).getTcteTranslation());		
-				coreContent.setDifficulty(InternationalizationUtility.getTranslationEntry(seminary.getDifficulty().getName(), culture, language).getTcteTranslation());
-				coreContent.setAuthor(seminary.getAuthor().getFirstName() + " " + seminary.getAuthor().getLastName());
-				coreContent.setLastEditor(seminary.getLastEditor().getFirstName() + " " + seminary.getLastEditor().getLastName());
-				coreContent.setCreatedDate(seminary.getDateCreated().toString());
-				coreContent.setEditedDate(seminary.getDateModified().toString());
-				
-				pageContent.getSeminariesChildren().add(coreContent);
+				SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);				
+				pageContent.getSeminariesChildren().add(seminaryCoreContent);
 			}
 						
 		} catch (Exception e) {
-			e.printStackTrace();
 			// TODO: handle exception
+			e.printStackTrace();
 		}		
 		
 		return pageContent;

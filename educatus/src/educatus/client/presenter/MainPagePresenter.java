@@ -418,6 +418,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				loginRequest.setUserName(boxUserName.getText());
 				loginRequest.setPassword(boxPassword.getText());
 				loginRequest.setSessionID(Cookies.getCookie("SessionID"));
+				loginRequest.setCulture(locale.getCulture());
+				loginRequest.setLanguage(locale.getLanguage());
 				requestService.sendRequest(loginRequest, new AsyncCallback<AbstractResponse>() {
 
 					@Override

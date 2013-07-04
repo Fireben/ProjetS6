@@ -2,6 +2,8 @@ package educatus.shared.dto.seminary;
 
 import java.io.Serializable;
 
+import educatus.shared.dto.user.UserCoreContent;
+
 public class SeminaryCoreContent implements Serializable {
 
 	private static final long serialVersionUID = 1047401170857580293L;
@@ -10,8 +12,8 @@ public class SeminaryCoreContent implements Serializable {
 	private String title;
 	private String description;
 
-	private String author;
-	private String lastEditor;
+	private UserCoreContent author;
+	private UserCoreContent lastEditor;
 
 	private String difficulty;
 
@@ -42,19 +44,19 @@ public class SeminaryCoreContent implements Serializable {
 		this.description = description;
 	}
 
-	public String getAuthor() {
+	public UserCoreContent getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(String author) {
+	public void setAuthor(UserCoreContent author) {
 		this.author = author;
 	}
 
-	public String getLastEditor() {
+	public UserCoreContent getLastEditor() {
 		return lastEditor;
 	}
 
-	public void setLastEditor(String lastEditor) {
+	public void setLastEditor(UserCoreContent lastEditor) {
 		this.lastEditor = lastEditor;
 	}
 

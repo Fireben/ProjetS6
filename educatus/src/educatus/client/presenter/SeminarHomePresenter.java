@@ -146,7 +146,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 					seminaryCoreContent.getId(), 
 					seminaryCoreContent.getTitle(), 
 					seminaryCoreContent.getDescription(), 
-					seminaryCoreContent.getAuthor(), 
+					seminaryCoreContent.getAuthor().getFirstName() + " " + seminaryCoreContent.getAuthor().getLastName(), 
 					seminaryCoreContent.getCreatedDate(), 
 					2
 			);
