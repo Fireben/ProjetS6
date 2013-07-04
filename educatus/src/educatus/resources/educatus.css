@@ -2400,8 +2400,13 @@ html>body .gwt-DialogBox {
 	margin-left: auto;
 	margin-right: auto;
 	width: 550px;
+	background-color: white;
 	text-align: justify;
 	font-family: calibri;
+	padding-left: 75px;
+	padding-right: 75px;
+	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 .dynamicSectionContainer>img {
@@ -2413,7 +2418,7 @@ html>body .gwt-DialogBox {
 .descriptionContainer {
 	color: rgb(200,200,200);
 	float: right;
-	margin-top: 50px;
+	margin-top: 100px;
 	margin-right: 20px;
 	width: 275px;
 	border: 1px;
@@ -2430,12 +2435,9 @@ html>body .gwt-DialogBox {
 
 .seminaryTitleLabel {
 	padding-top: 20px;
-	color: #3b5998;
+	color: #00a1d6;
 	font-size: 30px;	
 	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
-	width: 550px;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 .title {
@@ -2463,9 +2465,8 @@ html>body .gwt-DialogBox {
 	width: 700px;
 	margin-left: 370px;
 	margin-right: auto;
-	background-color: rgb(255,255,255);
 	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 	border-radius: 10px;
 }
 

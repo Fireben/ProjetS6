@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
 
 	<g:HTMLPanel>	
-	    <g:HorizontalPanel width = "100%">
+	    <g:HorizontalPanel ui:field="horizontalPanel" width = "100%">
 		    <g:FlowPanel ui:field="seminaryContainer">
 		    	<g:Label ui:field="titleLabel">
 		    	</g:Label>

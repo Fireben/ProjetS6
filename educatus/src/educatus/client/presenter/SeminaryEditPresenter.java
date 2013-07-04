@@ -252,8 +252,7 @@ public class SeminaryEditPresenter extends
 		
 		descriptionContainer.add(new Label(pageContent.getDifficultyText()));			
 		ListBox difficultyBox = getView().getDifficultyBox();
-		difficultyBox.clear();
-		for(DifficultyContent difficulty : difficultyList) {
+		difficultyBox.clear();		for(DifficultyContent difficulty : difficultyList) {
 			difficultyBox.addItem(difficulty.getName());
 		}
 		descriptionContainer.add(difficultyBox);
@@ -270,10 +269,13 @@ public class SeminaryEditPresenter extends
 	private void resetAll() {
 		getView().getContentPanel().clear();
 		getView().getSeminaryDescriptionContainer().clear();
-		getView().getDescriptionBox().setValue("");
+		
 		getView().getCategoryBox().clear();
 		getView().getDifficultyBox().clear();
+		
+		getView().getDescriptionBox().setValue("");
 		getView().getTitleBox().setValue("");
+		
 		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
 		pageContentRequest.setCulture(locale.getCulture());
 		pageContentRequest.setLanguage(locale.getLanguage());
