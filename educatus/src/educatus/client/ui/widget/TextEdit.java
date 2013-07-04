@@ -1,5 +1,7 @@
 package educatus.client.ui.widget;
 
+import com.google.gwt.event.logical.shared.InitializeEvent;
+import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -57,7 +59,11 @@ public class TextEdit extends Composite{
 	private void createGrid() {
 		richTextArea = new RichTextArea();
 		richTextArea.addStyleName("textArea");
-		
+		richTextArea.addInitializeHandler(new InitializeHandler() {
+	    	public void onInitialize(InitializeEvent event) {
+	    		richTextArea.getFormatter().setFontName("calibri");
+	        }
+	    });
 		richTextToolbar = new RichTextToolbar(richTextArea);
 		richTextToolbar.addStyleName("textToolbar");
 		
@@ -68,7 +74,7 @@ public class TextEdit extends Composite{
 	}
 	
 	public String getText() {
-		return richTextArea.getText();
+		return richTextArea.getHTML();
 	}
 	
 	public String getTitle() {

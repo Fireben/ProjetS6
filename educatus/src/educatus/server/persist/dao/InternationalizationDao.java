@@ -197,6 +197,7 @@ public class InternationalizationDao {
 		tcte.setTcteTranslation(translation);
 
 		// Insert Object
+		tece.addTextContentTranslationEntry(tcte);
 		entityManager.persist(tcte);
 
 		return tcte;
@@ -223,6 +224,7 @@ public class InternationalizationDao {
 		tcte.setTcteTranslation(translation);
 
 		// Insert Object
+		tece.addTextContentTranslationEntry(tcte);
 		entityManager.persist(tcte);
 
 		return tcte;
@@ -254,6 +256,7 @@ public class InternationalizationDao {
 		imte.setImage(image);
 
 		// Insert Object
+		imce.getImageContentTranslationEntries().add(imte);
 		entityManager.persist(imte);
 
 		return imte;		

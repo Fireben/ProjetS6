@@ -128,6 +128,5 @@ public class SeminaryAdministrationManager {
 		seminary = seminaryDao.addCategoryToSeminary(seminary.getSemiId(), 47);
 
 		manager.getTransaction().commit();
-		manager.getEntityManagerFactory().getCache().evictAll();
 	}
 }

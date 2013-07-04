@@ -209,6 +209,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	private MainPageContentRequest request = new MainPageContentRequest();
 	
 	final Button confirmButton = new Button();
+	final TextBox boxUserName = new TextBox(); 
 	
 	private int logInAttempt = 1;
 	
@@ -260,6 +261,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			public void onClick(ClickEvent event) {
 				dialogBox.center();
 				dialogBox.show();
+				boxUserName.setFocus(true);
 			}
 		});
 		
@@ -390,7 +392,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(userName, HasHorizontalAlignment.ALIGN_LEFT);
 
 		// Add an box to the dialog
-		final TextBox boxUserName = new TextBox();
 		boxUserName.setStyleName("logInBox", true);
 		dialogContents.add(boxUserName);
 		dialogContents.setCellHorizontalAlignment(boxUserName, HasHorizontalAlignment.ALIGN_CENTER);
@@ -417,6 +418,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				loginRequest.setUserName(boxUserName.getText());
 				loginRequest.setPassword(boxPassword.getText());
 				loginRequest.setSessionID(Cookies.getCookie("SessionID"));
+				loginRequest.setCulture(locale.getCulture());
+				loginRequest.setLanguage(locale.getLanguage());
 				requestService.sendRequest(loginRequest, new AsyncCallback<AbstractResponse>() {
 
 					@Override

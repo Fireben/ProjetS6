@@ -5,8 +5,8 @@ import java.util.List;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import educatus.server.businesslogic.SeminaryAdapter;
 import educatus.server.persist.dao.SeminaryDao;
-import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
@@ -31,18 +31,8 @@ public class SeminaryHomeCategoryBuilder {
 				// we get all children
 				List<Category> categoryList = semDao.findTopLevelCategories();
 				
-				for (Category category : categoryList) {
-					
-					CategoryCoreContent content = new CategoryCoreContent();
-					// TODO We need to get the correct translation in the entries
-					content.setId(category.getId());
-					content.setName(category.getName().getTextContentTranslationEntries().get(0).getTcteTranslation());
-					content.setDescription(category.getDescription().getTextContentTranslationEntries().get(0).getTcteTranslation());
-					// We know it's an externalImage
-					ImageExternal externalImage = (ImageExternal) category.getImage();
-					content.setImageUrl(externalImage.getUrl());
-					
-					// We add category content to the list
+				for (Category category : categoryList) {					
+					CategoryCoreContent content = SeminaryAdapter.categoryToCategoryCoreContent(category, culture, language);
 					pageContent.getCategoryChildren().add(content);
 				}			
 				
@@ -52,34 +42,21 @@ public class SeminaryHomeCategoryBuilder {
 				List<Category> childrenCategories = semDao.findChildrenCategories(parentCategory.getId());
 				
 				// We set common parent 
-				CategoryCoreContent commonParent = new CategoryCoreContent();
-				commonParent.setId(parentCategory.getId());
-				commonParent.setName(parentCategory.getName().getTextContentTranslationEntries().get(0).getTcteTranslation());
-				commonParent.setDescription(parentCategory.getDescription().getTextContentTranslationEntries().get(0).getTcteTranslation());
-				// We know it's an externalImage
-				ImageExternal commonParentExternalImage = (ImageExternal) parentCategory.getImage();
-				commonParent.setImageUrl(commonParentExternalImage.getUrl());
+				CategoryCoreContent commonParent = SeminaryAdapter.categoryToCategoryCoreContent(parentCategory, culture, language);
 				pageContent.setCommonParent(commonParent);
 				
 				for (Category category : childrenCategories) {
 					
-					CategoryCoreContent content = new CategoryCoreContent();
-					// TODO We need to get the correct translation in the entries
-					content.setId(category.getId());
-					content.setName(category.getName().getTextContentTranslationEntries().get(0).getTcteTranslation());
-					content.setDescription(category.getDescription().getTextContentTranslationEntries().get(0).getTcteTranslation());
-					// We know it's an externalImage
-					ImageExternal externalImage = (ImageExternal) category.getImage();
-					content.setImageUrl(externalImage.getUrl());
-					
+					CategoryCoreContent categoryCoreContent = SeminaryAdapter.categoryToCategoryCoreContent(category, culture, language);
 					// We add category content to the list
-					pageContent.getCategoryChildren().add(content);
+					pageContent.getCategoryChildren().add(categoryCoreContent);
 				}	
 			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-		}		
+			e.printStackTrace();
+		}
 
 		return pageContent;
 	}

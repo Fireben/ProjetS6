@@ -3,6 +3,7 @@ package educatus.client.view;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -25,9 +26,16 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	FlowPanel seminaryContainer;	
 	@UiField
 	Label titleLabel;
+	@UiField
+	FlowPanel leftSpacer;
+	@UiField
+	FlowPanel rightSpacer;
+	@UiField
+	HorizontalPanel horizontalPanel;
 
 	@Inject
 	public SeminaryViewView(final Binder binder) {
+		
 		widget = binder.createAndBindUi(this);
 		
 		descriptionContainer.setVisible(false);
@@ -36,7 +44,12 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		descriptionContainer.setStyleName("descriptionContainer");
 		dynamicSectionContainer.setStyleName("dynamicSectionContainer");		
 		titleLabel.setStyleName("seminaryTitleLabel");
-		seminaryContainer.setStyleName("viewSeminaryContainer");		
+		seminaryContainer.setStyleName("viewSeminaryContainer");	
+		rightSpacer.setStyleName("seminarySpacer");		
+		
+		horizontalPanel.setCellWidth(leftSpacer, "25%");
+		horizontalPanel.setCellWidth(rightSpacer, "5%");
+		horizontalPanel.setCellWidth(descriptionContainer, "30%");
 	}
 	
 	public FlowPanel getDescriptionContainer() {

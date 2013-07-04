@@ -26,9 +26,9 @@ public class SecurityDao {
 			throw new EntityNotFoundException();
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public List<User> findAllCulture() throws Exception {
+	public List<User> findAllUsers() throws Exception {
 
 		List<?> resultList = entityManager.createNamedQuery(User.FIND_ALL)
 				.getResultList();
@@ -39,5 +39,6 @@ public class SecurityDao {
 	public void updateUser(User user) throws Exception {
 		
 		entityManager.merge(user);		
-	}
+	}	
+	
 }

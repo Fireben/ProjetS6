@@ -1,6 +1,7 @@
 package educatus.server.persist.dao.internationalization;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ public class ImageContentEntry implements Serializable {
 
 	// bi-directional many-to-one association to Imagecontenttranslationentry
 	@OneToMany(mappedBy = "imagecontententry")
-	private List<ImageContentTranslationEntry> imageContentTranslationEntries;
+	private List<ImageContentTranslationEntry> imageContentTranslationEntries = new ArrayList<ImageContentTranslationEntry>();
 
 	public ImageContentEntry() {
 	}

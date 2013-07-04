@@ -1,12 +1,17 @@
 package educatus.shared.dto.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import educatus.shared.dto.seminary.SeminaryCoreContent;
 
 public class UserProfilContent implements Serializable {
 
 	private static final long serialVersionUID = 7413591483810523323L;
 	
 	private UserCoreContent userCoreContent;
+	private List<SeminaryCoreContent> completedSeminaryList = new ArrayList<SeminaryCoreContent>();
 	
 	private String profilImageUrl;
 
@@ -29,5 +34,13 @@ public class UserProfilContent implements Serializable {
 
 	public void setUserCoreContent(UserCoreContent userCoreContent) {
 		this.userCoreContent = userCoreContent;
+	}
+
+	public List<SeminaryCoreContent> getCompletedSeminaryList() {
+		return completedSeminaryList;
+	}
+
+	public void setCompletedSeminaryList(List<SeminaryCoreContent> completedSeminaryList) {
+		this.completedSeminaryList = completedSeminaryList;
 	}	
 }

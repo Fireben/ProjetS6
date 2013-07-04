@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Table(name = "dynamic_content.vdynamicsection")
 public abstract class DynamicSection implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8179032348916252759L;
 
 	@Id
 	@SequenceGenerator(name = "dynamicsection_dyse_id", sequenceName = "dynamic_content.dynamicsection_dyse_id_seq", allocationSize = 1)
@@ -36,7 +36,7 @@ public abstract class DynamicSection implements Serializable {
 
 	// bi-directional many-to-one association to DynamicContent
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "dyco_container", nullable = false)
+	@JoinColumn(name = "dyco_container", nullable = false, insertable = true, updatable = true)
 	private DynamicContent dynamicContent;
 
 	// bi-directional many-to-one association to DynamicSectionAlignment

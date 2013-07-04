@@ -10,6 +10,7 @@ import educatus.server.persist.dao.dynamiccontent.DynamicContent;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionType;
 import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
@@ -45,15 +46,18 @@ public class DynamicContentDao {
 		TextContentEntry titleTextContentEntry = entityManager.find(TextContentEntry.class, titleTextContentEntryId);
 		TextContentEntry textTextContentEntry = entityManager.find(TextContentEntry.class, textTextContentEntryId);
 		DynamicSectionAlignment dynamicSectionAlignment = entityManager.find(DynamicSectionAlignment.class, dynamicSectionAlignmentId);
-						
+		DynamicSectionType dynamicSectionType = entityManager.find(DynamicSectionType.class, DynamicSectionText.DYNAMIC_SECTION_TYPE_VALUE);
+		
 		DynamicSectionText dynamicSectionText = new DynamicSectionText();
 		dynamicSectionText.setDynamicContent(dynamicContent);
 		dynamicSectionText.setSequenceNumber(sequenceNumber);
 		dynamicSectionText.setTitle(titleTextContentEntry);
 		dynamicSectionText.setText(textTextContentEntry);	
 		dynamicSectionText.setDynamicSectionAlignment(dynamicSectionAlignment);
+		dynamicSectionText.setDynamicSectionType(dynamicSectionType);
 		
-		entityManager.merge(dynamicSectionText);
+		dynamicContent.getDynamicSectionList().add(dynamicSectionText);
+		entityManager.persist(dynamicSectionText);
 	}
 	
 	public void addDynamicSectionImage(int dynamicContentId, int descriptionTextContentEntryId, int imageContentEntryId, int dynamicSectionAlignmentId, int sequenceNumber) throws Exception {
@@ -62,6 +66,7 @@ public class DynamicContentDao {
 		TextContentEntry descriptionTextContentEntry = entityManager.find(TextContentEntry.class, descriptionTextContentEntryId);
 		ImageContentEntry imageContentEntry = entityManager.find(ImageContentEntry.class, imageContentEntryId);
 		DynamicSectionAlignment dynamicSectionAlignment = entityManager.find(DynamicSectionAlignment.class, dynamicSectionAlignmentId);
+		DynamicSectionType dynamicSectionType = entityManager.find(DynamicSectionType.class, DynamicSectionImage.DYNAMIC_SECTION_TYPE_VALUE);
 		
 		DynamicSectionImage dynamicSectionImage = new DynamicSectionImage();
 		dynamicSectionImage.setDescription(descriptionTextContentEntry);
@@ -69,7 +74,9 @@ public class DynamicContentDao {
 		dynamicSectionImage.setDynamicSectionAlignment(dynamicSectionAlignment);
 		dynamicSectionImage.setSequenceNumber(sequenceNumber);
 		dynamicSectionImage.setImage(imageContentEntry);
-		
-		entityManager.merge(dynamicSectionImage);
+		dynamicSectionImage.setDynamicSectionType(dynamicSectionType);
+
+		dynamicContent.getDynamicSectionList().add(dynamicSectionImage);
+		entityManager.persist(dynamicSectionImage);
 	}
 }

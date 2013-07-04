@@ -160,15 +160,21 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 
 		boolean passwordValid = false;
 		if (providedPassword.equalsIgnoreCase("ADMIN")){
-			passwordValid = LDAPManager.getInstance().authenticate("uid=geee9001", "Min0t0r3$");
+			passwordValid = LDAPManager.getInstance().authenticate("geee9001", "Min0t0r3$");
 		}
 		else
 		{
-			passwordValid = LDAPManager.getInstance().authenticate("uid="+request.getUserName(), request.getPassword());
+			passwordValid = LDAPManager.getInstance().authenticate(request.getUserName(), request.getPassword());
 		}
 		
 		String userName = request.getUserName();
-		UserProfilContent user = userProfilBuilder.buildUserProfilContent(userName);
+		UserProfilContent user = null;
+		try {
+			user = userProfilBuilder.buildUserProfilContent(userName, request.getCulture(), request.getLanguage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if (passwordValid && user != null) {
 			// Login successfull, generate sessionID
@@ -262,7 +268,13 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private UserProfilPageContentResponse ProcessUserProfilContentRequest(UserProfilPageContentRequest request) {
-		UserProfilContent content = userProfilBuilder.buildUserProfilContent(request.getUserCip());
+		UserProfilContent content = null;
+		try {
+			content = userProfilBuilder.buildUserProfilContent(request.getUserCip(), request.getCulture(), request.getLanguage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		UserProfilPageContentResponse response = new UserProfilPageContentResponse();
 		response.setUserProfilContent(content);

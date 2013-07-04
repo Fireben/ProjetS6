@@ -8,47 +8,9 @@
 	xmlns:npui="urn:import:educatus.client.ui">
 
 	<g:HTMLPanel>
-		   <style>
-			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
-			.art-content .art-postcontent-0 .layout-item-1 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-color:#FAFAFA; color: #DEDEDE; background: ;  }
-			.art-content .art-postcontent-0 .layout-item-2 { color: #FFFFFF; background: ; padding: 0px;  }
-			.art-content .art-postcontent-0 .layout-item-3 { margin-top: 20px;margin-bottom: 20px;  }
-			.art-content .art-postcontent-0 .layout-item-4 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
-			.art-content .art-postcontent-0 .layout-item-5 { border-right-style:Dotted;border-right-width:1px;border-right-color:#2B2B2B; padding-right: 20px;padding-left: 20px;  }
-			.ie7 .post .layout-cell {border:none !important; padding:0 !important; }
-			.ie6 .post .layout-cell {border:none !important; padding:0 !important; }
-		</style> 	
-	<div id="art-mainPage">		
-			<div class="art-sheet clearfix">
-				<div class="art-layout-wrapper clearfix">
-					<div class="art-content-layout">
-						<div class="art-content-layout-row">						    
-							<div class="art-layout-cell art-content clearfix">
-								<article class="art-post art-article">	    
-									<div class="art-postcontent art-postcontent-0 clearfix">	    
-										<div class="art-content-layout-wrapper layout-item-3">
-											<div class="art-content-layout">
-												<div class="art-content-layout-row">
-													<h5></h5>
-													<div id="imageProfil">
-														<g:Image ui:field="userImage" url="images/user_128.png"/>
-														<g:InlineHyperlink  text="Change Profil Picture"/>
-													</div>
-													<g:Label ui:field="profilNameLabel" text="Name:"/>
-													<g:Label ui:field="profilSurnameLabel" text="Surname: "/>
-													<g:Label ui:field="profilEmailLabel" text="Email: "/>
-													<g:FlowPanel ui:field="chartContainer">
-													</g:FlowPanel>
-			 									</div>
-			 								</div>
-			 							</div>
-			 						</div>
-			 					</article>
-			 				</div>
-			 			</div>
-			 		</div>
-			 	</div> 
-			 </div>
-		</div> 
+	   	<g:VerticalPanel ui:field="profilVerticalPanel">
+			   <npui:ProfilSummary ui:field="profilSummary"></npui:ProfilSummary>
+			   <npui:ProfilNewsfeed ui:field="profilNewsfeed"></npui:ProfilNewsfeed>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

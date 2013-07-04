@@ -36,7 +36,7 @@ public class User implements Serializable {
 	public static final String FIND_BY_CIP_PARAM_NAME = "cip";
 	
 	@Id
-	@SequenceGenerator(name = "USERS_USER_ID_GENERATOR", sequenceName = "security.users_user_id_seq")
+	@SequenceGenerator(name = "USERS_USER_ID_GENERATOR", sequenceName = "security.users_user_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_USER_ID_GENERATOR")
 	@Column(name = "user_id")
 	private Integer id;
@@ -72,10 +72,6 @@ public class User implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "security.userpermission", joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "perm_id", nullable = false) })
 	private List<Permission> associatedPermissionList;
-
-	// bi-directional many-to-many association to UserType
-	@ManyToMany(mappedBy = "associatedUserList")
-	private List<UserType> associatedUserTypeList;
 
 	// bi-directional many-to-many association to Group
 	@ManyToMany
@@ -175,14 +171,6 @@ public class User implements Serializable {
 
 	public void setAssociatedPermissionList(List<Permission> associatedPermissionList) {
 		this.associatedPermissionList = associatedPermissionList;
-	}
-
-	public List<UserType> getAssociatedUserTypeList() {
-		return this.associatedUserTypeList;
-	}
-
-	public void setAssociatedUserTypeList(List<UserType> associatedUserTypeList) {
-		this.associatedUserTypeList = associatedUserTypeList;
 	}
 
 	public List<Group> getAssociatedGroupList() {

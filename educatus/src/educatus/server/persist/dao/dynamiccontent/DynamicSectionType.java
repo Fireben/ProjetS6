@@ -15,7 +15,8 @@ import educatus.server.persist.dao.internationalization.TextContentEntry;
 @Entity
 @Table(name = "dynamic_content.dynamicsectiontype")
 public class DynamicSectionType implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = -2075712968262877701L;
 
 	@Id
 	@Column(name = "dyst_id", unique = true, nullable = false)

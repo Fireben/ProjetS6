@@ -1,3 +1,4 @@
+
 package educatus.client.presenter;
 
 import java.util.List;
@@ -46,6 +47,8 @@ public class SeminaryViewPresenter extends
 
 	@Inject
 	private EducatusLocale locale;
+	
+	String id;
 
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT
@@ -77,13 +80,36 @@ public class SeminaryViewPresenter extends
 	protected void onReset() {
 		super.onReset();
 		
-		//Clear the content to prevent having the data of a previous seminary
-		getView().getDynamicSectionContainer().clear();
-		getView().getDescriptionContainer().clear();
+
 	}
 	
 	@Override
 	protected void onReveal() {
+		super.onReveal();
+		//Clear the content to prevent having the data of a previous seminary
+		getView().getDynamicSectionContainer().clear();
+		getView().getDescriptionContainer().clear();
+		
+		SeminaryContentRequest request = new SeminaryContentRequest();
+		request.setCulture(locale.getCulture());
+		request.setLanguage(locale.getLanguage());
+		request.setSelectedSeminaryId(Integer.parseInt(id));
+		requestService.sendRequest(request,
+				new AsyncCallback<AbstractResponse>() {
+					@Override
+					public void onSuccess(AbstractResponse result) {
+						if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
+							SeminaryContentResponse response = (SeminaryContentResponse) result;
+							SeminaryContent seminaryContent = response
+									.getSeminaryContent();
+							populateSeminaryView(seminaryContent);
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
 	}
 
 
@@ -93,7 +119,7 @@ public class SeminaryViewPresenter extends
 
 		getView().getTitleLabel().setText(coreContent.getTitle());
 
-		descriptionContainer.add(new DescriptionEntry("Author", coreContent.getAuthor()));
+		descriptionContainer.add(new DescriptionEntry("Author", coreContent.getAuthor().getFirstName() + " " + coreContent.getAuthor().getLastName()));
 		descriptionContainer.add(new DescriptionEntry("Description", coreContent.getDescription()));
 		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
 		descriptionContainer.add(new DescriptionEntry("Created Date", coreContent.getCreatedDate()));
@@ -139,33 +165,12 @@ public class SeminaryViewPresenter extends
 		Label titleLabel = new Label(title);
 		titleLabel.setStyleName("title");
 		dynamicSectionContainer.add(titleLabel);
-		dynamicSectionContainer.add(new Label(text));		
+		dynamicSectionContainer.add(new HTML(text));		
 	}
 
 	@Override
 	public void prepareFromRequest(PlaceRequest placeRequest) {
 		super.prepareFromRequest(placeRequest);
-		String id = placeRequest.getParameter("id", "1");
-
-		SeminaryContentRequest request = new SeminaryContentRequest();
-		request.setCulture(locale.getCulture());
-		request.setLanguage(locale.getLanguage());
-		request.setSelectedSeminaryId(Integer.parseInt(id));
-		requestService.sendRequest(request,
-				new AsyncCallback<AbstractResponse>() {
-					@Override
-					public void onSuccess(AbstractResponse result) {
-						if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
-							SeminaryContentResponse response = (SeminaryContentResponse) result;
-							SeminaryContent seminaryContent = response
-									.getSeminaryContent();
-							populateSeminaryView(seminaryContent);
-						}
-					}
-
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-				});
+		id = placeRequest.getParameter("id", "1");
 	}
 }

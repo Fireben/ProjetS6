@@ -44,10 +44,6 @@ public class Permission implements Serializable {
 	@ManyToMany(mappedBy = "associatedPermissionList")
 	private List<User> associatedUserList;
 
-	// bi-directional many-to-many association to Usertype
-	@ManyToMany(mappedBy = "associatedPermissionList")
-	private List<UserType> associatedUserTypeList;
-
 	@ManyToMany
 	@JoinTable(name = "security.grouppermission", joinColumns = { @JoinColumn(name = "perm_id", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "grou_id", nullable = false) })
 	private List<Group> associatedGroupList;
@@ -85,14 +81,6 @@ public class Permission implements Serializable {
 
 	public void setAssociatedUserList(List<User> associatedUserList) {
 		this.associatedUserList = associatedUserList;
-	}
-
-	public List<UserType> getAssociatedUserTypeList() {
-		return this.associatedUserTypeList;
-	}
-
-	public void setAssociatedUserTypeList(List<UserType> associatedUserTypeList) {
-		this.associatedUserTypeList = associatedUserTypeList;
 	}
 	
 	public List<Group> getAssociatedGroupList() {

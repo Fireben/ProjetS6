@@ -62,7 +62,6 @@
 		<class>educatus.server.persist.dao.security.LogUserConnection</class>
 		<class>educatus.server.persist.dao.security.Permission</class>
 		<class>educatus.server.persist.dao.security.User</class>
-		<class>educatus.server.persist.dao.security.UserType</class>
 		<class>educatus.server.persist.dao.seminary.Category</class>
 		<class>educatus.server.persist.dao.seminary.Competence</class>
 		<class>educatus.server.persist.dao.seminary.Difficulty</class>

@@ -16,21 +16,16 @@ a,a:visited,a:hover {
 }
 
 #art-main {
-	background: #121212 url('images/page.png') repeat-x scroll;
 	background: url('images/pageglare.png') top center no-repeat,
 		url('images/page.png') repeat-x, #121212;
-	margin: 0 auto;
 	font-size: 12px;
 	font-family: Verdana, Geneva, Arial, Helvetica, Sans-Serif;
 	font-weight: normal;
 	font-style: normal;
 	position: relative;
-	width: 100%;
-	min-height: 100%;
-	left: 0;
-	top: 0;
 	cursor: default;
 	overflow: hidden;
+	border-bottom: 1px solid #2B2B2B;	
 }
 
 #art-mainPage {
@@ -2400,17 +2395,29 @@ html>body .gwt-DialogBox {
 
 
 .dynamicSectionContainer {
-	color: rgb(200,200,200);
+	color: rgb(0, 0, 0);;
 	margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
 	width: 550px;
+	background-color: white;
+	text-align: justify;
+	font-family: calibri;
+	padding-left: 75px;
+	padding-right: 75px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.dynamicSectionContainer>img {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
 
 .descriptionContainer {
 	color: rgb(200,200,200);
-	float: right;
-	margin-top: 50px;
+	margin-top: 100px;
 	margin-right: 20px;
 	width: 275px;
 	border: 1px;
@@ -2430,13 +2437,12 @@ html>body .gwt-DialogBox {
 	color: #00a1d6;
 	font-size: 30px;	
 	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
-	width: 550px;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 .title {
 	font-weight: bold;
+	font-size: 15px;
+	border-bottom: solid 1px;
 }
 
 .backButton {
@@ -2455,8 +2461,10 @@ html>body .gwt-DialogBox {
 }
 
 .viewSeminaryContainer {
-	margin-left: 300px;
-	margin-right: auto;
+	width: 700px;
+	margin-top: 20px;
+	margin-bottom: 40px;
+	border-radius: 10px;
 }
 
 .logInBox {
@@ -2495,7 +2503,7 @@ a:hover, .logInClose {
 	margin-left: auto;
 	margin-right: auto;
 	width: 550px;
-	padding-bottom: 10px
+	padding-bottom: 10px;
 }
 
 .editTitleTextBox {
@@ -2570,4 +2578,61 @@ a:hover, .logInClose {
 
 .editDifficultyBox {
 	margin-bottom: 10px;
+}
+
+.profilVerticalPanel {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.profilSummary {
+	color: rgb(200, 200, 200);
+	background-color: rgb(40, 40, 40);
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;	
+	padding: 10px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.profilNewsfeed {
+	color: rgb(200, 200, 200);
+	background-color: rgb(40, 40, 40);
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;	
+	padding: 10px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.profilSummaryLabel {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+
+.profilImage {
+	margin-left:10px;
+	margin-right:10px;
+	max-width:200px
+}
+
+.userDescriptionVerticalPanel {
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.newsfeedTable {
+	padding-bottom: 6%;
+	padding-top: 6%;
+	text-align: center;
+}
+
+.seminarySpacer {
+	min-width:100px;
 }

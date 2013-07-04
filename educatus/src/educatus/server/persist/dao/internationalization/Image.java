@@ -1,7 +1,6 @@
 package educatus.server.persist.dao.internationalization;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -16,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -42,11 +40,6 @@ public abstract class Image implements Serializable {
 	@JoinColumn(name = "imty_type", unique = true, nullable = false)
 	private ImageType type;
 
-	// bi-directional many-to-one association to Imagecontenttranslationentry
-	// TODO, Vérifier s'il faut mettre mappedBy = "vimage"
-	@OneToMany(mappedBy = "image")
-	private List<ImageContentTranslationEntry> imageContentTranslationEntries;
-
 	public Image() {
 	}
 
@@ -64,31 +57,5 @@ public abstract class Image implements Serializable {
 
 	public void setType(ImageType type) {
 		this.type = type;
-	}
-
-	public List<ImageContentTranslationEntry> getImageContentTranslationEntries() {
-		return this.imageContentTranslationEntries;
-	}
-
-	public void setImageContentTranslationEntries(
-			List<ImageContentTranslationEntry> imagecontenttranslationentries) {
-		this.imageContentTranslationEntries = imagecontenttranslationentries;
-	}
-
-	public ImageContentTranslationEntry addImageContentTranslationEntry(
-			ImageContentTranslationEntry imagecontenttranslationentry) {
-		getImageContentTranslationEntries().add(imagecontenttranslationentry);
-		imagecontenttranslationentry.setImage(this);
-
-		return imagecontenttranslationentry;
-	}
-
-	public ImageContentTranslationEntry removeImageContentTranslationEntry(
-			ImageContentTranslationEntry imagecontenttranslationentry) {
-		getImageContentTranslationEntries()
-				.remove(imagecontenttranslationentry);
-		imagecontenttranslationentry.setImage(null);
-
-		return imagecontenttranslationentry;
 	}
 }

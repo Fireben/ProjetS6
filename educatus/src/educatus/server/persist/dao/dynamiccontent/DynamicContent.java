@@ -20,8 +20,7 @@ import javax.persistence.Table;
 @Table(name = "dynamic_content.dynamiccontent")
 public class DynamicContent implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = -8951511534581405033L;
 	public static final String FIND_ALL = "DYNAMICCONTENT.FIND_ALL";
 
 	@Id
