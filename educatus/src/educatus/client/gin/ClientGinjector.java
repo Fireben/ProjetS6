@@ -23,6 +23,7 @@ import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
+import educatus.client.presenter.ExercicePresenter;
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.presenter.ProfilPresenter;
@@ -53,4 +54,6 @@ public interface ClientGinjector extends Ginjector {
 	AsyncProvider<SeminaryViewPresenter> getSeminaryViewPresenter();
 
 	AsyncProvider<CategoryAdministrationPresenter> getCategoryAdministrationPresenter();
+	
+	AsyncProvider<ExercicePresenter> getExercicePresenter();
 }

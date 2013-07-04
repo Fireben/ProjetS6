@@ -56,6 +56,7 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.events.PageChangingEvent.PageChangeHandler;
+import educatus.client.ui.CustomButton;
 import educatus.client.ui.Footer;
 import educatus.client.ui.MainMenu;
 import educatus.shared.dto.pagecontent.MainPageContent;
@@ -409,7 +410,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(boxPassword, HasHorizontalAlignment.ALIGN_CENTER);
 
 		// Add a confirm button at the bottom of the dialog
-
 		confirmButton.setHTML("Ok");
 		confirmButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

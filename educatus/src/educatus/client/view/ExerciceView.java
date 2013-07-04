@@ -9,11 +9,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-import educatus.client.presenter.SeminaryViewPresenter.MyView;
+import educatus.client.presenter.ExercicePresenter.MyView;
 
-public class SeminaryViewView extends ViewImpl implements MyView {
+public class ExerciceView extends ViewImpl implements MyView {
 
-	public interface Binder extends UiBinder<Widget, SeminaryViewView> {
+	public interface Binder extends UiBinder<Widget, ExerciceView> {
 	}
 
 	private final Widget widget;
@@ -34,7 +34,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	HorizontalPanel horizontalPanel;
 
 	@Inject
-	public SeminaryViewView(final Binder binder) {		
+	public ExerciceView(final Binder binder) {		
 		widget = binder.createAndBindUi(this);
 		
 		descriptionContainer.setVisible(false);
@@ -43,7 +43,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		descriptionContainer.setStyleName("descriptionContainer");
 		dynamicSectionContainer.setStyleName("dynamicSectionContainer");		
 		titleLabel.setStyleName("viewTitleLabel");
-		contentContainer.setStyleName("viewContentContainer");	
+		contentContainer.setStyleName("viewContainer");	
 		rightSpacer.setStyleName("viewSpacer");		
 		
 		horizontalPanel.setCellWidth(leftSpacer, "45%");

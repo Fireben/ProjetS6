@@ -2432,11 +2432,22 @@ html>body .gwt-DialogBox {
 	padding-right: 20px;
 }
 
-.seminaryTitleLabel {
+.viewTitleLabel {
 	padding-top: 20px;
 	color: #00a1d6;
 	font-size: 30px;	
 	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
+}
+
+.viewContentContainer {
+	width: 700px;
+	margin-top: 20px;
+	margin-bottom: 40px;
+	border-radius: 10px;
+}
+
+.viewSpacer {
+	min-width:100px;
 }
 
 .title {
@@ -2458,13 +2469,6 @@ html>body .gwt-DialogBox {
 .backButton:hover:enabled {
 	border: 1px solid #4B4B4B;
 	opacity: 1 !important;	
-}
-
-.viewSeminaryContainer {
-	width: 700px;
-	margin-top: 20px;
-	margin-bottom: 40px;
-	border-radius: 10px;
 }
 
 .logInBox {
@@ -2632,10 +2636,6 @@ a:hover, .logInClose {
 	text-align: center;
 }
 
-.seminarySpacer {
-	min-width:100px;
-}
-
 .responseSubmit {
 	background: none repeat scroll 0% 0% #202020;
 	opacity: 0.75;
@@ -2650,4 +2650,8 @@ a:hover, .logInClose {
 .responseSubmit:hover:enabled {
 	border: 1px solid #4B4B4B;
 	opacity: 1 !important;
+}
+
+.choiceResponseButton>label {
+	font-family: calibri;
 }

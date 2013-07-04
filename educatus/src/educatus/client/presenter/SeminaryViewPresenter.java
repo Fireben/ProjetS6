@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
@@ -22,7 +21,6 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
-import educatus.client.ui.widget.ChoiceResponse;
 import educatus.client.ui.widget.DescriptionEntry;
 import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
@@ -43,7 +41,7 @@ public class SeminaryViewPresenter extends
 	public interface MyView extends View {
 		public FlowPanel getDescriptionContainer();
 		public FlowPanel getDynamicSectionContainer();
-		public FlowPanel getSeminaryContainer();
+		public FlowPanel getContentContainer();
 		public Label getTitleLabel();
 	}
 
@@ -81,8 +79,6 @@ public class SeminaryViewPresenter extends
 	@Override
 	protected void onReset() {
 		super.onReset();
-		
-
 	}
 	
 	@Override
@@ -153,22 +149,9 @@ public class SeminaryViewPresenter extends
 			}
 			dynamicSectionContainer.add(new HTML("<br/>"));
 		}
-		/*
 		
-		ChoiceResponse choiceResponse = new ChoiceResponse();
-		choiceResponse.addChoice("L'ordre d'arrivee des paquets est garantie dans le routage par paquet");
-		choiceResponse.addChoice("Le temps d'etablissement d'un circuit virtuel est negligeable dans le processus de routage par circuit");
-		choiceResponse.addChoice("Un circuit virtuel est associee a un circuit secondaire dans le cas d'une panne");
-		choiceResponse.addChoice("Aucune");
 
-		dynamicSectionContainer.add(choiceResponse);
-		
-		Button submitButton = new Button("Submit");
-		submitButton.setStyleName("responseSubmit");
-		getView().getSeminaryContainer().add(submitButton);		
-		*/
-		
-		getView().getSeminaryContainer().setVisible(true);
+		getView().getContentContainer().setVisible(true);
 		descriptionContainer.setVisible(true);
 	}
 

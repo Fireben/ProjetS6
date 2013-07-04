@@ -33,42 +33,40 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * 
  * @author Christian Goudreau
  */
-public class NameTokens
-{
+public class NameTokens {
 	public static final String homePage = "!homePage";
 	public static final String profil = "!profil";
 	public static final String seminaryEdit = "!seminaryEdit";
 	public static final String seminarHomePage = "!seminarHomePage";
 	public static final String viewSeminary = "!viewSeminary";
 	public static final String categoryAdministration = "!categoryAdministration";
+	public static final String exercice = "!exercice";
 
-	public static String getHomePage()
-	{
+	public static String getHomePage() {
 		return homePage;
 	}
 
-	public static String getProfil()
-	{
+	public static String getProfil() {
 		return profil;
 	}
 
-	public static String getSeminarHomePage()
-	{
+	public static String getSeminarHomePage() {
 		return seminarHomePage;
 	}
 
-	public static String getSeminaryEdit()
-	{
+	public static String getSeminaryEdit() {
 		return seminaryEdit;
 	}
 
-	public static String getViewSeminary()
-	{
+	public static String getViewSeminary() {
 		return viewSeminary;
 	}
-	
-	public static String getCategoryAdministration()
-	{
+
+	public static String getCategoryAdministration() {
 		return categoryAdministration;
+	}
+
+	public static String getExercice() {
+		return exercice;
 	}
 }
