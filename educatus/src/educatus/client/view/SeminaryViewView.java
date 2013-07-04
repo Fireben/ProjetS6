@@ -45,7 +45,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		dynamicSectionContainer.setStyleName("dynamicSectionContainer");		
 		titleLabel.setStyleName("seminaryTitleLabel");
 		seminaryContainer.setStyleName("viewSeminaryContainer");	
-		leftSpacer.setStyleName("seminarySpacer");		
+		rightSpacer.setStyleName("seminarySpacer");		
 		
 		horizontalPanel.setCellWidth(leftSpacer, "25%");
 		horizontalPanel.setCellWidth(rightSpacer, "5%");
