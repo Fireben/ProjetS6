@@ -34,8 +34,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	HorizontalPanel horizontalPanel;
 
 	@Inject
-	public SeminaryViewView(final Binder binder) {
-		
+	public SeminaryViewView(final Binder binder) {		
 		widget = binder.createAndBindUi(this);
 		
 		descriptionContainer.setVisible(false);
@@ -47,9 +46,9 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		seminaryContainer.setStyleName("viewSeminaryContainer");	
 		rightSpacer.setStyleName("seminarySpacer");		
 		
-		horizontalPanel.setCellWidth(leftSpacer, "25%");
+		horizontalPanel.setCellWidth(leftSpacer, "45%");
 		horizontalPanel.setCellWidth(rightSpacer, "5%");
-		horizontalPanel.setCellWidth(descriptionContainer, "30%");
+		horizontalPanel.setCellWidth(descriptionContainer, "50%");
 	}
 	
 	public FlowPanel getDescriptionContainer() {

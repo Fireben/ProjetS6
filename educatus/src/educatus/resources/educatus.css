@@ -2635,3 +2635,19 @@ a:hover, .logInClose {
 .seminarySpacer {
 	min-width:100px;
 }
+
+.responseSubmit {
+	background: none repeat scroll 0% 0% #202020;
+	opacity: 0.75;
+	border: 1px solid #3B3B3B;
+	margin-top: 10px;
+	width: 65px;
+	height: 35px;
+	color: rgb(180, 217, 230);
+	cursor: pointer;
+}
+
+.responseSubmit:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;
+}
