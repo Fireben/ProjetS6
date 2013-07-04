@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -25,13 +27,20 @@ import educatus.server.persist.dao.internationalization.TextContentEntry;
 @Entity
 @NamedQueries({
 	@NamedQuery(name = Category.FIND_ALL, query = "SELECT c FROM Category c"),
-	@NamedQuery(name = Category.FIND_ALL_CHILDREN, query = "SELECT c FROM Category c WHERE c.parentCategory=:parentCategory"),
+	@NamedQuery(name = Category.FIND_TOP_CHILDREN, query = "SELECT c FROM Category c WHERE c.parentCategory=:parentCategory"),
 	@NamedQuery(name = Category.FIND_ALL_TOP_LEVEL, query = "SELECT c FROM Category c WHERE c.parentCategory IS NULL")})
+@NamedNativeQueries({
+	@NamedNativeQuery(name = Category.FIND_ALL_CHILDREN, query = "SELECT * FROM seminary.getCategoryTree(?)")
+})
+
+
 @Table(name = "seminary.category")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "CATEGORY.FIND_ALL";
+	public static final String FIND_TOP_CHILDREN = "CATEGORY.FIND_TOP_CHILDREN";
+	public static final String FIND_TOP_CHILDREN_PARAM_NAME = "parentCategory";
 	public static final String FIND_ALL_CHILDREN = "CATEGORY.FIND_ALL_CHILDREN";
 	public static final String FIND_ALL_CHILDREN_PARAM_NAME = "parentCategory";
 	public static final String FIND_ALL_TOP_LEVEL = "CATEGORY.FIND_ALL_TOP_LEVEL";

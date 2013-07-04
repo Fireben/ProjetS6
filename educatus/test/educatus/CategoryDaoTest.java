@@ -12,6 +12,7 @@ import educatus.server.persist.dao.DaoModule;
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.seminary.Category;
+import educatus.server.persist.dao.seminary.Seminary;
 
 public class CategoryDaoTest {
 
@@ -20,25 +21,24 @@ public class CategoryDaoTest {
 
 	public static void main(String[] args) {
 		try {
+			/* Create Injectors */
 			InternationalizationDao internationalizationDao = null;
 			SeminaryDao seminaryDao = null;
 			EntityManager manager = null;
 
-			Injector dbInjector = Guice.createInjector(new DaoModule(
-					"db-manager-localhost"));
+			Injector dbInjector = Guice.createInjector(new DaoModule("db-manager-localhost"));
 			dbInjector.getInstance(JpaInitializer.class);
-			internationalizationDao = dbInjector
-					.getInstance(InternationalizationDao.class);
+			internationalizationDao = dbInjector.getInstance(InternationalizationDao.class);
 			seminaryDao = dbInjector.getInstance(SeminaryDao.class);
 			manager = dbInjector.getInstance(EntityManager.class);
 
+			
 			List<Category> topLevelCat = seminaryDao.findTopLevelCategories();
 
 			for (Category category : topLevelCat) {
-				System.out.println(category.getName()
-						.getTextContentTranslationEntries().get(0)
-						.getTcteTranslation());
+				System.out.println(category.getName().getTextContentTranslationEntries().get(0).getTcteTranslation());
 			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -39,7 +39,7 @@ public class SeminaryHomeCategoryBuilder {
 			} else {
 				
 				Category parentCategory  = semDao.findCategoryById(parentId);
-				List<Category> childrenCategories = semDao.findChildrenCategories(parentCategory.getId());
+				List<Category> childrenCategories = semDao.findTopChildrenCategories(parentCategory.getId());
 				
 				// We set common parent 
 				CategoryCoreContent commonParent = SeminaryAdapter.categoryToCategoryCoreContent(parentCategory, culture, language);
