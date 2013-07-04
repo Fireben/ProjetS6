@@ -4,12 +4,13 @@
 
 	<g:HTMLPanel>	
 	    <g:HorizontalPanel ui:field="horizontalPanel" width = "100%">
+	        <g:FlowPanel ui:field="leftSpacer"/>
 		    <g:FlowPanel ui:field="seminaryContainer">
 		    	<g:Label ui:field="titleLabel">
 		    	</g:Label>
 		    	<g:FlowPanel ui:field="dynamicSectionContainer"/>
 	    	</g:FlowPanel>
-	    	<g:FlowPanel ui:field="spacer"/>	
+	    	<g:FlowPanel ui:field="rightSpacer"/>	
 			<g:FlowPanel ui:field="descriptionContainer"/>	
 		</g:HorizontalPanel>				 									
 	</g:HTMLPanel>

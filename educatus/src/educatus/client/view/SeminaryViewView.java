@@ -27,7 +27,9 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	@UiField
 	Label titleLabel;
 	@UiField
-	FlowPanel spacer;
+	FlowPanel leftSpacer;
+	@UiField
+	FlowPanel rightSpacer;
 	@UiField
 	HorizontalPanel horizontalPanel;
 
@@ -43,10 +45,10 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		dynamicSectionContainer.setStyleName("dynamicSectionContainer");		
 		titleLabel.setStyleName("seminaryTitleLabel");
 		seminaryContainer.setStyleName("viewSeminaryContainer");	
-		spacer.setStyleName("seminarySpacer");
+		leftSpacer.setStyleName("seminarySpacer");		
 		
-		horizontalPanel.setCellWidth(seminaryContainer, "65%");
-		horizontalPanel.setCellWidth(spacer, "5%");
+		horizontalPanel.setCellWidth(leftSpacer, "25%");
+		horizontalPanel.setCellWidth(rightSpacer, "5%");
 		horizontalPanel.setCellWidth(descriptionContainer, "30%");
 	}
 	
