@@ -452,9 +452,14 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 								dialogContents.remove(credentialsFail);
 								logInAttempt = 1;
 								dialogBox.hide();								
-							} else  {
+							} else  if (response.getLoginStatus() == LoginStatus.FAILURE){
 								// Login not sucessfull, display error text in login dialog
 								credentialsFail.setText("*Authentification Failed (" + logInAttempt + ")");
+								dialogContents.add(credentialsFail);
+								logInAttempt++;
+							}else if(response.getLoginStatus() == LoginStatus.LOCKED) {
+								// Login not sucessfull, display error text in login dialog
+								credentialsFail.setText("*Account locked for 15 minutes, too many failed attempt to connect.");
 								dialogContents.add(credentialsFail);
 								logInAttempt++;
 							}

@@ -22,7 +22,7 @@ public class SecurityDao {
 
 		if (resultList.size() == 1) {
 			return (User) resultList.get(0);
-		} else {
+		} else {			
 			throw new EntityNotFoundException();
 		}
 	}

@@ -8,7 +8,8 @@ public class LoginResponse extends AbstractResponse {
 
 	public static enum LoginStatus {
 		SUCCESS,
-		FAILURE
+		FAILURE,
+		LOCKED
 	}
 
 	private static final long serialVersionUID = -1783165567804879562L;
