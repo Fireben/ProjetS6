@@ -21,7 +21,7 @@ public class LogUserConnection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "LOGUSERCONNECTION_LOUC_ID_GENERATOR", sequenceName = "security.loguserconnection_louc_id_seq")
+	@SequenceGenerator(name = "LOGUSERCONNECTION_LOUC_ID_GENERATOR", sequenceName = "security.loguserconnection_louc_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOGUSERCONNECTION_LOUC_ID_GENERATOR")
 	@Column(name = "louc_id")
 	private Integer id;

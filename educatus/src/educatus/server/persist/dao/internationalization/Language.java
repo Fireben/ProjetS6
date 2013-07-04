@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = Language.FIND_ALL, query = "SELECT l FROM Language l"),
-		@NamedQuery(name = Language.FIND_BY_CODE, query = "SELECT l FROM Language l WHERE l.code=:code") })
+		@NamedQuery(name = Language.FIND_BY_CODE, query = "SELECT l FROM Language l WHERE lower(l.code)=lower(:code)") })
 @Table(name = "internationalization.language")
 public class Language implements Serializable {
 	private static final long serialVersionUID = 1L;

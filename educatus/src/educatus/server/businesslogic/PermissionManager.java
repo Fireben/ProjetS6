@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.security.Group;
 import educatus.server.persist.dao.security.Permission;
 import educatus.server.persist.dao.security.User;
@@ -78,6 +77,7 @@ public class PermissionManager {
 	public boolean UserRemovePermission(User user, PermissionConstant permission) {
 		return this.UserRemovePermission(user, entityManager.find(Permission.class, permission.getId()));
 	}
+	
 	public boolean UserAddPermission(User user, Permission[] permissions) {
 		boolean toReturnValue = false;
 
@@ -109,6 +109,37 @@ public class PermissionManager {
 		return toReturnValue;
 	}
 
+	public boolean GroupAddPermission(Group group, Permission permission) {
+		boolean toReturnValue = false;
+
+		entityManager.getTransaction().begin();
+		toReturnValue = this.InnerGroupAddPermission(group, permission);
+		entityManager.merge(group);
+		entityManager.getTransaction().commit();
+
+		this.UpdatePermissionSet(group);
+
+		return toReturnValue;
+	}
+	public boolean GroupAddPermission(Group group, PermissionConstant permission) {
+		return this.GroupAddPermission(group, entityManager.find(Permission.class, permission.getId()));
+	}
+	public boolean GroupRemovePermission(Group group, Permission permission) {
+		boolean toReturnValue = false;
+
+		entityManager.getTransaction().begin();
+		toReturnValue = this.InnerGroupRemovePermission(group, permission);
+		entityManager.merge(group);
+		entityManager.getTransaction().commit();
+
+		this.UpdatePermissionSet(group);
+
+		return toReturnValue;
+	}
+	public boolean GroupRemovePermission(Group group, PermissionConstant permission) {
+		return this.GroupRemovePermission(group, entityManager.find(Permission.class, permission.getId()));
+	}
+	
 	private boolean InnerUserAddPermission(User user, Permission permission) {
 		if (!user.getAssociatedPermissionList().contains(permission)) {
 			return user.getAssociatedPermissionList().add(permission);
@@ -117,6 +148,16 @@ public class PermissionManager {
 	}
 	private boolean InnerUserRemovePermission(User user, Permission permission) {
 		return user.getAssociatedPermissionList().remove(permission);
+	}
+	
+	private boolean InnerGroupAddPermission(Group group, Permission permission) {
+		if (!group.getAssociatedPermissionList().contains(permission)) {
+			return group.getAssociatedPermissionList().add(permission);
+		}
+		return false;
+	}
+	private boolean InnerGroupRemovePermission(Group group, Permission permission) {
+		return group.getAssociatedPermissionList().remove(permission);
 	}
 
 	private HashSet<Integer> GetPermissionSet(User user) {
@@ -135,6 +176,23 @@ public class PermissionManager {
 			this.mapSet = new HashMap<Integer, HashSet<Integer>>();
 		}
 		this.mapSet.put(user.getId(), this.GeneratePermissionSet(user));
+	}
+	private void UpdatePermissionSet(Group group){
+		if(this.mapSet == null){
+			this.mapSet = new HashMap<Integer,HashSet<Integer>>();
+		}
+		
+		//TODO - Devrait-on seulement wiper "la cache" de user au lieu de passer chaque user?
+		User tempUser = null;		
+		for(int id : this.mapSet.keySet()){
+			tempUser = entityManager.find(User.class, id);
+			
+			if(tempUser != null){
+				if(tempUser.getAssociatedGroupList().contains(group)){
+					this.mapSet.put(id, this.GeneratePermissionSet(tempUser));	
+				}				
+			}
+		}
 	}
 
 	private HashSet<Integer> GeneratePermissionSet(User user) {
