@@ -28,6 +28,7 @@ public class SeminaryDao {
 	
 	public Category createNewCategory(int nameTeceId, int descriptionTeceId, int imageId, Integer parent) throws Exception {
 		
+		
 		TextContentEntry nameTece = entityManager.find(TextContentEntry.class, nameTeceId);
 		TextContentEntry descriptionTece = entityManager.find(TextContentEntry.class, descriptionTeceId);		
 		Image image = entityManager.find(Image.class, imageId);
