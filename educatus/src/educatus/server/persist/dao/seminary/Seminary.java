@@ -26,12 +26,15 @@ import educatus.server.persist.dao.security.User;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = Seminary.FIND_ALL, query = "SELECT s FROM Seminary s")})
+	@NamedQuery(name = Seminary.FIND_ALL, query = "SELECT s FROM Seminary s"),
+	@NamedQuery(name = Seminary.FIND_BY_CATEGORY, query = "Select distinct s FROM Seminary s join s.categories c where c.id in :" + Seminary.FIND_BY_CATEGORY_PARAM)})
 @Table(name = "seminary.seminary")
 public class Seminary implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_ALL = "SEMINARY.FIND_ALL";
+	public static final String FIND_BY_CATEGORY = "SEMINARY.FINB_BY_CATEGORY";
+	public static final String FIND_BY_CATEGORY_PARAM = "catIds";
 	
 	@Id
 	@SequenceGenerator(name = "seminary_semi_id", sequenceName = "seminary.seminary_semi_id_seq", allocationSize = 1)
