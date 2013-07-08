@@ -79,7 +79,6 @@ public class MainMenu extends Composite {
 	}
 
 	public void appendMainMenuItem(String itemName, String targetHistoryToken) {
-
 		HTMLPanel hyperLinkPanel = new HTMLPanel("li", "");
 		InlineHyperlink hyperlink = new InlineHyperlink(itemName, targetHistoryToken);
 		hyperLinkPanel.add(hyperlink);

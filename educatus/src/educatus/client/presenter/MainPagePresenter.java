@@ -56,7 +56,6 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.events.PageChangingEvent.PageChangeHandler;
-import educatus.client.ui.CustomButton;
 import educatus.client.ui.Footer;
 import educatus.client.ui.MainMenu;
 import educatus.shared.dto.pagecontent.MainPageContent;
@@ -215,6 +214,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	private int logInAttempt = 1;
 	
 	private DialogBox dialogBox = createLoginDialogBox();
+	
+	private String activePage = null;
 
 	private class ExtendedDialogBox extends DialogBox {
 
@@ -281,7 +282,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		addRegisteredHandler(PageChangingEvent.getType(), new PageChangeHandler() {
 			@Override
 			public void onPageChange(PageChangingEvent event) {
-				setActiveMenuItem(event.getMessage());
+				activePage = event.getMessage();
+				setActiveMenuItem(activePage);
 			}
 		});
 	}
@@ -296,7 +298,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			requestService.sendRequest(request, requestHandler);
 		}
 	}
-	
+
 	private void requestView(ViewModeEnum viewMode) {
 		request.setViewMode(viewMode);
 		requestService.sendRequest(request, requestHandler);
@@ -324,7 +326,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			String nameToken = getNameTokenFromMenuItemType(mainMenuItemContent.getType());
 			// Append to the MainMenu
 			mainMenu.appendMainMenuItem(name, nameToken);
-		}		
+		}
+		mainMenu.setActiveMenuItem(activePage);
 	}
 	
 	private String getNameTokenFromMenuItemType(MainMenuItemEnum type){

@@ -2,13 +2,20 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">	
 
-	<g:HTMLPanel>	
+	<g:HTMLPanel ui:field="rootPanel">	
 	    <g:HorizontalPanel ui:field="horizontalPanel" width = "100%">
 	        <g:FlowPanel ui:field="leftSpacer"/>
 		    <g:FlowPanel ui:field="contentContainer">
 		    	<g:Label ui:field="titleLabel">
 		    	</g:Label>
 		    	<g:FlowPanel ui:field="dynamicSectionContainer"/>
+		    	<g:FlowPanel ui:field="questionContainer"/>
+		    	<g:Button ui:field="submitButton">
+		    		Submit
+		    	</g:Button>
+		    	<g:Button ui:field="nextButton">
+		    		Next
+		    	</g:Button>
 	    	</g:FlowPanel>
 	    	<g:FlowPanel ui:field="rightSpacer"/>	
 			<g:FlowPanel ui:field="descriptionContainer"/>	

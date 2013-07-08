@@ -606,6 +606,10 @@ ul.art-hmenu>li>a.active {
 	text-decoration: none;
 }
 
+ul.art-hmenu>li>a.active:hover {
+	color: #3BC8F7;
+}
+
 ul.art-hmenu>li>a:visited,ul.art-hmenu>li>a:hover,ul.art-hmenu>li:hover>a
 	{
 	text-decoration: none;
@@ -2395,7 +2399,7 @@ html>body .gwt-DialogBox {
 
 
 .dynamicSectionContainer {
-	color: rgb(0, 0, 0);;
+	color: rgb(0, 0, 0);
 	margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
@@ -2515,6 +2519,7 @@ a:hover, .logInClose {
 }
 
 .pager {
+	margin-top: 10px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -2637,22 +2642,87 @@ a:hover, .logInClose {
 	text-align: center;
 }
 
-.responseSubmit {
+.viewContainer>button {
 	background: none repeat scroll 0% 0% #202020;
 	opacity: 0.75;
 	border: 1px solid #3B3B3B;
 	margin-top: 10px;
+	margin-right: 5px;
+	margin-bottom: 30px;
 	width: 65px;
 	height: 35px;
 	color: rgb(180, 217, 230);
 	cursor: pointer;
 }
 
-.responseSubmit:hover:enabled {
+.viewContainer>button:hover:enabled {
 	border: 1px solid #4B4B4B;
 	opacity: 1 !important;
 }
 
 .choiceResponseButton>label {
 	font-family: calibri;
+}
+
+.questionTitle {
+	font-size: 16px;
+	border-bottom: solid 1px;
+	margin-bottom: 10px;
+}
+
+.questionLabel {
+	margin-bottom: 10px;
+}
+
+.responseFeedbackPanel {
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+
+.responseFeedbackPanel>img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.responseFeedbackPanel>button {
+	width: 65px;
+	height: 35px;
+	background: none repeat scroll 0% 0% #202020;
+	opacity: 0.75;
+	border: 1px solid #3B3B3B;
+	margin-top: 10px;
+	color: rgb(180, 217, 230);
+	cursor: pointer;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.responseFeedbackPanel>button:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;
+}
+
+.responseFeedbackLabel {
+	text-align: center;
+	color: rgb(233,233,233);
+	margin-top: 10px;
+}
+
+.questionContainer {
+	color: rgb(0, 0, 0);
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 550px;
+	background-color: white;
+	text-align: justify;
+	font-family: calibri;
+	padding-left: 75px;
+	padding-right: 75px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }

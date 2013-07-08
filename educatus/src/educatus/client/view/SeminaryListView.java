@@ -13,7 +13,6 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.Range;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -22,6 +21,7 @@ import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.ui.dataGrids.HyperLinkCell;
 import educatus.client.ui.dataGrids.ImageCell;
 import educatus.client.ui.dataGrids.Seminary;
+import educatus.client.ui.widget.Pager;
 import educatus.resources.SeminaryDataGridCssRessource;
 import educatus.resources.SimplePagerRessources;
 
@@ -115,47 +115,7 @@ SeminaryListPresenter.MyView {
 	
 	public void initializePager() {
 		Resources simplePagerRessources = GWT.create(SimplePagerRessources.class);
-		pager = new SimplePager(TextLocation.CENTER, simplePagerRessources , false, 0, true) {
-            private int pageSize = 12;
-
-            @Override
-            public int getPageSize() {
-                return pageSize;
-            }
-
-            @Override
-            public void previousPage() {
-                if (getDisplay() != null) {
-                    Range range = getDisplay().getVisibleRange();
-                    setPageStart(range.getStart() - getPageSize());
-                }
-            }
-
-            @Override
-            public void setPageStart(int index) {
-                if (getDisplay() != null) {
-                    Range range = getDisplay().getVisibleRange();
-                    int displayPageSize = getPageSize();
-                    if (isRangeLimited() && getDisplay().isRowCountExact()) {
-                        displayPageSize = Math.min(getPageSize(), getDisplay()
-                                .getRowCount() - index);
-                    }
-                    index = Math.max(0, index);
-                    if (index != range.getStart()) {
-                        getDisplay().setVisibleRange(index, displayPageSize);
-                    }
-                }
-            }
-
-            @Override
-            public void nextPage() {
-                if (getDisplay() != null) {
-                    Range range = getDisplay().getVisibleRange();
-                    setPageStart(range.getStart() + getPageSize());
-                }
-            }
-        };
-
+		pager = new Pager(TextLocation.CENTER, simplePagerRessources , false, 0, true);
         pager.setRangeLimited(true);
         pager.setDisplay(dataGrid);
         pager.setPageSize(12);

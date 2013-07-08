@@ -2,7 +2,9 @@ package educatus.client.view;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,6 +23,8 @@ public class ExerciceView extends ViewImpl implements MyView {
 	@UiField
 	FlowPanel dynamicSectionContainer;	
 	@UiField
+	FlowPanel questionContainer;
+	@UiField
 	FlowPanel descriptionContainer;	
 	@UiField
 	FlowPanel contentContainer;	
@@ -32,6 +36,12 @@ public class ExerciceView extends ViewImpl implements MyView {
 	FlowPanel rightSpacer;
 	@UiField
 	HorizontalPanel horizontalPanel;
+	@UiField
+	Button submitButton;
+	@UiField
+	Button nextButton;
+	@UiField
+	HTMLPanel rootPanel;
 
 	@Inject
 	public ExerciceView(final Binder binder) {		
@@ -41,7 +51,9 @@ public class ExerciceView extends ViewImpl implements MyView {
 		contentContainer.setVisible(false);
 		
 		descriptionContainer.setStyleName("descriptionContainer");
-		dynamicSectionContainer.setStyleName("dynamicSectionContainer");		
+		dynamicSectionContainer.setStyleName("dynamicSectionContainer");
+		dynamicSectionContainer.setVisible(false);
+		questionContainer.setStyleName("questionContainer");
 		titleLabel.setStyleName("viewTitleLabel");
 		contentContainer.setStyleName("viewContainer");	
 		rightSpacer.setStyleName("viewSpacer");		
@@ -65,6 +77,26 @@ public class ExerciceView extends ViewImpl implements MyView {
 
 	public Label getTitleLabel() {
 		return titleLabel;
+	}
+	
+	public Button getSubmitButton() {
+		return submitButton;
+	}	
+	
+	public Button getNextButton() {
+		return nextButton;
+	}
+
+	public HTMLPanel getRootPanel() {
+		return rootPanel;
+	}
+
+	public FlowPanel getQuestionContainer() {
+		return questionContainer;
+	}
+
+	public void setRootPanel(HTMLPanel rootPanel) {
+		this.rootPanel = rootPanel;
 	}
 
 	public Widget asWidget() {

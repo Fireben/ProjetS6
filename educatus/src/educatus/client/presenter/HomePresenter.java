@@ -131,7 +131,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 	@Override
 	protected void onReset() {
 		super.onReset();
-		PageChangingEvent.fire(this, NameTokens.getHomePage());
 		
 		if(request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage())
 		{
@@ -156,6 +155,13 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		}
 		
 	}
+	
+	@Override
+	protected void onReveal() {
+		super.onReveal();
+		PageChangingEvent.fire(this, NameTokens.getHomePage());
+	}
+	
 
 	private void fillPageWithContent(HomePageContent content) {
 		// Welcome

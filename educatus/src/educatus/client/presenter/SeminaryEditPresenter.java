@@ -161,7 +161,6 @@ public class SeminaryEditPresenter extends
 	@Override
 	protected void onReset() {
 		super.onReset();  		
-		setInSlot(SLOT_confirm, confirmPresenter);
 		confirmPresenter.setAddTextHandler(addTextHandler);
 		confirmPresenter.setAddImageHandler(addImageHandler);
 		confirmPresenter.setConfirmHandler(confirmHandler);
@@ -239,6 +238,7 @@ public class SeminaryEditPresenter extends
 			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_EDITOR_CONTENT_RESPONSE) {
 				SeminaryAdministrationPageContentResponse response = (SeminaryAdministrationPageContentResponse) result;
 				populateCoreContent(response.getSeminaryEditorContent(), response.getDifficultyContentList(), response.getCategoryCoreContentList());
+				setInSlot(SLOT_confirm, confirmPresenter);
 			}
 		}
 	}
@@ -252,7 +252,8 @@ public class SeminaryEditPresenter extends
 		
 		descriptionContainer.add(new Label(pageContent.getDifficultyText()));			
 		ListBox difficultyBox = getView().getDifficultyBox();
-		difficultyBox.clear();		for(DifficultyContent difficulty : difficultyList) {
+		difficultyBox.clear();		
+		for(DifficultyContent difficulty : difficultyList) {
 			difficultyBox.addItem(difficulty.getName());
 		}
 		descriptionContainer.add(difficultyBox);

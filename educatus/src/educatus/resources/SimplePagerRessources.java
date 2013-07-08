@@ -10,7 +10,7 @@ public interface SimplePagerRessources extends SimplePager.Resources{
     public ImageResource simplePagerFastForward(); 
     
 	@Override 
-    @Source( "last.png" )
+    @Source( "buttonLast.png" )
     public ImageResource simplePagerLastPage();
 	
 	@Override 
@@ -22,7 +22,7 @@ public interface SimplePagerRessources extends SimplePager.Resources{
     public ImageResource simplePagerLastPageDisabled();
 	
 	@Override 
-    @Source( "first.png" )
+    @Source( "buttonFirst.png" )
     public ImageResource simplePagerFirstPage();
 	
 	@Override 
@@ -30,7 +30,7 @@ public interface SimplePagerRessources extends SimplePager.Resources{
     public ImageResource simplePagerFirstPageDisabled();
 	
 	@Override 
-    @Source( "arrow_left.png" )
+    @Source( "buttonPrevious.png" )
     public ImageResource simplePagerPreviousPage();
 	
 	@Override 
@@ -42,7 +42,7 @@ public interface SimplePagerRessources extends SimplePager.Resources{
     public ImageResource simplePagerNextPageDisabled();
 	
 	@Override 
-    @Source( "arrow_right.png" )
+    @Source( "buttonNext.png" )
     public ImageResource simplePagerNextPage();
 	
 	@Source({CellTable.Style.DEFAULT_CSS, "seminaryDataGrid.css"})

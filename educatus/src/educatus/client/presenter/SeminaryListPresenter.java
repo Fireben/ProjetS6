@@ -41,6 +41,12 @@ public class SeminaryListPresenter extends
 		super.onReset();
 	}
 	
+	@Override
+	protected void onReveal() {
+		super.onReveal();
+		getView().getPager().setPage(0);
+	}
+	
 	public void setBackButtonHandler(ClickHandler backClickHandler) {
 		getView().getBackButton().addClickHandler(backClickHandler);
 	}
