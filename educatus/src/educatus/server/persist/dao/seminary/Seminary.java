@@ -42,7 +42,7 @@ public class Seminary implements Serializable {
 	@Column(name = "semi_id", unique = true, nullable = false)
 	private Integer id;
 
-	// bi-directional many-to-one association to TextContentEntry
+	// bi-directional many-to-one association to DynamicContent
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dyco_content", nullable = false, insertable = true, updatable = true)
 	private DynamicContent dynamicContent;
@@ -69,12 +69,12 @@ public class Seminary implements Serializable {
 	@JoinColumn(name = "tece_description", nullable = false, insertable = true, updatable = true)
 	private TextContentEntry description;
 
-	// bi-directional many-to-one association to TextContentEntry
+	// bi-directional many-to-one association to User
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_author", nullable = false, insertable = true, updatable = true)
 	private User author;
 
-	// bi-directional many-to-one association to TextContentEntry
+	// bi-directional many-to-one association to User
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_lasteditor", nullable = false, insertable = true, updatable = true)
 	private User lastEditor;
