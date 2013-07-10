@@ -27,6 +27,7 @@
 		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionText</class>
 		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionType</class>
 		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo</class>
+		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF</class>
 		<class>educatus.server.persist.dao.exercice.Answer</class>
 		<class>educatus.server.persist.dao.exercice.AnwserNumeric</class>
 		<class>educatus.server.persist.dao.exercice.AnwserText</class>
