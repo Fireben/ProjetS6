@@ -22,6 +22,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
+import educatus.client.ui.PdfViewer;
 import educatus.client.ui.widget.ChoiceQuestion;
 import educatus.client.ui.widget.MultipleChoiceQuestion;
 import educatus.client.ui.widget.Question;
@@ -137,8 +138,12 @@ public class ExercicePresenter extends
 			getView().getQuestionContainer().add(choiceQuestion);		
 		}
 		else if(state == 1) {
-			getView().getDynamicSectionContainer().setVisible(false);
-			
+			/*
+			PdfViewer pdf = new PdfViewer();
+			pdf.setPdfSrc("formatif.pdf");
+			getView().getDynamicSectionContainer().add(pdf);
+			getView().getDynamicSectionContainer().setVisible(true);
+			*/
 			getView().getTitleLabel().setText("Routage par paquet");
 			
 			SingleChoiceQuestion choiceQuestion = new SingleChoiceQuestion("Laquelle de ces affirmations est vraie ?");

@@ -1901,21 +1901,34 @@ img.art-lightbox-image.active {
 	margin: auto;
 }
 
-.categoryPanel>button {
+.backCategoryButton {
 	background: none repeat scroll 0% 0% #202020;
 	opacity: 0.75;
 	border: 1px solid #3B3B3B;
-	margin-right: 2px;
-	margin-top: 5px;
+	margin-left: 4px;
 	width: 65px;
 	height: 35px;
-	color: rgb(180, 217, 230);
-	float: right;
+	color: rgb(180, 217, 230);	
+	float: left;
+	cursor: pointer;
 }
 
-.categoryPanel>button:hover:enabled {
+.backCategoryButton>button:hover:enabled  {
 	border: 1px solid #4B4B4B;
-	opacity: 1 !important;
+	opacity: 1 !important;	
+}
+
+.nextCategoryButton {
+	float: right;
+	background: transparent;
+	margin-right: 10px;
+	color: rgb(87, 174, 241);
+	cursor: pointer;
+	border: none;
+}
+
+.nextCategoryButton:hover:enabled {
+
 }
 
 .categoryPanel>div {
@@ -2271,6 +2284,12 @@ GWTUpld,table.GWTUpld td {
 
 .imageUploadPanel {
 	width: 550px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.pdfUploadPanel {
+	width: 200px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -2726,3 +2745,12 @@ a:hover, .logInClose {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.pdfPreviewLabel {
+	color: white;
+} 

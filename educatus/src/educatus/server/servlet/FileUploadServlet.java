@@ -61,6 +61,17 @@ public class FileUploadServlet extends UploadAction {
 						receivedFiles.put(item.getFieldName(), file);
 						receivedContentTypes.put(item.getFieldName(),
 								item.getContentType());
+					}	
+					else if(item.getContentType().contains("pdf")) {
+						// TODO, prevent many request from the same user
+						File file = File.createTempFile("upload-", ".bin");
+						item.write(file);
+						generatedId = FileUploadCacheManager.getInstance().insertNewPdf(item.get());
+						
+						// / Save a list with the received files
+						receivedFiles.put(item.getFieldName(), file);
+						receivedContentTypes.put(item.getFieldName(),
+								item.getContentType());
 					}
 				} catch (Exception e) {
 					throw new UploadActionException(e);

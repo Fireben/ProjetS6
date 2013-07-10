@@ -15,6 +15,7 @@ public class ConfirmChangesPresenter extends
 	HandlerRegistration saveHandlerRegistration = null;
 	HandlerRegistration addImageHandlerRegistration = null;
 	HandlerRegistration addTextHandlerRegistration = null;
+	HandlerRegistration addPdfHandlerRegistration = null;
 	HandlerRegistration confirmHandlerRegistration = null;
 	HandlerRegistration cancelHandlerRegistration = null;
 
@@ -24,6 +25,7 @@ public class ConfirmChangesPresenter extends
 		public PushButton getAddTextButton();
 		public PushButton getAddImageButton();
 		public PushButton getAddVideoButton();
+		public PushButton getAddPdfButton();
 	}
 
 	@Inject
@@ -51,6 +53,12 @@ public class ConfirmChangesPresenter extends
 	public void setAddTextHandler(ClickHandler addTextBoxHandler) {
 		if(addTextHandlerRegistration == null) {
 			addTextHandlerRegistration = getView().getAddTextButton().addClickHandler(addTextBoxHandler);	
+		}
+	}
+	
+	public void setAddPdfHandler(ClickHandler addPdfHandler) {
+		if(addPdfHandlerRegistration == null) {
+			addPdfHandlerRegistration = getView().getAddPdfButton().addClickHandler(addPdfHandler);	
 		}
 	}
 

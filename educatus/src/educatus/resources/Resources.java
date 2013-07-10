@@ -38,4 +38,7 @@ public interface Resources extends ClientBundle {
     
     @Source("addVideo.png")
     ImageResource addVideoButton();
+    
+    @Source("addPdf.png")
+    ImageResource addPdfButton();
 }
