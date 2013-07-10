@@ -110,7 +110,7 @@ public class SeminaryAdministrationManager {
 				
 				DynamicSectionPDFContent pdfContent = (DynamicSectionPDFContent) dynamicSection;
 				
-				byte[] pdfRawData = null; //FileUploadCacheManager.getInstance().removeImage(imageContent.getImageUrl());
+				byte[] pdfRawData = FileUploadCacheManager.getInstance().removePdf(pdfContent.getPDFUrl());
 
 				dynamicContentDao.addDynamicSectionPDF(
 						seminaryDynamicContent.getId(),

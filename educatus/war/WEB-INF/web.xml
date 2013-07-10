@@ -22,6 +22,11 @@
     	<servlet-class>educatus.server.servlet.ImageServlet</servlet-class>
 	</servlet>
 	
+	<servlet>
+    	<servlet-name>pdfServlet</servlet-name>
+    	<servlet-class>educatus.server.servlet.PdfServlet</servlet-class>
+	</servlet>
+	
   <context-param>
     <!-- max size of the upload request -->
     <param-name>maxSize</param-name>
@@ -43,6 +48,11 @@
 	<servlet-mapping>
 	    <servlet-name>imageServlet</servlet-name>
 	    <url-pattern>/internalImageServlet/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	    <servlet-name>pdfServlet</servlet-name>
+	    <url-pattern>/internalPdfServlet/*</url-pattern>
 	</servlet-mapping>
   
 	<!-- Default page to serve -->

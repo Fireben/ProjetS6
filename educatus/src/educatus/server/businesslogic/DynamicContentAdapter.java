@@ -1,12 +1,14 @@
 package educatus.server.businesslogic;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageInternal;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment.AlignmentEnum;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 
 public class DynamicContentAdapter {
@@ -46,6 +48,18 @@ public class DynamicContentAdapter {
 		}
 		
 		return dynamicSectionImageContent;
+	}
+	
+	public static DynamicSectionPDFContent dynamicSectionPDFToContent(DynamicSectionPDF dynamicSectionPDF, String culture, String language) {
+		
+		DynamicSectionPDFContent dynamicSectionPDFContent = new DynamicSectionPDFContent();
+		
+		dynamicSectionPDFContent.setId(dynamicSectionPDF.getId());
+		dynamicSectionPDFContent.setSequenceNumber(dynamicSectionPDF.getSequenceNumber());
+		dynamicSectionPDFContent.setPDFUrl("/internalPdfServlet?id=" + dynamicSectionPDF.getId());
+		dynamicSectionPDFContent.setAlignment(getAlignment());
+		
+		return dynamicSectionPDFContent;
 	}
 
 	// TODO Remove hardcoding
