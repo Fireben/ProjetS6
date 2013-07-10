@@ -215,6 +215,6 @@ public class SessionManager {
 		// Generate the UUID from a string representation.
 		UUID uuid = UUID.fromString(stringUUID);
 		// Get the cip with the generated uuid from the mapping uuid-cip.
-		return this.uuidCipMap.get(uuid);				
+		return this.uuidCipMap.get(uuid);
 	}
 }

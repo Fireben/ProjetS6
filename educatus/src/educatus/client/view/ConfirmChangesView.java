@@ -28,6 +28,8 @@ public class ConfirmChangesView extends ViewImpl implements
 	@UiField
 	PushButton addVideoButton;
 	@UiField
+	PushButton addPdfButton;
+	@UiField
 	HTMLPanel confirmPanel;
 	@UiField
 	HorizontalPanel addSectionPanel;
@@ -41,6 +43,7 @@ public class ConfirmChangesView extends ViewImpl implements
 		DOM.getElementById("saveButton");
 		confirmPanel.setStyleName("confirmPanel");
 		addSectionPanel.setStyleName("addSectionPanel");
+		addPdfButton.addStyleName("addPushButton");
 		addTextButton.addStyleName("addPushButton");
 		addImageButton.addStyleName("addPushButton");
 		addVideoButton.addStyleName("addPushButton");
@@ -69,5 +72,9 @@ public class ConfirmChangesView extends ViewImpl implements
 
 	public PushButton getAddVideoButton() {
 		return addVideoButton;
+	}
+	
+	public PushButton getAddPdfButton() {
+		return addPdfButton;
 	}
 }

@@ -27,6 +27,7 @@ import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.widget.ImageEdit;
+import educatus.client.ui.widget.PdfEdit;
 import educatus.client.ui.widget.TextEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
@@ -89,6 +90,16 @@ public class SeminaryEditPresenter extends
 			getView().getContentPanel().remove(parent);
 		}
 	};
+	
+	private ClickHandler closePdfHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			CustomButton closeButton = (CustomButton)event.getSource();
+			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
+			PdfEdit parent = (PdfEdit)panelParent.getParent(); 
+			getView().getContentPanel().remove(parent);
+		}
+	};
 
 	private ClickHandler addTextHandler = new ClickHandler() {
 		@Override
@@ -103,8 +114,17 @@ public class SeminaryEditPresenter extends
 		@Override
 		public void onClick(ClickEvent event) {
 			ImageEdit imageEdit = new ImageEdit();
-			imageEdit.getCloseButton().addClickHandler(closeImageHandler);
+			imageEdit.getCloseButton().addClickHandler(closePdfHandler);
 			getView().getContentPanel().add(imageEdit);
+		}
+	};
+	
+	private ClickHandler addPdfHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			PdfEdit pdfEdit = new PdfEdit();
+			pdfEdit.getCloseButton().addClickHandler(closeImageHandler);
+			getView().getContentPanel().add(pdfEdit);
 		}
 	};
 	
@@ -165,6 +185,7 @@ public class SeminaryEditPresenter extends
 		confirmPresenter.setAddImageHandler(addImageHandler);
 		confirmPresenter.setConfirmHandler(confirmHandler);
 		confirmPresenter.setCancelHandler(cancelHandler);
+		confirmPresenter.setAddPdfHandler(addPdfHandler);
 		
 		getView().getSeminaryDescriptionContainer().clear();
 		
@@ -223,6 +244,10 @@ public class SeminaryEditPresenter extends
 				dynamicSectionImageContent.setImageUrl(id);
 				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
+			}
+			else if(currentWidget instanceof PdfEdit) {
+				PdfEdit pdfEdit = ((PdfEdit)currentWidget);
+				String id = pdfEdit.getPdfId();
 			}
 		}
 		return dynamicSectionList;

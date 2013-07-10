@@ -26,7 +26,7 @@
     <!-- max size of the upload request -->
     <param-name>maxSize</param-name>
     <!-- 3 Mo max -->
-    <param-value>3145728</param-value>
+    <param-value>10485760</param-value>
   </context-param>
   	
   	

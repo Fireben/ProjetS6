@@ -19,6 +19,9 @@
 			<g:PushButton ui:field="addVideoButton" enabled="true">
 				<g:upFace image='{res.addVideoButton}' />
 			</g:PushButton>
+			<g:PushButton ui:field="addPdfButton" enabled="true">
+				<g:upFace image='{res.addPdfButton}' />
+			</g:PushButton>			
 		</g:HorizontalPanel>
 			<g:Button ui:field="saveButton">Confirm</g:Button>
 			<g:Button ui:field="cancelButton">Cancel</g:Button>
