@@ -21,6 +21,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
+import educatus.client.ui.PdfViewer;
 import educatus.client.ui.widget.DescriptionEntry;
 import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
@@ -42,6 +43,7 @@ public class SeminaryViewPresenter extends
 		public FlowPanel getDescriptionContainer();
 		public FlowPanel getDynamicSectionContainer();
 		public FlowPanel getContentContainer();
+		public FlowPanel getPdfSectionContainer();
 		public Label getTitleLabel();
 	}
 
@@ -149,6 +151,12 @@ public class SeminaryViewPresenter extends
 			}
 			dynamicSectionContainer.add(new HTML("<br/>"));
 		}
+		
+		getView().getContentContainer().setWidth("900px");
+		dynamicSectionContainer.setVisible(false);
+		PdfViewer pdf = new PdfViewer();
+		pdf.setPdfSrc("formatif.pdf");
+		getView().getPdfSectionContainer().add(pdf);
 		
 
 		getView().getContentContainer().setVisible(true);

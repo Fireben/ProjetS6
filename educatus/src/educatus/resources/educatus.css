@@ -2249,18 +2249,20 @@ GWTUpld,table.GWTUpld td {
 
 }
 
-.addPushButton {
+.addSectionButton {
 	width: 50px;
 	height: 50px;
 	background: none;
 	border: none !important;
+	margin-right: 5px;
+	cursor: pointer;
 }
 
 .addSectionPanel {
 	padding-bottom: 10px;
 }
 
-.confirmPanel {
+.editButtonPanel {
 	margin-top: 10px;
 	width: 750px;
 	margin-left: auto;
@@ -2268,7 +2270,7 @@ GWTUpld,table.GWTUpld td {
 	padding-bottom: 20px;
 }
 
-.confirmPanel>button {
+.editButtonPanel>button {
 	background: none repeat scroll 0% 0% #202020;
 	opacity: 0.75;
 	border: 1px solid #3B3B3B;
@@ -2277,7 +2279,7 @@ GWTUpld,table.GWTUpld td {
 	color: rgb(180, 217, 230);
 }
 
-.confirmPanel>button:hover:enabled {
+.editButtonPanel>button:hover:enabled {
 	border: 1px solid #4B4B4B;
 	opacity: 1 !important;
 }
@@ -2298,6 +2300,7 @@ GWTUpld,table.GWTUpld td {
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
+	max-width: 500px;
 }
 
 
@@ -2544,6 +2547,7 @@ a:hover, .logInClose {
 }
 
 .editSection {
+	color:white;
 	background: rgb(30,30,30);
 	width: 700px;
 	margin-left: auto;
@@ -2586,6 +2590,8 @@ a:hover, .logInClose {
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:50px;
+	margin-top: 20px;
+	color: white
 }
 
 .editContent {
@@ -2753,4 +2759,50 @@ a:hover, .logInClose {
 
 .pdfPreviewLabel {
 	color: white;
-} 
+}
+
+.questionBox {
+	width: 500px;
+}
+
+.questionEdit {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.questionEditLabel {
+	color: white;
+	font-size: small;
+}
+
+.answerEditLabel {
+	color: white;
+	font-size: small;
+	margin-top: 20px;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.questionEditButtonPanel {
+	width: 600px;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.questionEditButtonPanel>button {
+	background: none repeat scroll 0% 0% rgb(68,68,68);
+	opacity: 0.75;
+	border: 1px solid rgb(105,105,105);
+	margin-right: 10px;
+	height: 35px;
+	color: white;
+	cursor: pointer;
+}
+
+.questionEditButtonPanel>button:hover:enabled {
+	border: 1px solid rgb(150,150,150);
+	opacity: 1 !important;
+}

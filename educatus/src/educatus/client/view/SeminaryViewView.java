@@ -21,6 +21,8 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	@UiField
 	FlowPanel dynamicSectionContainer;	
 	@UiField
+	FlowPanel pdfSectionContainer;	
+	@UiField
 	FlowPanel descriptionContainer;	
 	@UiField
 	FlowPanel contentContainer;	
@@ -57,7 +59,11 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 
 	public FlowPanel getDynamicSectionContainer() {
 		return dynamicSectionContainer;
-	}		
+	}	
+	
+	public FlowPanel getPdfSectionContainer() {
+		return pdfSectionContainer;
+	}
 
 	public FlowPanel getContentContainer() {
 		return contentContainer;

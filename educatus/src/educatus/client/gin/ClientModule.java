@@ -23,7 +23,8 @@ import educatus.client.EducatusPlaceManager;
 import educatus.client.NameTokens;
 import educatus.client.presenter.CategoryAdministrationPresenter;
 import educatus.client.presenter.CategoryPresenter;
-import educatus.client.presenter.ConfirmChangesPresenter;
+import educatus.client.presenter.EditButtonPanelPresenter;
+import educatus.client.presenter.ExerciceEditPresenter;
 import educatus.client.presenter.ExercicePresenter;
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
@@ -34,7 +35,8 @@ import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
 import educatus.client.view.CategoryAdministrationView;
 import educatus.client.view.CategoryView;
-import educatus.client.view.ConfirmChangesView;
+import educatus.client.view.EditButtonPanelView;
+import educatus.client.view.ExerciceEditView;
 import educatus.client.view.ExerciceView;
 import educatus.client.view.HomeView;
 import educatus.client.view.MainPageView;
@@ -81,8 +83,8 @@ public class ClientModule extends AbstractPresenterModule {
 		bindPresenter(ProfilPresenter.class, ProfilPresenter.MyView.class,
 				ProfilView.class, ProfilPresenter.MyProxy.class);
 
-		bindPresenterWidget(ConfirmChangesPresenter.class,
-				ConfirmChangesPresenter.MyView.class, ConfirmChangesView.class);
+		bindPresenterWidget(EditButtonPanelPresenter.class,
+				EditButtonPanelPresenter.MyView.class, EditButtonPanelView.class);
 
 		bindPresenter(SeminaryViewPresenter.class,
 				SeminaryViewPresenter.MyView.class, SeminaryViewView.class,
@@ -97,5 +99,10 @@ public class ClientModule extends AbstractPresenterModule {
 				ExercicePresenter.MyView.class,
 				ExerciceView.class,
 				ExercicePresenter.MyProxy.class);
+		
+		bindPresenter(ExerciceEditPresenter.class,
+				ExerciceEditPresenter.MyView.class,
+				ExerciceEditView.class,
+				ExerciceEditPresenter.MyProxy.class);
 	}
 }

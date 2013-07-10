@@ -41,6 +41,7 @@ public class NameTokens {
 	public static final String viewSeminary = "!viewSeminary";
 	public static final String categoryAdministration = "!categoryAdministration";
 	public static final String exercice = "!exercice";
+	public static final String exerciceEdit = "!exerciceEdit";
 
 	public static String getHomePage() {
 		return homePage;
@@ -68,5 +69,9 @@ public class NameTokens {
 
 	public static String getExercice() {
 		return exercice;
+	}
+	
+	public static String getExerciceEdit() {
+		return exerciceEdit;
 	}
 }

@@ -22,7 +22,6 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
-import educatus.client.ui.PdfViewer;
 import educatus.client.ui.widget.ChoiceQuestion;
 import educatus.client.ui.widget.MultipleChoiceQuestion;
 import educatus.client.ui.widget.Question;

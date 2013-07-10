@@ -156,7 +156,7 @@ public class SeminaryEditPresenter extends
 	};
 
 	@Inject
-	ConfirmChangesPresenter confirmPresenter;
+	EditButtonPanelPresenter editButtonPanelPresenter;
 
 	public static final Object SLOT_confirm = new Object();
 
@@ -180,12 +180,17 @@ public class SeminaryEditPresenter extends
 
 	@Override
 	protected void onReset() {
-		super.onReset();  		
-		confirmPresenter.setAddTextHandler(addTextHandler);
-		confirmPresenter.setAddImageHandler(addImageHandler);
-		confirmPresenter.setConfirmHandler(confirmHandler);
-		confirmPresenter.setCancelHandler(cancelHandler);
-		confirmPresenter.setAddPdfHandler(addPdfHandler);
+		super.onReset(); 	
+		
+		editButtonPanelPresenter.getView().getAddSectionPanel().clear();
+
+		editButtonPanelPresenter.addSectionButton("images/addText.png", addTextHandler);
+		editButtonPanelPresenter.addSectionButton("images/addImage.png", addImageHandler);
+		editButtonPanelPresenter.addSectionButton("images/addPdf.png", addPdfHandler);
+		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addPdfHandler);
+		
+		editButtonPanelPresenter.setSaveButtonHandler(confirmHandler);
+		editButtonPanelPresenter.setCancelHandler(cancelHandler);
 		
 		getView().getSeminaryDescriptionContainer().clear();
 		
@@ -263,7 +268,7 @@ public class SeminaryEditPresenter extends
 			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_EDITOR_CONTENT_RESPONSE) {
 				SeminaryAdministrationPageContentResponse response = (SeminaryAdministrationPageContentResponse) result;
 				populateCoreContent(response.getSeminaryEditorContent(), response.getDifficultyContentList(), response.getCategoryCoreContentList());
-				setInSlot(SLOT_confirm, confirmPresenter);
+				setInSlot(SLOT_confirm, editButtonPanelPresenter);
 			}
 		}
 	}
