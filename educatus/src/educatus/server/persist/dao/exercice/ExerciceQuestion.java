@@ -10,10 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
+import educatus.server.persist.dao.security.User;
 
 @Entity
 @Table(name = "exercice.exercicequestion")
@@ -44,9 +46,14 @@ public class ExerciceQuestion implements Serializable {
 
 	// bi-directional many-to-one association to ExerciceQuestionType
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "exqt_type", unique = true, nullable = false)
-	private ExerciceQuestionType exercicequestiontype;
+	@JoinColumn(name = "exqt_type", unique = true, nullable = false, insertable = false, updatable = false)
+	private ExerciceQuestionType exerciceQuestionType;
 
+	// bi-directional one-to-one association to User
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "exqu_id", nullable = false, insertable = false, updatable = false)
+	private Answer answer;
+	
 	public ExerciceQuestion() {
 	}
 
@@ -66,20 +73,20 @@ public class ExerciceQuestion implements Serializable {
 		this.dynamicContent = dynamicContent;
 	}
 
-	public Integer getExquScore() {
+	public Integer getScore() {
 		return this.score;
 	}
 
-	public void setExquScore(Integer exquScore) {
-		this.score = exquScore;
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
-	public Integer getExquSequence() {
+	public Integer getSequence() {
 		return this.sequence;
 	}
 
-	public void setExquSequence(Integer exquSequence) {
-		this.sequence = exquSequence;
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
 	public Exercice getExercice() {
@@ -90,12 +97,11 @@ public class ExerciceQuestion implements Serializable {
 		this.exercice = exercice;
 	}
 
-	public ExerciceQuestionType getExercicequestiontype() {
-		return this.exercicequestiontype;
+	public ExerciceQuestionType getExerciceQuestionType() {
+		return this.exerciceQuestionType;
 	}
 
-	public void setExercicequestiontype(
-			ExerciceQuestionType exercicequestiontype) {
-		this.exercicequestiontype = exercicequestiontype;
+	public void setExercicequestiontype(ExerciceQuestionType exerciceQuestionType) {
+		this.exerciceQuestionType = exerciceQuestionType;
 	}
 }
