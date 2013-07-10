@@ -31,6 +31,7 @@ import educatus.client.ui.widget.PdfEdit;
 import educatus.client.ui.widget.TextEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
@@ -253,6 +254,9 @@ public class SeminaryEditPresenter extends
 			else if(currentWidget instanceof PdfEdit) {
 				PdfEdit pdfEdit = ((PdfEdit)currentWidget);
 				String id = pdfEdit.getPdfId();
+				DynamicSectionPDFContent dynamicSectionPDFContent = new DynamicSectionPDFContent();
+				dynamicSectionPDFContent.setPDFUrl(id);
+				dynamicSectionList.add(dynamicSectionPDFContent);
 			}
 		}
 		return dynamicSectionList;

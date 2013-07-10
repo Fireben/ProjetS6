@@ -20,7 +20,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import educatus.server.persist.dao.internationalization.TextContentEntry;
-import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
 import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Competence;

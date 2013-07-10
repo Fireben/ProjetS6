@@ -26,6 +26,7 @@ import educatus.client.ui.widget.DescriptionEntry;
 import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
@@ -148,6 +149,10 @@ public class SeminaryViewPresenter extends
 				 * + src + " frameborder=\"0\" allowfullscreen></iframe>");
 				 */
 				break;
+			case PDF_SECTION:
+				DynamicSectionPDFContent pdfContent = (DynamicSectionPDFContent) abstractDynamicSection;
+				addPDFSection(pdfContent.getPDFUrl());
+				break;
 			}
 			dynamicSectionContainer.add(new HTML("<br/>"));
 		}
@@ -174,6 +179,13 @@ public class SeminaryViewPresenter extends
 		titleLabel.setStyleName("title");
 		dynamicSectionContainer.add(titleLabel);
 		dynamicSectionContainer.add(new HTML(text));		
+	}
+	
+	private void addPDFSection(String pdfUrl) {
+		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
+		PdfViewer pdfViewer = new PdfViewer();
+		pdfViewer.setPdfSrc(pdfUrl);
+		dynamicSectionContainer.add(pdfViewer);
 	}
 
 	@Override

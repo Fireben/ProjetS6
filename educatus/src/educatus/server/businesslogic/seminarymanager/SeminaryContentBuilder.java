@@ -10,10 +10,12 @@ import educatus.server.businesslogic.SeminaryAdapter;
 import educatus.server.persist.dao.dynamiccontent.DynamicSection;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionFormula;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.server.persist.dao.seminary.Seminary;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
@@ -55,6 +57,11 @@ public class SeminaryContentBuilder {
 				break;
 			case 4:
 				DynamicSectionFormula dynamicSectionFormula = (DynamicSectionFormula) dynamicSection;
+				break;
+			case 5:
+				DynamicSectionPDF dynamicSectionPDF = (DynamicSectionPDF) dynamicSection;
+				DynamicSectionPDFContent dynamicSectionPDFContent = DynamicContentAdapter.dynamicSectionPDFToContent(dynamicSectionPDF, culture, language);
+				content.getDynamicSectionList().add(dynamicSectionPDFContent);
 				break;
 			default:
 				break;

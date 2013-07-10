@@ -27,21 +27,16 @@
 		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionText</class>
 		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionType</class>
 		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo</class>
-		<class>educatus.server.persist.dao.exercice.AnwserChoice</class>
-		<class>educatus.server.persist.dao.exercice.AnwserChoicePK</class>
+		<class>educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF</class>
+		<class>educatus.server.persist.dao.exercice.Answer</class>
 		<class>educatus.server.persist.dao.exercice.AnwserNumeric</class>
 		<class>educatus.server.persist.dao.exercice.AnwserText</class>
+		<class>educatus.server.persist.dao.exercice.AnwserChoice</class>
 		<class>educatus.server.persist.dao.exercice.EQAnwserChoiceDynamicSection</class>
 		<class>educatus.server.persist.dao.exercice.EQAnwserChoiceDynamicSectionPK</class>
 		<class>educatus.server.persist.dao.exercice.Exercice</class>
-		<class>educatus.server.persist.dao.exercice.ExerciceCategory</class>
-		<class>educatus.server.persist.dao.exercice.ExerciceCategoryPK</class>
-		<class>educatus.server.persist.dao.exercice.ExerciceCompetence</class>
-		<class>educatus.server.persist.dao.exercice.ExerciceCompetencePK</class>
 		<class>educatus.server.persist.dao.exercice.ExerciceQuestion</class>
 		<class>educatus.server.persist.dao.exercice.ExerciceQuestionType</class>
-		<class>educatus.server.persist.dao.exercice.UserExerciceQuestion</class>
-		<class>educatus.server.persist.dao.exercice.UserExerciceQuestionPK</class>
 		<class>educatus.server.persist.dao.internationalization.Culture</class>
 		<class>educatus.server.persist.dao.internationalization.Image</class>
 		<class>educatus.server.persist.dao.internationalization.ImageContentEntry</class>

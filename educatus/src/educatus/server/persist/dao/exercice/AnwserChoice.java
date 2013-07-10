@@ -1,49 +1,59 @@
 package educatus.server.persist.dao.exercice;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import educatus.server.persist.dao.dynamiccontent.DynamicContent;
+
 @Entity
-@Table(name="exercice.anwserchoice")
-public class AnwserChoice implements Serializable {
+@DiscriminatorValue("3")
+public class AnwserChoice extends Answer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AnwserChoicePK id;
+	private AnwserChoicePK pk;
 
-	@Column(name="dyco_id", nullable=false)
-	private Integer dycoId;
+	// bi-directional many-to-one association to DynamicContent
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dyco_id", nullable = false, insertable = true, updatable = true)
+	private DynamicContent dynamicContent;
 
-	//bi-directional many-to-one association to EQAnwserChoiceDynamicSection
-	@OneToMany(mappedBy="anwserchoice")
+	// bi-directional many-to-one association to EQAnwserChoiceDynamicSection
+	@OneToMany(mappedBy = "anwserchoice")
 	private List<EQAnwserChoiceDynamicSection> eqanwserchoicedynamicsections;
 
-    public AnwserChoice() {
-    }
-
-	public AnwserChoicePK getId() {
-		return this.id;
+	public AnwserChoice() {
 	}
 
-	public void setId(AnwserChoicePK id) {
-		this.id = id;
-	}
-	
-	public Integer getDycoId() {
-		return this.dycoId;
+	public AnwserChoicePK getPK() {
+		return this.pk;
 	}
 
-	public void setDycoId(Integer dycoId) {
-		this.dycoId = dycoId;
-	}
-	
-	public List<EQAnwserChoiceDynamicSection> getEqanwserchoicedynamicsections() {
-		return this.eqanwserchoicedynamicsections;
+	public void setPK(AnwserChoicePK pk) {
+		this.pk = pk;
 	}
 
-	public void setEqanwserchoicedynamicsections(List<EQAnwserChoiceDynamicSection> eqanwserchoicedynamicsections) {
-		this.eqanwserchoicedynamicsections = eqanwserchoicedynamicsections;
+	public DynamicContent getDynamicContent() {
+		return this.dynamicContent;
 	}
-	
+
+	public void setDynamicContent(DynamicContent dynamicContent) {
+		this.dynamicContent = dynamicContent;
+	}
+
+//	public List<EQAnwserChoiceDynamicSection> getEqanwserchoicedynamicsections() {
+//		return this.eqanwserchoicedynamicsections;
+//	}
+//
+//	public void setEqanwserchoicedynamicsections(List<EQAnwserChoiceDynamicSection> eqanwserchoicedynamicsections) {
+//		this.eqanwserchoicedynamicsections = eqanwserchoicedynamicsections;
+//	}
 }

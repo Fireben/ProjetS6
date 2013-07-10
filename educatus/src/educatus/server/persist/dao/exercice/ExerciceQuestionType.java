@@ -4,8 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import educatus.server.persist.dao.internationalization.TextContentEntry;
 
 @Entity
 @Table(name = "exercicequestiontype")
@@ -14,38 +19,42 @@ public class ExerciceQuestionType implements Serializable {
 
 	@Id
 	@Column(name = "exqt_id", unique = true, nullable = false)
-	private Integer exqtId;
+	private Integer id;
 
-	@Column(name = "tece_description", nullable = false)
-	private Integer teceDescription;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_name", nullable = false, insertable = true, updatable = true)
+	private TextContentEntry name;
 
-	@Column(name = "tece_name", nullable = false)
-	private Integer teceName;
-
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_description", nullable = false, insertable = true, updatable = true)
+	private TextContentEntry description;
+	
 	public ExerciceQuestionType() {
 	}
 
-	public Integer getExqtId() {
-		return this.exqtId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setExqtId(Integer exqtId) {
-		this.exqtId = exqtId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public Integer getTeceDescription() {
-		return this.teceDescription;
+	public TextContentEntry getDescription() {
+		return this.description;
 	}
 
-	public void setTeceDescription(Integer teceDescription) {
-		this.teceDescription = teceDescription;
+	public void setDescription(TextContentEntry description) {
+		this.description = description;
 	}
 
-	public Integer getTeceName() {
-		return this.teceName;
+	public TextContentEntry getName() {
+		return this.name;
 	}
 
-	public void setTeceName(Integer teceName) {
-		this.teceName = teceName;
+	public void setName(TextContentEntry name) {
+		this.name = name;
 	}
 }

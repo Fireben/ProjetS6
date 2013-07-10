@@ -1,36 +1,33 @@
 package educatus.server.persist.dao.exercice;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import educatus.server.persist.dao.internationalization.TextContentEntry;
 
 @Entity
-@Table(name = "exercice.anwsertext")
-public class AnwserText implements Serializable {
+@DiscriminatorValue("2")
+public class AnwserText extends Answer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "exqu_id", unique = true, nullable = false)
-	private Integer exquId;
-
-	@Column(name = "tece_value", nullable = false)
-	private Integer teceValue;
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_value", nullable = false, insertable = true, updatable = true)
+	private TextContentEntry value;
 
 	public AnwserText() {
 	}
 
-	public Integer getExquId() {
-		return this.exquId;
+	public TextContentEntry getValue() {
+		return this.value;
 	}
 
-	public void setExquId(Integer exquId) {
-		this.exquId = exquId;
-	}
-
-	public Integer getTeceValue() {
-		return this.teceValue;
-	}
-
-	public void setTeceValue(Integer teceValue) {
-		this.teceValue = teceValue;
+	public void setValue(TextContentEntry value) {
+		this.value = value;
 	}
 }

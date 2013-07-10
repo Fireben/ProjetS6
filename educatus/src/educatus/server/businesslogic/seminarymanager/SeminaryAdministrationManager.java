@@ -16,6 +16,7 @@ import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
 import educatus.server.persist.dao.internationalization.ImageInternal;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
@@ -25,6 +26,7 @@ import educatus.server.persist.dao.seminary.Seminary;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection.DynamicSectionType;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 
@@ -104,6 +106,18 @@ public class SeminaryAdministrationManager {
 
 			} else if (dynamicSection.getSectionType() == DynamicSectionType.FORMULA_SECTION) {
 
+			} else if (dynamicSection.getSectionType() == DynamicSectionType.PDF_SECTION) {
+				
+				DynamicSectionPDFContent pdfContent = (DynamicSectionPDFContent) dynamicSection;
+				
+				byte[] pdfRawData = FileUploadCacheManager.getInstance().removePdf(pdfContent.getPDFUrl());
+
+				dynamicContentDao.addDynamicSectionPDF(
+						seminaryDynamicContent.getId(),
+						pdfRawData,
+						centerAlignment.getId(),
+						sequenceId
+				);
 			}
 
 			sequenceId++;
