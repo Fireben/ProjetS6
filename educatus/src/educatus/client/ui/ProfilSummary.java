@@ -90,7 +90,7 @@ public class ProfilSummary extends Composite {
 	
 	private OnLoadPreloadedImageHandler showImage = new OnLoadPreloadedImageHandler() {
 		public void onLoad(PreloadedImage image) {
-			profilImage.setUrl(image.getUrl());
+			//profilImage.setUrl(image.getUrl());
 		}
 	};
 }
