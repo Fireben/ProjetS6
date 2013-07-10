@@ -22,7 +22,7 @@ import educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF;
 public class PdfServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -2182576910144267368L;
-	private static final int DEFAULT_BUFFER_SIZE = 10240;
+	private static final int DEFAULT_BUFFER_SIZE = 50240;
 
 	@Inject
 	EntityManager entityManager;
@@ -84,7 +84,8 @@ public class PdfServlet extends HttpServlet {
 			output.write(dynamicSectionPDF.getPdfData());
 		} finally {
 			// Gently close streams.
-			close(output);
+			// FIXME, check why we get error if we try to close the output
+			//close(output);
 		}
 	}
 
