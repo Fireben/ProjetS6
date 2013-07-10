@@ -10,6 +10,7 @@ import educatus.server.businesslogic.SeminaryAdapter;
 import educatus.server.persist.dao.dynamiccontent.DynamicSection;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionFormula;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.server.persist.dao.seminary.Seminary;
@@ -55,6 +56,10 @@ public class SeminaryContentBuilder {
 				break;
 			case 4:
 				DynamicSectionFormula dynamicSectionFormula = (DynamicSectionFormula) dynamicSection;
+				break;
+			case 5:
+				DynamicSectionPDF dynamicSectionPDF = (DynamicSectionPDF) dynamicSection;
+				
 				break;
 			default:
 				break;

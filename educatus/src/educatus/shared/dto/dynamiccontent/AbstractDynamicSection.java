@@ -8,7 +8,8 @@ public abstract class AbstractDynamicSection implements Serializable {
 		FORMULA_SECTION, 
 		IMAGE_SECTION, 
 		VIDEO_SECTION, 
-		TEXT_SECTION
+		TEXT_SECTION,
+		PDF_SECTION
 	}
 
 	private static final long serialVersionUID = -5902916778158111997L;

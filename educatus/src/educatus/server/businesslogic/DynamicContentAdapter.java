@@ -3,12 +3,11 @@ package educatus.server.businesslogic;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.internationalization.Image;
-import educatus.server.persist.dao.internationalization.ImageExternal;
 import educatus.server.persist.dao.internationalization.ImageInternal;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment;
+import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment.AlignmentEnum;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
-import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment.AlignmentEnum;
 
 public class DynamicContentAdapter {
 
