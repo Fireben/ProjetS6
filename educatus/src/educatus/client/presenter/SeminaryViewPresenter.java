@@ -89,7 +89,15 @@ public class SeminaryViewPresenter extends
 		super.onReveal();
 		//Clear the content to prevent having the data of a previous seminary
 		getView().getDynamicSectionContainer().clear();
+		getView().getDynamicSectionContainer().setVisible(true);
+		
+		getView().getPdfSectionContainer().clear();
+		
 		getView().getDescriptionContainer().clear();
+		getView().getDescriptionContainer().setVisible(false);
+		
+		getView().getContentContainer().setVisible(false);
+		getView().getContentContainer().setWidth("700px");			
 		
 		SeminaryContentRequest request = new SeminaryContentRequest();
 		request.setCulture(locale.getCulture());
@@ -156,13 +164,6 @@ public class SeminaryViewPresenter extends
 			}
 			dynamicSectionContainer.add(new HTML("<br/>"));
 		}
-		
-		getView().getContentContainer().setWidth("900px");
-		dynamicSectionContainer.setVisible(false);
-		PdfViewer pdf = new PdfViewer();
-		pdf.setPdfSrc("formatif.pdf");
-		getView().getPdfSectionContainer().add(pdf);
-		
 
 		getView().getContentContainer().setVisible(true);
 		descriptionContainer.setVisible(true);
@@ -182,10 +183,12 @@ public class SeminaryViewPresenter extends
 	}
 	
 	private void addPDFSection(String pdfUrl) {
-		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
+		getView().getContentContainer().setWidth("900px");
+		getView().getDynamicSectionContainer().setVisible(false);
+		
 		PdfViewer pdfViewer = new PdfViewer();
 		pdfViewer.setPdfSrc(pdfUrl);
-		dynamicSectionContainer.add(pdfViewer);
+		getView().getPdfSectionContainer().add(pdfViewer);
 	}
 
 	@Override

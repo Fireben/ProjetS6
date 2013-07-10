@@ -2435,6 +2435,12 @@ html>body .gwt-DialogBox {
 	padding-bottom: 30px;
 }
 
+.pdfSectionContainer {
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .dynamicSectionContainer>img {
 	margin-left: auto;
 	margin-right: auto;

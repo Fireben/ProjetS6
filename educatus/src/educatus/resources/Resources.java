@@ -29,16 +29,4 @@ public interface Resources extends ClientBundle {
     
     @Source("flag_english_32px.png")
     ImageResource englishLanguageButton();
-
-    @Source("addImage.png")
-    ImageResource addImageButton();
-    
-    @Source("addText.png")
-    ImageResource addTextButton();
-    
-    @Source("addVideo.png")
-    ImageResource addVideoButton();
-    
-    @Source("addPdf.png")
-    ImageResource addPdfButton();
 }

@@ -43,7 +43,8 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		contentContainer.setVisible(false);
 		
 		descriptionContainer.setStyleName("descriptionContainer");
-		dynamicSectionContainer.setStyleName("dynamicSectionContainer");		
+		dynamicSectionContainer.setStyleName("dynamicSectionContainer");
+		pdfSectionContainer.setStyleName("pdfSectionContainer");
 		titleLabel.setStyleName("viewTitleLabel");
 		contentContainer.setStyleName("viewContentContainer");	
 		rightSpacer.setStyleName("viewSpacer");		
