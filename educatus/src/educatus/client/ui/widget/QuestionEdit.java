@@ -1,22 +1,54 @@
 package educatus.client.ui.widget;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 
 public class QuestionEdit extends Composite {
 	private FlowPanel panel;
 	private TextBox questionBox;
+	FlowPanel buttonPanel;
+	Widget answer;
 	
+	private ClickHandler singleChoiceHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			panel.remove(buttonPanel);	
+			answer = new ChoiceEdit(false);
+			panel.add(answer);
+		}
+	};
+	
+	private ClickHandler multipleChoiceHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			panel.remove(buttonPanel);	
+			answer = new ChoiceEdit(true);
+			panel.add(answer);
+		}
+	};
+	
+	private ClickHandler numericHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			panel.remove(buttonPanel);	
+			answer = new TextAnswerEdit();
+			panel.add(answer);
+		}
+	};
+
 	public QuestionEdit() {
 		panel = new FlowPanel();
 		initWidget(panel);
 		createPanel();
 	}
-	
+
 	public void createPanel() {
 		panel.setStyleName("editSection");
 		
@@ -37,11 +69,36 @@ public class QuestionEdit extends Composite {
 		answerEditLabel.setStyleName("answerEditLabel");
 		panel.add(answerEditLabel);
 		
-		FlowPanel buttonPanel = new FlowPanel();
-		buttonPanel.setStyleName("questionEditButtonPanel");
-		buttonPanel.add(new Button("Single Choice"));
-		buttonPanel.add(new Button("Multiple Choices"));
-		buttonPanel.add(new Button("Numeric"));
+		buttonPanel = new FlowPanel();
+		buttonPanel.setStyleName("answerEditPanel");
+		
+		Button singleChoiceButton = new Button("Single Choice");
+		singleChoiceButton.setStyleName("answerEditButton");
+		singleChoiceButton.addClickHandler(singleChoiceHandler);		
+		buttonPanel.add(singleChoiceButton);
+		
+		Button multipleChoiceButton = new Button("Multiple Choices");
+		multipleChoiceButton.setStyleName("answerEditButton");
+		multipleChoiceButton.addClickHandler(multipleChoiceHandler);
+		buttonPanel.add(multipleChoiceButton);		
+		
+		Button textButton = new Button("Text");
+		textButton.setStyleName("answerEditButton");
+		textButton.addClickHandler(numericHandler);
+		buttonPanel.add(textButton);	
+		
 		panel.add(buttonPanel);		
+	}
+	
+	public FlowPanel getPanel() {
+		return panel;
+	}
+	
+	public Widget getAnswer() {
+		return answer;
+	}
+	
+	public String getQuestion() {
+		return questionBox.getValue();
 	}
 }

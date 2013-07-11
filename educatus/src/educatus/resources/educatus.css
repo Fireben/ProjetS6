@@ -2791,14 +2791,14 @@ a:hover, .logInClose {
 	margin-right: auto;
 }
 
-.questionEditButtonPanel {
+.answerEditPanel {
 	width: 600px;
 	margin-top: 10px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.questionEditButtonPanel>button {
+.answerEditButton {
 	background: none repeat scroll 0% 0% rgb(68,68,68);
 	opacity: 0.75;
 	border: 1px solid rgb(105,105,105);
@@ -2808,7 +2808,18 @@ a:hover, .logInClose {
 	cursor: pointer;
 }
 
-.questionEditButtonPanel>button:hover:enabled {
+.answerEditButton>button:hover:enabled {
 	border: 1px solid rgb(150,150,150);
 	opacity: 1 !important;
+}
+
+.choiceText {
+	width: 500px;
+}
+
+.textAnswerEdit {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
 }
