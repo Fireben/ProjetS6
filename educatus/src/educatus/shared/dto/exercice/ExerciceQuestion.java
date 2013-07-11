@@ -8,6 +8,7 @@ import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 public class ExerciceQuestion {
 
 	private int id;
+	private int sequence;
 	private List<AbstractDynamicSection> questionContext = new ArrayList<AbstractDynamicSection>();
 	private ExerciceQuestionType questionType;
 	private AbstractAnswerContent answer;
@@ -42,5 +43,13 @@ public class ExerciceQuestion {
 
 	public void setQuestionType(ExerciceQuestionType questionType) {
 		this.questionType = questionType;
+	}
+
+	public int getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
 	}
 }
