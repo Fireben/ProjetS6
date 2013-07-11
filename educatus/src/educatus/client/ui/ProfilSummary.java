@@ -1,21 +1,21 @@
 package educatus.client.ui;
 
-import gwtupload.client.IUploader;
-import gwtupload.client.PreloadedImage;
-import gwtupload.client.SingleUploader;
 import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader;
 import gwtupload.client.IUploader.UploadedInfo;
+import gwtupload.client.PreloadedImage;
 import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
+import gwtupload.client.SingleUploader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ProfilSummary extends Composite {
 
@@ -48,7 +48,7 @@ public class ProfilSummary extends Composite {
 		defaultUploader.addOnFinishUploadHandler(onFinishUploaderHandler);
 
 		imageUploadPanel = new FlowPanel();
-		imageUploadPanel.setStyleName("imageUploadPanel");
+		imageUploadPanel.setStyleName("profilUploadPanel");
 		imageUploadPanel.add(defaultUploader);
 		
 		userImageVerticalPanel.add(imageUploadPanel);
@@ -91,6 +91,10 @@ public class ProfilSummary extends Composite {
 	private OnLoadPreloadedImageHandler showImage = new OnLoadPreloadedImageHandler() {
 		public void onLoad(PreloadedImage image) {
 			//profilImage.setUrl(image.getUrl());
+			profilImage.removeFromParent();
+			imageUploadPanel.clear();
+			imageUploadPanel.add(image);
+			imageUploadPanel.add(defaultUploader);
 		}
 	};
 }
