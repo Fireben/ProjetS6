@@ -153,8 +153,10 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 					break;
 				case EXERCICE_QUESTION_VALIDATION_REQUEST:
 					response = ProcessExerciceQuestionValidationRequest((ExerciceQuestionValidationRequest) request);
+					break;
 				case EXERCICE_ADMINISTRATION_ACTION_REQUEST:
 					response = ProcessExerciceAdministrationActionRequest((ExerciceAdministrationActionRequest) request);
+					break;
 				default:
 					break;
 			}
