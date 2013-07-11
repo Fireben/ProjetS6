@@ -39,7 +39,7 @@ import educatus.shared.dto.exercice.AnswerChoiceContent;
 import educatus.shared.dto.exercice.AnswerTextContent;
 import educatus.shared.dto.exercice.ExerciceContent;
 import educatus.shared.dto.exercice.ExerciceCoreContent;
-import educatus.shared.dto.exercice.ExerciceQuestion;
+import educatus.shared.dto.exercice.ExerciceQuestionContent;
 import educatus.shared.dto.exercice.ExerciceQuestionType;
 import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
@@ -51,57 +51,61 @@ import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 
-public class ExerciceEditPresenter extends
-		Presenter<ExerciceEditPresenter.MyView, ExerciceEditPresenter.MyProxy> {
+public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyView, ExerciceEditPresenter.MyProxy> {
 	public interface MyView extends View {
 		public FlowPanel getSeminaryDescriptionContainer();
+
 		public FlowPanel getContentPanel();
+
 		public TextBox getTitleBox();
+
 		public TextArea getDescriptionBox();
+
 		public ListBox getDifficultyBox();
+
 		public ListBox getCategoryBox();
 	}
 
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
-	
+
 	// Response handler
 	private AbstractResponseHandler responseHandler = null;
-	
+
 	@Inject
 	private EducatusLocale locale;
-	
+
 	@ProxyCodeSplit
 	@NameToken(NameTokens.exerciceEdit)
 	public interface MyProxy extends ProxyPlace<ExerciceEditPresenter> {
 	}
-	
+
 	private ClickHandler closeTextHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton)event.getSource();
-			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
-			TextEdit parent = (TextEdit)panelParent.getParent(); 
+			CustomButton closeButton = (CustomButton) event.getSource();
+			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
+			TextEdit parent = (TextEdit) panelParent.getParent();
 			getView().getContentPanel().remove(parent);
 		}
 	};
-	
+
 	private ClickHandler closeImageHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton)event.getSource();
-			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
-			ImageEdit parent = (ImageEdit)panelParent.getParent(); 
+			CustomButton closeButton = (CustomButton) event.getSource();
+			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
+			ImageEdit parent = (ImageEdit) panelParent.getParent();
 			getView().getContentPanel().remove(parent);
 		}
 	};
-	
+
 	private ClickHandler closePdfHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton)event.getSource();
-			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
-			PdfEdit parent = (PdfEdit)panelParent.getParent(); 
+			CustomButton closeButton = (CustomButton) event.getSource();
+			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
+			PdfEdit parent = (PdfEdit) panelParent.getParent();
 			getView().getContentPanel().remove(parent);
 		}
 	};
@@ -123,7 +127,7 @@ public class ExerciceEditPresenter extends
 			getView().getContentPanel().add(imageEdit);
 		}
 	};
-	
+
 	private ClickHandler addPdfHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -132,41 +136,38 @@ public class ExerciceEditPresenter extends
 			getView().getContentPanel().add(pdfEdit);
 		}
 	};
-	
+
 	private ClickHandler addQuestionHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			QuestionEdit questionEdit = new QuestionEdit();
-			//pdfEdit.getCloseButton().addClickHandler(closeImageHandler);
+			// pdfEdit.getCloseButton().addClickHandler(closeImageHandler);
 			getView().getContentPanel().add(questionEdit);
 		}
 	};
-	
+
 	private ClickHandler cancelHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			resetAll();
 		}
 	};
-	
+
 	private ClickHandler confirmHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			ExerciceContent exerciceContent = getExerciceContent(); 
-			
+			ExerciceContent exerciceContent = getExerciceContent();
+
 			/*
-			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {				
-				@Override
-				public void onSuccess(AbstractResponse result) {
-					resetAll();
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-			});
-			*/
-		}	
+			 * requestService.sendRequest(request, new
+			 * AsyncCallback<AbstractResponse>() {
+			 * 
+			 * @Override public void onSuccess(AbstractResponse result) {
+			 * resetAll(); }
+			 * 
+			 * @Override public void onFailure(Throwable caught) { } });
+			 */
+		}
 	};
 
 	@Inject
@@ -175,15 +176,13 @@ public class ExerciceEditPresenter extends
 	public static final Object SLOT_confirm = new Object();
 
 	@Inject
-	public ExerciceEditPresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy) {
+	public ExerciceEditPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
 		super(eventBus, view, proxy);
 	}
 
 	@Override
 	protected void revealInParent() {
-		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent,
-				this);
+		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
 	}
 
 	@Override
@@ -194,8 +193,8 @@ public class ExerciceEditPresenter extends
 
 	@Override
 	protected void onReset() {
-		super.onReset(); 	
-		
+		super.onReset();
+
 		editButtonPanelPresenter.getView().getAddSectionPanel().clear();
 
 		editButtonPanelPresenter.addSectionButton("images/addText.png", addTextHandler);
@@ -203,100 +202,96 @@ public class ExerciceEditPresenter extends
 		editButtonPanelPresenter.addSectionButton("images/addPdf.png", addPdfHandler);
 		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addPdfHandler);
 		editButtonPanelPresenter.addSectionButton("images/addQuestion.png", addQuestionHandler);
-		
-		
+
 		editButtonPanelPresenter.setSaveButtonHandler(confirmHandler);
 		editButtonPanelPresenter.setCancelHandler(cancelHandler);
-		
+
 		getView().getSeminaryDescriptionContainer().clear();
-		
+
 		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
 		pageContentRequest.setCulture(locale.getCulture());
 		pageContentRequest.setLanguage(locale.getLanguage());
-  		requestService.sendRequest(pageContentRequest, responseHandler);	  		
+		requestService.sendRequest(pageContentRequest, responseHandler);
 	}
-	
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
 		PageChangingEvent.fire(this, NameTokens.getSeminaryEdit());
 	}
-	
+
 	private ExerciceContent getExerciceContent() {
-		List<ExerciceQuestion> questionList = getQuestionList();
+		List<ExerciceQuestionContent> questionList = getQuestionList();
 		ExerciceCoreContent coreContent = getCoreContent();
-		
-		ExerciceContent exerciceContent= new ExerciceContent();
+
+		ExerciceContent exerciceContent = new ExerciceContent();
 		exerciceContent.setCoreContent(coreContent);
 		exerciceContent.setQuestionList(questionList);
-		
+
 		return exerciceContent;
 	}
-	
+
 	private ExerciceCoreContent getCoreContent() {
 		ExerciceCoreContent coreContent = new ExerciceCoreContent();
 		coreContent.setDescription(getView().getDescriptionBox().getText());
 		coreContent.setTitle(getView().getTitleBox().getText());
-		
+
 		ListBox difficultyBox = getView().getDifficultyBox();
 		int index = difficultyBox.getSelectedIndex();
 		coreContent.setDifficulty(difficultyBox.getValue(index));
-		
+
 		return coreContent;
 	}
 
-	public List<ExerciceQuestion> getQuestionList() {
-		List<ExerciceQuestion> questionList = new ArrayList<ExerciceQuestion>();	
-		
+	public List<ExerciceQuestionContent> getQuestionList() {
+		List<ExerciceQuestionContent> questionList = new ArrayList<ExerciceQuestionContent>();
+
 		List<AbstractDynamicSection> dynamicSectionList = new ArrayList<AbstractDynamicSection>();
 		FlowPanel contentPanel = getView().getContentPanel();
 		Widget currentWidget;
-		for(int i=0; i<contentPanel.getWidgetCount(); i++) {
+		for (int i = 0; i < contentPanel.getWidgetCount(); i++) {
 			currentWidget = contentPanel.getWidget(i);
-			if(currentWidget instanceof TextEdit) {
-				TextEdit textEdit = ((TextEdit)currentWidget);
+			if (currentWidget instanceof TextEdit) {
+				TextEdit textEdit = ((TextEdit) currentWidget);
 				DynamicSectionTextContent dynamicSectionTextContent = new DynamicSectionTextContent();
 				dynamicSectionTextContent.setText(textEdit.getText());
 				dynamicSectionTextContent.setTitle(textEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionTextContent);
-			}
-			else if(currentWidget instanceof ImageEdit) {
-				ImageEdit imageEdit = ((ImageEdit)currentWidget);
+			} else if (currentWidget instanceof ImageEdit) {
+				ImageEdit imageEdit = ((ImageEdit) currentWidget);
 				String id = imageEdit.getImageId();
 				DynamicSectionImageContent dynamicSectionImageContent = new DynamicSectionImageContent();
 				dynamicSectionImageContent.setImageUrl(id);
 				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
-			}
-			else if(currentWidget instanceof QuestionEdit) {
-				ExerciceQuestion exerciceQuestion = new ExerciceQuestion();
-				
-				QuestionEdit questionEdit = ((QuestionEdit)currentWidget);				
-				Widget answer = questionEdit.getAnswer();				
-				if(answer instanceof ChoiceEdit) {
+			} else if (currentWidget instanceof QuestionEdit) {
+				ExerciceQuestionContent exerciceQuestion = new ExerciceQuestionContent();
+
+				QuestionEdit questionEdit = ((QuestionEdit) currentWidget);
+				Widget answer = questionEdit.getAnswer();
+				if (answer instanceof ChoiceEdit) {
 					ChoiceEdit choiceEdit = (ChoiceEdit) answer;
 					AnswerChoiceContent answerChoiceContent = choiceEdit.getAnswerChoiceContent();
 					exerciceQuestion.setAnswer(answerChoiceContent);
 					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_CHOICE);
-				}
-				else if(answer instanceof TextAnswerEdit) {
+				} else if (answer instanceof TextAnswerEdit) {
 					TextAnswerEdit textAnswerEdit = (TextAnswerEdit) answer;
 					AnswerTextContent answerTextContent = textAnswerEdit.getAnswerTextContent();
 					exerciceQuestion.setAnswer(answerTextContent);
 					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_TEXT);
 				}
 				exerciceQuestion.setQuestionContext(dynamicSectionList);
-				dynamicSectionList = new ArrayList<AbstractDynamicSection>();;
-				
+				dynamicSectionList = new ArrayList<AbstractDynamicSection>();
+
 				questionList.add(exerciceQuestion);
 			}
 		}
 		return questionList;
 	}
-	
+
 	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
 		@Override
-		public void onFailure(Throwable caught) {			
+		public void onFailure(Throwable caught) {
 		}
 
 		@Override
@@ -308,44 +303,44 @@ public class ExerciceEditPresenter extends
 			}
 		}
 	}
-	
+
 	private void populateCoreContent(SeminaryAdministrationPageContent pageContent, List<DifficultyContent> difficultyList, List<CategoryCoreContent> categoryList) {
 		FlowPanel descriptionContainer = getView().getSeminaryDescriptionContainer();
 		descriptionContainer.add(new Label(pageContent.getTitleText()));
 		descriptionContainer.add(getView().getTitleBox());
 		descriptionContainer.add(new Label(pageContent.getDescriptionText()));
 		descriptionContainer.add(getView().getDescriptionBox());
-		
-		descriptionContainer.add(new Label(pageContent.getDifficultyText()));			
+
+		descriptionContainer.add(new Label(pageContent.getDifficultyText()));
 		ListBox difficultyBox = getView().getDifficultyBox();
-		difficultyBox.clear();		
-		for(DifficultyContent difficulty : difficultyList) {
+		difficultyBox.clear();
+		for (DifficultyContent difficulty : difficultyList) {
 			difficultyBox.addItem(difficulty.getName());
 		}
 		descriptionContainer.add(difficultyBox);
-		
+
 		descriptionContainer.add(new Label(pageContent.getCategoryText()));
 		ListBox categoryBox = getView().getCategoryBox();
 		categoryBox.clear();
-		for(CategoryCoreContent category : categoryList) {
+		for (CategoryCoreContent category : categoryList) {
 			categoryBox.addItem(category.getName());
 		}
 		descriptionContainer.add(categoryBox);
-	}	
-	
+	}
+
 	private void resetAll() {
 		getView().getContentPanel().clear();
 		getView().getSeminaryDescriptionContainer().clear();
-		
+
 		getView().getCategoryBox().clear();
 		getView().getDifficultyBox().clear();
-		
+
 		getView().getDescriptionBox().setValue("");
 		getView().getTitleBox().setValue("");
-		
+
 		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
 		pageContentRequest.setCulture(locale.getCulture());
 		pageContentRequest.setLanguage(locale.getLanguage());
-  		requestService.sendRequest(pageContentRequest, responseHandler);
+		requestService.sendRequest(pageContentRequest, responseHandler);
 	}
 }
