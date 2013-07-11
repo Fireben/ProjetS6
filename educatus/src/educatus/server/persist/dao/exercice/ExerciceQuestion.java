@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
+import educatus.server.persist.dao.internationalization.TextContentEntry;
 
 @Entity
 @Table(name = "exercice.exercicequestion")
@@ -52,6 +53,11 @@ public class ExerciceQuestion implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "exqu_id", nullable = false, insertable = false, updatable = false)
 	private Answer answer;
+	
+	// bi-directional many-to-one association to TextContentEntry
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tece_question", nullable = false, insertable = true, updatable = true)
+	private TextContentEntry question;
 	
 	public ExerciceQuestion() {
 	}
@@ -110,5 +116,13 @@ public class ExerciceQuestion implements Serializable {
 
 	public void setAnswer(Answer answer) {
 		this.answer = answer;
+	}
+	
+	public TextContentEntry getQuestion() {
+		return question;
+	}
+	
+	public void setQuestion(TextContentEntry question) {
+		this.question = question;
 	}
 }
