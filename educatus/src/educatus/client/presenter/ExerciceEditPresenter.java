@@ -26,24 +26,28 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
+import educatus.client.ui.widget.ChoiceEdit;
 import educatus.client.ui.widget.ImageEdit;
 import educatus.client.ui.widget.PdfEdit;
 import educatus.client.ui.widget.QuestionEdit;
+import educatus.client.ui.widget.TextAnswerEdit;
 import educatus.client.ui.widget.TextEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.exercice.AnswerChoiceContent;
+import educatus.shared.dto.exercice.AnswerTextContent;
+import educatus.shared.dto.exercice.ExerciceContent;
+import educatus.shared.dto.exercice.ExerciceCoreContent;
+import educatus.shared.dto.exercice.ExerciceQuestion;
+import educatus.shared.dto.exercice.ExerciceQuestionType;
 import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
-import educatus.shared.dto.seminary.SeminaryContent;
-import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
-import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest;
-import educatus.shared.services.requestservice.request.SeminaryAdministrationActionRequest.SeminaryAdministractionAction;
 import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 
@@ -148,10 +152,9 @@ public class ExerciceEditPresenter extends
 	private ClickHandler confirmHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			SeminaryAdministrationActionRequest request = new SeminaryAdministrationActionRequest();
-			request.setAction(SeminaryAdministractionAction.INSERT);
-			request.setSeminaryContent(getSeminaryContent());
+			ExerciceContent exerciceContent = getExerciceContent(); 
 			
+			/*
 			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {				
 				@Override
 				public void onSuccess(AbstractResponse result) {
@@ -162,6 +165,7 @@ public class ExerciceEditPresenter extends
 				public void onFailure(Throwable caught) {
 				}
 			});
+			*/
 		}	
 	};
 
@@ -218,19 +222,19 @@ public class ExerciceEditPresenter extends
 		PageChangingEvent.fire(this, NameTokens.getSeminaryEdit());
 	}
 	
-	private SeminaryContent getSeminaryContent() {
-		List<AbstractDynamicSection> dynamicSectionList = getDynamicContentList();
-		SeminaryCoreContent coreContent = getCoreContent();
+	private ExerciceContent getExerciceContent() {
+		List<ExerciceQuestion> questionList = getQuestionList();
+		ExerciceCoreContent coreContent = getCoreContent();
 		
-		SeminaryContent seminaryContent= new SeminaryContent();
-		seminaryContent.setCoreContent(coreContent);
-		seminaryContent.setDynamicSectionList(dynamicSectionList);
+		ExerciceContent exerciceContent= new ExerciceContent();
+		exerciceContent.setCoreContent(coreContent);
+		exerciceContent.setQuestionList(questionList);
 		
-		return seminaryContent;
+		return exerciceContent;
 	}
 	
-	private SeminaryCoreContent getCoreContent() {
-		SeminaryCoreContent coreContent = new SeminaryCoreContent();
+	private ExerciceCoreContent getCoreContent() {
+		ExerciceCoreContent coreContent = new ExerciceCoreContent();
 		coreContent.setDescription(getView().getDescriptionBox().getText());
 		coreContent.setTitle(getView().getTitleBox().getText());
 		
@@ -241,7 +245,9 @@ public class ExerciceEditPresenter extends
 		return coreContent;
 	}
 
-	public List<AbstractDynamicSection> getDynamicContentList() {
+	public List<ExerciceQuestion> getQuestionList() {
+		List<ExerciceQuestion> questionList = new ArrayList<ExerciceQuestion>();	
+		
 		List<AbstractDynamicSection> dynamicSectionList = new ArrayList<AbstractDynamicSection>();
 		FlowPanel contentPanel = getView().getContentPanel();
 		Widget currentWidget;
@@ -262,12 +268,30 @@ public class ExerciceEditPresenter extends
 				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
 			}
-			else if(currentWidget instanceof PdfEdit) {
-				PdfEdit pdfEdit = ((PdfEdit)currentWidget);
-				String id = pdfEdit.getPdfId();
+			else if(currentWidget instanceof QuestionEdit) {
+				ExerciceQuestion exerciceQuestion = new ExerciceQuestion();
+				
+				QuestionEdit questionEdit = ((QuestionEdit)currentWidget);				
+				Widget answer = questionEdit.getAnswer();				
+				if(answer instanceof ChoiceEdit) {
+					ChoiceEdit choiceEdit = (ChoiceEdit) answer;
+					AnswerChoiceContent answerChoiceContent = choiceEdit.getAnswerChoiceContent();
+					exerciceQuestion.setAnswer(answerChoiceContent);
+					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_CHOICE);
+				}
+				else if(answer instanceof TextAnswerEdit) {
+					TextAnswerEdit textAnswerEdit = (TextAnswerEdit) answer;
+					AnswerTextContent answerTextContent = textAnswerEdit.getAnswerTextContent();
+					exerciceQuestion.setAnswer(answerTextContent);
+					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_TEXT);
+				}
+				exerciceQuestion.setQuestionContext(dynamicSectionList);
+				dynamicSectionList = new ArrayList<AbstractDynamicSection>();;
+				
+				questionList.add(exerciceQuestion);
 			}
 		}
-		return dynamicSectionList;
+		return questionList;
 	}
 	
 	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
