@@ -8,9 +8,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
-import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
-import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
-import educatus.server.persist.dao.dynamiccontent.DynamicSectionType;
 import educatus.server.persist.dao.exercice.AnwserText;
 import educatus.server.persist.dao.exercice.Exercice;
 import educatus.server.persist.dao.exercice.ExerciceQuestion;
@@ -19,7 +16,6 @@ import educatus.server.persist.dao.internationalization.TextContentEntry;
 import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Difficulty;
-import educatus.server.persist.dao.seminary.Seminary;
 
 @Singleton
 public class ExerciceDao {
