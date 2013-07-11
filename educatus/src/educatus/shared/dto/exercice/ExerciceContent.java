@@ -9,7 +9,7 @@ public class ExerciceContent implements Serializable {
 	private static final long serialVersionUID = 12464514921804686L;
 
 	private ExerciceCoreContent coreContent;
-	private List<ExerciceQuestion> questionList = new ArrayList<ExerciceQuestion>();
+	private List<ExerciceQuestionContent> questionList = new ArrayList<ExerciceQuestionContent>();
 	
 	public ExerciceCoreContent getCoreContent() {
 		return coreContent;
@@ -19,11 +19,11 @@ public class ExerciceContent implements Serializable {
 		this.coreContent = coreContent;
 	}
 
-	public List<ExerciceQuestion> getQuestionList() {
+	public List<ExerciceQuestionContent> getQuestionList() {
 		return questionList;
 	}
 
-	public void setQuestionList(List<ExerciceQuestion> questionList) {
+	public void setQuestionList(List<ExerciceQuestionContent> questionList) {
 		this.questionList = questionList;
 	}
 }

@@ -14,7 +14,7 @@ public class ExerciceAdministrationActionRequest extends AbstractRequest {
 
 	private static final long serialVersionUID = 3049588535764579312L;
 
-	private ExerciceContent seminaryContent;
+	private ExerciceContent exerciceContent;
 	private ExerciceAdministractionAction action = ExerciceAdministractionAction.INSERT;
 
 	@Override
@@ -30,11 +30,11 @@ public class ExerciceAdministrationActionRequest extends AbstractRequest {
 		this.action = action;
 	}
 
-	public ExerciceContent getSeminaryContent() {
-		return seminaryContent;
+	public ExerciceContent getExerciceContent() {
+		return exerciceContent;
 	}
 
-	public void setSeminaryContent(ExerciceContent seminaryContent) {
-		this.seminaryContent = seminaryContent;
+	public void setExerciceContent(ExerciceContent exerciceContent) {
+		this.exerciceContent = exerciceContent;
 	}
 }

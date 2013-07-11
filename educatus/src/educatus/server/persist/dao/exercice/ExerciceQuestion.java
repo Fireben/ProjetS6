@@ -15,7 +15,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
-import educatus.server.persist.dao.security.User;
 
 @Entity
 @Table(name = "exercice.exercicequestion")
@@ -103,5 +102,13 @@ public class ExerciceQuestion implements Serializable {
 
 	public void setExercicequestiontype(ExerciceQuestionType exerciceQuestionType) {
 		this.exerciceQuestionType = exerciceQuestionType;
+	}
+
+	public Answer getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(Answer answer) {
+		this.answer = answer;
 	}
 }

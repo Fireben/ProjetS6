@@ -5,10 +5,11 @@ import java.util.List;
 
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 
-public class ExerciceQuestion {
+public class ExerciceQuestionContent {
 
 	private int id;
 	private int sequence;
+	private int score;
 	private List<AbstractDynamicSection> questionContext = new ArrayList<AbstractDynamicSection>();
 	private ExerciceQuestionType questionType;
 	private AbstractAnswerContent answer;
@@ -51,5 +52,13 @@ public class ExerciceQuestion {
 
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 }

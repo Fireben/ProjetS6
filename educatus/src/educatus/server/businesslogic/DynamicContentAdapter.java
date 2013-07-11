@@ -1,10 +1,18 @@
 package educatus.server.businesslogic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import educatus.server.persist.dao.dynamiccontent.DynamicContent;
+import educatus.server.persist.dao.dynamiccontent.DynamicSection;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionFormula;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageInternal;
+import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment.AlignmentEnum;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
@@ -25,6 +33,42 @@ public class DynamicContentAdapter {
 		dynamicSectionTextContent.setAlignment(getAlignment());
 		
 		return dynamicSectionTextContent;
+	}
+	
+	public static List<AbstractDynamicSection> getAbstractDynamicSectionFromDynamicContent(DynamicContent dynamicContent, String culture, String language) {
+		
+		List<AbstractDynamicSection> abstractDynamicSections = new ArrayList<AbstractDynamicSection>();
+		
+		for (DynamicSection dynamicSection : dynamicContent.getDynamicSectionList()) {
+			switch (dynamicSection.getDynamicSectionType().getId()) {
+			// ID 1 => DynamicSectionText
+			case 1:
+				DynamicSectionText dynamicSectionText = (DynamicSectionText) dynamicSection;
+				DynamicSectionTextContent dynamicSectionTextContent = DynamicContentAdapter.dynamicSectionTextToContent(dynamicSectionText, culture, language);
+				abstractDynamicSections.add(dynamicSectionTextContent);
+				break;
+			case 2:
+				DynamicSectionImage dynamicSectionImage = (DynamicSectionImage) dynamicSection;
+				DynamicSectionImageContent dynamicSectionImageContent = DynamicContentAdapter.dynamicSectionImageToContent(dynamicSectionImage, culture, language);
+				abstractDynamicSections.add(dynamicSectionImageContent);
+				break;
+			case 3:
+				DynamicSectionVideo dynamicSectionVideo = (DynamicSectionVideo) dynamicSection;
+				break;
+			case 4:
+				DynamicSectionFormula dynamicSectionFormula = (DynamicSectionFormula) dynamicSection;
+				break;
+			case 5:
+				DynamicSectionPDF dynamicSectionPDF = (DynamicSectionPDF) dynamicSection;
+				DynamicSectionPDFContent dynamicSectionPDFContent = DynamicContentAdapter.dynamicSectionPDFToContent(dynamicSectionPDF, culture, language);
+				abstractDynamicSections.add(dynamicSectionPDFContent);
+				break;
+			default:
+				break;
+			}
+		}
+		
+		return abstractDynamicSections;
 	}
 	
 	public static DynamicSectionImageContent dynamicSectionImageToContent(DynamicSectionImage dynamicSectionImage, String culture, String language) {

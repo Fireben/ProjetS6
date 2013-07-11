@@ -12,6 +12,8 @@ import com.google.inject.Singleton;
 import educatus.server.businesslogic.LDAPManager;
 import educatus.server.businesslogic.PermissionManager;
 import educatus.server.businesslogic.SessionManager;
+import educatus.server.businesslogic.exercicemanager.ExerciceAdministrationManager;
+import educatus.server.businesslogic.exercicemanager.ExerciceContentBuilder;
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
@@ -22,6 +24,7 @@ import educatus.server.businesslogic.uibuilder.MainPageContentBuilder;
 import educatus.server.businesslogic.uibuilder.SeminaryEditorContentBuilder;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
+import educatus.shared.dto.exercice.ExerciceContent;
 import educatus.shared.dto.pagecontent.HomePageContent;
 import educatus.shared.dto.pagecontent.MainPageContent;
 import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
@@ -35,6 +38,10 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.RequestTypeEnum;
+import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest;
+import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest.ExerciceAdministractionAction;
+import educatus.shared.services.requestservice.request.ExerciceContentRequest;
+import educatus.shared.services.requestservice.request.ExerciceQuestionValidationRequest;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;
 import educatus.shared.services.requestservice.request.LoginRequest;
 import educatus.shared.services.requestservice.request.MainPageContentRequest;
@@ -45,9 +52,12 @@ import educatus.shared.services.requestservice.request.SeminaryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.UserProfilPageContentRequest;
+import educatus.shared.services.requestservice.response.ExerciceAdministrationActionResponse;
+import educatus.shared.services.requestservice.response.ExerciceContentResponse;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.LoginResponse;
 import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
+import educatus.shared.services.requestservice.response.ExerciceQuestionValidationResponse;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
@@ -73,6 +83,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private SeminaryAdministrationManager seminaryAdministrationManager;
 	private SessionManager sessionManager;
 	private PermissionManager permissionManager;
+	private ExerciceContentBuilder exerciceContentBuilder;
+	private ExerciceAdministrationManager exerciceAdministrationManager;
 
 	@Override
 	public void init() throws ServletException {
@@ -94,6 +106,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		seminaryAdministrationManager = dbInjector.getInstance(SeminaryAdministrationManager.class);		
 		sessionManager = dbInjector.getInstance(SessionManager.class);
 		permissionManager = dbInjector.getInstance(PermissionManager.class);
+		exerciceContentBuilder = dbInjector.getInstance(ExerciceContentBuilder.class);
+		exerciceAdministrationManager = dbInjector.getInstance(ExerciceAdministrationManager.class);
 	}
 
 	@Override
@@ -133,7 +147,14 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 					break;
 				case SEMINARY_CONTENT_REQUEST:
 					response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);
-					break;			
+					break;		
+				case EXERCICE_CONTENT_REQUEST:
+					response = ProcessExerciceContentRequest((ExerciceContentRequest) request);
+					break;
+				case EXERCICE_QUESTION_VALIDATION_REQUEST:
+					response = ProcessExerciceQuestionValidationRequest((ExerciceQuestionValidationRequest) request);
+				case EXERCICE_ADMINISTRATION_ACTION_REQUEST:
+					response = ProcessExerciceAdministrationActionRequest((ExerciceAdministrationActionRequest) request);
 				default:
 					break;
 			}
@@ -141,6 +162,39 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			e.printStackTrace();
 		}
 
+		return response;
+	}
+
+	private ExerciceAdministrationActionResponse ProcessExerciceAdministrationActionRequest(ExerciceAdministrationActionRequest request) {
+		
+		ExerciceAdministrationActionResponse response = new ExerciceAdministrationActionResponse();
+		
+		if (request.getAction() == ExerciceAdministractionAction.INSERT) {
+			try {
+				exerciceAdministrationManager.insertExercice(request.getExerciceContent());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return response;
+	}
+
+	private ExerciceQuestionValidationResponse ProcessExerciceQuestionValidationRequest(ExerciceQuestionValidationRequest request) {
+		
+		ExerciceQuestionValidationResponse response = new ExerciceQuestionValidationResponse();
+		response.setExerciceQuestion(request.getExerciceQuestion());
+		// TODO, Check validation
+		response.setValid(true);
+		return response;
+	}
+
+	private ExerciceContentResponse ProcessExerciceContentRequest(ExerciceContentRequest request) {
+		ExerciceContentResponse response = new ExerciceContentResponse();
+				
+		ExerciceContent exerciceContent = exerciceContentBuilder.buildExerciceContent(request.getSelectedExerciceId(), request.getCulture(), request.getLanguage());		
+		response.setExerciceContent(exerciceContent);
+		
 		return response;
 	}
 
