@@ -76,7 +76,7 @@ public class SessionManager {
 	public boolean userCanLog(String cip)
 	{
 		if(this.sessionMap.containsKey(cip)){
-			SessionEntry sessionEntry = this.sessionMap.get(cip);
+			SessionEntry sessionEntry = this.getSessionEntry(cip);
 			
 			if(sessionEntry.nbFailedConnectionAttempt < SessionManager.MAX_CONNECTION_ATTEMPT){
 				return true;
@@ -89,7 +89,7 @@ public class SessionManager {
 											
 				Date now = new Date();
 				
-				return now.after(cal.getTime());				
+				return now.after(cal.getTime());			
 			}
 		}
 		else{
@@ -99,13 +99,7 @@ public class SessionManager {
 	}
 	
 	public void logConnectionAttempt(String cip, boolean passwordIsValid){
-		SessionEntry sessionEntry = null;
-		
-		if(!this.sessionMap.containsKey(cip)){			
-			this.sessionMap.put(cip, new SessionEntry(cip));					
-		}
-		sessionEntry = this.sessionMap.get(cip);
-		
+		SessionEntry sessionEntry = this.getSessionEntry(cip);
 		// Log of the connection attempt.
 		//TODO - A verifier
 				
@@ -149,7 +143,7 @@ public class SessionManager {
 		this.uuidCipMap.put(tempuuid, cip);
 		
 		// Retrieving the sessionentry associated with the cip.
-		SessionEntry sessionEntry = this.sessionMap.get(cip);		
+		SessionEntry sessionEntry = this.getSessionEntry(cip);
 		// If an UUID already exist in the sessionEntry, we free the UUID from the mapping UUID-CIP.
 		if(sessionEntry.uuid != null)
 		{
@@ -168,7 +162,7 @@ public class SessionManager {
 		// Get the cip with the generated uuid from the mapping uuid-cip.		
 		String cip = this.getSessionAssociatedCip(stringUUID);
 		// Retrieve the sessionEntry from the cip.
-		SessionEntry sessionEntry = this.sessionMap.get(cip);
+		SessionEntry sessionEntry = this.getSessionEntry(cip);
 		
 		try
 		{
@@ -202,6 +196,12 @@ public class SessionManager {
 		}
 	}
 	
+	private SessionEntry getSessionEntry(String cip){
+		if(!this.sessionMap.containsKey(cip)){			
+			this.sessionMap.put(cip, new SessionEntry(cip));					
+		}
+		return this.sessionMap.get(cip);
+	}
 	public UUID getSessionUUID(String cip){
 		SessionEntry sessionEntry = this.sessionMap.get(cip);
 		
