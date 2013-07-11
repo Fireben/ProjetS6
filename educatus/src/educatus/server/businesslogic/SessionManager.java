@@ -116,7 +116,8 @@ public class SessionManager {
 		LogUserConnection log = new LogUserConnection();
 		log.setAttemptSuccess(passwordIsValid);
 		log.setTimestamp(new Timestamp(new Date().getTime()));
-		user.addLogUserConnection(log);		
+		user.addLogUserConnection(log);
+		entityManager.persist(log);
 		entityManager.merge(user);
 		entityManager.getTransaction().commit();
 				
