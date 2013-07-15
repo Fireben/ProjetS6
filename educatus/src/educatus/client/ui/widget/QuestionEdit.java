@@ -6,15 +6,19 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
+import educatus.client.ui.CustomButton;
+
 public class QuestionEdit extends Composite {
 	private FlowPanel panel;
 	private TextBox questionBox;
-	FlowPanel buttonPanel;
-	Widget answer;
+	private FlowPanel buttonPanel;
+	private Widget answer;
+	private CustomButton closeButton;
 	
 	private ClickHandler singleChoiceHandler = new ClickHandler() {
 		@Override
@@ -50,6 +54,9 @@ public class QuestionEdit extends Composite {
 	}
 
 	public void createPanel() {
+		createCloseButton();
+		panel.add(closeButton);
+		
 		panel.setStyleName("editSection");
 		
 		HorizontalPanel questionPanel = new HorizontalPanel();
@@ -90,6 +97,12 @@ public class QuestionEdit extends Composite {
 		panel.add(buttonPanel);		
 	}
 	
+	private void createCloseButton() {
+		closeButton = new CustomButton();
+		closeButton.add(new Image("images/closeButton.png"));
+		closeButton.setStyleName("editCloseButton");
+	}
+	
 	public FlowPanel getPanel() {
 		return panel;
 	}
@@ -100,5 +113,9 @@ public class QuestionEdit extends Composite {
 	
 	public String getQuestion() {
 		return questionBox.getValue();
+	}
+
+	public CustomButton getCloseButton() {
+		return closeButton;
 	}
 }

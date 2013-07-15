@@ -109,6 +109,16 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 			getView().getContentPanel().remove(parent);
 		}
 	};
+	
+	private ClickHandler closeQuestionHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			CustomButton closeButton = (CustomButton) event.getSource();
+			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
+			QuestionEdit parent = (QuestionEdit) panelParent.getParent();
+			getView().getContentPanel().remove(parent);
+		}
+	};
 
 	private ClickHandler addTextHandler = new ClickHandler() {
 		@Override
@@ -123,7 +133,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			ImageEdit imageEdit = new ImageEdit();
-			imageEdit.getCloseButton().addClickHandler(closePdfHandler);
+			imageEdit.getCloseButton().addClickHandler(closeImageHandler);
 			getView().getContentPanel().add(imageEdit);
 		}
 	};
@@ -132,7 +142,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			PdfEdit pdfEdit = new PdfEdit();
-			pdfEdit.getCloseButton().addClickHandler(closeImageHandler);
+			pdfEdit.getCloseButton().addClickHandler(closePdfHandler);
 			getView().getContentPanel().add(pdfEdit);
 		}
 	};
@@ -141,7 +151,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			QuestionEdit questionEdit = new QuestionEdit();
-			// pdfEdit.getCloseButton().addClickHandler(closeImageHandler);
+			questionEdit.getCloseButton().addClickHandler(closeQuestionHandler);
 			getView().getContentPanel().add(questionEdit);
 		}
 	};
@@ -257,14 +267,16 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 				dynamicSectionTextContent.setText(textEdit.getText());
 				dynamicSectionTextContent.setTitle(textEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionTextContent);
-			} else if (currentWidget instanceof ImageEdit) {
+			} 
+			else if (currentWidget instanceof ImageEdit) {
 				ImageEdit imageEdit = ((ImageEdit) currentWidget);
 				String id = imageEdit.getImageId();
 				DynamicSectionImageContent dynamicSectionImageContent = new DynamicSectionImageContent();
 				dynamicSectionImageContent.setImageUrl(id);
 				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
-			} else if (currentWidget instanceof QuestionEdit) {
+			} 
+			else if (currentWidget instanceof QuestionEdit) {
 				ExerciceQuestionContent exerciceQuestion = new ExerciceQuestionContent();
 
 				QuestionEdit questionEdit = ((QuestionEdit) currentWidget);
@@ -274,12 +286,14 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 					AnswerChoiceContent answerChoiceContent = choiceEdit.getAnswerChoiceContent();
 					exerciceQuestion.setAnswer(answerChoiceContent);
 					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_CHOICE);
-				} else if (answer instanceof TextAnswerEdit) {
+				} 
+				else if (answer instanceof TextAnswerEdit) {
 					TextAnswerEdit textAnswerEdit = (TextAnswerEdit) answer;
 					AnswerTextContent answerTextContent = textAnswerEdit.getAnswerTextContent();
 					exerciceQuestion.setAnswer(answerTextContent);
 					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_TEXT);
 				}
+				exerciceQuestion.setQuestion(questionEdit.getQuestion());
 				exerciceQuestion.setQuestionContext(dynamicSectionList);
 				dynamicSectionList = new ArrayList<AbstractDynamicSection>();
 
