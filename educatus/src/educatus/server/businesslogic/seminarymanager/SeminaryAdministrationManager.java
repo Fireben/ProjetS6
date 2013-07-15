@@ -46,7 +46,7 @@ public class SeminaryAdministrationManager {
 	@Inject
 	EntityManager manager;
 
-	public void insertSeminary(SeminaryContent content) throws Exception {
+	public void insertSeminary(SeminaryContent content, String cip) throws Exception {
 
 		manager.getTransaction().begin();
 
@@ -122,7 +122,7 @@ public class SeminaryAdministrationManager {
 			sequenceId++;
 		}
 
-		User user = securityDao.findUserByCip("beam1711");
+		User user = securityDao.findUserByCip(cip);
 		Difficulty difficulty = seminaryDao.findDifficultyByLevel(1);
 
 		TextContentTranslationEntry seminaryTitle = internationalizationDao.insertTextContentTranslationEntry(
@@ -138,6 +138,7 @@ public class SeminaryAdministrationManager {
 				difficulty.getDifficultyValue()
 				);
 
+		// TODO, remove category hardcoding
 		seminary = seminaryDao.addCategoryToSeminary(seminary.getSemiId(), 47);
 
 		manager.getTransaction().commit();

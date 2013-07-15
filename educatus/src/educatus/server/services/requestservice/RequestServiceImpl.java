@@ -205,7 +205,20 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 
 		if (request.getAction() == SeminaryAdministractionAction.INSERT) {
 			try {
-				seminaryAdministrationManager.insertSeminary(request.getSeminaryContent());
+				
+				String cip = sessionManager.getSessionAssociatedCip(request.getSessionID());
+				
+				if (cip != null){
+					// TODO Verify if user has permission
+					boolean userHasPermission = true;
+					if (userHasPermission) {
+						seminaryAdministrationManager.insertSeminary(request.getSeminaryContent(), cip);							
+					} else {
+						// TODO, doesn't have permission for the action
+					}					
+				} else {
+					// TODO, invalid username, session expired, or user not logged
+				}				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -261,7 +274,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		{
 			// Log each Login attempt, even if the user is locked.
 			sessionManager.logConnectionAttempt(providedUsername, passwordIsValid);
-		}		
+		}
 	}
 
 	private SeminaryAdministrationPageContentResponse ProcessSeminaryAdministrationPageContentRequest(SeminaryAdministrationPageContentRequest request) {
