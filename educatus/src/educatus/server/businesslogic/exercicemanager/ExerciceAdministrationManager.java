@@ -152,10 +152,12 @@ public class ExerciceAdministrationManager {
 				
 				AnswerTextContent answerTextContent = (AnswerTextContent) exerciceQuestionContent.getAnswer();
 				TextContentTranslationEntry responseEntry = internationalizationDao.insertTextContentTranslationEntry(EN_LANG, CA_CULT, answerTextContent.getTextAnswer());
-								
+				TextContentTranslationEntry questionEntry = internationalizationDao.insertTextContentTranslationEntry(EN_LANG, CA_CULT, exerciceQuestionContent.getQuestion());			
+				
 				exerciceDao.addTextExerciceQuestionToExercice(
 						exercice.getId(),
 						dycoContent.getId(),
+						questionEntry.getTextcontententry().getId(),
 						exerciceQuestionContent.getScore(),
 						responseEntry.getTextcontententry().getId(),
 						exerciceQuestionContentSequence

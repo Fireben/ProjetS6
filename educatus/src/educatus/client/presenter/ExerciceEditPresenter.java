@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -48,6 +49,8 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest;
+import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest.ExerciceAdministractionAction;
 import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 
@@ -109,7 +112,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 			getView().getContentPanel().remove(parent);
 		}
 	};
-	
+
 	private ClickHandler closeQuestionHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -167,16 +170,22 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			ExerciceContent exerciceContent = getExerciceContent();
+			ExerciceAdministrationActionRequest request = new ExerciceAdministrationActionRequest();
+			request.setExerciceContent(exerciceContent);
+			request.setAction(ExerciceAdministractionAction.INSERT);
+			request.setSessionID(Cookies.getCookie("SessionID"));
+			
+			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
 
-			/*
-			 * requestService.sendRequest(request, new
-			 * AsyncCallback<AbstractResponse>() {
-			 * 
-			 * @Override public void onSuccess(AbstractResponse result) {
-			 * resetAll(); }
-			 * 
-			 * @Override public void onFailure(Throwable caught) { } });
-			 */
+				@Override
+				public void onSuccess(AbstractResponse result) {
+					resetAll();
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+			});
 		}
 	};
 
@@ -267,16 +276,14 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 				dynamicSectionTextContent.setText(textEdit.getText());
 				dynamicSectionTextContent.setTitle(textEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionTextContent);
-			} 
-			else if (currentWidget instanceof ImageEdit) {
+			} else if (currentWidget instanceof ImageEdit) {
 				ImageEdit imageEdit = ((ImageEdit) currentWidget);
 				String id = imageEdit.getImageId();
 				DynamicSectionImageContent dynamicSectionImageContent = new DynamicSectionImageContent();
 				dynamicSectionImageContent.setImageUrl(id);
 				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
-			} 
-			else if (currentWidget instanceof QuestionEdit) {
+			} else if (currentWidget instanceof QuestionEdit) {
 				ExerciceQuestionContent exerciceQuestion = new ExerciceQuestionContent();
 
 				QuestionEdit questionEdit = ((QuestionEdit) currentWidget);
@@ -286,8 +293,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 					AnswerChoiceContent answerChoiceContent = choiceEdit.getAnswerChoiceContent();
 					exerciceQuestion.setAnswer(answerChoiceContent);
 					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_CHOICE);
-				} 
-				else if (answer instanceof TextAnswerEdit) {
+				} else if (answer instanceof TextAnswerEdit) {
 					TextAnswerEdit textAnswerEdit = (TextAnswerEdit) answer;
 					AnswerTextContent answerTextContent = textAnswerEdit.getAnswerTextContent();
 					exerciceQuestion.setAnswer(answerTextContent);

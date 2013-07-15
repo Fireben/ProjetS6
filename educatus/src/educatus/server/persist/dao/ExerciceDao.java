@@ -63,16 +63,18 @@ public class ExerciceDao {
 		return exercice;
 	}
 	
-	public void addTextExerciceQuestionToExercice(int exerciceId, int questionContextDynamicContentId, int score, int responseValueTextContentEntryId, int sequence)
+	public void addTextExerciceQuestionToExercice(int exerciceId, int questionContextDynamicContentId, int questionTextContentEntryId, int score, int responseValueTextContentEntryId, int sequence)
 	{
 		Exercice exercice = entityManager.find(Exercice.class, exerciceId);
 		DynamicContent questionContext = entityManager.find(DynamicContent.class, questionContextDynamicContentId);
+		TextContentEntry questionTextContentEntry = entityManager.find(TextContentEntry.class, questionTextContentEntryId);
 		TextContentEntry responseValueTextContentEntry = entityManager.find(TextContentEntry.class, responseValueTextContentEntryId);
 		// Answer Text => type 2
 		ExerciceQuestionType questionType = entityManager.find(ExerciceQuestionType.class, 2);
 		
 		ExerciceQuestion exerciceQuestion = new ExerciceQuestion();
 		exerciceQuestion.setDynamicContent(questionContext);
+		exerciceQuestion.setQuestion(questionTextContentEntry);
 		exerciceQuestion.setExercice(exercice);
 		exerciceQuestion.setExercicequestiontype(questionType);
 		exerciceQuestion.setScore(score);

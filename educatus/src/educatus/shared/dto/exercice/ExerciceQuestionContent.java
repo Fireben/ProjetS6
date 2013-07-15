@@ -1,12 +1,15 @@
 package educatus.shared.dto.exercice;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 
-public class ExerciceQuestionContent {
+public class ExerciceQuestionContent implements Serializable {
 
+	private static final long serialVersionUID = 739363531689826998L;
+	
 	private int id;
 	private int sequence;
 	private int score;
