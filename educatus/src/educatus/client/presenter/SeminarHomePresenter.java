@@ -22,6 +22,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -107,6 +108,8 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	  super.onReset();      
 	  PageChangingEvent.fire(this, NameTokens.getSeminarHomePage());
 	  seminarCategoryPresenter.registerBackButton(backClickHandler);
+	  seminarCategoryPresenter.registerSeeAllButton(seeAllClickHandler);
+	  
 	}
 	
 	@Override
@@ -120,6 +123,14 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		@Override
 		public void onClick(ClickEvent event) {	 
 			createAndSendCategoryRequest(null);
+		}
+	};
+	
+	private ClickHandler seeAllClickHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {	 
+			CategoryCoreContent parentCategory = seminarCategoryPresenter.getParent();		
+	  		createAndSendListingRequest(parentCategory);
 		}
 	};
 	

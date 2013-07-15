@@ -52,12 +52,12 @@ public class SeminaryListPresenter extends
 	}
 	
 	public void setData(List<Seminary> seminaries) {		
-		if(seminaries.size() < MIN_ELEMENTS) {
+		/*if(seminaries.size() < MIN_ELEMENTS) {
 			int nbEmptyRows= MIN_ELEMENTS - seminaries.size();
 			for(int i=0; i < nbEmptyRows; i++) {
 				seminaries.add(new Seminary(-1, null, null, null, null, -1));
 			}
-		}
+		}*/
 		CellTable<Seminary> dataGrid = getView().getDataGrid();	
 		ListDataProvider<Seminary> dataProvider = new ListDataProvider<Seminary>();
 		dataProvider.addDataDisplay(dataGrid);

@@ -1918,7 +1918,7 @@ img.art-lightbox-image.active {
 	opacity: 1 !important;	
 }
 
-.nextCategoryButton {
+.seeAllSeminaryButton {
 	float: right;
 	background: transparent;
 	margin-right: 10px;
@@ -1927,7 +1927,7 @@ img.art-lightbox-image.active {
 	border: none;
 }
 
-.nextCategoryButton:hover:enabled {
+.seeAllSeminaryButton:hover:enabled {
 
 }
 

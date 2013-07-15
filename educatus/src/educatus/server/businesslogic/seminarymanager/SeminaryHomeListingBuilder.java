@@ -15,35 +15,55 @@ import educatus.shared.dto.seminary.SeminaryCoreContent;
 
 @Singleton
 public class SeminaryHomeListingBuilder {
-	
+
 	@Inject
 	private SeminaryDao semDao;
-	
-	public SeminaryHomePageListingContent buildSeminaryHomeListingContent(int parentId, String culture, String language) {
-		
+
+	public SeminaryHomePageListingContent buildSeminaryHomeListingContent(String culture, String language) {
 		SeminaryHomePageListingContent pageContent = new SeminaryHomePageListingContent();
-		
+
 		try {
-			
-			Category parentCategory = semDao.findCategoryById(parentId);
-			
-			// We set common parent 
-			CategoryCoreContent commonParent = SeminaryAdapter.categoryToCategoryCoreContent(parentCategory, culture, language);
-			pageContent.setCommonParent(commonParent);
-			
-			// TODO get actual childrens			
+			// We set common parent
+			pageContent.setCommonParent(null);
+
 			List<Seminary> seminaryList = semDao.findAllSeminary();
-			
+
 			for (Seminary seminary : seminaryList) {
-				SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);				
+				SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
 				pageContent.getSeminariesChildren().add(seminaryCoreContent);
 			}
-						
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		}		
-		
+		}
+
 		return pageContent;
-	}	
+	}
+
+	public SeminaryHomePageListingContent buildSeminaryHomeListingContent(int parentId, String culture, String language) {
+
+		SeminaryHomePageListingContent pageContent = new SeminaryHomePageListingContent();
+
+		try {
+			Category parentCategory = semDao.findCategoryById(parentId);
+
+			// We set common parent
+			CategoryCoreContent commonParent = SeminaryAdapter.categoryToCategoryCoreContent(parentCategory, culture, language);
+			pageContent.setCommonParent(commonParent);
+
+			List<Seminary> seminaryList = semDao.findSeminariesByCategory(parentId);
+
+			for (Seminary seminary : seminaryList) {
+				SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
+				pageContent.getSeminariesChildren().add(seminaryCoreContent);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		return pageContent;
+	}
 }

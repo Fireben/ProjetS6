@@ -19,7 +19,7 @@ CategoryPresenter.MyView {
 	@UiField FlowPanel categoryPanel;
 	@UiField FlowPanel buttonPanel;
 	@UiField Button backButton;
-	@UiField Button nextButton;
+	@UiField Button seeAllButton;
 	@UiField Label titleLabel;
 	
 	public interface Binder extends UiBinder<Widget, CategoryView> {
@@ -31,7 +31,7 @@ CategoryPresenter.MyView {
 	  categoryPanel.setStyleName("categoryPanel");
 	  buttonPanel.setStyleName("buttonPanel");  
 	  backButton.setStyleName("backCategoryButton");
-	  nextButton.setStyleName("nextCategoryButton");
+	  seeAllButton.setStyleName("seeAllSeminaryButton");
 	}
 	
 	public Widget asWidget() {
@@ -50,7 +50,13 @@ CategoryPresenter.MyView {
 		return backButton;
 	}
 	
+	public Button getSeeAllButton() {
+		return seeAllButton;
+	}
+	
 	public Label getLabel() {
 		return titleLabel;
 	}
+	
+	
 }

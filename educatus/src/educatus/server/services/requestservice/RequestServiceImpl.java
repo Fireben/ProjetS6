@@ -331,8 +331,13 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	}
 
 	private SeminaryHomePageListingContentResponse ProcessSeminaryHomePageListingContentRequest(SeminaryHomePageListingContentRequest request) {
-		SeminaryHomePageListingContent content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
-
+		SeminaryHomePageListingContent content = new SeminaryHomePageListingContent();
+		
+		if(request.getSelectedCategory() == null)
+			content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getCulture(), request.getLanguage());
+		else
+			content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
+			
 		SeminaryHomePageListingContentResponse response = new SeminaryHomePageListingContentResponse();
 		response.setContent(content);
 
