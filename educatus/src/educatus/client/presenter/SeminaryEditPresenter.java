@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -141,6 +142,10 @@ public class SeminaryEditPresenter extends
 		public void onClick(ClickEvent event) {
 			SeminaryAdministrationActionRequest request = new SeminaryAdministrationActionRequest();
 			request.setAction(SeminaryAdministractionAction.INSERT);
+			/* TODO, manage culture here
+			request.setCulture();
+			request.setLanguage();*/
+			request.setSessionID(Cookies.getCookie("SessionID"));
 			request.setSeminaryContent(getSeminaryContent());
 			
 			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {				
@@ -198,6 +203,7 @@ public class SeminaryEditPresenter extends
 		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
 		pageContentRequest.setCulture(locale.getCulture());
 		pageContentRequest.setLanguage(locale.getLanguage());
+		pageContentRequest.setSessionID(Cookies.getCookie("SessionID"));
   		requestService.sendRequest(pageContentRequest, responseHandler);	  		
 	}
 	
@@ -314,6 +320,7 @@ public class SeminaryEditPresenter extends
 		SeminaryAdministrationPageContentRequest pageContentRequest = new SeminaryAdministrationPageContentRequest();
 		pageContentRequest.setCulture(locale.getCulture());
 		pageContentRequest.setLanguage(locale.getLanguage());
+		pageContentRequest.setSessionID(Cookies.getCookie("SessionID"));
   		requestService.sendRequest(pageContentRequest, responseHandler);
 	}
 }
