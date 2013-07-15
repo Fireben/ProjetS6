@@ -2290,6 +2290,19 @@ GWTUpld,table.GWTUpld td {
 	margin-right: auto;
 }
 
+.profilUploadPanel {
+	width: 550px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.profilUploadPanel>img {
+	margin-left: 30px;
+	margin-right: auto;
+	max-width: 256px;
+	max-height: 256px;
+}
+
 .pdfUploadPanel {
 	width: 200px;
 	margin-left: auto;

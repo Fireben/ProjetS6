@@ -22,6 +22,7 @@ public class MainPageContent implements Serializable {
 			PROFILE_ITEM,
 			EXCERCICE_ITEM, 
 			CREATE_SEMINAR_ITEM,
+			CREATE_EXERCICE_ITEM,
 			CATEGORY_ADMINISTRATION_ITEM
 		}
 

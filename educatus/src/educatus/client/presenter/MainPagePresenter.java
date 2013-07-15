@@ -349,6 +349,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			case CATEGORY_ADMINISTRATION_ITEM:
 				nameToken = NameTokens.getCategoryAdministration();
 				break;
+			case CREATE_EXERCICE_ITEM:
+				nameToken = NameTokens.getExerciceEdit();
+				break;
 			// Default Token leads to HomePage
 			default:
 				nameToken = NameTokens.getHomePage();

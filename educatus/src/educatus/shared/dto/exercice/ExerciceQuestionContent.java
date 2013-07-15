@@ -10,6 +10,7 @@ public class ExerciceQuestionContent {
 	private int id;
 	private int sequence;
 	private int score;
+	private String question;
 	private List<AbstractDynamicSection> questionContext = new ArrayList<AbstractDynamicSection>();
 	private ExerciceQuestionType questionType;
 	private AbstractAnswerContent answer;
@@ -60,5 +61,13 @@ public class ExerciceQuestionContent {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+	
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 }

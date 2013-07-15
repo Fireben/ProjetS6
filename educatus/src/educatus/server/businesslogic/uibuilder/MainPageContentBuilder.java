@@ -21,6 +21,7 @@ public class MainPageContentBuilder {
 	//private static final int VIEW_SEMINARY_MAIN_MENU_ITEM = -11003;
 	private static final int CREATE_SEMINARY_MAIN_MENU_ITEM = -11004;
 	private static final int CATEGORY_ADMINISTRATION_MAIN_MENU_ITEM = -11005;
+	private static final int CREATE_EXERCICE_MAIN_MENU_ITEM = -11006;
 
 	@Inject
 	private InternationalizationDao interDao;
@@ -92,11 +93,14 @@ public class MainPageContentBuilder {
 		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
 		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.CREATE_SEMINAR_ITEM));
 		
-
 		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, CATEGORY_ADMINISTRATION_MAIN_MENU_ITEM);
 		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
 		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.CATEGORY_ADMINISTRATION_ITEM));		
 
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, CREATE_EXERCICE_MAIN_MENU_ITEM);
+		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.CREATE_EXERCICE_ITEM));	
+		
 		mainPageContent.setMainMenuContent(mainMenuContent);
 		
 		return mainPageContent;

@@ -9,6 +9,7 @@ import com.google.inject.Singleton;
 
 import educatus.server.businesslogic.DynamicContentAdapter;
 import educatus.server.businesslogic.ExerciceAdapter;
+import educatus.server.businesslogic.InternationalizationUtility;
 import educatus.server.persist.dao.exercice.AnwserChoice;
 import educatus.server.persist.dao.exercice.AnwserNumeric;
 import educatus.server.persist.dao.exercice.AnwserText;
@@ -50,6 +51,7 @@ public class ExerciceContentBuilder {
 			exerciceQuestionContent.setId(exerciceQuestion.getId());
 			exerciceQuestionContent.setScore(exerciceQuestion.getScore());
 			exerciceQuestionContent.setSequence(exerciceQuestion.getSequence());
+			exerciceQuestionContent.setQuestion(InternationalizationUtility.getTranslationEntry(exerciceQuestion.getQuestion(), culture, language).getTcteTranslation());
 			
 			switch(exerciceQuestion.getExerciceQuestionType().getId())
 			{
