@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +32,13 @@ public abstract class Answer implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "exqt_type", nullable = false, insertable = false, updatable = false)
 	private ExerciceQuestionType exerciceQuestionType;
+	
+	@OneToOne
+	@JoinColumns({
+		@JoinColumn(name = "exqu_id", nullable = false, insertable = false, updatable = false ),
+	    @JoinColumn(name = "exqt_type", nullable = false, insertable = false, updatable = false )
+	})	
+	private ExerciceQuestion exerciceQuestion;
 
 	public Answer(){		
 	}
@@ -48,5 +57,13 @@ public abstract class Answer implements Serializable {
 
 	public void setExerciceQuestionType(ExerciceQuestionType exercicequestiontype) {
 		this.exerciceQuestionType = exercicequestiontype;
+	}
+
+	public ExerciceQuestion getExerciceQuestion() {
+		return exerciceQuestion;
+	}
+
+	public void setExerciceQuestion(ExerciceQuestion exerciceQuestion) {
+		this.exerciceQuestion = exerciceQuestion;
 	}
 }

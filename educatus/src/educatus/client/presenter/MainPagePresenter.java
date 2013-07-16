@@ -52,6 +52,7 @@ import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
+import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
@@ -136,6 +137,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			if (request.getViewMode() == ViewModeEnum.ADMIN || placeManager.getCurrentPlaceRequest().getNameToken() == NameTokens.getProfil()){
 				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
 				requestView(ViewModeEnum.USER);
+				// Remove Cookies
+				Cookies.removeCookie(CookiesConst.SESSION_ID);
+				Cookies.removeCookie(CookiesConst.CURRENT_USER);
 			}		
 			// Display the login Ui in the MainMenu
 			displayLoginUi();
@@ -435,17 +439,18 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 							LoginResponse response = (LoginResponse) result;
 							
 							if (response.getLoginStatus() == LoginStatus.SUCCESS){
+								// User data
+								UserCoreContent userCoreContent = response.getUserCoreContent();
 								// Login Sucessfull								
 								String sessionID = response.getSessionID();
 								
 								// Remember 30 minutes
 								Date expiration = new Date(System.currentTimeMillis() + 1000 * 60 * 30);								
 								// Set the sessionID cookie
-								Cookies.setCookie("SessionID", sessionID, expiration);
-								
-								// User data
-								UserCoreContent userCoreContent = response.getUserCoreContent();
-								
+								Cookies.setCookie(CookiesConst.SESSION_ID, sessionID, expiration);						
+								// Set the currentUser cookie
+								Cookies.setCookie(CookiesConst.CURRENT_USER, userCoreContent.getCip(), expiration);
+																
 								getView().getMainMenu().getLogInProfilUi().getLogInName().setText(
 										userCoreContent.getFirstName() + " " + 
 										userCoreContent.getLastName()

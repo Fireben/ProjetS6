@@ -15,7 +15,7 @@ public class CategoryAdministrationPageContentResponse extends AbstractResponse 
 
 	@Override
 	public ResponseTypeEnum GetResponseType() {
-		return ResponseTypeEnum.SEMINARY_EDITOR_CONTENT_RESPONSE;
+		return ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE;
 	}
 
 	public List<CategoryCoreContent> getCategoryCoreContentList() {

@@ -46,12 +46,11 @@ public class ExerciceQuestion implements Serializable {
 
 	// bi-directional many-to-one association to ExerciceQuestionType
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "exqt_type", unique = true, nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "exqt_type", unique = true, nullable = false, insertable = true, updatable = true)
 	private ExerciceQuestionType exerciceQuestionType;
 
 	// bi-directional one-to-one association to User
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "exqu_id", nullable = false, insertable = false, updatable = false)
+	@OneToOne(optional=false, mappedBy="exerciceQuestion")
 	private Answer answer;
 	
 	// bi-directional many-to-one association to TextContentEntry
