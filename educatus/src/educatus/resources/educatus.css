@@ -2576,8 +2576,17 @@ a:hover, .logInClose {
 	border-radius: 20px;
 	padding-bottom: 50px;
 	padding-top: 50px;
-	margin-top: 50px;
 	margin-bottom: 50px;
+}
+
+.editSectionTitle {
+	margin-left: auto;
+	margin-right: auto;
+	width: 700px;
+	color: #00a1d6;
+	font-size: 25px;
+	margin-bottom: 10px;
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif
 }
 
 .textAreaGrid {
@@ -2835,4 +2844,15 @@ a:hover, .logInClose {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 5px;
+}
+
+.listTitle {
+	color: #00a1d6;
+	font-size: 30px;
+	margin-bottom: 10px;
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
+	width: 1020px;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
 }

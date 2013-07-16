@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -17,13 +18,11 @@ import educatus.client.ui.dataGrids.Seminary;
 public class SeminaryListPresenter extends
 		PresenterWidget<SeminaryListPresenter.MyView>
 {
-	
-	private final static int MIN_ELEMENTS = 12;
-	
 	public interface MyView extends View {
 		CellTable<Seminary> getDataGrid();
 		Button getBackButton();
 		SimplePager getPager();
+		Label getTitle();
 	}
 
 	@Inject
@@ -51,13 +50,11 @@ public class SeminaryListPresenter extends
 		getView().getBackButton().addClickHandler(backClickHandler);
 	}
 	
+	public void setTitle(String title) {
+		getView().getTitle().setText(title);
+	}
+	
 	public void setData(List<Seminary> seminaries) {		
-		/*if(seminaries.size() < MIN_ELEMENTS) {
-			int nbEmptyRows= MIN_ELEMENTS - seminaries.size();
-			for(int i=0; i < nbEmptyRows; i++) {
-				seminaries.add(new Seminary(-1, null, null, null, null, -1));
-			}
-		}*/
 		CellTable<Seminary> dataGrid = getView().getDataGrid();	
 		ListDataProvider<Seminary> dataProvider = new ListDataProvider<Seminary>();
 		dataProvider.addDataDisplay(dataGrid);
