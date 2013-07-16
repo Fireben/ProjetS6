@@ -98,7 +98,7 @@ public class ProfilPresenter extends
 
 			@Override
 			public void onSuccess(AbstractResponse result) {
-				if (result.GetResponseType() == ResponseTypeEnum.USER_CONTENT_REQUEST) {
+				if (result.GetResponseType() == ResponseTypeEnum.USER_CONTENT_RESPONSE) {
 					UserContentResponse response = (UserContentResponse) result;
 
 					UserProfilContent content = response.getUserProfilContent();

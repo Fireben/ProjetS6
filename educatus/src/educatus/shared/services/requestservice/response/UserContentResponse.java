@@ -12,7 +12,7 @@ public class UserContentResponse extends AbstractResponse {
 	
 	@Override
 	public ResponseTypeEnum GetResponseType() {
-		return ResponseTypeEnum.USER_CONTENT_REQUEST;
+		return ResponseTypeEnum.USER_CONTENT_RESPONSE;
 	}
 
 	public UserProfilContent getUserProfilContent() {
