@@ -1,5 +1,6 @@
 package educatus.server.businesslogic.profilmanager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Inject;
@@ -52,5 +53,20 @@ public class UserProfilBuilder {
 		}
 		
 		return content;		
-	}	
+	}
+	
+	public List<UserCoreContent> buildAllUserProfilCoreContent(String culture, String language) throws Exception {
+		
+		List<UserCoreContent> userCoreContentList = new ArrayList<UserCoreContent>();
+		
+		List<User> userList = securityDao.findAllUsers();
+		for (User user : userList) {
+			UserCoreContent userCoreContent = UserAdapter.userToUserCoreContent(user);
+			LDAPUser requestedLDAPUser = LDAPManager.getInstance().findUser(user.getCip());	
+			userCoreContent = UserAdapter.mergeLDAPUser(userCoreContent, requestedLDAPUser);
+			userCoreContentList.add(userCoreContent);
+		}
+		
+		return userCoreContentList;
+	}
 }

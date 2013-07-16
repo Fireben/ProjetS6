@@ -33,6 +33,7 @@ import educatus.shared.dto.pagecontent.SeminaryHomePageListingContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
 import educatus.shared.dto.seminary.SeminaryContent;
+import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.user.UserProfilContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
@@ -52,6 +53,7 @@ import educatus.shared.services.requestservice.request.SeminaryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.UserContentRequest;
+import educatus.shared.services.requestservice.request.UserListingRequest;
 import educatus.shared.services.requestservice.response.ExerciceAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.ExerciceContentResponse;
 import educatus.shared.services.requestservice.response.ExerciceQuestionValidationResponse;
@@ -65,6 +67,7 @@ import educatus.shared.services.requestservice.response.SeminaryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.UserContentResponse;
+import educatus.shared.services.requestservice.response.UserListingResponse;
 
 /**
  * The server side implementation of the RPC service.
@@ -139,6 +142,9 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				case USER_CONTENT_REQUEST:
 					response = ProcessUserContentRequest((UserContentRequest) request);
 					break;
+				case USER_LISTING_REQUEST:
+					response = ProcessUserListingRequest((UserListingRequest) request);
+					break;
 				case SEMINARY_ADMINISTRATION_PAGE_CONTENT_REQUEST:
 					response = ProcessSeminaryAdministrationPageContentRequest((SeminaryAdministrationPageContentRequest) request);
 					break;
@@ -164,6 +170,21 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			e.printStackTrace();
 		}
 
+		return response;
+	}
+
+	private UserListingResponse ProcessUserListingRequest(UserListingRequest request) {
+		
+		UserListingResponse response = new UserListingResponse();
+		
+		try {
+			List<UserCoreContent> userCoreContentList = userProfilBuilder.buildAllUserProfilCoreContent(request.getCulture(), request.getLanguage());
+			response.setUserCoreContentList(userCoreContentList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
 		return response;
 	}
 
