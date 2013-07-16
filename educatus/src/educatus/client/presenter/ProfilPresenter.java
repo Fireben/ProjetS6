@@ -33,10 +33,8 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
-import educatus.shared.services.requestservice.request.ProfilPageContentRequest;
 import educatus.shared.services.requestservice.request.UserContentRequest;
 import educatus.shared.services.requestservice.response.UserContentResponse;
-import educatus.shared.services.requestservice.response.UserProfilPageContentResponse;
 
 public class ProfilPresenter extends
 		Presenter<ProfilPresenter.MyView, ProfilPresenter.MyProxy> {
