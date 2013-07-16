@@ -15,6 +15,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
@@ -50,6 +51,8 @@ public class ProfilPresenter extends
 	
 	@Inject
 	private EducatusLocale locale;
+	
+	private String requestedUser = null;
 
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT
@@ -81,8 +84,15 @@ public class ProfilPresenter extends
 	protected void onReset() {
 		super.onReset();
 		
+		String user = null;
+		if (requestedUser != null) {
+			user = requestedUser;
+		} else {
+			user = Cookies.getCookie(CookiesConst.CURRENT_USER);
+		}
+		
 		UserContentRequest request = new UserContentRequest();
-		request.setRequestedUser(Cookies.getCookie(CookiesConst.CURRENT_USER));
+		request.setRequestedUser(user);
 		request.setCulture(locale.getCulture());
 		request.setLanguage(locale.getLanguage());
 		request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
@@ -149,6 +159,12 @@ public class ProfilPresenter extends
 
 			}
 		});
+	}
+	
+	@Override
+	public void prepareFromRequest(PlaceRequest placeRequest) {
+		super.prepareFromRequest(placeRequest);
+		requestedUser = placeRequest.getParameter("cip", null);
 	}
 
 	/*

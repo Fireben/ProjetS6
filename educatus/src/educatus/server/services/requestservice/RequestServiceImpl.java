@@ -362,6 +362,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private UserContentResponse ProcessUserContentRequest(UserContentRequest request) {
 		UserProfilContent content = null;
 		try {
+			
+			// TODO IF requestedUser fits with SessionID, we need full access to content
 			content = userProfilBuilder.buildUserProfilContent(request.getRequestedUser(), request.getCulture(), request.getLanguage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
