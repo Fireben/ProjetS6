@@ -1,14 +1,15 @@
 
 package educatus.client.presenter;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -23,18 +24,32 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.widget.ChoiceQuestion;
+import educatus.client.ui.widget.DynamicSection;
 import educatus.client.ui.widget.MultipleChoiceQuestion;
 import educatus.client.ui.widget.Question;
 import educatus.client.ui.widget.ResponseFeedback;
 import educatus.client.ui.widget.SingleChoiceQuestion;
 import educatus.client.ui.widget.TextQuestion;
+import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
+import educatus.shared.dto.exercice.AnswerChoiceContent;
+import educatus.shared.dto.exercice.AnswerChoiceContent.AnswerChoiceType;
+import educatus.shared.dto.exercice.ExerciceContent;
+import educatus.shared.dto.exercice.ExerciceCoreContent;
+import educatus.shared.dto.exercice.ExerciceQuestionContent;
+import educatus.shared.dto.exercice.ExerciceQuestionType;
+import educatus.shared.services.RequestService;
+import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.ExerciceContentRequest;
+import educatus.shared.services.requestservice.response.ExerciceContentResponse;
 
 public class ExercicePresenter extends
 		Presenter<ExercicePresenter.MyView, ExercicePresenter.MyProxy> {
 
 	public interface MyView extends View {
 		public FlowPanel getDescriptionContainer();
-		public FlowPanel getDynamicSectionContainer();
+		public DynamicSection getDynamicSection();
 		public FlowPanel getContentContainer();
 		public FlowPanel getQuestionContainer();
 		public Label getTitleLabel();
@@ -48,9 +63,16 @@ public class ExercicePresenter extends
 	
 	private Question currentQuestion;
 	private ResponseFeedback responseFeedback = null;
-	private int state = 0;
-	@SuppressWarnings("unused")
+	
+	private int questionIndex = 0;
+	private List<ExerciceQuestionContent> questionList;
+	private ExerciceCoreContent questionCore;
+	
 	private String id;
+	
+	// Create a remote service proxy to talk to the server-side service.
+	private final RequestServiceAsync requestService = GWT
+			.create(RequestService.class);
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.exercice)
@@ -90,11 +112,12 @@ public class ExercicePresenter extends
 				getView().getRootPanel().remove(responseFeedback);
 				responseFeedback = null;
 			}
-			if(state == 2) {
-				state = 0;
-			}
+			
+			if(questionIndex < (questionList.size()-1)) {
+				questionIndex++;				
+			}		
 			else {
-				state++;
+				questionIndex = 0;
 			}
 			populateQuestion();
 		}
@@ -115,60 +138,75 @@ public class ExercicePresenter extends
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		populateQuestion();
+		
+		ExerciceContentRequest request = new ExerciceContentRequest();
+		request.setCulture(locale.getCulture());
+		request.setLanguage(locale.getLanguage());
+		request.setSelectedExerciceId(Integer.parseInt(id));
+		requestService.sendRequest(request,
+				new AsyncCallback<AbstractResponse>() {
+					@Override
+					public void onSuccess(AbstractResponse result) {
+						if (result.GetResponseType() == ResponseTypeEnum.EXERCICE_CONTENT_RESPONSE) {
+							ExerciceContentResponse response = (ExerciceContentResponse) result;
+							ExerciceContent exerciceContent = response.getExerciceContent();
+							populateExercice(exerciceContent);
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
 	}
 	
+	private void populateExercice(ExerciceContent exerciceContent) {
+		questionIndex = 0;
+		questionList = exerciceContent.getQuestionList();
+		questionCore = exerciceContent.getCoreContent();
+		populateQuestion();
+	}
+
 	private void populateQuestion() {
 		getView().getQuestionContainer().clear();					
-		getView().getDynamicSectionContainer().clear();
+		getView().getDynamicSection().clear();		
 		
-		if(state == 0) {
-			getView().getDynamicSectionContainer().add(new Image("images/routing.png"));
-			getView().getDynamicSectionContainer().setVisible(true);
-			
-			getView().getTitleLabel().setText("Routage par paquet");
-			
-			MultipleChoiceQuestion choiceQuestion = new MultipleChoiceQuestion("Laquelle de ces affirmations est vraie ?");
-			choiceQuestion.addChoice("L'ordre d'arrivee des paquets est garantie dans le routage par paquet","1");
-			choiceQuestion.addChoice("Le temps d'etablissement d'un circuit virtuel est negligeable dans le processus de routage par circuit","2");
-			choiceQuestion.addChoice("Un circuit virtuel est associee a un circuit secondaire dans le cas d'une panne","3");
-			choiceQuestion.addChoice("Aucune","4");	
-			currentQuestion = choiceQuestion;			
-			getView().getQuestionContainer().add(choiceQuestion);		
-		}
-		else if(state == 1) {
-			/*
-			PdfViewer pdf = new PdfViewer();
-			pdf.setPdfSrc("formatif.pdf");
-			getView().getDynamicSectionContainer().add(pdf);
-			getView().getDynamicSectionContainer().setVisible(true);
-			*/
-			getView().getTitleLabel().setText("Routage par paquet");
-			
-			SingleChoiceQuestion choiceQuestion = new SingleChoiceQuestion("Laquelle de ces affirmations est vraie ?");
-			choiceQuestion.addChoice("L'ordre d'arrivee des paquets est garantie dans le routage par paquet","1");
-			choiceQuestion.addChoice("Le temps d'etablissement d'un circuit virtuel est negligeable dans le processus de routage par circuit","2");
-			choiceQuestion.addChoice("Un circuit virtuel est associee a un circuit secondaire dans le cas d'une panne","3");
-			choiceQuestion.addChoice("Aucune","4");	
-			currentQuestion = choiceQuestion;
-			getView().getQuestionContainer().add(choiceQuestion);		
-		}
-		else if(state == 2) {
-			getView().getDynamicSectionContainer().add(new Image("images/canal.png"));
-			getView().getDynamicSectionContainer().setVisible(true);
-			
-			getView().getTitleLabel().setText("Signal sur bruit");
-			TextQuestion textQuestion = new TextQuestion("Quel est le rapport signal sur bruit ? (en dB)");
+		getView().getTitleLabel().setText(questionCore.getTitle());
+		
+		ExerciceQuestionContent question = questionList.get(questionIndex);			
+		if(question.getQuestionType() == ExerciceQuestionType.ANSWER_TEXT) {
+			TextQuestion textQuestion = new TextQuestion(question.getQuestion());
 			currentQuestion = textQuestion;
-			getView().getQuestionContainer().add(textQuestion);
-		}		
+			getView().getQuestionContainer().add(textQuestion);	
+		}	
+		else if(question.getQuestionType() == ExerciceQuestionType.ANSWER_CHOICE) {
+			AnswerChoiceContent answer = (AnswerChoiceContent)question.getAnswer();
+			ChoiceQuestion choiceQuestion;
+			if(answer.getType() == AnswerChoiceType.MULTIPLE_CHOICE) {
+				choiceQuestion = new MultipleChoiceQuestion(question.getQuestion());
+			}
+			else {
+				choiceQuestion = new SingleChoiceQuestion(question.getQuestion());
+			}
+			List<String> choiceList = answer.getAvailableChoiceList();
+			for(int i=0; i < choiceList.size(); i++) {
+				choiceQuestion.addChoice(choiceList.get(i), String.valueOf(i));
+			}
+			currentQuestion = choiceQuestion;
+			getView().getQuestionContainer().add(choiceQuestion);
+		}
+		
+		List<AbstractDynamicSection> dynamicSectionList = question.getQuestionContext();
+		DynamicSection dynamicSection = getView().getDynamicSection();
+		dynamicSection.setList(dynamicSectionList, getView().getContentContainer());
+		
 		getView().getContentContainer().setVisible(true);
 	}
 
 	private void verifyResponse() {		
 		boolean validAnswer = false;
 		if(currentQuestion instanceof TextQuestion) {
-			validAnswer = ((TextQuestion)currentQuestion).getResponse().equals("54");
+			validAnswer = verifyChoiceResponse();
 		}
 		else if(currentQuestion instanceof ChoiceQuestion) {
 			validAnswer = verifyChoiceResponse();
@@ -186,23 +224,8 @@ public class ExercicePresenter extends
 	}
 	
 
-	private boolean verifyChoiceResponse() {
-		boolean validAnswer = false;
-		if(currentQuestion instanceof MultipleChoiceQuestion) {
-			ArrayList<String> rightResponses = new ArrayList<String>();
-			rightResponses.add("1");
-			rightResponses.add("3");		
-			
-			ArrayList<String> checkedResponses = ((MultipleChoiceQuestion) currentQuestion).getValues();
-			validAnswer = rightResponses.equals(checkedResponses);
-		}
-		else if(currentQuestion instanceof SingleChoiceQuestion) {
-			String id = ((SingleChoiceQuestion)currentQuestion).getValue();
-			if(id != null) {
-				validAnswer = id.equals("4");			
-			}
-		}		
-		return validAnswer;
+	private boolean verifyChoiceResponse() {		
+		return true;
 	}
 
 	@Override

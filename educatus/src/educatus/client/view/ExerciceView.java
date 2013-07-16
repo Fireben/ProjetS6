@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import educatus.client.presenter.ExercicePresenter.MyView;
+import educatus.client.ui.widget.DynamicSection;
 
 public class ExerciceView extends ViewImpl implements MyView {
 
@@ -21,7 +22,7 @@ public class ExerciceView extends ViewImpl implements MyView {
 	private final Widget widget;
 
 	@UiField
-	FlowPanel dynamicSectionContainer;	
+	DynamicSection dynamicSection;	
 	@UiField
 	FlowPanel questionContainer;
 	@UiField
@@ -51,8 +52,6 @@ public class ExerciceView extends ViewImpl implements MyView {
 		contentContainer.setVisible(false);
 		
 		descriptionContainer.setStyleName("descriptionContainer");
-		dynamicSectionContainer.setStyleName("dynamicSectionContainer");
-		dynamicSectionContainer.setVisible(false);
 		questionContainer.setStyleName("questionContainer");
 		titleLabel.setStyleName("viewTitleLabel");
 		contentContainer.setStyleName("viewContainer");	
@@ -67,8 +66,8 @@ public class ExerciceView extends ViewImpl implements MyView {
 		return descriptionContainer;
 	}
 
-	public FlowPanel getDynamicSectionContainer() {
-		return dynamicSectionContainer;
+	public DynamicSection getDynamicSection() {
+		return dynamicSection;
 	}		
 
 	public FlowPanel getContentContainer() {

@@ -270,20 +270,25 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		Widget currentWidget;
 		for (int i = 0; i < contentPanel.getWidgetCount(); i++) {
 			currentWidget = contentPanel.getWidget(i);
+			
 			if (currentWidget instanceof TextEdit) {
 				TextEdit textEdit = ((TextEdit) currentWidget);
 				DynamicSectionTextContent dynamicSectionTextContent = new DynamicSectionTextContent();
 				dynamicSectionTextContent.setText(textEdit.getText());
 				dynamicSectionTextContent.setTitle(textEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionTextContent);
-			} else if (currentWidget instanceof ImageEdit) {
+			} 
+			
+			else if (currentWidget instanceof ImageEdit) {
 				ImageEdit imageEdit = ((ImageEdit) currentWidget);
 				String id = imageEdit.getImageId();
 				DynamicSectionImageContent dynamicSectionImageContent = new DynamicSectionImageContent();
 				dynamicSectionImageContent.setImageUrl(id);
 				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
-			} else if (currentWidget instanceof QuestionEdit) {
+			} 
+			
+			else if (currentWidget instanceof QuestionEdit) {
 				ExerciceQuestionContent exerciceQuestion = new ExerciceQuestionContent();
 
 				QuestionEdit questionEdit = ((QuestionEdit) currentWidget);
@@ -293,12 +298,15 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 					AnswerChoiceContent answerChoiceContent = choiceEdit.getAnswerChoiceContent();
 					exerciceQuestion.setAnswer(answerChoiceContent);
 					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_CHOICE);
-				} else if (answer instanceof TextAnswerEdit) {
+				} 
+				
+				else if (answer instanceof TextAnswerEdit) {
 					TextAnswerEdit textAnswerEdit = (TextAnswerEdit) answer;
 					AnswerTextContent answerTextContent = textAnswerEdit.getAnswerTextContent();
 					exerciceQuestion.setAnswer(answerTextContent);
 					exerciceQuestion.setQuestionType(ExerciceQuestionType.ANSWER_TEXT);
 				}
+				
 				exerciceQuestion.setQuestion(questionEdit.getQuestion());
 				exerciceQuestion.setQuestionContext(dynamicSectionList);
 				dynamicSectionList = new ArrayList<AbstractDynamicSection>();

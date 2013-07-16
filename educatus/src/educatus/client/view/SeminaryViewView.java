@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import educatus.client.presenter.SeminaryViewPresenter.MyView;
+import educatus.client.ui.widget.DynamicSection;
 
 public class SeminaryViewView extends ViewImpl implements MyView {
 
@@ -18,10 +19,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 
 	private final Widget widget;
 
-	@UiField
-	FlowPanel dynamicSectionContainer;	
-	@UiField
-	FlowPanel pdfSectionContainer;	
+	DynamicSection dynamicSection = new DynamicSection();	
 	@UiField
 	FlowPanel descriptionContainer;	
 	@UiField
@@ -43,8 +41,6 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		contentContainer.setVisible(false);
 		
 		descriptionContainer.setStyleName("descriptionContainer");
-		dynamicSectionContainer.setStyleName("dynamicSectionContainer");
-		pdfSectionContainer.setStyleName("pdfSectionContainer");
 		titleLabel.setStyleName("viewTitleLabel");
 		contentContainer.setStyleName("viewContentContainer");	
 		rightSpacer.setStyleName("viewSpacer");		
@@ -58,14 +54,10 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		return descriptionContainer;
 	}
 
-	public FlowPanel getDynamicSectionContainer() {
-		return dynamicSectionContainer;
+	public DynamicSection getDynamicSection() {
+		return dynamicSection;
 	}	
 	
-	public FlowPanel getPdfSectionContainer() {
-		return pdfSectionContainer;
-	}
-
 	public FlowPanel getContentContainer() {
 		return contentContainer;
 	}
