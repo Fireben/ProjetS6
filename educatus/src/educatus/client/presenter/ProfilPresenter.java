@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
@@ -17,6 +18,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.ProfilNewsfeed;
@@ -30,7 +32,9 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
-import educatus.shared.services.requestservice.request.UserProfilPageContentRequest;
+import educatus.shared.services.requestservice.request.ProfilPageContentRequest;
+import educatus.shared.services.requestservice.request.UserContentRequest;
+import educatus.shared.services.requestservice.response.UserContentResponse;
 import educatus.shared.services.requestservice.response.UserProfilPageContentResponse;
 
 public class ProfilPresenter extends
@@ -77,16 +81,17 @@ public class ProfilPresenter extends
 	protected void onReset() {
 		super.onReset();
 		
-		UserProfilPageContentRequest request = new UserProfilPageContentRequest();
-		request.setUserCip("graj2308");
+		UserContentRequest request = new UserContentRequest();
+		request.setRequestedUser(Cookies.getCookie(CookiesConst.CURRENT_USER));
 		request.setCulture(locale.getCulture());
 		request.setLanguage(locale.getLanguage());
+		request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
 		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
 
 			@Override
 			public void onSuccess(AbstractResponse result) {
-				if (result.GetResponseType() == ResponseTypeEnum.PROFIL_PAGE_CONTENT_RESPONSE) {
-					UserProfilPageContentResponse response = (UserProfilPageContentResponse) result;
+				if (result.GetResponseType() == ResponseTypeEnum.USER_CONTENT_REQUEST) {
+					UserContentResponse response = (UserContentResponse) result;
 
 					UserProfilContent content = response.getUserProfilContent();
 					UserCoreContent coreContent = content.getUserCoreContent();

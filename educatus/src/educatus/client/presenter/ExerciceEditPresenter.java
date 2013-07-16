@@ -50,8 +50,8 @@ import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest;
-import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest.ExerciceAdministractionAction;
 import educatus.shared.services.requestservice.request.SeminaryAdministrationPageContentRequest;
+import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest.ExerciceAdministractionAction;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 
 public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyView, ExerciceEditPresenter.MyProxy> {
@@ -316,7 +316,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 
 		@Override
 		public void onSuccess(AbstractResponse result) {
-			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_EDITOR_CONTENT_RESPONSE) {
+			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_ADMINISTRATION_PAGE_CONTENT_RESPONSE) {
 				SeminaryAdministrationPageContentResponse response = (SeminaryAdministrationPageContentResponse) result;
 				populateCoreContent(response.getSeminaryEditorContent(), response.getDifficultyContentList(), response.getCategoryCoreContentList());
 				setInSlot(SLOT_confirm, editButtonPanelPresenter);

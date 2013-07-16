@@ -19,7 +19,7 @@ public class SeminaryAdministrationPageContentResponse extends AbstractResponse 
 
 	@Override
 	public ResponseTypeEnum GetResponseType() {
-		return ResponseTypeEnum.SEMINARY_EDITOR_CONTENT_RESPONSE;
+		return ResponseTypeEnum.SEMINARY_ADMINISTRATION_PAGE_CONTENT_RESPONSE;
 	}
 
 	public SeminaryAdministrationPageContent getSeminaryEditorContent() {

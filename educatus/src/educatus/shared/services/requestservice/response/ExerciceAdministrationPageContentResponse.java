@@ -9,6 +9,6 @@ public class ExerciceAdministrationPageContentResponse extends AbstractResponse 
 	
 	@Override
 	public ResponseTypeEnum GetResponseType() {
-		return ResponseTypeEnum.EXERCICE_ADMINISTRATION_CONTENT_RESPONSE;
+		return ResponseTypeEnum.EXERCICE_ADMINISTRATION_PAGE_CONTENT_RESPONSE;
 	}
 }

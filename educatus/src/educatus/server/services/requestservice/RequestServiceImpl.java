@@ -51,20 +51,20 @@ import educatus.shared.services.requestservice.request.SeminaryAdministrationPag
 import educatus.shared.services.requestservice.request.SeminaryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
-import educatus.shared.services.requestservice.request.UserProfilPageContentRequest;
+import educatus.shared.services.requestservice.request.UserContentRequest;
 import educatus.shared.services.requestservice.response.ExerciceAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.ExerciceContentResponse;
+import educatus.shared.services.requestservice.response.ExerciceQuestionValidationResponse;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.LoginResponse;
 import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
-import educatus.shared.services.requestservice.response.ExerciceQuestionValidationResponse;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
-import educatus.shared.services.requestservice.response.UserProfilPageContentResponse;
+import educatus.shared.services.requestservice.response.UserContentResponse;
 
 /**
  * The server side implementation of the RPC service.
@@ -136,8 +136,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
 					response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
 					break;
-				case PROFIL_PAGE_CONTENT_REQUEST:
-					response = ProcessUserProfilContentRequest((UserProfilPageContentRequest) request);
+				case USER_CONTENT_REQUEST:
+					response = ProcessUserContentRequest((UserContentRequest) request);
 					break;
 				case SEMINARY_ADMINISTRATION_PAGE_CONTENT_REQUEST:
 					response = ProcessSeminaryAdministrationPageContentRequest((SeminaryAdministrationPageContentRequest) request);
@@ -359,18 +359,17 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		return response;
 	}
 
-	private UserProfilPageContentResponse ProcessUserProfilContentRequest(UserProfilPageContentRequest request) {
+	private UserContentResponse ProcessUserContentRequest(UserContentRequest request) {
 		UserProfilContent content = null;
 		try {
-			content = userProfilBuilder.buildUserProfilContent(request.getUserCip(), request.getCulture(), request.getLanguage());
+			content = userProfilBuilder.buildUserProfilContent(request.getRequestedUser(), request.getCulture(), request.getLanguage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		UserProfilPageContentResponse response = new UserProfilPageContentResponse();
+		UserContentResponse response = new UserContentResponse();
 		response.setUserProfilContent(content);
-
 		return response;
 	}
 }
