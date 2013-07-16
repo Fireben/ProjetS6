@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,10 +28,19 @@ import educatus.server.persist.dao.seminary.Competence;
 import educatus.server.persist.dao.seminary.Difficulty;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = Exercice.FIND_ALL, query = "SELECT e FROM Exercice e"),
+	@NamedQuery(name = Exercice.FIND_BY_CATEGORY, query = "Select distinct e FROM Exercice e join e.categories c where c.id in :" + Exercice.FIND_BY_CATEGORY_PARAM)})
+
 @Table(name = "exercice.exercice")
 public class Exercice implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
-
+	
+	public static final String FIND_ALL = "Exercice.FIND_ALL";
+	public static final String FIND_BY_CATEGORY = "Exercice.FINB_BY_CATEGORY";
+	public static final String FIND_BY_CATEGORY_PARAM = "catIds";
+	
 	@Id
 	@SequenceGenerator(name = "exercice_exer_id", sequenceName = "exercice.exercice_exer_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exercice_exer_id")

@@ -1,8 +1,11 @@
 package educatus.server.persist.dao;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -16,12 +19,36 @@ import educatus.server.persist.dao.internationalization.TextContentEntry;
 import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Difficulty;
+import educatus.server.persist.dao.seminary.Seminary;
 
 @Singleton
 public class ExerciceDao {
 
 	@Inject
 	private EntityManager entityManager;
+	
+	@Inject 
+	private SeminaryDao seminaryDao;
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Exercice> findAllExercice() throws Exception {
+		Query query = entityManager.createNamedQuery(Exercice.FIND_ALL);
+		query.setHint("javax.persistence.cache.retrieveMode", "REFRESH");
+		List<?> resultList = query.getResultList();
+		return (List<Exercice>) resultList;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Exercice> findExercicesByCategory(int parentId) throws Exception {
+		List<Integer> categoryTreeIds = seminaryDao.findAllChildrenCategories(parentId);
+		List<Exercice> exercices = new ArrayList<Exercice>();
+		
+		if(categoryTreeIds.isEmpty())
+			throw new Exception("Category id doesn't exist");
+		
+		return (List<Exercice>) entityManager.createNamedQuery(Exercice.FIND_BY_CATEGORY).setParameter(Exercice.FIND_BY_CATEGORY_PARAM, categoryTreeIds).getResultList();	
+	}
 	
 	public Exercice insertExercice(int titleTextContentEntryId, int descriptionTextContentEntryId, int authorId, int difficultyValue) throws Exception {
 
