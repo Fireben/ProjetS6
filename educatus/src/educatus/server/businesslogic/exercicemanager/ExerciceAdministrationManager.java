@@ -58,14 +58,14 @@ public class ExerciceAdministrationManager {
 		User user = securityDao.findUserByCip("beam1711");
 		Difficulty difficulty = seminaryDao.findDifficultyByLevel(1);
 
-		TextContentTranslationEntry exerciceTitle = internationalizationDao.insertTextContentTranslationEntry(
+		TextContentTranslationEntry exerciceTitleTcte = internationalizationDao.insertTextContentTranslationEntry(
 				EN_LANG, CA_CULT, exerciceContent.getCoreContent().getTitle());
-		TextContentTranslationEntry exerciceDesc = internationalizationDao.insertTextContentTranslationEntry(
+		TextContentTranslationEntry exerciceDescriptionTcte = internationalizationDao.insertTextContentTranslationEntry(
 				EN_LANG, CA_CULT, exerciceContent.getCoreContent().getDescription());
 
 		Exercice exercice = exerciceDao.insertExercice(
-				exerciceTitle.getTextcontententry().getId(),
-				exerciceDesc.getTextcontententry().getId(),
+				exerciceTitleTcte.getTextcontententry().getId(),
+				exerciceDescriptionTcte.getTextcontententry().getId(),
 				user.getId(),
 				difficulty.getDifficultyValue()
 				);

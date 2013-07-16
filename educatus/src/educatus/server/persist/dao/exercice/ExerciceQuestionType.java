@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
 
 @Entity
-@Table(name = "exercicequestiontype")
+@Table(name = "exercice.exercicequestiontype")
 public class ExerciceQuestionType implements Serializable {
 	private static final long serialVersionUID = 1L;
 

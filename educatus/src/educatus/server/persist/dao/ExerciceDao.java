@@ -86,6 +86,7 @@ public class ExerciceDao {
 		anwserText.setExerciceQuestionType(questionType);
 		anwserText.setId(exerciceQuestion.getId());
 		anwserText.setValue(responseValueTextContentEntry);
+		anwserText.setExerciceQuestion(exerciceQuestion);
 		exerciceQuestion.setAnswer(anwserText);
 		entityManager.persist(anwserText);
 	}
