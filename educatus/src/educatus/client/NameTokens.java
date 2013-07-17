@@ -42,6 +42,7 @@ public class NameTokens {
 	public static final String categoryAdministration = "!categoryAdministration";
 	public static final String exercice = "!exercice";
 	public static final String exerciceEdit = "!exerciceEdit";
+	public static final String community = "!community";
 
 	public static String getHomePage() {
 		return homePage;
@@ -73,5 +74,9 @@ public class NameTokens {
 	
 	public static String getExerciceEdit() {
 		return exerciceEdit;
+	}
+	
+	public static String getCommunity() {
+		return community;
 	}
 }

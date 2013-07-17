@@ -23,6 +23,7 @@ import educatus.client.EducatusPlaceManager;
 import educatus.client.NameTokens;
 import educatus.client.presenter.CategoryAdministrationPresenter;
 import educatus.client.presenter.CategoryPresenter;
+import educatus.client.presenter.CommunityPresenter;
 import educatus.client.presenter.EditButtonPanelPresenter;
 import educatus.client.presenter.ExerciceEditPresenter;
 import educatus.client.presenter.ExercicePresenter;
@@ -35,6 +36,7 @@ import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
 import educatus.client.view.CategoryAdministrationView;
 import educatus.client.view.CategoryView;
+import educatus.client.view.CommunityView;
 import educatus.client.view.EditButtonPanelView;
 import educatus.client.view.ExerciceEditView;
 import educatus.client.view.ExerciceView;
@@ -104,5 +106,8 @@ public class ClientModule extends AbstractPresenterModule {
 				ExerciceEditPresenter.MyView.class,
 				ExerciceEditView.class,
 				ExerciceEditPresenter.MyProxy.class);
+		
+		bindPresenter(CommunityPresenter.class, CommunityPresenter.MyView.class,
+				    CommunityView.class, CommunityPresenter.MyProxy.class);
 	}
 }

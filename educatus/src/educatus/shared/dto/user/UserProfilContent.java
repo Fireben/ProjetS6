@@ -12,7 +12,8 @@ public class UserProfilContent implements Serializable {
 	
 	private UserCoreContent userCoreContent;
 	private List<SeminaryCoreContent> completedSeminaryList = new ArrayList<SeminaryCoreContent>();
-	
+	private List<UserCoreContent> completedUserList = new ArrayList<UserCoreContent>();
+
 	private String profilImageUrl;
 
 	//TODO Ajouter les listes d'achievements, certificats, etc
@@ -43,4 +44,13 @@ public class UserProfilContent implements Serializable {
 	public void setCompletedSeminaryList(List<SeminaryCoreContent> completedSeminaryList) {
 		this.completedSeminaryList = completedSeminaryList;
 	}	
+	
+	
+	public List<UserCoreContent> getCompletedUserList() {
+		return completedUserList;
+	}
+
+	public void setCompletedUserList(List<UserCoreContent> completedUserList) {
+		this.completedUserList = completedUserList;
+	}
 }
