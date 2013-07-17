@@ -6,8 +6,6 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -21,13 +19,10 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
-import educatus.client.ui.PdfViewer;
 import educatus.client.ui.widget.DescriptionEntry;
+import educatus.client.ui.widget.DynamicSection;
 import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
-import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
-import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
-import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.services.RequestService;
@@ -42,15 +37,13 @@ public class SeminaryViewPresenter extends
 
 	public interface MyView extends View {
 		public FlowPanel getDescriptionContainer();
-		public FlowPanel getDynamicSectionContainer();
+		public DynamicSection getDynamicSection();
 		public FlowPanel getContentContainer();
-		public FlowPanel getPdfSectionContainer();
 		public Label getTitleLabel();
 	}
 
 	@Inject
-	private EducatusLocale locale;
-	
+	private EducatusLocale locale;	
 	String id;
 
 	// Create a remote service proxy to talk to the server-side service.
@@ -88,16 +81,13 @@ public class SeminaryViewPresenter extends
 	protected void onReveal() {
 		super.onReveal();
 		//Clear the content to prevent having the data of a previous seminary
-		getView().getDynamicSectionContainer().clear();
-		getView().getDynamicSectionContainer().setVisible(true);
-		
-		getView().getPdfSectionContainer().clear();
+		getView().getDynamicSection().clear();
+		getView().getDynamicSection().setVisible(true);
 		
 		getView().getDescriptionContainer().clear();
 		getView().getDescriptionContainer().setVisible(false);
 		
-		getView().getContentContainer().setVisible(false);
-		getView().getContentContainer().setWidth("700px");			
+		getView().getContentContainer().setVisible(false);		
 		
 		SeminaryContentRequest request = new SeminaryContentRequest();
 		request.setCulture(locale.getCulture());
@@ -122,8 +112,7 @@ public class SeminaryViewPresenter extends
 	}
 
 
-	private void populateSeminaryView(SeminaryContent seminaryContent) {
-		
+	private void populateSeminaryView(SeminaryContent seminaryContent) {		
 		FlowPanel descriptionContainer = getView().getDescriptionContainer();
 		SeminaryCoreContent coreContent = seminaryContent.getCoreContent();
 
@@ -134,61 +123,13 @@ public class SeminaryViewPresenter extends
 		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
 		descriptionContainer.add(new DescriptionEntry("Created Date", coreContent.getCreatedDate()));
 
-		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
+		DynamicSection dynamicSection = getView().getDynamicSection();
 		List<AbstractDynamicSection> dynamicSectionList = seminaryContent.getDynamicSectionList();
-
-		for (AbstractDynamicSection abstractDynamicSection : dynamicSectionList) {
-			switch (abstractDynamicSection.getSectionType()) {
-			case FORMULA_SECTION:
-				break;
-			case IMAGE_SECTION:
-				DynamicSectionImageContent imageContent = (DynamicSectionImageContent) abstractDynamicSection;
-				addImageSection(imageContent.getImageUrl());
-				break;
-			case TEXT_SECTION:
-				DynamicSectionTextContent textContent = (DynamicSectionTextContent) abstractDynamicSection;
-				addTextSection(textContent.getTitle(), textContent.getText());
-				break;
-			case VIDEO_SECTION:
-				/*
-				 * String src =
-				 * "http://www.youtube.com/embed/Gm-RO-cmsEQ?list=PL29DDDC847F63AF82";
-				 * HTML videoHtml = new HTML("<iframe width=\"560\" height=\"315\" src="
-				 * + src + " frameborder=\"0\" allowfullscreen></iframe>");
-				 */
-				break;
-			case PDF_SECTION:
-				DynamicSectionPDFContent pdfContent = (DynamicSectionPDFContent) abstractDynamicSection;
-				addPDFSection(pdfContent.getPDFUrl());
-				break;
-			}
-			dynamicSectionContainer.add(new HTML("<br/>"));
-		}
+		dynamicSection.setList(dynamicSectionList, getView().getContentContainer());
+		getView().getContentContainer().add(dynamicSection);
 
 		getView().getContentContainer().setVisible(true);
 		descriptionContainer.setVisible(true);
-	}
-
-	private void addImageSection(String imageUrl) {
-		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
-		dynamicSectionContainer.add(new Image(imageUrl));
-	}
-
-	private void addTextSection(String title, String text) {
-		FlowPanel dynamicSectionContainer = getView().getDynamicSectionContainer();
-		Label titleLabel = new Label(title);
-		titleLabel.setStyleName("title");
-		dynamicSectionContainer.add(titleLabel);
-		dynamicSectionContainer.add(new HTML(text));		
-	}
-	
-	private void addPDFSection(String pdfUrl) {
-		getView().getContentContainer().setWidth("900px");
-		getView().getDynamicSectionContainer().setVisible(false);
-		
-		PdfViewer pdfViewer = new PdfViewer();
-		pdfViewer.setPdfSrc(pdfUrl);
-		getView().getPdfSectionContainer().add(pdfViewer);
 	}
 
 	@Override

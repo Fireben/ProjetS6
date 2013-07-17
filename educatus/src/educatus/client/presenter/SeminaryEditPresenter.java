@@ -108,6 +108,7 @@ public class SeminaryEditPresenter extends
 		public void onClick(ClickEvent event) {
 			TextEdit textEdit = new TextEdit();
 			textEdit.getCloseButton().addClickHandler(closeTextHandler);
+			addSectionTitle("Text");
 			getView().getContentPanel().add(textEdit);
 		}
 	};
@@ -117,6 +118,7 @@ public class SeminaryEditPresenter extends
 		public void onClick(ClickEvent event) {
 			ImageEdit imageEdit = new ImageEdit();
 			imageEdit.getCloseButton().addClickHandler(closePdfHandler);
+			addSectionTitle("Image");
 			getView().getContentPanel().add(imageEdit);
 		}
 	};
@@ -126,6 +128,7 @@ public class SeminaryEditPresenter extends
 		public void onClick(ClickEvent event) {
 			PdfEdit pdfEdit = new PdfEdit();
 			pdfEdit.getCloseButton().addClickHandler(closeImageHandler);
+			addSectionTitle("Pdf");
 			getView().getContentPanel().add(pdfEdit);
 		}
 	};
@@ -322,5 +325,11 @@ public class SeminaryEditPresenter extends
 		pageContentRequest.setLanguage(locale.getLanguage());
 		pageContentRequest.setSessionID(Cookies.getCookie("SessionID"));
   		requestService.sendRequest(pageContentRequest, responseHandler);
+	}
+	
+	private void addSectionTitle(String title) {
+		Label titleLabel = new Label(title);
+		titleLabel.setStyleName("editSectionTitle");
+		getView().getContentPanel().add(titleLabel);
 	}
 }

@@ -14,6 +14,7 @@ import educatus.server.businesslogic.PermissionManager;
 import educatus.server.businesslogic.SessionManager;
 import educatus.server.businesslogic.exercicemanager.ExerciceAdministrationManager;
 import educatus.server.businesslogic.exercicemanager.ExerciceContentBuilder;
+import educatus.server.businesslogic.exercicemanager.ExerciceHomeListingBuilder;
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
@@ -25,6 +26,7 @@ import educatus.server.businesslogic.uibuilder.SeminaryEditorContentBuilder;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
 import educatus.shared.dto.exercice.ExerciceContent;
+import educatus.shared.dto.pagecontent.ExerciceHomePageListingContent;
 import educatus.shared.dto.pagecontent.HomePageContent;
 import educatus.shared.dto.pagecontent.MainPageContent;
 import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
@@ -42,6 +44,7 @@ import educatus.shared.services.requestservice.RequestTypeEnum;
 import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest;
 import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest.ExerciceAdministractionAction;
 import educatus.shared.services.requestservice.request.ExerciceContentRequest;
+import educatus.shared.services.requestservice.request.ExerciceHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.ExerciceQuestionValidationRequest;
 import educatus.shared.services.requestservice.request.HomePageContentRequest;
 import educatus.shared.services.requestservice.request.LoginRequest;
@@ -60,6 +63,7 @@ import educatus.shared.services.requestservice.response.ExerciceQuestionValidati
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.LoginResponse;
 import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
+import educatus.shared.services.requestservice.response.ExerciceHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
@@ -80,6 +84,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private HomePageContentBuilder homePageContentBuilder;
 	private SeminaryHomeCategoryBuilder seminaryHomeCategoryBuilder;
 	private SeminaryHomeListingBuilder seminaryHomeListingBuilder;
+	private ExerciceHomeListingBuilder exerciceHomeListingBuilder;
 	private SeminaryEditorContentBuilder seminaryEditorContentBuilder;
 	private SeminaryContentBuilder seminaryContentBuilder;
 	private UserProfilBuilder userProfilBuilder;
@@ -111,6 +116,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		permissionManager = dbInjector.getInstance(PermissionManager.class);
 		exerciceContentBuilder = dbInjector.getInstance(ExerciceContentBuilder.class);
 		exerciceAdministrationManager = dbInjector.getInstance(ExerciceAdministrationManager.class);
+		exerciceHomeListingBuilder = dbInjector.getInstance(ExerciceHomeListingBuilder.class);
 	}
 
 	@Override
@@ -138,6 +144,9 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 					break;
 				case SEMINARY_HOME_PAGE_LISTING_CONTENT_REQUEST:
 					response = ProcessSeminaryHomePageListingContentRequest((SeminaryHomePageListingContentRequest) request);
+					break;
+				case EXERCICE_HOME_PAGE_LISTING_CONTENT_REQUEST:
+					response = ProcessExerciceHomePageListingContentRequest((ExerciceHomePageListingContentRequest) request);
 					break;
 				case USER_CONTENT_REQUEST:
 					response = ProcessUserContentRequest((UserContentRequest) request);
@@ -169,6 +178,21 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		return response;
+	}
+
+	private ExerciceHomePageListingContentResponse ProcessExerciceHomePageListingContentRequest(ExerciceHomePageListingContentRequest request) {
+		
+		ExerciceHomePageListingContent content = new ExerciceHomePageListingContent();
+		
+		if(request.getSelectedCategory() == null)
+			content = exerciceHomeListingBuilder.buildExerciceHomePageListingContent(request.getCulture(), request.getLanguage());
+		else
+			content = exerciceHomeListingBuilder.buildExerciceHomePageListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
+			
+		ExerciceHomePageListingContentResponse response = new ExerciceHomePageListingContentResponse();
+		response.setContent(content);
 
 		return response;
 	}

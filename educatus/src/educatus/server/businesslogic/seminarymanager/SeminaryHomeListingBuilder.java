@@ -66,4 +66,6 @@ public class SeminaryHomeListingBuilder {
 
 		return pageContent;
 	}
+	
+	
 }

@@ -12,6 +12,7 @@ import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
@@ -36,6 +37,8 @@ SeminaryListPresenter.MyView {
 	Button backButton;	
 	@UiField(provided=true) 
 	SimplePager pager;
+	@UiField
+	Label listTitle;
 	
 	public interface Binder extends UiBinder<Widget, SeminaryListView> {
 	}
@@ -49,6 +52,7 @@ SeminaryListPresenter.MyView {
 		initializePager();
 		widget = binder.createAndBindUi(this);	
 		backButton.setStyleName("backButton");
+		listTitle.setStyleName("listTitle");
 	}
 	
 	public Widget asWidget() {
@@ -129,4 +133,8 @@ SeminaryListPresenter.MyView {
 	public SimplePager getPager() {
 		return pager;
 	}	
+	
+	public Label getTitle() {
+		return listTitle;
+	}
 }

@@ -22,7 +22,6 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -148,7 +147,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   		createAndSendCategoryRequest(parentCategory);
 	}
 	
-	private void setSeminaryList(List<SeminaryCoreContent> seminaryCoreContentList) {	
+	private void setSeminaryList(List<SeminaryCoreContent> seminaryCoreContentList, String title) {	
 
 		List<Seminary> seminaries = new ArrayList<Seminary>();
 		
@@ -163,6 +162,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 			);
 			seminaries.add(seminary);
 		}
+		seminaryListPresenter.setTitle(title);
 		seminaryListPresenter.setData(seminaries);
 		seminaryListPresenter.setBackButtonHandler(backClickHandler);
 	}
@@ -195,7 +195,8 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 				setInSlot(SLOT_content, seminaryListPresenter);	
 				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
 				List<SeminaryCoreContent> seminaryCoreContentList = response.getContent().getSeminariesChildren();
-				setSeminaryList(seminaryCoreContentList);
+				String name = response.getContent().getCommonParent() != null ? response.getContent().getCommonParent().getName() : "Seminaries";
+				setSeminaryList(seminaryCoreContentList, name);
 			} 
 			
 			else {

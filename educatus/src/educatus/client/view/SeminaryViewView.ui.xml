@@ -6,10 +6,7 @@
 	    <g:HorizontalPanel ui:field="horizontalPanel" width = "100%">
 	        <g:FlowPanel ui:field="leftSpacer"/>
 		    <g:FlowPanel ui:field="contentContainer">
-		    	<g:Label ui:field="titleLabel">
-		    	</g:Label>
-		    	<g:FlowPanel ui:field="dynamicSectionContainer"/>
-		    	<g:FlowPanel ui:field="pdfSectionContainer"/>
+		    	<g:Label ui:field="titleLabel"/>
 	    	</g:FlowPanel>
 	    	<g:FlowPanel ui:field="rightSpacer"/>	
 			<g:FlowPanel ui:field="descriptionContainer"/>	
