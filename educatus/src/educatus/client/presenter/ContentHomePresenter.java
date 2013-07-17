@@ -29,6 +29,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
@@ -36,7 +37,8 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
-import educatus.client.ui.dataGrids.Seminary;
+import educatus.client.ui.dataGrids.ListContent;
+import educatus.shared.dto.exercice.ExerciceCoreContent;
 import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
@@ -44,26 +46,32 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
+import educatus.shared.services.requestservice.request.ExerciceHomePageListingContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
+import educatus.shared.services.requestservice.response.ExerciceHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
 
 /**
  * @author Nicolas Michaud
  */
-public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView, SeminarHomePresenter.MyProxy> {
+public class ContentHomePresenter extends Presenter<ContentHomePresenter.MyView, ContentHomePresenter.MyProxy> {
     /**
-     * {@link SeminarHomePresenter}'s proxy.
+     * {@link ContentHomePresenter}'s proxy.
      */
 	
     @ProxyCodeSplit
-    @NameToken(NameTokens.seminarHomePage)
-    public interface MyProxy extends ProxyPlace<SeminarHomePresenter> {
+    @NameToken(NameTokens.contentHomePage)
+    public interface MyProxy extends ProxyPlace<ContentHomePresenter> {
     }
     
 	@Inject
 	private EducatusLocale locale;
+	
+	private String id;
+	private final String SEMINARY_ID = "0";
+	private final String EXERCICE_ID = "1";
     
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
@@ -78,16 +86,16 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	CategoryPresenter seminarCategoryPresenter;
 	
 	@Inject
-	SeminaryListPresenter seminaryListPresenter;
+	ContentListPresenter seminaryListPresenter;
 
     /**
-     * {@link SeminarHomePresenter}'s view.
+     * {@link ContentHomePresenter}'s view.
      */
     public interface MyView extends View {	  
     }
 
     @Inject
-    public SeminarHomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
+    public ContentHomePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
       super(eventBus, view, proxy);
     }
 
@@ -147,26 +155,6 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   		createAndSendCategoryRequest(parentCategory);
 	}
 	
-	private void setSeminaryList(List<SeminaryCoreContent> seminaryCoreContentList, String title) {	
-
-		List<Seminary> seminaries = new ArrayList<Seminary>();
-		
-		for (SeminaryCoreContent seminaryCoreContent : seminaryCoreContentList) {
-			Seminary seminary = new Seminary(
-					seminaryCoreContent.getId(), 
-					seminaryCoreContent.getTitle(), 
-					seminaryCoreContent.getDescription(), 
-					seminaryCoreContent.getAuthor().getFirstName() + " " + seminaryCoreContent.getAuthor().getLastName(), 
-					seminaryCoreContent.getCreatedDate(), 
-					2
-			);
-			seminaries.add(seminary);
-		}
-		seminaryListPresenter.setTitle(title);
-		seminaryListPresenter.setData(seminaries);
-		seminaryListPresenter.setBackButtonHandler(backClickHandler);
-	}
-	
 	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
 		
 		@Override
@@ -191,13 +179,21 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 				}				
 			} 
 			
-			else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE){
+			else if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE) {
 				setInSlot(SLOT_content, seminaryListPresenter);	
 				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
 				List<SeminaryCoreContent> seminaryCoreContentList = response.getContent().getSeminariesChildren();
 				String name = response.getContent().getCommonParent() != null ? response.getContent().getCommonParent().getName() : "Seminaries";
 				setSeminaryList(seminaryCoreContentList, name);
 			} 
+			
+			else if (result.GetResponseType() == ResponseTypeEnum.EXERCICE_HOME_PAGE_LISTING_CONTENT_RESPONSE) {
+				setInSlot(SLOT_content, seminaryListPresenter);
+				ExerciceHomePageListingContentResponse response = (ExerciceHomePageListingContentResponse) result;
+				List<ExerciceCoreContent> exerciceCoreContentList = response.getContent().getExercicesChildren();
+				String name = response.getContent().getCommonParent() != null ? response.getContent().getCommonParent().getName() : "Exercices";
+				setExerciceList(exerciceCoreContentList, name);
+			}
 			
 			else {
 				// ERROR, not the response type we expected
@@ -217,11 +213,64 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   		requestService.sendRequest(request, responseHandler);	
 	}
 	
+	public void setExerciceList(List<ExerciceCoreContent> exerciceCoreContentList, String title) {
+		List<ListContent> list = new ArrayList<ListContent>();
+		
+		for (ExerciceCoreContent exerciceCoreContent : exerciceCoreContentList) {
+			ListContent listContent = new ListContent(
+					exerciceCoreContent.getId(), 
+					exerciceCoreContent.getTitle(), 
+					exerciceCoreContent.getDescription(), 
+					exerciceCoreContent.getAuthor().getFirstName() + " " + exerciceCoreContent.getAuthor().getLastName(), 
+					exerciceCoreContent.getCreatedDate(), 
+					2
+			);
+			list.add(listContent);
+		}
+		seminaryListPresenter.setTitle(title);
+		seminaryListPresenter.setData(list);
+		seminaryListPresenter.setBackButtonHandler(backClickHandler);		
+	}
+	
+	private void setSeminaryList(List<SeminaryCoreContent> seminaryCoreContentList, String title) {	
+		List<ListContent> list = new ArrayList<ListContent>();
+		
+		for (SeminaryCoreContent seminaryCoreContent : seminaryCoreContentList) {
+			ListContent seminary = new ListContent(
+					seminaryCoreContent.getId(), 
+					seminaryCoreContent.getTitle(), 
+					seminaryCoreContent.getDescription(), 
+					seminaryCoreContent.getAuthor().getFirstName() + " " + seminaryCoreContent.getAuthor().getLastName(), 
+					seminaryCoreContent.getCreatedDate(), 
+					2
+			);
+			list.add(seminary);
+		}
+		seminaryListPresenter.setTitle(title);
+		seminaryListPresenter.setData(list);
+		seminaryListPresenter.setBackButtonHandler(backClickHandler);
+	}
+
 	public void createAndSendListingRequest(CategoryCoreContent parentCategory) {
-  		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
-  		request.setSelectedCategory(parentCategory);
-  		request.setCulture(locale.getCulture());
-  		request.setLanguage(locale.getLanguage());
-  		requestService.sendRequest(request, responseHandler);
+		if(id.equals(EXERCICE_ID)) {
+	  		ExerciceHomePageListingContentRequest request = new ExerciceHomePageListingContentRequest();
+	  		request.setSelectedCategory(parentCategory);
+	  		request.setCulture(locale.getCulture());
+	  		request.setLanguage(locale.getLanguage());
+	  		requestService.sendRequest(request, responseHandler);
+		}
+		else if (id.equals(SEMINARY_ID)) {
+	  		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
+	  		request.setSelectedCategory(parentCategory);
+	  		request.setCulture(locale.getCulture());
+	  		request.setLanguage(locale.getLanguage());
+	  		requestService.sendRequest(request, responseHandler);
+		}  		
+	}
+	
+	@Override
+	public void prepareFromRequest(PlaceRequest placeRequest) {
+		super.prepareFromRequest(placeRequest);
+		id = placeRequest.getParameter("id", "0");
 	}
 }

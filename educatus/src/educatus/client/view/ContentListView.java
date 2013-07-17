@@ -18,21 +18,21 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import educatus.client.NameTokens;
-import educatus.client.presenter.SeminaryListPresenter;
+import educatus.client.presenter.ContentListPresenter;
 import educatus.client.ui.dataGrids.HyperLinkCell;
 import educatus.client.ui.dataGrids.ImageCell;
-import educatus.client.ui.dataGrids.Seminary;
+import educatus.client.ui.dataGrids.ListContent;
 import educatus.client.ui.widget.Pager;
 import educatus.resources.SeminaryDataGridCssRessource;
 import educatus.resources.SimplePagerRessources;
 
-public class SeminaryListView extends ViewImpl implements
-SeminaryListPresenter.MyView {
+public class ContentListView extends ViewImpl implements
+ContentListPresenter.MyView {
 
 	public final Widget widget;
 	
 	@UiField(provided=true) 
-	CellTable<Seminary> dataGrid;	
+	CellTable<ListContent> dataGrid;	
 	@UiField
 	Button backButton;	
 	@UiField(provided=true) 
@@ -40,13 +40,13 @@ SeminaryListPresenter.MyView {
 	@UiField
 	Label listTitle;
 	
-	public interface Binder extends UiBinder<Widget, SeminaryListView> {
+	public interface Binder extends UiBinder<Widget, ContentListView> {
 	}
 
 	@Inject
-	public SeminaryListView(final Binder binder) {
+	public ContentListView(final Binder binder) {
 		CellTable.Resources SeminaryDataGridRessources = GWT.create(SeminaryDataGridCssRessource.class);
-		dataGrid = new CellTable<Seminary>(12, SeminaryDataGridRessources);
+		dataGrid = new CellTable<ListContent>(12, SeminaryDataGridRessources);
 		dataGrid.addStyleName("dataGridContainer");
 		initializeColumns();
 		initializePager();
@@ -59,15 +59,15 @@ SeminaryListPresenter.MyView {
 		return widget;
 	}
 
-	public CellTable<Seminary> getDataGrid() {
+	public CellTable<ListContent> getDataGrid() {
 		return dataGrid;
 	}	
 	
 	public void initializeColumns() {		
-		Column<Seminary, Hyperlink> IdColumn = 
-			    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
+		Column<ListContent, Hyperlink> IdColumn = 
+			    new Column<ListContent, Hyperlink>(new HyperLinkCell()) { 
 			        @Override 
-			        public Hyperlink getValue(Seminary seminary) {			    	  
+			        public Hyperlink getValue(ListContent seminary) {			    	  
 			        	Hyperlink link = new Hyperlink(String.valueOf(seminary.getId()), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
 			            link.setStyleName("cellTableHyperlink");
 			            return link; 
@@ -76,38 +76,38 @@ SeminaryListPresenter.MyView {
 		dataGrid.addColumn(IdColumn, "Id", "");
 		dataGrid.setColumnWidth(IdColumn, 100, Unit.PX);
 		
-		TextColumn<Seminary> NameColumn = new TextColumn<Seminary>() {
+		TextColumn<ListContent> NameColumn = new TextColumn<ListContent>() {
 		    @Override
-		    public String getValue(Seminary seminary) {
+		    public String getValue(ListContent seminary) {
 		      return seminary.getName();
 		    }
 		  };
 		dataGrid.addColumn(NameColumn, "Name", "");
 		dataGrid.setColumnWidth(NameColumn, 200, Unit.PX);
 		
-		TextColumn<Seminary> AuthorColumn = new TextColumn<Seminary>() {
+		TextColumn<ListContent> AuthorColumn = new TextColumn<ListContent>() {
 		    @Override
-		    public String getValue(Seminary seminary) {
+		    public String getValue(ListContent seminary) {
 		      return seminary.getAuthor();
 		    }
 		  };
 		dataGrid.addColumn(AuthorColumn, "Author", "");
 		dataGrid.setColumnWidth(AuthorColumn, 200, Unit.PX);
 		
-		Column<Seminary, Integer> DifficultyColumn = 
-			    new Column<Seminary, Integer>(new ImageCell()) { 
+		Column<ListContent, Integer> DifficultyColumn = 
+			    new Column<ListContent, Integer>(new ImageCell()) { 
 			        @Override 
-			        public Integer getValue(Seminary seminary) { 
+			        public Integer getValue(ListContent seminary) { 
 			        	return seminary.getDifficulty();
 			        }
 				};
 		dataGrid.addColumn(DifficultyColumn, "Difficulty", "");
 		dataGrid.setColumnWidth(DifficultyColumn, 120, Unit.PX);
 		
-		Column<Seminary, Hyperlink> DescriptionColumn = 
-		    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
+		Column<ListContent, Hyperlink> DescriptionColumn = 
+		    new Column<ListContent, Hyperlink>(new HyperLinkCell()) { 
 		        @Override 
-		        public Hyperlink getValue(Seminary seminary) {			    	  
+		        public Hyperlink getValue(ListContent seminary) {			    	  
 		        	Hyperlink link = new Hyperlink(seminary.getDescription(), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
 		            link.setStyleName("cellTableHyperlink");
 		            return link; 

@@ -13,20 +13,20 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-import educatus.client.ui.dataGrids.Seminary;
+import educatus.client.ui.dataGrids.ListContent;
 
-public class SeminaryListPresenter extends
-		PresenterWidget<SeminaryListPresenter.MyView>
+public class ContentListPresenter extends
+		PresenterWidget<ContentListPresenter.MyView>
 {
 	public interface MyView extends View {
-		CellTable<Seminary> getDataGrid();
+		CellTable<ListContent> getDataGrid();
 		Button getBackButton();
 		SimplePager getPager();
 		Label getTitle();
 	}
 
 	@Inject
-	public SeminaryListPresenter(final EventBus eventBus, final MyView view) {
+	public ContentListPresenter(final EventBus eventBus, final MyView view) {
 		super(eventBus, view);		
 	}
 
@@ -54,10 +54,10 @@ public class SeminaryListPresenter extends
 		getView().getTitle().setText(title);
 	}
 	
-	public void setData(List<Seminary> seminaries) {		
-		CellTable<Seminary> dataGrid = getView().getDataGrid();	
-		ListDataProvider<Seminary> dataProvider = new ListDataProvider<Seminary>();
+	public void setData(List<ListContent> listContents) {		
+		CellTable<ListContent> dataGrid = getView().getDataGrid();	
+		ListDataProvider<ListContent> dataProvider = new ListDataProvider<ListContent>();
 		dataProvider.addDataDisplay(dataGrid);
-		dataProvider.setList(seminaries);	
+		dataProvider.setList(listContents);	
 	}
 }

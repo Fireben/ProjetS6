@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 import educatus.client.NameTokens;
 import educatus.client.ui.dataGrids.HyperLinkCell;
 import educatus.client.ui.dataGrids.ImageCell;
-import educatus.client.ui.dataGrids.Seminary;
+import educatus.client.ui.dataGrids.ListContent;
 import educatus.resources.SeminaryDataGridCssRessource;
 
 public class ProfilNewsfeed extends Composite {
@@ -28,29 +28,29 @@ public class ProfilNewsfeed extends Composite {
 	@UiField
 	Label newsfeedTitleLabel;
 	@UiField(provided=true) 
-	CellTable<Seminary> newsfeedTable;
+	CellTable<ListContent> newsfeedTable;
 	
 	interface ProfilNewsfeedUiBinder extends UiBinder<Widget, ProfilNewsfeed> {
 	}
 
 	public ProfilNewsfeed() {
 		CellTable.Resources SeminaryDataGridRessources = GWT.create(SeminaryDataGridCssRessource.class);
-		newsfeedTable = new CellTable<Seminary>(12, SeminaryDataGridRessources);
+		newsfeedTable = new CellTable<ListContent>(12, SeminaryDataGridRessources);
 		newsfeedTable.addStyleName("newsfeedTable");
 		initializeColumns();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
 
-	public CellTable<Seminary> getDataGrid() {
+	public CellTable<ListContent> getDataGrid() {
 		return newsfeedTable;
 	}	
 	
 	private void initializeColumns() {		
-		Column<Seminary, Hyperlink> IdColumn = 
-			    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
+		Column<ListContent, Hyperlink> IdColumn = 
+			    new Column<ListContent, Hyperlink>(new HyperLinkCell()) { 
 			        @Override 
-			        public Hyperlink getValue(Seminary seminary) {			    	  
+			        public Hyperlink getValue(ListContent seminary) {			    	  
 			        	Hyperlink link = new Hyperlink(String.valueOf(seminary.getId()), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
 			            link.setStyleName("cellTableHyperlink");
 			            return link; 
@@ -59,38 +59,38 @@ public class ProfilNewsfeed extends Composite {
 		newsfeedTable.addColumn(IdColumn, "Id", "");
 		newsfeedTable.setColumnWidth(IdColumn, 100, Unit.PX);
 		
-		TextColumn<Seminary> NameColumn = new TextColumn<Seminary>() {
+		TextColumn<ListContent> NameColumn = new TextColumn<ListContent>() {
 		    @Override
-		    public String getValue(Seminary seminary) {
+		    public String getValue(ListContent seminary) {
 		      return seminary.getName();
 		    }
 		  };
 		newsfeedTable.addColumn(NameColumn, "Name", "");
 		newsfeedTable.setColumnWidth(NameColumn, 200, Unit.PX);
 		
-		TextColumn<Seminary> AuthorColumn = new TextColumn<Seminary>() {
+		TextColumn<ListContent> AuthorColumn = new TextColumn<ListContent>() {
 		    @Override
-		    public String getValue(Seminary seminary) {
+		    public String getValue(ListContent seminary) {
 		      return seminary.getAuthor();
 		    }
 		  };
 		newsfeedTable.addColumn(AuthorColumn, "Author", "");
 		newsfeedTable.setColumnWidth(AuthorColumn, 200, Unit.PX);
 		
-		Column<Seminary, Integer> DifficultyColumn = 
-			    new Column<Seminary, Integer>(new ImageCell()) { 
+		Column<ListContent, Integer> DifficultyColumn = 
+			    new Column<ListContent, Integer>(new ImageCell()) { 
 			        @Override 
-			        public Integer getValue(Seminary seminary) { 
+			        public Integer getValue(ListContent seminary) { 
 			        	return seminary.getDifficulty();
 			        }
 				};
 		newsfeedTable.addColumn(DifficultyColumn, "Difficulty", "");
 		newsfeedTable.setColumnWidth(DifficultyColumn, 120, Unit.PX);
 		
-		Column<Seminary, Hyperlink> DescriptionColumn = 
-		    new Column<Seminary, Hyperlink>(new HyperLinkCell()) { 
+		Column<ListContent, Hyperlink> DescriptionColumn = 
+		    new Column<ListContent, Hyperlink>(new HyperLinkCell()) { 
 		        @Override 
-		        public Hyperlink getValue(Seminary seminary) {			    	  
+		        public Hyperlink getValue(ListContent seminary) {			    	  
 		        	Hyperlink link = new Hyperlink(seminary.getDescription(), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
 		            link.setStyleName("cellTableHyperlink");
 		            return link; 

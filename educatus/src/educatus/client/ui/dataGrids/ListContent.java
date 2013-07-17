@@ -1,6 +1,6 @@
 package educatus.client.ui.dataGrids;
 
-public class Seminary {
+public class ListContent {
 	private int id;
 	private String name;
 	private String description;	
@@ -8,7 +8,7 @@ public class Seminary {
 	private String date;
 	private int difficulty;
 	
-	public Seminary(int id, String name, String description, String author,
+	public ListContent(int id, String name, String description, String author,
 			String date, int difficulty) {
 		super();
 		this.id = id;

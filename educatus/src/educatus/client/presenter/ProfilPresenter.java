@@ -24,7 +24,7 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.ProfilNewsfeed;
 import educatus.client.ui.ProfilSummary;
-import educatus.client.ui.dataGrids.Seminary;
+import educatus.client.ui.dataGrids.ListContent;
 import educatus.client.ui.widget.DescriptionEntry;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.dto.user.UserCoreContent;
@@ -130,11 +130,11 @@ public class ProfilPresenter extends
 							coreContent.getLastConnexion())
 							);
 
-					List<Seminary> seminaries = new ArrayList<Seminary>();
+					List<ListContent> seminaries = new ArrayList<ListContent>();
 					List<SeminaryCoreContent> seminaryCoreContentList = content.getCompletedSeminaryList();
 
 					for (SeminaryCoreContent seminaryCoreContent : seminaryCoreContentList) {
-						Seminary seminary = new Seminary(
+						ListContent seminary = new ListContent(
 								seminaryCoreContent.getId(),
 								seminaryCoreContent.getTitle(),
 								seminaryCoreContent.getDescription(),
@@ -144,8 +144,8 @@ public class ProfilPresenter extends
 								);
 						seminaries.add(seminary);
 					}
-					CellTable<Seminary> dataGrid = getView().getProfilNewsfeed().getDataGrid();
-					ListDataProvider<Seminary> dataProvider = new ListDataProvider<Seminary>();
+					CellTable<ListContent> dataGrid = getView().getProfilNewsfeed().getDataGrid();
+					ListDataProvider<ListContent> dataProvider = new ListDataProvider<ListContent>();
 					dataProvider.addDataDisplay(dataGrid);
 					dataProvider.setList(seminaries);
 				}

@@ -1,7 +1,6 @@
 package educatus.shared.services.requestservice.response;
 
 import educatus.shared.dto.pagecontent.ExerciceHomePageListingContent;
-import educatus.shared.dto.pagecontent.SeminaryHomePageListingContent;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 
@@ -13,7 +12,7 @@ public class ExerciceHomePageListingContentResponse extends AbstractResponse {
 
 	@Override
 	public ResponseTypeEnum GetResponseType() {
-		return ResponseTypeEnum.SEMINARY_HOME_PAGE_LISTING_CONTENT_RESPONSE;
+		return ResponseTypeEnum.EXERCICE_HOME_PAGE_LISTING_CONTENT_RESPONSE;
 	}
 
 	public ExerciceHomePageListingContent getContent() {

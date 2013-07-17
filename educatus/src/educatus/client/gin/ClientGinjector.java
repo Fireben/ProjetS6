@@ -28,7 +28,7 @@ import educatus.client.presenter.ExercicePresenter;
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.presenter.ProfilPresenter;
-import educatus.client.presenter.SeminarHomePresenter;
+import educatus.client.presenter.ContentHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
 import educatus.client.presenter.CategoryAdministrationPresenter;
@@ -48,7 +48,7 @@ public interface ClientGinjector extends Ginjector {
 
 	AsyncProvider<ProfilPresenter> getProfilPresenter();
 
-	AsyncProvider<SeminarHomePresenter> getSeminarHomePresenter();
+	AsyncProvider<ContentHomePresenter> getSeminarHomePresenter();
 
 	AsyncProvider<SeminaryEditPresenter> getSeminaryEditPresenter();
 

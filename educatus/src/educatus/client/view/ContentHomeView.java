@@ -7,11 +7,11 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-import educatus.client.presenter.SeminarHomePresenter;
-import educatus.client.presenter.SeminarHomePresenter.MyView;
+import educatus.client.presenter.ContentHomePresenter;
+import educatus.client.presenter.ContentHomePresenter.MyView;
 
-public class SeminarHomeView extends ViewImpl implements MyView {
-		interface SeminarHomeUiBinder extends UiBinder<Widget, SeminarHomeView> {
+public class ContentHomeView extends ViewImpl implements MyView {
+		interface SeminarHomeUiBinder extends UiBinder<Widget, ContentHomeView> {
 	}
 
     private static SeminarHomeUiBinder uiBinder = GWT.create(SeminarHomeUiBinder.class);
@@ -19,7 +19,7 @@ public class SeminarHomeView extends ViewImpl implements MyView {
 	
 	@UiField HTMLPanel contentPanel;
 
-	public SeminarHomeView() {		
+	public ContentHomeView() {		
 	  widget = uiBinder.createAndBindUi(this);  
 	}
 	
@@ -29,7 +29,7 @@ public class SeminarHomeView extends ViewImpl implements MyView {
 	
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		if(slot == SeminarHomePresenter.SLOT_content) {
+		if(slot == ContentHomePresenter.SLOT_content) {
 			contentPanel.clear();
 			if(content != null)
 				contentPanel.add(content);

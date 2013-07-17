@@ -108,6 +108,8 @@ public class ExercicePresenter extends
 	private ClickHandler nextClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {	 
+			getView().getQuestionContainer().clear();					
+			getView().getDynamicSection().clear();	
 			if(responseFeedback != null) {
 				getView().getRootPanel().remove(responseFeedback);
 				responseFeedback = null;
@@ -167,10 +169,7 @@ public class ExercicePresenter extends
 		populateQuestion();
 	}
 
-	private void populateQuestion() {
-		getView().getQuestionContainer().clear();					
-		getView().getDynamicSection().clear();		
-		
+	private void populateQuestion() {		
 		getView().getTitleLabel().setText(questionCore.getTitle());
 		
 		ExerciceQuestionContent question = questionList.get(questionIndex);			
