@@ -23,27 +23,28 @@ import educatus.client.EducatusPlaceManager;
 import educatus.client.NameTokens;
 import educatus.client.presenter.CategoryAdministrationPresenter;
 import educatus.client.presenter.CategoryPresenter;
+import educatus.client.presenter.CommunityPresenter;
 import educatus.client.presenter.EditButtonPanelPresenter;
 import educatus.client.presenter.ExerciceEditPresenter;
 import educatus.client.presenter.ExercicePresenter;
 import educatus.client.presenter.HomePresenter;
 import educatus.client.presenter.MainPagePresenter;
 import educatus.client.presenter.ProfilPresenter;
-import educatus.client.presenter.ContentHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
-import educatus.client.presenter.ContentListPresenter;
+import educatus.client.presenter.SeminaryListPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
 import educatus.client.view.CategoryAdministrationView;
 import educatus.client.view.CategoryView;
+import educatus.client.view.CommunityView;
 import educatus.client.view.EditButtonPanelView;
 import educatus.client.view.ExerciceEditView;
 import educatus.client.view.ExerciceView;
 import educatus.client.view.HomeView;
 import educatus.client.view.MainPageView;
 import educatus.client.view.ProfilView;
-import educatus.client.view.ContentHomeView;
+import educatus.client.view.SeminarHomeView;
 import educatus.client.view.SeminaryEditView;
-import educatus.client.view.ContentListView;
+import educatus.client.view.SeminaryListView;
 import educatus.client.view.SeminaryViewView;
 
 /**
@@ -70,15 +71,15 @@ public class ClientModule extends AbstractPresenterModule {
 				SeminaryEditPresenter.MyView.class, SeminaryEditView.class,
 				SeminaryEditPresenter.MyProxy.class);
 
-		bindPresenter(ContentHomePresenter.class,
-				ContentHomePresenter.MyView.class, ContentHomeView.class,
-				ContentHomePresenter.MyProxy.class);
+		bindPresenter(SeminarHomePresenter.class,
+				SeminarHomePresenter.MyView.class, SeminarHomeView.class,
+				SeminarHomePresenter.MyProxy.class);
 
 		bindPresenterWidget(CategoryPresenter.class,
 				CategoryPresenter.MyView.class, CategoryView.class);
 
-		bindPresenterWidget(ContentListPresenter.class,
-				ContentListPresenter.MyView.class, ContentListView.class);
+		bindPresenterWidget(SeminaryListPresenter.class,
+				SeminaryListPresenter.MyView.class, SeminaryListView.class);
 
 		bindPresenter(ProfilPresenter.class, ProfilPresenter.MyView.class,
 				ProfilView.class, ProfilPresenter.MyProxy.class);
@@ -104,5 +105,8 @@ public class ClientModule extends AbstractPresenterModule {
 				ExerciceEditPresenter.MyView.class,
 				ExerciceEditView.class,
 				ExerciceEditPresenter.MyProxy.class);
+		
+		bindPresenter(CommunityPresenter.class, CommunityPresenter.MyView.class,
+				    CommunityView.class, CommunityPresenter.MyProxy.class);
 	}
 }

@@ -18,7 +18,9 @@ public class MainPageContent implements Serializable {
 
 		public static enum MainMenuItemEnum {
 			HOME_ITEM, 
-			SEMINARS_HOME_ITEM, 
+			SEMINARS_HOME_ITEM,
+			EXERCICE_HOME_ITEM,
+			COMMUNITY_ITEM,
 			PROFILE_ITEM,
 			EXCERCICE_ITEM, 
 			CREATE_SEMINAR_ITEM,

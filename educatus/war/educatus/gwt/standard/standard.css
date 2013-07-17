@@ -530,18 +530,17 @@ a, a:visited, a:hover {
   padding: 4px 4px 2px 6px;
 }
 .gwt-PushButton-down {
-  border: 1px inset #666;
+  border: none;
   cursor: pointer;
   cursor: hand;
 }
 .gwt-PushButton-down-hovering {
-  border: 1px inset;
-  border-color: #9cf #69e #69e #7af;
+  border: none;
   cursor: pointer;
   cursor: hand;
 }
 .gwt-PushButton-down-disabled {
-  border: 1px outset #ccc;
+  border: none;
   cursor: default;
   opacity: 0.5;
   filter: alpha(opacity=40);

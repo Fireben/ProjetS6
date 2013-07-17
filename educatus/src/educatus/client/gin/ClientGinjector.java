@@ -23,6 +23,8 @@ import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
+import educatus.client.presenter.CategoryAdministrationPresenter;
+import educatus.client.presenter.CommunityPresenter;
 import educatus.client.presenter.ExerciceEditPresenter;
 import educatus.client.presenter.ExercicePresenter;
 import educatus.client.presenter.HomePresenter;
@@ -31,7 +33,6 @@ import educatus.client.presenter.ProfilPresenter;
 import educatus.client.presenter.ContentHomePresenter;
 import educatus.client.presenter.SeminaryEditPresenter;
 import educatus.client.presenter.SeminaryViewPresenter;
-import educatus.client.presenter.CategoryAdministrationPresenter;
 
 /**
  * @author Christian Goudreau
@@ -59,4 +60,7 @@ public interface ClientGinjector extends Ginjector {
 	AsyncProvider<ExercicePresenter> getExercicePresenter();
 	
 	AsyncProvider<ExerciceEditPresenter> getExerciceEditPresenter();
+	
+	AsyncProvider<CommunityPresenter> getCommunityPresenter();
+
 }
