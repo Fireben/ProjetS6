@@ -344,6 +344,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 			case SEMINARS_HOME_ITEM:
 				nameToken = NameTokens.getSeminarHomePage();
 				break;
+			case COMMUNITY_ITEM:
+				nameToken = NameTokens.getCommunity();
+				break;
 			case PROFILE_ITEM:
 				nameToken = NameTokens.getProfil();
 				break;

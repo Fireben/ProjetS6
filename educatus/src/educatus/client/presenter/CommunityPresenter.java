@@ -21,6 +21,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CommunityUsersFeed;
 import educatus.client.ui.dataGrids.User;
 import educatus.shared.dto.user.UserCoreContent;
@@ -73,27 +74,12 @@ public class CommunityPresenter extends
 
 	@Override
 	protected void onReset() {
-		super.onReset();
-		
-//		String user = null;
-//		if (requestedUser != null) {
-//			user = requestedUser;
-//		} else {
-//			user = Cookies.getCookie(CookiesConst.CURRENT_USER);
-//		}
-		
+		super.onReset();		
 		UserListingRequest usersRequest = new UserListingRequest();
 		usersRequest.setCulture(locale.getCulture());
 		usersRequest.setLanguage(locale.getLanguage());
 		usersRequest.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
 		requestService.sendRequest(usersRequest, new AsyncCallback<AbstractResponse>() {
-
-//		UserContentRequest request = new UserContentRequest();
-//		request.setRequestedUser(user);
-//		request.setCulture(locale.getCulture());
-//		request.setLanguage(locale.getLanguage());
-//		request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
-//		requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
 
 			@Override
 			public void onSuccess(AbstractResponse result) {
@@ -135,6 +121,8 @@ public class CommunityPresenter extends
 
 			}
 		});
+
+		PageChangingEvent.fire(this, NameTokens.getCommunity());
 	}
 	
 //	@Override
