@@ -232,6 +232,8 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		pageContentRequest.setCulture(locale.getCulture());
 		pageContentRequest.setLanguage(locale.getLanguage());
 		requestService.sendRequest(pageContentRequest, responseHandler);
+		PageChangingEvent.fire(this, NameTokens.getExerciceEdit());
+
 	}
 
 	@Override
