@@ -3,6 +3,9 @@ package educatus.server.businesslogic.profilmanager;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -26,67 +29,81 @@ public class UserProfilBuilder {
 
 	private static String EN_LANG = "en";
 	private static String CA_CULT = "CA";
-	
+
 	@Inject
 	SecurityDao securityDao;
-	
-	@Inject 
+
+	@Inject
 	SeminaryDao seminaryDao;
 
+	@Inject
+	EntityManager entityManager;
+
 	public UserProfilContent buildUserProfilContent(String cip, String culture, String language) throws Exception {
-		
 		UserProfilContent content = new UserProfilContent();
-				
-		User requestedUser = securityDao.findUserByCip(cip);
+		User requestedUser = null;
+		LDAPUser requestedLDAPUser = LDAPManager.getInstance().findUser(cip);
+
+		entityManager.getTransaction().begin();
+		try {
+			requestedUser = securityDao.findUserByCip(cip);
+			securityDao.updateUserFromLdap(requestedUser, requestedLDAPUser);
+		} catch (EntityNotFoundException e) {
+			requestedUser = securityDao.insertUserFromLdap(requestedLDAPUser);
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.getTransaction().commit();
+		}
+
 		UserCoreContent requestedUserCoreContent = UserAdapter.userToUserCoreContent(requestedUser);
-		LDAPUser requestedLDAPUser = LDAPManager.getInstance().findUser(cip);	
 		requestedUserCoreContent = UserAdapter.mergeLDAPUser(requestedUserCoreContent, requestedLDAPUser);
 
 		// TODO, request correct image, fallback to default image
 		content.setProfilImageUrl("images/user_128.png");
 		content.setUserCoreContent(requestedUserCoreContent);
-		
+
 		List<Category> categoryList = seminaryDao.findAllCategories();
-		
+
 		UserStatisticsContent userStatisticsContent = new UserStatisticsContent();
 		List<CategoryStat> categoryStatList = new ArrayList<CategoryStat>();
 		for (Category category : categoryList) {
 			CategoryStat categoryStat = new CategoryStat();
 			categoryStat.setCategoryCoreContent(SeminaryAdapter.categoryToCategoryCoreContent(category, CA_CULT, EN_LANG));
 			categoryStat.setTotalSeminaries(100);
-			categoryStat.setCompletedSeminaries((int)(Math.random() * 100));
+			categoryStat.setCompletedSeminaries((int) (Math.random() * 100));
 			categoryStatList.add(categoryStat);
 		}
 		userStatisticsContent.setCategoryStatList(categoryStatList);
 		content.setUserStatisticsContent(userStatisticsContent);
-				
-		// TODO, replace with real completed seminary list			
-		List<Seminary> completedSeminaryList = seminaryDao.findAllSeminary();	
+
+		// TODO, replace with real completed seminary list
+		List<Seminary> completedSeminaryList = seminaryDao.findAllSeminary();
 		int count = 0;
 		for (Seminary seminary : completedSeminaryList) {
 			if (count > 5) {
 				break;
 			}
-			SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);			
+			SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
 			content.getCompletedSeminaryList().add(seminaryCoreContent);
 			count++;
 		}
-		
-		return content;		
+
+		return content;
 	}
-	
+
 	public List<UserCoreContent> buildAllUserProfilCoreContent(String culture, String language) throws Exception {
-		
+
 		List<UserCoreContent> userCoreContentList = new ArrayList<UserCoreContent>();
-		
+
 		List<User> userList = securityDao.findAllUsers();
 		for (User user : userList) {
 			UserCoreContent userCoreContent = UserAdapter.userToUserCoreContent(user);
-			LDAPUser requestedLDAPUser = LDAPManager.getInstance().findUser(user.getCip());	
+			LDAPUser requestedLDAPUser = LDAPManager.getInstance().findUser(user.getCip());
 			userCoreContent = UserAdapter.mergeLDAPUser(userCoreContent, requestedLDAPUser);
 			userCoreContentList.add(userCoreContent);
 		}
-		
+
 		return userCoreContentList;
 	}
 }
