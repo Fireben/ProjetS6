@@ -318,9 +318,14 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			return response;
 		}
 		finally
+		//FIXME TRY CATCH DANS LE FINALLY
 		{
 			// Log each Login attempt, even if the user is locked.
-			sessionManager.logConnectionAttempt(providedUsername, passwordIsValid);
+			try {
+				sessionManager.logConnectionAttempt(providedUsername, passwordIsValid);				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
