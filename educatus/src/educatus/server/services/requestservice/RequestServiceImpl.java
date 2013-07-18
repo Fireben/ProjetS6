@@ -285,10 +285,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		try
 		{
 			LoginResponse response = new LoginResponse();
-			
-			// Attempt to validate the credential
-			passwordIsValid = LDAPManager.getInstance().authenticate(providedUsername, providedPassword);
-			
+						
 			// The user cannot connect to the application --> NbFailedConnectionAttempt exceed
 			if(!sessionManager.userCanLog(providedUsername))
 			{
@@ -296,22 +293,24 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				// Force the password invalid even if it is valid since the NbFailedConnectionAttempt have been reach.
 				passwordIsValid = false;
 				return response;
-			}			
-					
-			// Attempt to retrieve user's information.
-			UserProfilContent user = null;
-			try {
-				user = userProfilBuilder.buildUserProfilContent(providedUsername, request.getCulture(), request.getLanguage());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			}		
 			
-			if (passwordIsValid && user != null) {
-				// Login successfull, generate sessionID
-				response.setLoginStatus(LoginStatus.SUCCESS);
-				response.setSessionID(sessionManager.generateSessionUUID(providedUsername,providedIp).toString());
-				response.setUserCoreContent(user.getUserCoreContent());
+			// Attempt to validate the credential
+			passwordIsValid = LDAPManager.getInstance().authenticate(providedUsername, providedPassword);
+
+			// if password is valid, attempt to retrieve user's information.
+			if (passwordIsValid) {
+				try {				
+					UserProfilContent user = null;
+					user = userProfilBuilder.buildUserProfilContent(providedUsername, request.getCulture(), request.getLanguage());
+					// Login successfull, generate sessionID
+					response.setLoginStatus(LoginStatus.SUCCESS);
+					response.setSessionID(sessionManager.generateSessionUUID(providedUsername,providedIp).toString());
+					response.setUserCoreContent(user.getUserCoreContent());				
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.setLoginStatus(LoginStatus.FAILURE);
+				}				
 			} else {			
 				response.setLoginStatus(LoginStatus.FAILURE);
 			}
