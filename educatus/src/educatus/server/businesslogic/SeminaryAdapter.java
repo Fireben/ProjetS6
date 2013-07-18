@@ -1,5 +1,7 @@
 package educatus.server.businesslogic;
 
+import java.text.SimpleDateFormat;
+
 import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Seminary;
@@ -27,8 +29,10 @@ public class SeminaryAdapter {
 
 		seminaryCoreContent.setAuthor(authorUserCoreContent);
 		seminaryCoreContent.setLastEditor(editorUserCoreContent);
-		seminaryCoreContent.setCreatedDate(seminary.getDateCreated().toString());
-		seminaryCoreContent.setEditedDate(seminary.getDateModified().toString());
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:MM:ss");		
+		seminaryCoreContent.setCreatedDate(simpleDateFormat.format(seminary.getDateCreated()));
+		seminaryCoreContent.setEditedDate(simpleDateFormat.format(seminary.getDateModified()));
 
 		return seminaryCoreContent;
 	}
