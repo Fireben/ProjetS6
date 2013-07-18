@@ -194,7 +194,6 @@ public class ExercicePresenter extends
 			currentQuestion = choiceQuestion;
 			getView().getQuestionContainer().add(choiceQuestion);
 		}
-		
 		List<AbstractDynamicSection> dynamicSectionList = question.getQuestionContext();
 		DynamicSection dynamicSection = getView().getDynamicSection();
 		dynamicSection.setList(dynamicSectionList, getView().getContentContainer());
@@ -207,11 +206,15 @@ public class ExercicePresenter extends
 
 	private void verifyResponse() {		
 		boolean validAnswer = false;
-		if(currentQuestion instanceof TextQuestion) {
-			validAnswer = verifyChoiceResponse();
+		
+		if(currentQuestion instanceof MultipleChoiceQuestion) {			
+			ArrayList<String> checkedResponses = ((MultipleChoiceQuestion) currentQuestion).getValues();
 		}
-		else if(currentQuestion instanceof ChoiceQuestion) {
-			validAnswer = verifyChoiceResponse();
+		else if(currentQuestion instanceof SingleChoiceQuestion) {
+			String id = ((SingleChoiceQuestion)currentQuestion).getValue();
+		}		
+		else if(currentQuestion instanceof TextQuestion) {
+			String response = ((TextQuestion)currentQuestion).getResponse();
 		}
 		
 		if(validAnswer) {
@@ -225,19 +228,6 @@ public class ExercicePresenter extends
 		getView().getRootPanel().add(responseFeedback);
 	}
 	
-
-	private boolean verifyChoiceResponse() {	
-		if(currentQuestion instanceof MultipleChoiceQuestion) {			
-			ArrayList<String> checkedResponses = ((MultipleChoiceQuestion) currentQuestion).getValues();
-		}
-		else if(currentQuestion instanceof SingleChoiceQuestion) {
-			String id = ((SingleChoiceQuestion)currentQuestion).getValue();
-		}		
-		else if(currentQuestion instanceof TextQuestion) {
-			String response = ((TextQuestion)currentQuestion).getResponse();
-		}
-		return true;
-	}
 
 	@Override
 	public void prepareFromRequest(PlaceRequest placeRequest) {
