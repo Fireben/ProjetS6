@@ -1,6 +1,7 @@
 
 package educatus.client.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -108,8 +109,7 @@ public class ExercicePresenter extends
 	private ClickHandler nextClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {	 
-			getView().getQuestionContainer().clear();					
-			getView().getDynamicSection().clear();	
+			reset();
 			if(responseFeedback != null) {
 				getView().getRootPanel().remove(responseFeedback);
 				responseFeedback = null;
@@ -140,7 +140,7 @@ public class ExercicePresenter extends
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		
+		reset();
 		ExerciceContentRequest request = new ExerciceContentRequest();
 		request.setCulture(locale.getCulture());
 		request.setLanguage(locale.getLanguage());
@@ -194,21 +194,27 @@ public class ExercicePresenter extends
 			currentQuestion = choiceQuestion;
 			getView().getQuestionContainer().add(choiceQuestion);
 		}
-		
 		List<AbstractDynamicSection> dynamicSectionList = question.getQuestionContext();
 		DynamicSection dynamicSection = getView().getDynamicSection();
 		dynamicSection.setList(dynamicSectionList, getView().getContentContainer());
 		
+		if(questionList.size() == (questionIndex +1)) {
+			getView().getNextButton().setVisible(false);
+		}
 		getView().getContentContainer().setVisible(true);
 	}
 
 	private void verifyResponse() {		
 		boolean validAnswer = false;
-		if(currentQuestion instanceof TextQuestion) {
-			validAnswer = verifyChoiceResponse();
+		
+		if(currentQuestion instanceof MultipleChoiceQuestion) {			
+			ArrayList<String> checkedResponses = ((MultipleChoiceQuestion) currentQuestion).getValues();
 		}
-		else if(currentQuestion instanceof ChoiceQuestion) {
-			validAnswer = verifyChoiceResponse();
+		else if(currentQuestion instanceof SingleChoiceQuestion) {
+			String id = ((SingleChoiceQuestion)currentQuestion).getValue();
+		}		
+		else if(currentQuestion instanceof TextQuestion) {
+			String response = ((TextQuestion)currentQuestion).getResponse();
 		}
 		
 		if(validAnswer) {
@@ -222,10 +228,6 @@ public class ExercicePresenter extends
 		getView().getRootPanel().add(responseFeedback);
 	}
 	
-
-	private boolean verifyChoiceResponse() {		
-		return true;
-	}
 
 	@Override
 	public void prepareFromRequest(PlaceRequest placeRequest) {
@@ -243,5 +245,11 @@ public class ExercicePresenter extends
 			((TextQuestion)currentQuestion).clearResponse();
 		}
 		getView().getContentContainer().setVisible(true);
+	}
+	
+	protected void reset() {
+		getView().getNextButton().setVisible(true);
+		getView().getQuestionContainer().clear();					
+		getView().getDynamicSection().clear();	
 	}
 }
