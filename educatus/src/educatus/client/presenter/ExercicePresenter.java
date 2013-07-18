@@ -108,8 +108,7 @@ public class ExercicePresenter extends
 	private ClickHandler nextClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {	 
-			getView().getQuestionContainer().clear();					
-			getView().getDynamicSection().clear();	
+			reset();
 			if(responseFeedback != null) {
 				getView().getRootPanel().remove(responseFeedback);
 				responseFeedback = null;
@@ -140,7 +139,7 @@ public class ExercicePresenter extends
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		
+		reset();
 		ExerciceContentRequest request = new ExerciceContentRequest();
 		request.setCulture(locale.getCulture());
 		request.setLanguage(locale.getLanguage());
@@ -199,6 +198,9 @@ public class ExercicePresenter extends
 		DynamicSection dynamicSection = getView().getDynamicSection();
 		dynamicSection.setList(dynamicSectionList, getView().getContentContainer());
 		
+		if(questionList.size() == (questionIndex +1)) {
+			getView().getNextButton().setVisible(false);
+		}
 		getView().getContentContainer().setVisible(true);
 	}
 
@@ -223,7 +225,7 @@ public class ExercicePresenter extends
 	}
 	
 
-	private boolean verifyChoiceResponse() {		
+	private boolean verifyChoiceResponse() {	
 		return true;
 	}
 
@@ -243,5 +245,11 @@ public class ExercicePresenter extends
 			((TextQuestion)currentQuestion).clearResponse();
 		}
 		getView().getContentContainer().setVisible(true);
+	}
+	
+	protected void reset() {
+		getView().getNextButton().setVisible(true);
+		getView().getQuestionContainer().clear();					
+		getView().getDynamicSection().clear();	
 	}
 }
