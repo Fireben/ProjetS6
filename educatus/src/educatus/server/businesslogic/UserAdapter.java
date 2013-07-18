@@ -1,5 +1,8 @@
 package educatus.server.businesslogic;
 
+import java.util.List;
+
+import educatus.server.persist.dao.security.LogUserConnection;
 import educatus.server.persist.dao.security.User;
 import educatus.shared.dto.user.UserCoreContent;
 
@@ -14,9 +17,20 @@ public class UserAdapter {
 		userCoreContent.setLastName(user.getLastName());
 		userCoreContent.setJoinedDate(user.getDateJoined().toString());
 		
-		// TODO get last connexion from log
-		userCoreContent.setLastConnexion(user.getDateJoined().toString());
+		// Default latest connexion is joined date
+		String latestConnexion = user.getDateJoined().toString();
+
+		// TODO, create specific query to fetch lasted successfull connexion only
+		List<LogUserConnection> logUserConnectionList = user.getLogUserConnections();
+		for (int i = logUserConnectionList.size() - 1; i >= 0; i--) {
+			LogUserConnection connection = logUserConnectionList.get(i);
+			if (connection.getAttemptSuccess() == true) {
+				latestConnexion = connection.getTimestamp().toString();
+				break;
+			}
+		}
 		
+		userCoreContent.setLastConnexion(latestConnexion);		
 		return userCoreContent;
 	}
 	
