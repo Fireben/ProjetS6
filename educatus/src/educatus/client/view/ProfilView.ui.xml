@@ -11,6 +11,7 @@
 	   	<g:VerticalPanel ui:field="profilVerticalPanel">
 			   <npui:ProfilSummary ui:field="profilSummary"></npui:ProfilSummary>
 			   <npui:ProfilNewsfeed ui:field="profilNewsfeed"></npui:ProfilNewsfeed>
+			   <npui:UserStatisticsWidget ui:field="userStatisticsWidget"></npui:UserStatisticsWidget>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

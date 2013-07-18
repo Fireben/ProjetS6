@@ -10,6 +10,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 import educatus.client.presenter.ProfilPresenter;
 import educatus.client.ui.ProfilNewsfeed;
 import educatus.client.ui.ProfilSummary;
+import educatus.client.ui.UserStatisticsWidget;
 
 public class ProfilView extends ViewImpl implements ProfilPresenter.MyView {
 	
@@ -18,6 +19,7 @@ public class ProfilView extends ViewImpl implements ProfilPresenter.MyView {
 	@UiField VerticalPanel profilVerticalPanel;
 	@UiField ProfilSummary profilSummary;
 	@UiField ProfilNewsfeed profilNewsfeed;
+	@UiField UserStatisticsWidget userStatisticsWidget;
 	
 	public interface Binder extends UiBinder<Widget, ProfilView> {
 	}
@@ -28,6 +30,7 @@ public class ProfilView extends ViewImpl implements ProfilPresenter.MyView {
 	    profilVerticalPanel.setStyleName("profilVerticalPanel");
 	    profilSummary.setStyleName("profilSummary");
 	    profilNewsfeed.setStyleName("profilNewsfeed");
+	    userStatisticsWidget.setStyleName("userStatisticsWidget");
 	}
 	
 	@Override
@@ -44,5 +47,9 @@ public class ProfilView extends ViewImpl implements ProfilPresenter.MyView {
 
 	public ProfilNewsfeed getProfilNewsfeed() {
 		return profilNewsfeed;
+	}
+
+	public UserStatisticsWidget getUserStatisticsWidget() {
+		return userStatisticsWidget;
 	}
 }

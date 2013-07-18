@@ -17,6 +17,7 @@ public class UserProfilContent implements Serializable {
 	private String profilImageUrl;
 
 	//TODO Ajouter les listes d'achievements, certificats, etc
+	private UserStatisticsContent userStatisticsContent;
 	
 	public UserProfilContent() {
 	}
@@ -52,5 +53,13 @@ public class UserProfilContent implements Serializable {
 
 	public void setCompletedUserList(List<UserCoreContent> completedUserList) {
 		this.completedUserList = completedUserList;
+	}
+
+	public UserStatisticsContent getUserStatisticsContent() {
+		return userStatisticsContent;
+	}
+
+	public void setUserStatisticsContent(UserStatisticsContent userStatisticsContent) {
+		this.userStatisticsContent = userStatisticsContent;
 	}
 }

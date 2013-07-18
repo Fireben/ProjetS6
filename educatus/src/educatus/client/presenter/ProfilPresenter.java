@@ -24,11 +24,13 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.ProfilNewsfeed;
 import educatus.client.ui.ProfilSummary;
+import educatus.client.ui.UserStatisticsWidget;
 import educatus.client.ui.dataGrids.ListContent;
 import educatus.client.ui.widget.DescriptionEntry;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.user.UserProfilContent;
+import educatus.shared.dto.user.UserStatisticsContent.CategoryStat;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
@@ -45,6 +47,8 @@ public class ProfilPresenter extends
 		public ProfilSummary getProfilSummary();
 
 		public ProfilNewsfeed getProfilNewsfeed();
+
+		public UserStatisticsWidget getUserStatisticsWidget();
 	}
 	
 	@Inject
@@ -149,6 +153,16 @@ public class ProfilPresenter extends
 					ListDataProvider<ListContent> dataProvider = new ListDataProvider<ListContent>();
 					dataProvider.addDataDisplay(dataGrid);
 					dataProvider.setList(seminaries);
+					
+					getView().getUserStatisticsWidget().clearAllProgressBars();
+					List<CategoryStat> categoryStatList = content.getUserStatisticsContent().getCategoryStatList();
+					for (CategoryStat categoryStat : categoryStatList) {
+						getView().getUserStatisticsWidget().appendProgressBar(
+								categoryStat.getCategoryCoreContent().getName(), 
+								categoryStat.getTotalSeminaries(),
+								categoryStat.getCompletedSeminaries()
+						);
+					}				
 				}
 			}
 

@@ -70,6 +70,6 @@
 
 	</ui:style>
 	<g:HTMLPanel addStyleNames="{style.meter}">
-		<span style="width: 25%"></span>
+		<span ui:field="span" style="width: 25%"></span>
 	</g:HTMLPanel>
 </ui:UiBinder> 

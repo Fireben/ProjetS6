@@ -13,13 +13,19 @@ import educatus.server.businesslogic.UserAdapter;
 import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.security.User;
+import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Seminary;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
 import educatus.shared.dto.user.UserCoreContent;
 import educatus.shared.dto.user.UserProfilContent;
+import educatus.shared.dto.user.UserStatisticsContent;
+import educatus.shared.dto.user.UserStatisticsContent.CategoryStat;
 
 @Singleton
 public class UserProfilBuilder {
+
+	private static String EN_LANG = "en";
+	private static String CA_CULT = "CA";
 	
 	@Inject
 	SecurityDao securityDao;
@@ -40,6 +46,20 @@ public class UserProfilBuilder {
 		content.setProfilImageUrl("images/user_128.png");
 		content.setUserCoreContent(requestedUserCoreContent);
 		
+		List<Category> categoryList = seminaryDao.findAllCategories();
+		
+		UserStatisticsContent userStatisticsContent = new UserStatisticsContent();
+		List<CategoryStat> categoryStatList = new ArrayList<CategoryStat>();
+		for (Category category : categoryList) {
+			CategoryStat categoryStat = new CategoryStat();
+			categoryStat.setCategoryCoreContent(SeminaryAdapter.categoryToCategoryCoreContent(category, CA_CULT, EN_LANG));
+			categoryStat.setTotalSeminaries(100);
+			categoryStat.setCompletedSeminaries((int)(Math.random() * 100));
+			categoryStatList.add(categoryStat);
+		}
+		userStatisticsContent.setCategoryStatList(categoryStatList);
+		content.setUserStatisticsContent(userStatisticsContent);
+				
 		// TODO, replace with real completed seminary list			
 		List<Seminary> completedSeminaryList = seminaryDao.findAllSeminary();	
 		int count = 0;
