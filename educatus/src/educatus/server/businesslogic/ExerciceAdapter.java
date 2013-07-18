@@ -1,5 +1,7 @@
 package educatus.server.businesslogic;
 
+import java.text.SimpleDateFormat;
+
 import educatus.server.persist.dao.exercice.Exercice;
 import educatus.server.persist.dao.security.User;
 import educatus.shared.dto.exercice.ExerciceCoreContent;
@@ -25,8 +27,10 @@ public class ExerciceAdapter {
 
 		exerciceCoreContent.setAuthor(authorUserCoreContent);
 		exerciceCoreContent.setLastEditor(editorUserCoreContent);
-		exerciceCoreContent.setCreatedDate(exercice.getDateCreated().toString());
-		exerciceCoreContent.setEditedDate(exercice.getDateModified().toString());
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:MM:ss");		
+		exerciceCoreContent.setCreatedDate(simpleDateFormat.format(exercice.getDateCreated()));
+		exerciceCoreContent.setEditedDate(simpleDateFormat.format(exercice.getDateModified()));
 
 		return exerciceCoreContent;
 	}
