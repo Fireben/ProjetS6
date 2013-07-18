@@ -2,6 +2,7 @@ package educatus.server.businesslogic.exercicemanager;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
@@ -28,6 +29,7 @@ import educatus.shared.dto.dynamiccontent.AbstractDynamicSection.DynamicSectionT
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.exercice.AnswerChoiceContent;
 import educatus.shared.dto.exercice.AnswerNumericContent;
 import educatus.shared.dto.exercice.AnswerTextContent;
 import educatus.shared.dto.exercice.ExerciceContent;
@@ -179,7 +181,19 @@ public class ExerciceAdministrationManager {
 				);
 				break;
 			case ANSWER_CHOICE:
-
+				AnswerChoiceContent answerChoiceContent = (AnswerChoiceContent) exerciceQuestionContent.getAnswer();
+				List<String> answerList = answerChoiceContent.getAnswerList();
+				List<String> answerChoiceList = answerChoiceContent.getAvailableChoiceList();
+				
+				exerciceDao.addAnswerChoiceExerciceQuestionToExercice(
+						exercice.getId(),
+						dycoContent.getId(),
+						questionEntry.getTextcontententry().getId(),
+						exerciceQuestionContent.getScore(),
+						answerChoiceList,
+						answerList,
+						exerciceQuestionContentSequence
+				);
 				break;
 			default:
 				break;

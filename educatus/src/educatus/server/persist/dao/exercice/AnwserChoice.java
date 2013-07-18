@@ -26,9 +26,16 @@ public class AnwserChoice extends Answer implements Serializable {
 	@JoinColumn(name = "dyco_id", nullable = false, insertable = true, updatable = true)
 	private DynamicContent dynamicContent;
 
-	// bi-directional many-to-one association to EQAnwserChoiceDynamicSection
-	@OneToMany(mappedBy = "anwserchoice")
-	private List<EQAnwserChoiceDynamicSection> eqanwserchoicedynamicsections;
+	@OneToMany(mappedBy = "anwserChoice")
+	private List<EQAnwserChoiceDynamicSection> eqAnwserChoiceDynamicSection;
+
+	public List<EQAnwserChoiceDynamicSection> getEqAnwserChoiceDynamicSection() {
+		return eqAnwserChoiceDynamicSection;
+	}
+
+	public void setEqAnwserChoiceDynamicSection(List<EQAnwserChoiceDynamicSection> eqAnwserChoiceDynamicSection) {
+		this.eqAnwserChoiceDynamicSection = eqAnwserChoiceDynamicSection;
+	}
 
 	public AnwserChoice() {
 	}
@@ -48,12 +55,4 @@ public class AnwserChoice extends Answer implements Serializable {
 	public void setDynamicContent(DynamicContent dynamicContent) {
 		this.dynamicContent = dynamicContent;
 	}
-
-//	public List<EQAnwserChoiceDynamicSection> getEqanwserchoicedynamicsections() {
-//		return this.eqanwserchoicedynamicsections;
-//	}
-//
-//	public void setEqanwserchoicedynamicsections(List<EQAnwserChoiceDynamicSection> eqanwserchoicedynamicsections) {
-//		this.eqanwserchoicedynamicsections = eqanwserchoicedynamicsections;
-//	}
 }

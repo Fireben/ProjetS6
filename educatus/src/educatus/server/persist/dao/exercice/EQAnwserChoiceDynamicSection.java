@@ -3,6 +3,8 @@ package educatus.server.persist.dao.exercice;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import educatus.server.persist.dao.dynamiccontent.DynamicSection;
+
 @Entity
 @Table(name = "exercice.eqanwserchoicedynamicsection")
 public class EQAnwserChoiceDynamicSection implements Serializable {
@@ -14,9 +16,13 @@ public class EQAnwserChoiceDynamicSection implements Serializable {
 	// bi-directional many-to-one association to AnwserChoice
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
-			@JoinColumn(name = "exqt_type", referencedColumnName = "exqt_type", nullable = false),
+			@JoinColumn(name = "exqt_type", referencedColumnName = "exqt_type", nullable = false, insertable = false, updatable = false),
 			@JoinColumn(name = "exqu_id", referencedColumnName = "exqu_id", nullable = false, insertable = false, updatable = false) })
-	private AnwserChoice anwserchoice;
+	private AnwserChoice anwserChoice;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dyse_id", nullable = false, insertable = false, updatable = false)
+	private DynamicSection dynamicSection;
 
 	public EQAnwserChoiceDynamicSection() {
 	}
@@ -30,11 +36,19 @@ public class EQAnwserChoiceDynamicSection implements Serializable {
 	}
 
 	public AnwserChoice getAnwserchoice() {
-		return this.anwserchoice;
+		return this.anwserChoice;
 	}
 
 	public void setAnwserchoice(AnwserChoice anwserchoice) {
-		this.anwserchoice = anwserchoice;
+		this.anwserChoice = anwserchoice;
+	}
+
+	public DynamicSection getDynamicSection() {
+		return dynamicSection;
+	}
+
+	public void setDynamicSection(DynamicSection dynamicSection) {
+		this.dynamicSection = dynamicSection;
 	}
 
 }
