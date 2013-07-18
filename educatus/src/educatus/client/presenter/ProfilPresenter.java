@@ -82,6 +82,11 @@ public class ProfilPresenter extends
 		super.onBind();
 	}
 
+	private void cleanPageContent() {
+		getView().getProfilSummary().getUserDescriptionVerticalPanel().clear();
+		getView().getUserStatisticsWidget().clearAllProgressBars();
+	}
+	
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -92,6 +97,8 @@ public class ProfilPresenter extends
 		} else {
 			user = Cookies.getCookie(CookiesConst.CURRENT_USER);
 		}
+		// we clear all content before request
+		cleanPageContent();
 		
 		UserContentRequest request = new UserContentRequest();
 		request.setRequestedUser(user);
@@ -108,7 +115,6 @@ public class ProfilPresenter extends
 					UserProfilContent content = response.getUserProfilContent();
 					UserCoreContent coreContent = content.getUserCoreContent();
 
-					getView().getProfilSummary().getUserDescriptionVerticalPanel().clear();
 					getView().getProfilSummary().getUserDescriptionVerticalPanel().add(new DescriptionEntry(
 							"Fullname",
 							coreContent.getFullName())
@@ -154,7 +160,6 @@ public class ProfilPresenter extends
 					dataProvider.addDataDisplay(dataGrid);
 					dataProvider.setList(seminaries);
 					
-					getView().getUserStatisticsWidget().clearAllProgressBars();
 					List<CategoryStat> categoryStatList = content.getUserStatisticsContent().getCategoryStatList();
 					for (CategoryStat categoryStat : categoryStatList) {
 						getView().getUserStatisticsWidget().appendProgressBar(

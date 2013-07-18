@@ -23,6 +23,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
@@ -173,7 +174,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 			ExerciceAdministrationActionRequest request = new ExerciceAdministrationActionRequest();
 			request.setExerciceContent(exerciceContent);
 			request.setAction(ExerciceAdministractionAction.INSERT);
-			request.setSessionID(Cookies.getCookie("SessionID"));
+			request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
 			
 			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
 
