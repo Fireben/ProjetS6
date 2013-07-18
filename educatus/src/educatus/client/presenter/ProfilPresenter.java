@@ -140,7 +140,8 @@ public class ProfilPresenter extends
 								seminaryCoreContent.getDescription(),
 								seminaryCoreContent.getAuthor().getFirstName() + " " + seminaryCoreContent.getAuthor().getLastName(),
 								seminaryCoreContent.getCreatedDate(),
-								2
+								2,
+								NameTokens.getViewSeminary()
 								);
 						seminaries.add(seminary);
 					}

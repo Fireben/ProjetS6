@@ -67,8 +67,8 @@ ContentListPresenter.MyView {
 		Column<ListContent, Hyperlink> IdColumn = 
 			    new Column<ListContent, Hyperlink>(new HyperLinkCell()) { 
 			        @Override 
-			        public Hyperlink getValue(ListContent seminary) {			    	  
-			        	Hyperlink link = new Hyperlink(String.valueOf(seminary.getId()), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
+			        public Hyperlink getValue(ListContent listContent) {			    	  
+			        	Hyperlink link = new Hyperlink(String.valueOf(listContent.getId()), NameTokens.getViewSeminary() + ";id=" + listContent.getId());
 			            link.setStyleName("cellTableHyperlink");
 			            return link; 
 			        }
@@ -78,8 +78,8 @@ ContentListPresenter.MyView {
 		
 		TextColumn<ListContent> NameColumn = new TextColumn<ListContent>() {
 		    @Override
-		    public String getValue(ListContent seminary) {
-		      return seminary.getName();
+		    public String getValue(ListContent listContent) {
+		      return listContent.getName();
 		    }
 		  };
 		dataGrid.addColumn(NameColumn, "Name", "");
@@ -87,8 +87,8 @@ ContentListPresenter.MyView {
 		
 		TextColumn<ListContent> AuthorColumn = new TextColumn<ListContent>() {
 		    @Override
-		    public String getValue(ListContent seminary) {
-		      return seminary.getAuthor();
+		    public String getValue(ListContent listContent) {
+		      return listContent.getAuthor();
 		    }
 		  };
 		dataGrid.addColumn(AuthorColumn, "Author", "");
@@ -97,8 +97,8 @@ ContentListPresenter.MyView {
 		Column<ListContent, Integer> DifficultyColumn = 
 			    new Column<ListContent, Integer>(new ImageCell()) { 
 			        @Override 
-			        public Integer getValue(ListContent seminary) { 
-			        	return seminary.getDifficulty();
+			        public Integer getValue(ListContent listContent) { 
+			        	return listContent.getDifficulty();
 			        }
 				};
 		dataGrid.addColumn(DifficultyColumn, "Difficulty", "");
@@ -107,8 +107,8 @@ ContentListPresenter.MyView {
 		Column<ListContent, Hyperlink> DescriptionColumn = 
 		    new Column<ListContent, Hyperlink>(new HyperLinkCell()) { 
 		        @Override 
-		        public Hyperlink getValue(ListContent seminary) {			    	  
-		        	Hyperlink link = new Hyperlink(seminary.getDescription(), NameTokens.getViewSeminary() + ";id=" + seminary.getId());
+		        public Hyperlink getValue(ListContent listContent) {			    	  
+		        	Hyperlink link = new Hyperlink(listContent.getDescription(), listContent.getNameToken() + ";id=" + listContent.getId());
 		            link.setStyleName("cellTableHyperlink");
 		            return link; 
 		        }

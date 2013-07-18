@@ -37,7 +37,8 @@ public class NameTokens {
 	public static final String homePage = "!homePage";
 	public static final String profil = "!profil";
 	public static final String seminaryEdit = "!seminaryEdit";
-	public static final String contentHomePage = "!contentHomePage";
+	public static final String seminarHomePage = "!seminarHomePage";
+	public static final String exerciceHomePage = "!exerciceHomePage";
 	public static final String viewSeminary = "!viewSeminary";
 	public static final String categoryAdministration = "!categoryAdministration";
 	public static final String exercice = "!exercice";
@@ -53,7 +54,7 @@ public class NameTokens {
 	}
 
 	public static String getSeminarHomePage() {
-		return contentHomePage;
+		return seminarHomePage;
 	}
 
 	public static String getSeminaryEdit() {
@@ -79,4 +80,8 @@ public class NameTokens {
 	public static String getCommunity() {
 		return community;
 	}
+
+	public static String getExerciceHomePage() {
+		return exerciceHomePage;
+	}	
 }

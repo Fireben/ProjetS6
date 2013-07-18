@@ -7,9 +7,10 @@ public class ListContent {
 	private String author;
 	private String date;
 	private int difficulty;
+	private String nameToken;
 	
 	public ListContent(int id, String name, String description, String author,
-			String date, int difficulty) {
+			String date, int difficulty, String nameToken) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -17,6 +18,7 @@ public class ListContent {
 		this.author = author;
 		this.date = date;
 		this.difficulty = difficulty;
+		this.nameToken = nameToken;
 	}
 
 	public int getId() {
@@ -66,4 +68,12 @@ public class ListContent {
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
+
+	public String getNameToken() {
+		return nameToken;
+	}
+
+	public void setNameToken(String nameToken) {
+		this.nameToken = nameToken;
+	}	
 }
