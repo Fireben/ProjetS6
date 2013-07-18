@@ -68,7 +68,7 @@ ContentListPresenter.MyView {
 			    new Column<ListContent, Hyperlink>(new HyperLinkCell()) { 
 			        @Override 
 			        public Hyperlink getValue(ListContent listContent) {			    	  
-			        	Hyperlink link = new Hyperlink(String.valueOf(listContent.getId()), NameTokens.getViewSeminary() + ";id=" + listContent.getId());
+			        	Hyperlink link = new Hyperlink(String.valueOf(listContent.getId()), listContent.getNameToken() + ";id=" + listContent.getId());
 			            link.setStyleName("cellTableHyperlink");
 			            return link; 
 			        }

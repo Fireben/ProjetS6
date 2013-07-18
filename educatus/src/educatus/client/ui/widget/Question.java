@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Question extends Composite {
 	protected VerticalPanel panel;
-	
+
 	public Question(String question) {
 		super();
 		panel = new VerticalPanel();

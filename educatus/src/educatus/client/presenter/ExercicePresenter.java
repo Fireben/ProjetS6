@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -22,6 +23,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.widget.ChoiceQuestion;
@@ -34,6 +36,7 @@ import educatus.client.ui.widget.TextQuestion;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.exercice.AnswerChoiceContent;
 import educatus.shared.dto.exercice.AnswerChoiceContent.AnswerChoiceType;
+import educatus.shared.dto.exercice.AnswerTextContent;
 import educatus.shared.dto.exercice.ExerciceContent;
 import educatus.shared.dto.exercice.ExerciceCoreContent;
 import educatus.shared.dto.exercice.ExerciceQuestionContent;
@@ -43,7 +46,9 @@ import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.ExerciceContentRequest;
+import educatus.shared.services.requestservice.request.ExerciceQuestionValidationRequest;
 import educatus.shared.services.requestservice.response.ExerciceContentResponse;
+import educatus.shared.services.requestservice.response.ExerciceQuestionValidationResponse;
 
 public class ExercicePresenter extends
 		Presenter<ExercicePresenter.MyView, ExercicePresenter.MyProxy> {
@@ -205,27 +210,62 @@ public class ExercicePresenter extends
 	}
 
 	private void verifyResponse() {		
-		boolean validAnswer = false;
+		ExerciceQuestionContent questionContent = questionList.get(questionIndex);
+		int answerId = questionContent.getAnswer().getId();
 		
 		if(currentQuestion instanceof MultipleChoiceQuestion) {			
 			ArrayList<String> checkedResponses = ((MultipleChoiceQuestion) currentQuestion).getValues();
+			AnswerChoiceContent answer = new AnswerChoiceContent();
+			answer.setAnswerList(checkedResponses);
+			answer.setType(AnswerChoiceType.MULTIPLE_CHOICE);
+			answer.setId(answerId);
+			questionContent.setAnswer(answer);
 		}
 		else if(currentQuestion instanceof SingleChoiceQuestion) {
+			ArrayList<String> checkedResponses = new ArrayList<String>();
 			String id = ((SingleChoiceQuestion)currentQuestion).getValue();
+			checkedResponses.add(id);
+			AnswerChoiceContent answer = new AnswerChoiceContent();
+			answer.setAnswerList(checkedResponses);
+			answer.setType(AnswerChoiceType.SINGLE_CHOICE);
+			answer.setId(answerId);
+			questionContent.setAnswer(answer);
 		}		
 		else if(currentQuestion instanceof TextQuestion) {
 			String response = ((TextQuestion)currentQuestion).getResponse();
+			AnswerTextContent answer = new AnswerTextContent();
+			answer.setId(answerId);
+			answer.setTextAnswer(response);
+			questionContent.setAnswer(answer);
 		}
 		
-		if(validAnswer) {
-			responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Next", nextClickHandler);
-		}
-		else {
-			responseFeedback = new ResponseFeedback("You don't have the right answer, try again", "images/error.png", "Back", backClickHandler);
-		}
-		
-		getView().getContentContainer().setVisible(false);
-		getView().getRootPanel().add(responseFeedback);
+		ExerciceQuestionValidationRequest validationRequest = new ExerciceQuestionValidationRequest();
+		validationRequest.setExerciceQuestion(questionContent);
+		validationRequest.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
+		validationRequest.setCulture(locale.getCulture());
+		validationRequest.setLanguage(locale.getLanguage());
+		requestService.sendRequest(validationRequest, 
+			new AsyncCallback<AbstractResponse>() {
+				@Override
+				public void onSuccess(AbstractResponse result) {
+					if (result.GetResponseType() == ResponseTypeEnum.EXERCICE_QUESTION_VALIDATION_RESPONSE) {
+						ExerciceQuestionValidationResponse response = (ExerciceQuestionValidationResponse) result;
+						boolean validAnswer = response.isValid();
+						if(validAnswer) {
+							responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Next", nextClickHandler);
+						}
+						else {
+							responseFeedback = new ResponseFeedback("You don't have the right answer, try again", "images/error.png", "Back", backClickHandler);
+						}
+						getView().getContentContainer().setVisible(false);
+						getView().getRootPanel().add(responseFeedback);
+					}
+				}
+	
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+		});
 	}
 	
 
