@@ -75,7 +75,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 
     
 	@Inject
-	CategoryPresenter seminarCategoryPresenter;
+	CategoryPresenter categoryPresenter;
 	
 	@Inject
 	ContentListPresenter listPresenter;
@@ -106,15 +106,16 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	protected void onReset() {
 	  super.onReset();      
 	  PageChangingEvent.fire(this, NameTokens.getSeminarHomePage());
-	  seminarCategoryPresenter.registerBackButton(backClickHandler);
-	  seminarCategoryPresenter.registerSeeAllButton(seeAllClickHandler);
+	  categoryPresenter.setRootParent("Seminars");
+	  categoryPresenter.registerBackButton(backClickHandler);
+	  categoryPresenter.registerSeeAllButton(seeAllClickHandler);
 	  
 	}
 	
 	@Override
 	protected void onReveal() {  	
 		setInSlot(SLOT_content, null);
-		seminarCategoryPresenter.clear(); 
+		categoryPresenter.clear(); 
 		createAndSendCategoryRequest(null);
 	}
 	
@@ -128,7 +129,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	private ClickHandler seeAllClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {	 
-			CategoryCoreContent parentCategory = seminarCategoryPresenter.getParent();		
+			CategoryCoreContent parentCategory = categoryPresenter.getParent();		
 	  		createAndSendListingRequest(parentCategory);
 		}
 	};
@@ -152,16 +153,16 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		@Override
 		public void onSuccess(AbstractResponse result) {			
 			if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_HOME_PAGE_CATEGORY_CONTENT_RESPONSE){	
-				setInSlot(SLOT_content, seminarCategoryPresenter);
+				setInSlot(SLOT_content, categoryPresenter);
 				SeminaryHomePageCategoryContentResponse response = (SeminaryHomePageCategoryContentResponse) result;
 				SeminaryHomePageCategoryContent content = response.getContent();
 				
 				// Children, ask for categories
 				if(content.getCategoryChildren().size() != 0) {
-					seminarCategoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
+					categoryPresenter.setAndAnimateCategoryPanel(categoryClickHandler, content);
 					CategoryCoreContent parent = content.getCommonParent();
 					if(parent != null) {
-						seminarCategoryPresenter.animateBackButtonIn();
+						categoryPresenter.animateBackButtonIn();
 					}					
 				} 				
 				// No child, ask for list of seminaries
@@ -174,7 +175,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 				setInSlot(SLOT_content, listPresenter);	
 				SeminaryHomePageListingContentResponse response = (SeminaryHomePageListingContentResponse) result;
 				List<SeminaryCoreContent> seminaryCoreContentList = response.getContent().getSeminariesChildren();
-				String name = response.getContent().getCommonParent() != null ? response.getContent().getCommonParent().getName() : "Seminaries";
+				String name = response.getContent().getCommonParent() != null ? response.getContent().getCommonParent().getName() : "Seminars";
 				setSeminaryList(seminaryCoreContentList, name);
 			} 
 			else {

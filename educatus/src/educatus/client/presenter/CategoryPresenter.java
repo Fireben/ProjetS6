@@ -26,6 +26,7 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 	ListFadeAnimation<HasWidgets> listAnimation = null;
 	HandlerRegistration backRegisteredHandler = null;
 	HandlerRegistration seeAllRegisteredHandler = null;
+	private String rootParent;
 	
 	private CategoryCoreContent parent = null; 
 	
@@ -94,7 +95,7 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 
 		this.parent = content.getCommonParent();
 		if (parent == null) {
-			getView().getLabel().setText("Seminaries");
+			getView().getLabel().setText(rootParent);
 		} else {
 			getView().getLabel().setText(parent.getName());
 		}
@@ -140,4 +141,8 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 	public CategoryCoreContent getParent() {
 		return this.parent;
 	}
+	
+	public void setRootParent(String rootParent) {
+		this.rootParent = rootParent;
+	}	
 }
