@@ -218,6 +218,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	
 	final Button confirmButton = new Button();
 	final TextBox boxUserName = new TextBox(); 
+	final PasswordTextBox boxPassword = new PasswordTextBox(); 
 	
 	private int logInAttempt = 1;
 	
@@ -235,6 +236,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
         	
 	            case Event.ONKEYDOWN:
 	                if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ESCAPE) {
+	                	boxUserName.setText("");
+	    				boxPassword.setText("");
 	                    hide();
 	                } else if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
 	                	confirmButton.click();
@@ -397,6 +400,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		close.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				boxUserName.setText("");
+				boxPassword.setText("");
 				dialogBox.hide();
 			}
 		});
@@ -423,7 +428,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		dialogContents.setCellHorizontalAlignment(password, HasHorizontalAlignment.ALIGN_LEFT);
 
 		// Add an box to the dialog
-		final PasswordTextBox boxPassword = new PasswordTextBox();
 		boxPassword.setStyleName("boxPassword", true);
 		boxPassword.setStyleName("logInBox", true);
 		dialogContents.add(boxPassword);
@@ -487,6 +491,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 							}
 						} else {
 							// Wrong response type, hide box, don't display LogInProfilUi
+							boxUserName.setText("");
+							boxPassword.setText("");
 							dialogBox.hide();
 						}						
 					}
@@ -494,6 +500,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 					@Override
 					public void onFailure(Throwable caught) {
 						// On failure, hide box, don't display LogInProfilUi
+						boxUserName.setText("");
+						boxPassword.setText("");
 						dialogBox.hide();						
 					}
 				});
