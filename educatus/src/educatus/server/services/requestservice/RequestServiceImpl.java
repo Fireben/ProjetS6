@@ -15,6 +15,7 @@ import educatus.server.businesslogic.SessionManager;
 import educatus.server.businesslogic.exercicemanager.ExerciceAdministrationManager;
 import educatus.server.businesslogic.exercicemanager.ExerciceContentBuilder;
 import educatus.server.businesslogic.exercicemanager.ExerciceHomeListingBuilder;
+import educatus.server.businesslogic.exercicemanager.ExerciceValidationManager;
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
@@ -92,6 +93,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private SessionManager sessionManager;
 	private PermissionManager permissionManager;
 	private ExerciceContentBuilder exerciceContentBuilder;
+	private ExerciceValidationManager exerciceValidationManager;
 	private ExerciceAdministrationManager exerciceAdministrationManager;
 
 	@Override
@@ -109,12 +111,12 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		seminaryHomeCategoryBuilder = dbInjector.getInstance(SeminaryHomeCategoryBuilder.class);
 		seminaryHomeListingBuilder = dbInjector.getInstance(SeminaryHomeListingBuilder.class);
 		seminaryContentBuilder = dbInjector.getInstance(SeminaryContentBuilder.class);
-		seminaryEditorContentBuilder = dbInjector.getInstance(SeminaryEditorContentBuilder.class); 
-		
+		seminaryEditorContentBuilder = dbInjector.getInstance(SeminaryEditorContentBuilder.class); 		
 		seminaryAdministrationManager = dbInjector.getInstance(SeminaryAdministrationManager.class);		
 		sessionManager = dbInjector.getInstance(SessionManager.class);
 		permissionManager = dbInjector.getInstance(PermissionManager.class);
 		exerciceContentBuilder = dbInjector.getInstance(ExerciceContentBuilder.class);
+		exerciceValidationManager = dbInjector.getInstance(ExerciceValidationManager.class);
 		exerciceAdministrationManager = dbInjector.getInstance(ExerciceAdministrationManager.class);
 		exerciceHomeListingBuilder = dbInjector.getInstance(ExerciceHomeListingBuilder.class);
 	}
@@ -231,8 +233,9 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		
 		ExerciceQuestionValidationResponse response = new ExerciceQuestionValidationResponse();
 		response.setExerciceQuestion(request.getExerciceQuestion());
+		boolean valid = exerciceValidationManager.validateAnswer(request.getExerciceQuestion(), request.getCulture(), request.getLanguage());
 		// TODO, Check validation
-		response.setValid(true);
+		response.setValid(valid);
 		return response;
 	}
 

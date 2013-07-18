@@ -23,6 +23,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
@@ -148,7 +149,7 @@ public class SeminaryEditPresenter extends
 			/* TODO, manage culture here
 			request.setCulture();
 			request.setLanguage();*/
-			request.setSessionID(Cookies.getCookie("SessionID"));
+			request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
 			request.setSeminaryContent(getSeminaryContent());
 			
 			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {				

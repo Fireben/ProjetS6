@@ -8,7 +8,7 @@ public class MainPageContentRequest extends AbstractRequest {
 
 	private static final long serialVersionUID = 5410345524705815167L;
 
-	private ViewModeEnum viewMode = ViewModeEnum.USER;
+	private ViewModeEnum viewMode = ViewModeEnum.GUEST;
 
 	@Override
 	public RequestTypeEnum GetRequestType() {
