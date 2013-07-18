@@ -134,12 +134,16 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (request.getViewMode() == ViewModeEnum.ADMIN || placeManager.getCurrentPlaceRequest().getNameToken() == NameTokens.getProfil()){
-				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
-				requestView(ViewModeEnum.USER);
+			if (	   request.getViewMode() == ViewModeEnum.USER 
+					|| request.getViewMode() == ViewModeEnum.ADMIN 
+					|| placeManager.getCurrentPlaceRequest().getNameToken() == NameTokens.getProfil()){
+				
 				// Remove Cookies
 				Cookies.removeCookie(CookiesConst.SESSION_ID);
 				Cookies.removeCookie(CookiesConst.CURRENT_USER);
+
+				placeManager.revealPlace(new PlaceRequest(NameTokens.getHomePage()));
+				requestView(ViewModeEnum.GUEST);
 			}		
 			// Display the login Ui in the MainMenu
 			displayLoginUi();
@@ -468,7 +472,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 								boxPassword.setText("");
 								dialogContents.remove(credentialsFail);
 								logInAttempt = 1;
-								dialogBox.hide();								
+								dialogBox.hide();
+								requestView(ViewModeEnum.USER);
 							} else  if (response.getLoginStatus() == LoginStatus.FAILURE){
 								// Login not sucessfull, display error text in login dialog
 								credentialsFail.setText("*Authentification Failed (" + logInAttempt + ")");
