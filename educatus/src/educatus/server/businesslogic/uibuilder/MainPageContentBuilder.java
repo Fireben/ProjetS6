@@ -3,6 +3,7 @@ package educatus.server.businesslogic.uibuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import educatus.client.NameTokens;
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
 import educatus.shared.dto.pagecontent.MainPageContent;
@@ -32,12 +33,52 @@ public class MainPageContentBuilder {
 
 		if (mode == ViewModeEnum.ADMIN){
 			return buildAdminMainPageContent(culture, language);
-		} else {
+		} else if (mode == ViewModeEnum.USER){
 			return buildUserMainPageContent(culture, language);
+		} else {
+			return buildGuestMainPageContent(culture, language);
 		}
 	}
 
 	
+	private MainPageContent buildGuestMainPageContent(String culture, String language) {
+
+		int cultureId;
+		int languageId;
+		try {
+			cultureId = interDao.findCultureByCode(culture).getId();
+			languageId = interDao.findLanguageByCode(language).getId();
+
+		} catch (Exception e) {
+			// TODO Manage Exceptions
+			e.printStackTrace();
+			return null;
+		}
+
+		MainPageContent mainPageContent = new MainPageContent();
+		MainMenuContent mainMenuContent = new MainMenuContent();
+
+		TextContentTranslationEntry textContentTranslationEntry = null;
+		String text = "";
+
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, HOME_MAIN_MENU_ITEM);
+		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.HOME_ITEM));
+
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, SEMINARS_MAIN_MENU_ITEM);
+		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.SEMINARS_HOME_ITEM));
+		
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, EXERCICES_MAIN_MENU_ITEM);
+		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.EXERCICE_HOME_ITEM));
+
+		mainPageContent.setMainMenuContent(mainMenuContent);
+		
+		return mainPageContent;
+	}
+
+
 	private MainPageContent buildUserMainPageContent(String culture, String language) {
 
 		int cultureId;
