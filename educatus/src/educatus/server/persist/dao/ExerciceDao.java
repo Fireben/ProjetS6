@@ -11,6 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
+import educatus.server.persist.dao.exercice.AnwserNumeric;
 import educatus.server.persist.dao.exercice.AnwserText;
 import educatus.server.persist.dao.exercice.Exercice;
 import educatus.server.persist.dao.exercice.ExerciceQuestion;
@@ -116,5 +117,32 @@ public class ExerciceDao {
 		anwserText.setExerciceQuestion(exerciceQuestion);
 		exerciceQuestion.setAnswer(anwserText);
 		entityManager.persist(anwserText);
+	}
+	
+	public void addNumericExerciceQuestionToExercice(int exerciceId, int questionContextDynamicContentId, int questionTextContentEntryId, int score, int answer, int sequence)
+	{
+		Exercice exercice = entityManager.find(Exercice.class, exerciceId);
+		DynamicContent questionContext = entityManager.find(DynamicContent.class, questionContextDynamicContentId);
+		TextContentEntry questionTextContentEntry = entityManager.find(TextContentEntry.class, questionTextContentEntryId);
+		// Answer Numeric => type 1
+		ExerciceQuestionType questionType = entityManager.find(ExerciceQuestionType.class, 1);
+		
+		ExerciceQuestion exerciceQuestion = new ExerciceQuestion();
+		exerciceQuestion.setDynamicContent(questionContext);
+		exerciceQuestion.setQuestion(questionTextContentEntry);
+		exerciceQuestion.setExercice(exercice);
+		exerciceQuestion.setExercicequestiontype(questionType);
+		exerciceQuestion.setScore(score);
+		exerciceQuestion.setSequence(sequence);
+		exercice.getExercicequestions().add(exerciceQuestion);
+		entityManager.persist(exerciceQuestion);
+		
+		AnwserNumeric anwserNumeric = new AnwserNumeric();
+		anwserNumeric.setExerciceQuestionType(questionType);
+		anwserNumeric.setId(exerciceQuestion.getId());
+		anwserNumeric.setValue(answer);
+		anwserNumeric.setExerciceQuestion(exerciceQuestion);
+		exerciceQuestion.setAnswer(anwserNumeric);
+		entityManager.persist(anwserNumeric);
 	}
 }

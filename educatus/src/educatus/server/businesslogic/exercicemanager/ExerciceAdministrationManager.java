@@ -28,6 +28,7 @@ import educatus.shared.dto.dynamiccontent.AbstractDynamicSection.DynamicSectionT
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.exercice.AnswerNumericContent;
 import educatus.shared.dto.exercice.AnswerTextContent;
 import educatus.shared.dto.exercice.ExerciceContent;
 import educatus.shared.dto.exercice.ExerciceQuestionContent;
@@ -144,15 +145,16 @@ public class ExerciceAdministrationManager {
 				}
 
 				dycoSequence++;
-			}			
+			}		
+			
+			TextContentTranslationEntry questionEntry = internationalizationDao.insertTextContentTranslationEntry(EN_LANG, CA_CULT, exerciceQuestionContent.getQuestion());		
 
 			switch (exerciceQuestionContent.getQuestionType())
 			{
 			case ANSWER_TEXT:
 				
 				AnswerTextContent answerTextContent = (AnswerTextContent) exerciceQuestionContent.getAnswer();
-				TextContentTranslationEntry responseEntry = internationalizationDao.insertTextContentTranslationEntry(EN_LANG, CA_CULT, answerTextContent.getTextAnswer());
-				TextContentTranslationEntry questionEntry = internationalizationDao.insertTextContentTranslationEntry(EN_LANG, CA_CULT, exerciceQuestionContent.getQuestion());			
+				TextContentTranslationEntry responseEntry = internationalizationDao.insertTextContentTranslationEntry(EN_LANG, CA_CULT, answerTextContent.getTextAnswer());	
 				
 				exerciceDao.addTextExerciceQuestionToExercice(
 						exercice.getId(),
@@ -164,7 +166,17 @@ public class ExerciceAdministrationManager {
 				);
 				break;
 			case ANSWER_NUMERIC:
-
+				
+				AnswerNumericContent answerNumericContent = (AnswerNumericContent) exerciceQuestionContent.getAnswer();
+				int answer = answerNumericContent.getNumericAnswer();
+				exerciceDao.addNumericExerciceQuestionToExercice(
+						exercice.getId(),
+						dycoContent.getId(),
+						questionEntry.getTextcontententry().getId(),
+						exerciceQuestionContent.getScore(),
+						answer,
+						exerciceQuestionContentSequence
+				);
 				break;
 			case ANSWER_CHOICE:
 
