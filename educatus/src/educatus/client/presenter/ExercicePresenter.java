@@ -1,6 +1,7 @@
 
 package educatus.client.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -226,6 +227,15 @@ public class ExercicePresenter extends
 	
 
 	private boolean verifyChoiceResponse() {	
+		if(currentQuestion instanceof MultipleChoiceQuestion) {			
+			ArrayList<String> checkedResponses = ((MultipleChoiceQuestion) currentQuestion).getValues();
+		}
+		else if(currentQuestion instanceof SingleChoiceQuestion) {
+			String id = ((SingleChoiceQuestion)currentQuestion).getValue();
+		}		
+		else if(currentQuestion instanceof TextQuestion) {
+			String response = ((TextQuestion)currentQuestion).getResponse();
+		}
 		return true;
 	}
 
