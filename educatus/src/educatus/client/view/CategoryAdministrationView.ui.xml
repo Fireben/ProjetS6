@@ -4,9 +4,13 @@
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
-	ui:generateLocales='default'>
+	ui:generateLocales='default'
+	xmlns:npui="urn:import:educatus.client.ui">
 
-	<g:HTMLPanel>
-		<g:Label text="Work in progress"/>
+	<g:HTMLPanel ui:field="categoryHtmlPanel">	
+		<g:VerticalPanel ui:field="categoryVerticalPanel">
+			   <!--  <npui:CategoryInformation ui:field="categoryInformation"></npui:CategoryInformation>
+			    <npui:CategoryList ui:field="categoryList"></npui:CategoryList> -->
+		</g:VerticalPanel> 		    
 	</g:HTMLPanel>
 </ui:UiBinder>

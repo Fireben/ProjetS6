@@ -1,0 +1,23 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:educatus.client.ui.widget">
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel>
+		<g:VerticalPanel width="100%" height="100%">
+			<g:Label text="Category Title" height="20px"/>
+			<g:TextBox ui:field="categoryName"></g:TextBox>
+			<g:HorizontalPanel width="100%" height="100%">
+				<g:VerticalPanel ui:field="categoryImageVerticalPanel" width="50%" height="100%">
+					<g:Label text="Category Image" />
+					<g:TextBox ui:field="categoryImage"></g:TextBox>
+				</g:VerticalPanel>
+				<g:VerticalPanel ui:field="categoryDescriptionVerticalPanel">
+					<g:Label text="Category Description" />
+					<g:TextArea ui:field="categoryDescription"></g:TextArea>
+				</g:VerticalPanel>
+			</g:HorizontalPanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
