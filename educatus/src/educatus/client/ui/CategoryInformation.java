@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -23,7 +24,7 @@ public class CategoryInformation extends Composite {
 	private static CategoryInformationUiBinder uiBinder = GWT.create(CategoryInformationUiBinder.class);
 	
 	@UiField 
-	Label categoryName; 
+	TextBox categoryName; 
 	@UiField 
 	Image categoryImage;
 	@UiField
@@ -55,11 +56,11 @@ public class CategoryInformation extends Composite {
 	}
 	
 	
-	public Label getCategoryName(){
+	public TextBox getCategoryName(){
 		return categoryName;
 	}
 	
-	public void setCategoryName(Label categoryName){
+	public void setCategoryName(TextBox categoryName){
 		this.categoryName = categoryName;
 	}
 	
