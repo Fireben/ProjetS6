@@ -32,6 +32,9 @@ public class Language implements Serializable {
 
 	@Column(name = "lang_code", nullable = false, length = 2)
 	private String code;
+	
+	@Column(name = "lang_fullname", nullable = false, length = 100)
+	private String fullname;
 
 	public Language() {
 	}
@@ -50,5 +53,13 @@ public class Language implements Serializable {
 
 	public void setLangCode(String code) {
 		this.code = code;
+	}
+	
+	public String getFullname() {
+		return this.fullname;
+	}
+
+	public void setLangFullname(String fullname) {
+		this.fullname = fullname;
 	}
 }

@@ -49,8 +49,6 @@ public class SessionManager {
 	@Inject
 	private SecurityDao securityDao;
 
-	private static SessionManager instance;
-
 	private Map<String, SessionEntry> sessionMap;
 	private Map<UUID, String> uuidCipMap;
 
