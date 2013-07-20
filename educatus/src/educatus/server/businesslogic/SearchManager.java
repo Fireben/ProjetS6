@@ -76,7 +76,7 @@ public class SearchManager
 		for (Object obj : results)
 		{
 			entry = (Object[]) obj;
-			toReturnIdList.add((int) entry[0]);
+			toReturnIdList.add((Integer) entry[0]);
 		}
 
 		return toReturnIdList;
@@ -113,7 +113,7 @@ public class SearchManager
 		for (Object obj : results)
 		{
 			entry = (Object[]) obj;
-			toReturnIdList.add((int) entry[0]);
+			toReturnIdList.add((Integer) entry[0]);
 		}
 
 		return toReturnIdList;

@@ -47,7 +47,7 @@ public class SearchManagerTest {
 		List<Integer> list = null;
 		List<Integer> list2 = null;
 		
-		trys
+		try
 		{
 			list = searchManager.SearchInSeminary("Basics of factory", false, internationalizationDao.findLanguageByCode("en"));
 			list2 = searchManager.SearchInExercice("question de ",  true, internationalizationDao.findLanguageByCode("en"));
