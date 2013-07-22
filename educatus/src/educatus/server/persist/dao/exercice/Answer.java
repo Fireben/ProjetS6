@@ -26,19 +26,19 @@ public abstract class Answer implements Serializable {
 
 	@Id
 	@Column(name = "exqu_id", unique = true, nullable = false)
-	private Integer id;
+	protected Integer id;
 
 	// bi-directional many-to-one association to ExerciceQuestionType
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "exqt_type", nullable = false, insertable = false, updatable = false)
-	private ExerciceQuestionType exerciceQuestionType;
+	protected ExerciceQuestionType exerciceQuestionType;
 	
 	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "exqu_id", nullable = false, insertable = false, updatable = false ),
 	    @JoinColumn(name = "exqt_type", nullable = false, insertable = false, updatable = false )
 	})	
-	private ExerciceQuestion exerciceQuestion;
+	protected ExerciceQuestion exerciceQuestion;
 
 	public Answer(){		
 	}

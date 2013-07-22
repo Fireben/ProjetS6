@@ -3,6 +3,7 @@ package educatus.server.persist.dao.exercice;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ public class AnwserChoice extends Answer implements Serializable {
 	@JoinColumn(name = "dyco_id", nullable = false, insertable = true, updatable = true)
 	private DynamicContent dynamicContent;
 
-	@OneToMany(mappedBy = "anwserChoice")
+	@OneToMany(mappedBy = "anwserChoice", cascade = CascadeType.PERSIST)
 	private List<EQAnwserChoiceDynamicSection> eqAnwserChoiceDynamicSection;
 
 	public List<EQAnwserChoiceDynamicSection> getEqAnwserChoiceDynamicSection() {
@@ -40,13 +41,13 @@ public class AnwserChoice extends Answer implements Serializable {
 	public AnwserChoice() {
 	}
 
-	public AnwserChoicePK getPK() {
-		return this.pk;
-	}
+	//public AnwserChoicePK getPK() {
+	//	return this.pk;
+	//}
 
-	public void setPK(AnwserChoicePK pk) {
-		this.pk = pk;
-	}
+	//public void setPK(AnwserChoicePK pk) {
+	//	this.pk = pk;
+	//}
 
 	public DynamicContent getDynamicContent() {
 		return this.dynamicContent;

@@ -51,7 +51,7 @@ public class ChoiceEdit extends Composite {
 			if(panel.getWidget(i) instanceof ChoiceEditEntry) {
 				ChoiceEditEntry choiceEditEntry = (ChoiceEditEntry)panel.getWidget(i);
 				if(choiceEditEntry.isSelected()) {
-					answerList.add(choiceEditEntry.getValue());
+					answerList.add(String.valueOf(i));
 				}
 				availableChoiceList.add(choiceEditEntry.getValue());
 			}
