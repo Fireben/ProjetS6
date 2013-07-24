@@ -7,7 +7,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -25,6 +24,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CategoryInformation;
 import educatus.client.ui.CategoryList;
 import educatus.client.ui.dataGrids.Category;
@@ -77,6 +77,7 @@ public class CategoryAdministrationPresenter extends Presenter<CategoryAdministr
 	@Override
 	protected void onReset() {
 		super.onReset();
+		PageChangingEvent.fire(this, NameTokens.getCategoryAdministration());
 
 		getView().getCategoryVerticalPanel().clear();
 
