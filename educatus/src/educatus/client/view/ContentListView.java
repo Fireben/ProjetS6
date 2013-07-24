@@ -11,13 +11,14 @@ import com.google.gwt.user.cellview.client.SimplePager.Resources;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-import educatus.client.NameTokens;
 import educatus.client.presenter.ContentListPresenter;
 import educatus.client.ui.dataGrids.HyperLinkCell;
 import educatus.client.ui.dataGrids.ImageCell;
@@ -115,6 +116,16 @@ ContentListPresenter.MyView {
 			};
 		dataGrid.addColumn(DescriptionColumn, "Description", "");
 		dataGrid.setColumnWidth(DescriptionColumn, 400, Unit.PX);
+		
+		FlowPanel emptyPanel = new FlowPanel();
+		Label emptyLabel = new Label("List is empty !");
+		emptyLabel.setStyleName("emptyListLabel");
+		Image image = new Image("images/Sheep.png");
+		image.setStyleName("sheep");
+		emptyPanel.add(image);
+		emptyPanel.add(emptyLabel);
+
+		dataGrid.setEmptyTableWidget(emptyPanel);
 	}
 	
 	public void initializePager() {
@@ -122,7 +133,7 @@ ContentListPresenter.MyView {
 		pager = new Pager(TextLocation.CENTER, simplePagerRessources , false, 0, true);
         pager.setRangeLimited(true);
         pager.setDisplay(dataGrid);
-        pager.setPageSize(12);
+
         pager.setStyleName("pager");
 	}
 

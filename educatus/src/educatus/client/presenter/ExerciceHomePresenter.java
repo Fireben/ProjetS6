@@ -108,8 +108,7 @@ public class ExerciceHomePresenter extends Presenter<ExerciceHomePresenter.MyVie
 	  PageChangingEvent.fire(this, NameTokens.getExerciceHomePage());
 	  categoryPresenter.setRootParent("Exercices");
 	  categoryPresenter.registerBackButton(backClickHandler);
-	  categoryPresenter.registerSeeAllButton(seeAllClickHandler);
-	  
+	  categoryPresenter.registerSeeAllButton(seeAllClickHandler);	  
 	}
 	
 	@Override

@@ -289,6 +289,10 @@ public class ExercicePresenter extends
 	
 	protected void reset() {
 		getView().getNextButton().setVisible(true);
+		if(responseFeedback != null) {
+			getView().getRootPanel().remove(responseFeedback);
+			responseFeedback = null;
+		}
 		getView().getQuestionContainer().clear();					
 		getView().getDynamicSection().clear();	
 	}

@@ -4,8 +4,13 @@ package educatus.client.presenter;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -21,6 +26,7 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.widget.DescriptionEntry;
 import educatus.client.ui.widget.DynamicSection;
+import educatus.client.ui.widget.SeenMessage;
 import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.seminary.SeminaryContent;
@@ -40,11 +46,21 @@ public class SeminaryViewPresenter extends
 		public DynamicSection getDynamicSection();
 		public FlowPanel getContentContainer();
 		public Label getTitleLabel();
+		public Button getSeenButton();
+		public FlowPanel getStatsContainer();
 	}
 
 	@Inject
 	private EducatusLocale locale;	
 	String id;
+	
+	private ClickHandler seenButtonHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			getView().getSeenButton().removeFromParent();
+			getView().getStatsContainer().add(new SeenMessage());
+		}
+	};
 
 	// Create a remote service proxy to talk to the server-side service.
 	private final RequestServiceAsync requestService = GWT
@@ -70,6 +86,7 @@ public class SeminaryViewPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
+		getView().getSeenButton().addClickHandler(seenButtonHandler);
 	}
 
 	@Override
@@ -130,8 +147,9 @@ public class SeminaryViewPresenter extends
 
 		getView().getContentContainer().setVisible(true);
 		descriptionContainer.setVisible(true);
+		getView().getSeenButton().setVisible(true);
 	}
-
+	
 	@Override
 	public void prepareFromRequest(PlaceRequest placeRequest) {
 		super.prepareFromRequest(placeRequest);
