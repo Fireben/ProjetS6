@@ -180,4 +180,13 @@ public class User implements Serializable {
 	public void setAssociatedGroupList(List<Group> associatedGroupList) {
 		this.associatedGroupList = associatedGroupList;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+			return this.cip.equals(((User)obj).getCip());
+		} else {
+			return false;
+		}
+	}
 }
