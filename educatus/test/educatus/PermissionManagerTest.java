@@ -9,6 +9,7 @@ import com.google.inject.Injector;
 
 import educatus.server.businesslogic.PermissionConstant;
 import educatus.server.businesslogic.PermissionManager;
+import educatus.server.businesslogic.SearchManager;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
 import educatus.server.persist.dao.DynamicContentDao;
@@ -21,7 +22,8 @@ import educatus.server.persist.dao.security.User;
 public class PermissionManagerTest {
 
 	public static void main(String[] args) throws Exception {
-
+	
+		
 		InternationalizationDao internationalizationDao = null;
 		SeminaryDao seminaryDao = null;
 		SecurityDao securityDao = null;
@@ -38,7 +40,7 @@ public class PermissionManagerTest {
 		securityDao = dbInjector.getInstance(SecurityDao.class);
 		dynamicContentDao = dbInjector.getInstance(DynamicContentDao.class);
 		manager = dbInjector.getInstance(EntityManager.class);
-		permManage = dbInjector.getInstance(PermissionManager.class);
+		permManage = dbInjector.getInstance(PermissionManager.class);		
 		
 		// Retrouve l'utilisateur temporaire du test s'il existe.
 		User tempUser = null;
