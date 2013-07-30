@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -20,6 +21,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.widget.DescriptionEntry;
@@ -34,7 +36,9 @@ import educatus.shared.services.RequestServiceAsync;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.SeminaryContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryValidationRequest;
 import educatus.shared.services.requestservice.response.SeminaryContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryValidationResponse;
 
 public class SeminaryViewPresenter extends
 		Presenter<SeminaryViewPresenter.MyView, SeminaryViewPresenter.MyProxy> {
@@ -55,8 +59,28 @@ public class SeminaryViewPresenter extends
 	private ClickHandler seenButtonHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			getView().getSeenButton().removeFromParent();
-			getView().getStatsContainer().add(new SeenMessage());
+			
+			SeminaryValidationRequest request = new SeminaryValidationRequest();
+			request.setCulture(locale.getCulture());
+			request.setLanguage(locale.getLanguage());
+			request.setSeminaryId(Integer.parseInt(id));
+			request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
+			requestService.sendRequest(request,
+					new AsyncCallback<AbstractResponse>() {
+						@Override
+						public void onSuccess(AbstractResponse result) {
+							if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_VALIDATION_RESPONSE) {
+								SeminaryValidationResponse response = (SeminaryValidationResponse) result;
+								
+								getView().getSeenButton().removeFromParent();
+								getView().getStatsContainer().add(new SeenMessage());
+							}
+						}
+
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+					});
 		}
 	};
 
