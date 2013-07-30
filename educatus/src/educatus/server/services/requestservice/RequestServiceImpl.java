@@ -390,7 +390,6 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				response.setSeminaryCompletedByUser(isSeminaryCompleted);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		response.setSeminaryContent(content);
 
