@@ -26,8 +26,6 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	@UiField
 	FlowPanel statsContainer;	
 	@UiField
-	Button seenButton;	
-	@UiField
 	FlowPanel contentContainer;	
 	@UiField
 	Label titleLabel;
@@ -44,13 +42,11 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		
 		descriptionContainer.setVisible(false);
 		contentContainer.setVisible(false);
-		seenButton.setVisible(false);
 		
 		descriptionContainer.setStyleName("descriptionContainer");
 		titleLabel.setStyleName("viewTitleLabel");
 		contentContainer.setStyleName("viewContentContainer");	
 		rightSpacer.setStyleName("viewSpacer");
-		seenButton.setStyleName("seenButton");
 		statsContainer.setStyleName("statsContainer");
 		
 		horizontalPanel.setCellWidth(leftSpacer, "45%");
@@ -72,10 +68,6 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 
 	public Label getTitleLabel() {
 		return titleLabel;
-	}
-
-	public Button getSeenButton() {
-		return seenButton;
 	}
 
 	public FlowPanel getStatsContainer() {

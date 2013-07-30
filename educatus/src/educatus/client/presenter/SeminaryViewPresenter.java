@@ -48,7 +48,6 @@ public class SeminaryViewPresenter extends
 		public DynamicSection getDynamicSection();
 		public FlowPanel getContentContainer();
 		public Label getTitleLabel();
-		public Button getSeenButton();
 		public FlowPanel getStatsContainer();
 	}
 
@@ -72,7 +71,7 @@ public class SeminaryViewPresenter extends
 							if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_VALIDATION_RESPONSE) {
 								SeminaryValidationResponse response = (SeminaryValidationResponse) result;
 								
-								getView().getSeenButton().removeFromParent();
+								getView().getStatsContainer().clear();
 								getView().getStatsContainer().add(new SeenMessage());
 							}
 						}
@@ -108,7 +107,6 @@ public class SeminaryViewPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
-		getView().getSeenButton().addClickHandler(seenButtonHandler);
 	}
 
 	@Override
@@ -122,6 +120,7 @@ public class SeminaryViewPresenter extends
 		//Clear the content to prevent having the data of a previous seminary
 		getView().getDynamicSection().clear();
 		getView().getDynamicSection().setVisible(true);
+		getView().getStatsContainer().clear();
 		
 		getView().getDescriptionContainer().clear();
 		getView().getDescriptionContainer().setVisible(false);
@@ -138,8 +137,27 @@ public class SeminaryViewPresenter extends
 					public void onSuccess(AbstractResponse result) {
 						if (result.GetResponseType() == ResponseTypeEnum.SEMINARY_CONTENT_RESPONSE) {
 							SeminaryContentResponse response = (SeminaryContentResponse) result;
-							SeminaryContent seminaryContent = response
-									.getSeminaryContent();
+							SeminaryContent seminaryContent = response.getSeminaryContent();
+							
+							if(response.isSeminaryCompletedByUser()) {
+								// Seminary already completed, display "seen message"
+								getView().getStatsContainer().clear();
+								getView().getStatsContainer().add(new SeenMessage());
+							} else {
+								String sessionId = Cookies.getCookie(CookiesConst.SESSION_ID);
+								String username = Cookies.getCookie(CookiesConst.CURRENT_USER);
+								if (sessionId == null || sessionId.isEmpty()) {
+									// User not logged, display no stats nor seen button
+									getView().getStatsContainer().clear();								
+								} else {
+									// User logged, but not yet completed seminary
+									Button seenButton = new Button("Seen it !");
+									seenButton.addClickHandler(seenButtonHandler);
+									seenButton.setStyleName("seenButton");									
+									getView().getStatsContainer().add(seenButton);
+								}
+							}
+							
 							populateSeminaryView(seminaryContent);
 						}
 					}
@@ -169,7 +187,6 @@ public class SeminaryViewPresenter extends
 
 		getView().getContentContainer().setVisible(true);
 		descriptionContainer.setVisible(true);
-		getView().getSeenButton().setVisible(true);
 	}
 	
 	@Override
