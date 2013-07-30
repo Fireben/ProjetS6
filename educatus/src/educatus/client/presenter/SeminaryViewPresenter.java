@@ -131,6 +131,7 @@ public class SeminaryViewPresenter extends
 		request.setCulture(locale.getCulture());
 		request.setLanguage(locale.getLanguage());
 		request.setSelectedSeminaryId(Integer.parseInt(id));
+		request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
 		requestService.sendRequest(request,
 				new AsyncCallback<AbstractResponse>() {
 					@Override
