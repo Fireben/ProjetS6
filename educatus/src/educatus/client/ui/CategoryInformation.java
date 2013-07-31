@@ -1,11 +1,11 @@
 package educatus.client.ui;
 
-import gwtupload.client.IUploader;
-import gwtupload.client.PreloadedImage;
-import gwtupload.client.SingleUploader;
 import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader;
 import gwtupload.client.IUploader.UploadedInfo;
+import gwtupload.client.PreloadedImage;
 import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
+import gwtupload.client.SingleUploader;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -15,8 +15,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HeaderPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;

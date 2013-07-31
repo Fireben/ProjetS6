@@ -3,6 +3,10 @@ body,table td,select {
 	
 }
 
+* {
+	font-family: Calibri !important;
+}
+
 pre {
 	
 }
@@ -2618,7 +2622,9 @@ a:hover, .logInClose {
 	margin-right:auto;
 	margin-bottom:50px;
 	margin-top: 20px;
-	color: white
+	color: white;
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, sans-serif;
+	font-size: 15px;
 }
 
 .editContent {
@@ -2630,6 +2636,7 @@ a:hover, .logInClose {
 	width: 350px;
 	resize: none;
 	margin-bottom: 10px;
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, sans-serif;
 }
 
 .editTitleBox {
@@ -2850,6 +2857,8 @@ a:hover, .logInClose {
 	height: 35px;
 	color: white;
 	cursor: pointer;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .answerEditButton>button:hover:enabled {
@@ -2879,49 +2888,67 @@ a:hover, .logInClose {
 	margin-right: auto;
 }
 
-.categoryVerticalPanel{
+.emptyListLabel {
+	color: #00a1d6;
+	font-size: 28px;
+	margin-bottom: 20px;
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
+	width: 1020px;
+	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	margin-left:10px;
-	margin-right:10px;
 }
 
-.categoryTable {
-	padding-bottom: 6%;
-	padding-top: 6%;
-	text-align: center;
+.sheep {
+	margin-top: 10px;
 }
 
-.editCategoryHtmlPanel {
-	align: right;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:50px;
+.seenButton {
+	background: none repeat scroll 0% 0% #202020;
+	opacity: 0.75;
+	border: 1px solid #3B3B3B;
+	color: rgb(180, 217, 230);
+	cursor: pointer;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 35px;
+}
+
+.seenButton:hover:enabled {
+	border: 1px solid #4B4B4B;
+	opacity: 1 !important;
+}
+
+.statsContainer {
 	margin-top: 20px;
-	color: white
+	width: 315px;
 }
 
-.editCategoryVerticalPanel {
-	align: right;
-	width: 750px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:50px;
-	margin-top: 20px;
-	color: white
+.seenLabel {
+	margin-top: 6px;
+	padding-right: 10px;
+	color: rgb(233, 233, 233);
 }
 
-.editCategoryTitleBox{
-	width: 200px;
-	margin-bottom: 10px !important;
+.center {
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.editCategoryImage {
-	margin-bottom: 10px !important;
+.searchBox {
+	float: right;
+	margin-top: -50px;
+	margin-right: 50px;
 }
 
-.editCategoryDescriptionBox {
-	width: 350px;
-	resize: none;
-	margin-bottom: 10px;
+.searchText {
+	border-radius: 2px;
+}
+
+.searchButton {
+	width: 28px;
+	height: 28px;
+	margin-top: -4px;
+	margin-left: -5px;
+	cursor: pointer;
 }

@@ -11,7 +11,7 @@ public class ImageCell extends AbstractCell<Integer> {
 		Image image = new Image("images/star.png");
 		image.setHeight("20px");
 		image.setWidth("20px");
-		for(int i=0;i<difficulty;i++) {
+		for(int i=0;i<difficulty/2 +1;i++) {
 	        sb.append(SafeHtmlUtils.fromTrustedString(image.toString()));        
 		}
     }

@@ -109,7 +109,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	  categoryPresenter.setRootParent("Seminars");
 	  categoryPresenter.registerBackButton(backClickHandler);
 	  categoryPresenter.registerSeeAllButton(seeAllClickHandler);
-	  
+	  categoryPresenter.registerSearchButton(searchHandler);	  
 	}
 	
 	@Override
@@ -134,6 +134,13 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		}
 	};
 	
+	private ClickHandler searchHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {	 				
+	  		createAndSendSearchListingRequest(categoryPresenter.getView().getSearchBox().getValue());
+		}
+	};
+	
 	private ClickHandler categoryClickHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -147,7 +154,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
   		parentCategory.setId(id);  		
   		createAndSendCategoryRequest(parentCategory);
 	}
-	
+
 	private class AbstractResponseHandler implements AsyncCallback<AbstractResponse> {
 		
 		@Override
@@ -206,7 +213,7 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 					seminaryCoreContent.getDescription(), 
 					seminaryCoreContent.getAuthor().getFirstName() + " " + seminaryCoreContent.getAuthor().getLastName(), 
 					seminaryCoreContent.getCreatedDate(), 
-					2,
+					seminaryCoreContent.getDifficultyValue(),
 					NameTokens.getViewSeminary()
 			);
 			list.add(listContent);
@@ -216,11 +223,19 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 		listPresenter.setBackButtonHandler(backClickHandler);
 	}
 
-	public void createAndSendListingRequest(CategoryCoreContent parentCategory) {
+	private void createAndSendListingRequest(CategoryCoreContent parentCategory) {
   		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
   		request.setSelectedCategory(parentCategory);
   		request.setCulture(locale.getCulture());
   		request.setLanguage(locale.getLanguage());
   		requestService.sendRequest(request, responseHandler);	
+	}
+	
+	private void createAndSendSearchListingRequest(String value) {
+  		SeminaryHomePageListingContentRequest request = new SeminaryHomePageListingContentRequest();
+  		request.setSearchTerm(value);
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(request, responseHandler);			
 	}
 }

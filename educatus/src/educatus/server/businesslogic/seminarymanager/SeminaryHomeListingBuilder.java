@@ -5,7 +5,9 @@ import java.util.List;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import educatus.server.businesslogic.SearchManager;
 import educatus.server.businesslogic.SeminaryAdapter;
+import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.SeminaryDao;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Seminary;
@@ -13,11 +15,18 @@ import educatus.shared.dto.pagecontent.SeminaryHomePageListingContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.SeminaryCoreContent;
 
+
 @Singleton
 public class SeminaryHomeListingBuilder {
 
 	@Inject
 	private SeminaryDao semDao;
+	
+	@Inject
+	private SearchManager searchManager;
+	
+	@Inject
+	private InternationalizationDao internationalizationDao;
 
 	public SeminaryHomePageListingContent buildSeminaryHomeListingContent(String culture, String language) {
 		SeminaryHomePageListingContent pageContent = new SeminaryHomePageListingContent();
@@ -25,7 +34,6 @@ public class SeminaryHomeListingBuilder {
 		try {
 			// We set common parent
 			pageContent.setCommonParent(null);
-
 			List<Seminary> seminaryList = semDao.findAllSeminary();
 
 			for (Seminary seminary : seminaryList) {
@@ -66,6 +74,34 @@ public class SeminaryHomeListingBuilder {
 
 		return pageContent;
 	}
+	
+	public SeminaryHomePageListingContent buildSeminaryHomeListingContent(String searchTerm, String culture, String language) {
+
+		SeminaryHomePageListingContent pageContent = new SeminaryHomePageListingContent();
+		
+		// We set common parent
+		pageContent.setCommonParent(null);
+		try {			
+			List<Integer> ids = searchManager.SearchInSeminary(searchTerm, true, internationalizationDao.findLanguageByCode("en"));
+			if(ids.size() == 0) {
+				return null;
+			}
+				
+			List<Seminary> seminaryList = semDao.findSeminariesByIds(ids);
+
+			for (Seminary seminary : seminaryList) {
+				SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
+				pageContent.getSeminariesChildren().add(seminaryCoreContent);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		return pageContent;
+	}
+	
 	
 	
 }
