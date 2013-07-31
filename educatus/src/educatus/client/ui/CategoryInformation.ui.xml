@@ -4,20 +4,21 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:HTMLPanel>
-		<g:VerticalPanel width="100%" height="100%">
-			<g:Label text="Category Title" height="20px"/>
+	<g:HTMLPanel ui:field="categoryEditHtmlPanel">
+		<g:VerticalPanel ui:field ="categoryEditVerticalPanel" width="100%" height="100%">
+			<g:Label text="Category Name" height="20px"/>
 			<g:TextBox ui:field="categoryName"></g:TextBox>
-			<g:HorizontalPanel width="100%" height="100%">
+			<!-- <g:HorizontalPanel width="100%" height="100%">-->
 				<g:VerticalPanel ui:field="categoryImageVerticalPanel" width="50%" height="100%">
 					<g:Label text="Category Image" />
 					<g:Image ui:field="categoryImage"></g:Image>
-				</g:VerticalPanel>
-				<g:VerticalPanel ui:field="categoryDescriptionVerticalPanel">
+			</g:VerticalPanel>
+			<!-- </g:HorizontalPanel>-->
+			<g:VerticalPanel ui:field="categoryDescriptionVerticalPanel">
 					<g:Label text="Category Description" />
-					<g:TextArea ui:field="categoryDescription"></g:TextArea>
+					<g:TextArea ui:field="categoryDescription" width="210px" height="110px"></g:TextArea>
 				</g:VerticalPanel>
-			</g:HorizontalPanel>
 		</g:VerticalPanel>
-	</g:HTMLPanel>
+		<g:HTMLPanel ui:field="confirmPanel"/>
+	</g:HTMLPanel>	
 </ui:UiBinder> 

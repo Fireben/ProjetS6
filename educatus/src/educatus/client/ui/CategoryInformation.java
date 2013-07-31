@@ -12,6 +12,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.HeaderPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -21,7 +23,10 @@ public class CategoryInformation extends Composite {
 	
 	private static CategoryInformationUiBinder uiBinder = GWT.create(CategoryInformationUiBinder.class);
 	
-	@UiField 
+	@UiField
+	HTMLPanel categoryEditHtmlPanel;
+	@UiField
+	VerticalPanel categoryEditVerticalPanel;	@UiField 
 	TextBox categoryName; 
 	@UiField 
 	Image categoryImage;
@@ -39,9 +44,11 @@ public class CategoryInformation extends Composite {
 
 	public CategoryInformation(){
 		initWidget(uiBinder.createAndBindUi(this));
-		categoryName.setStyleName("profileSummaryLabel");
-		categoryImage.setStyleName("profileImage");
-		categoryDescriptionVerticalPanel.setStyleName("userDescriptionVerticalPanel");
+		categoryName.setStyleName("editCategoryVerticalPanel");
+		categoryEditHtmlPanel.setStyleName("editCategoryHtmlPanel");
+		categoryName.setStyleName("editCategoryHtmlPanel");
+		categoryImage.setStyleName("editCategoryImage");
+		categoryDescriptionVerticalPanel.setStyleName("editCategoryDescriptionBox");
 		defaultUploader = new SingleUploader();
 		defaultUploader.setAutoSubmit(true);
 		defaultUploader.addOnFinishUploadHandler(onFinishUploaderHandler);

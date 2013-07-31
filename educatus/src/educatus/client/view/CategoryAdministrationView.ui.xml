@@ -7,8 +7,8 @@
 	ui:generateLocales='default'
 	xmlns:npui="urn:import:educatus.client.ui">
 
-	<g:HTMLPanel ui:field="categoryHtmlPanel">	
-		<g:VerticalPanel ui:field="categoryVerticalPanel">
+	<g:HTMLPanel>	
+		<g:VerticalPanel ui:field="categoryAdminVerticalPanel">
 			   <!--  <npui:CategoryInformation ui:field="categoryInformation"></npui:CategoryInformation>
 			    <npui:CategoryList ui:field="categoryList"></npui:CategoryList> -->
 		</g:VerticalPanel> 		    

@@ -17,10 +17,7 @@ public class CategoryAdministrationView extends ViewImpl implements
 
 	private final Widget widget;
 
-	@UiField HTMLPanel categoryHtmlPanel;
-	@UiField VerticalPanel categoryVerticalPanel;
-	//@UiField CategoryList categoryList;
-	//@UiField CategoryInformation categoryInformation;
+	@UiField VerticalPanel categoryAdminVerticalPanel;
 	
 	public interface Binder extends UiBinder<Widget, CategoryAdministrationView> {
 	}
@@ -28,6 +25,7 @@ public class CategoryAdministrationView extends ViewImpl implements
 	@Inject
 	public CategoryAdministrationView(final Binder binder) {
 		widget = binder.createAndBindUi(this);
+		categoryAdminVerticalPanel.setStyleName("center");
 	}
 
 	@Override
@@ -35,19 +33,8 @@ public class CategoryAdministrationView extends ViewImpl implements
 		return widget;
 	}
 	
-	public HTMLPanel getHtmlPanel(){
-		return categoryHtmlPanel;
-	}
-	
 	public VerticalPanel getCategoryVerticalPanel() {
-		return categoryVerticalPanel;
+		return categoryAdminVerticalPanel;
 	}
-	
-	/*public CategoryList getCategoryList() {
-		return categoryList;
-	}
-	
-	public CategoryInformation getCategoryInformation() {
-		return categoryInformation;
-	}*/
+
 }
