@@ -36,6 +36,7 @@ public class ProfilNewsfeed extends Composite {
 	}
 
 	public ProfilNewsfeed() {
+		
 		CellTable.Resources SeminaryDataGridRessources = GWT.create(SeminaryDataGridCssRessource.class);
 		newsfeedTable = new CellTable<ListContent>(12, SeminaryDataGridRessources);
 		newsfeedTable.addStyleName("newsfeedTable");
@@ -52,6 +53,8 @@ public class ProfilNewsfeed extends Composite {
 		newsfeedTable.setEmptyTableWidget(emptyPanel);
 		
 		initWidget(uiBinder.createAndBindUi(this));
+		newsfeedTitleLabel.setStyleName("newsfeedTitleLabel");
+		newsfeedVerticalPanel.setStyleName("newsfeedVerticalPanel");
 	}
 	
 
