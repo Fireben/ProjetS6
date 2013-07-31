@@ -64,8 +64,9 @@ public class DynamicSection extends Composite {
 	}
 	
 	private void addImageSection(String imageUrl) {
+		Image image = new Image(imageUrl);
 		
-		panel.add(new Image(imageUrl));
+		panel.add(image);
 	}
 
 	private void addTextSection(String title, String text) {
