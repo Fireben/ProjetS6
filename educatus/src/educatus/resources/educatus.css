@@ -2879,49 +2879,49 @@ a:hover, .logInClose {
 	margin-right: auto;
 }
 
-.emptyListLabel {
-	color: #00a1d6;
-	font-size: 28px;
-	margin-bottom: 20px;
-	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, Sans-Serif;
-	width: 1020px;
+.categoryVerticalPanel{
+	margin-left: auto;
+	margin-right: auto;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.categoryTable {
+	padding-bottom: 6%;
+	padding-top: 6%;
 	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
 }
 
-.sheep {
-	margin-top: 10px;
-}
-
-.seenButton {
-	background: none repeat scroll 0% 0% #202020;
-	opacity: 0.75;
-	border: 1px solid #3B3B3B;
-	color: rgb(180, 217, 230);
-	cursor: pointer;
-	padding-left: 10px;
-	padding-right: 10px;
-	height: 35px;
-}
-
-.seenButton:hover:enabled {
-	border: 1px solid #4B4B4B;
-	opacity: 1 !important;
-}
-
-.statsContainer {
+.editCategoryHtmlPanel {
+	align: right;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:50px;
 	margin-top: 20px;
-	width: 315px;
+	color: white
 }
 
-.seenLabel {
-	margin-top: 6px;
-	padding-right: 10px;
-	color: rgb(233, 233, 233);
+.editCategoryVerticalPanel {
+	align: right;
+	width: 750px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:50px;
+	margin-top: 20px;
+	color: white
 }
 
-.center {
-	margin-left: auto;
-	margin-right: auto;
+.editCategoryTitleBox{
+	width: 200px;
+	margin-bottom: 10px !important;
+}
+
+.editCategoryImage {
+	margin-bottom: 10px !important;
+}
+
+.editCategoryDescriptionBox {
+	width: 350px;
+	resize: none;
+	margin-bottom: 10px;
 }

@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -22,37 +23,48 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CategoryInformation;
 import educatus.client.ui.CategoryList;
 import educatus.client.ui.dataGrids.Category;
+import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.services.RequestService;
 import educatus.shared.services.RequestServiceAsync;
+import educatus.shared.services.requestservice.AbstractResponse;
+import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.CategoryAdministrationPageContentRequest;
+import educatus.shared.services.requestservice.response.CategoryAdministrationPageContentResponse;
+import educatus.shared.services.requestservice.response.HomePageContentResponse;
 
-public class CategoryAdministrationPresenter extends Presenter<CategoryAdministrationPresenter.MyView, CategoryAdministrationPresenter.MyProxy> {
+public class CategoryAdministrationPresenter
+		extends
+		Presenter<CategoryAdministrationPresenter.MyView, CategoryAdministrationPresenter.MyProxy> {
 
 	HandlerRegistration DeletedCategoryHandler = null;
 
 	public interface MyView extends View {
 
 		public VerticalPanel getCategoryVerticalPanel();
-
-		public HTMLPanel getHtmlPanel();
 	}
+
+	// Response handler
+	private AbstractResponseHandler responseHandler = null;
 
 	String action = null;
 	String id = null;
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.categoryAdministration)
-	public interface MyProxy extends ProxyPlace<CategoryAdministrationPresenter> {
+	public interface MyProxy extends
+			ProxyPlace<CategoryAdministrationPresenter> {
 	}
 
 	// Create a remote service proxy to talk to the server-side service.
-	private final RequestServiceAsync requestService = GWT.create(RequestService.class);
+	private final RequestServiceAsync requestService = GWT
+			.create(RequestService.class);
 
 	@Inject
 	private EducatusLocale locale;
@@ -60,18 +72,21 @@ public class CategoryAdministrationPresenter extends Presenter<CategoryAdministr
 	public static final Object SLOT_content = new Object();
 
 	@Inject
-	public CategoryAdministrationPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
+	public CategoryAdministrationPresenter(final EventBus eventBus,
+			final MyView view, final MyProxy proxy) {
 		super(eventBus, view, proxy);
 	}
 
 	@Override
 	protected void revealInParent() {
-		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
+		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent,
+				this);
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
+		responseHandler = new AbstractResponseHandler();
 	}
 
 	@Override
@@ -91,7 +106,8 @@ public class CategoryAdministrationPresenter extends Presenter<CategoryAdministr
 
 			VerticalPanel verticalPanel = new VerticalPanel();
 			verticalPanel.add(new RichTextArea());
-			categoryInformation.setCategoryDescriptionVerticalPanel(verticalPanel);
+			categoryInformation
+					.setCategoryDescriptionVerticalPanel(verticalPanel);
 
 			Image categoryImage = new Image("images/categories/software.png");
 			categoryInformation.setCategoryImage(categoryImage);
@@ -109,15 +125,16 @@ public class CategoryAdministrationPresenter extends Presenter<CategoryAdministr
 
 		else if (action == null && id == null) {
 
-			CategoryAdministrationPageContentRequest request = new CategoryAdministrationPageContentRequest();
-			// request.setCulture(locale.getCulture());
-			// request.setLanguage(locale.getLanguage());
-			// requestService.sendRequest(request, new
-			// AsyncCallback<AbstractResponse>() {
-
-			// @Override
-			// public void onSuccess(AbstractResponse result) {
 			/*
+			 * CategoryAdministrationPageContentRequest request = new
+			 * CategoryAdministrationPageContentRequest();
+			 * request.setCulture(locale.getCulture());
+			 * request.setLanguage(locale.getLanguage());
+			 * requestService.sendRequest(request, new
+			 * AsyncCallback<AbstractResponse>() {
+			 * 
+			 * @Override public void onSuccess(AbstractResponse result) {
+			 * 
 			 * if (result.GetResponseType() ==
 			 * ResponseTypeEnum.CATEGORY_ADMINISTRATION_CONTENT_RESPONSE) {
 			 * CategoryAdministrationPageContentResponse response =
@@ -141,24 +158,28 @@ public class CategoryAdministrationPresenter extends Presenter<CategoryAdministr
 			 * ListDataProvider<Category>();
 			 * dataProvider.addDataDisplay(dataGrid);
 			 * dataProvider.setList(categories); }
+			 * 
+			 * 
+			 * //Category category1 = new Category(1, "Hardware",
+			 * "Seminars related to the hardware", "C:/Url/Path"); //Category
+			 * category2 = new Category(2, "Software",
+			 * "Seminars related to the software", "C:/Url/Path/Software");
+			 * //Category category3 = new Category(3, "Algorithm",
+			 * "Seminars related to the algorithm", "C:/Url/Path/Algorithm");
+			 * 
+			 * //List<Category> categories = new ArrayList<Category>();
+			 * //categories.add(category1); //categories.add(category2);
+			 * //categories.add(category3);
+			 * 
+			 * //CategoryList categoryList = new CategoryList();
+			 * //CellTable<Category> dataGrid = categoryList.getDataGrid();
+			 * //ListDataProvider<Category> dataProvider = new
+			 * ListDataProvider<Category>();
+			 * //dataProvider.addDataDisplay(dataGrid);
+			 * //dataProvider.setList(categories);
+			 * 
+			 * //getView().getCategoryVerticalPanel().add(categoryList);
 			 */
-
-			Category category1 = new Category(1, "Hardware", "Seminars related to the hardware", "C:/Url/Path");
-			Category category2 = new Category(2, "Software", "Seminars related to the software", "C:/Url/Path/Software");
-			Category category3 = new Category(3, "Algorithm", "Seminars related to the algorithm", "C:/Url/Path/Algorithm");
-
-			List<Category> categories = new ArrayList<Category>();
-			categories.add(category1);
-			categories.add(category2);
-			categories.add(category3);
-
-			CategoryList categoryList = new CategoryList();
-			CellTable<Category> dataGrid = categoryList.getDataGrid();
-			ListDataProvider<Category> dataProvider = new ListDataProvider<Category>();
-			dataProvider.addDataDisplay(dataGrid);
-			dataProvider.setList(categories);
-
-			getView().getCategoryVerticalPanel().add(categoryList);
 		}
 
 		else {
@@ -167,16 +188,16 @@ public class CategoryAdministrationPresenter extends Presenter<CategoryAdministr
 		// }
 
 		/*
-		 * @Override public void onFailure(Throwable caught) { // TODO
-		 * Auto-generated method
-		 * 
-		 * } });
+		 * @Override public void onFailure(Throwable caught) { // TODO //
+		 * Auto-generated method } });
 		 */
+
 	}
 
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		createAndSendCategoryListRequest();
 	}
 
 	@Override
@@ -185,4 +206,95 @@ public class CategoryAdministrationPresenter extends Presenter<CategoryAdministr
 		action = placeRequest.getParameter("action", null);
 		id = placeRequest.getParameter("id", null);
 	}
+
+	public void createAndSendCategoryListRequest() {
+		CategoryAdministrationPageContentRequest request = new CategoryAdministrationPageContentRequest();
+		request.setCulture(locale.getCulture());
+		request.setLanguage(locale.getLanguage());
+		request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
+		// requestService.sendRequest(request, responseHandler);
+		requestService.sendRequest(request,
+				new AsyncCallback<AbstractResponse>() {
+
+					@Override
+					public void onSuccess(AbstractResponse result) {
+						if (result.GetResponseType() == ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE) {
+							CategoryAdministrationPageContentResponse response = (CategoryAdministrationPageContentResponse) result;
+
+							List<CategoryCoreContent> categoryCoreContentList = response
+									.getCategoryCoreContentList();
+
+							getView().getCategoryVerticalPanel().clear();
+
+							List<Category> categories = new ArrayList<Category>();
+
+							for (CategoryCoreContent categoryCoreContent : categoryCoreContentList) {
+								Category category = new Category(
+										categoryCoreContent.getId(),
+										categoryCoreContent.getName(),
+										categoryCoreContent.getDescription(),
+										categoryCoreContent.getImageUrl());
+								categories.add(category);
+							}
+							CategoryList categoryList = new CategoryList();
+							CellTable<Category> dataGrid = categoryList
+									.getDataGrid();
+							ListDataProvider<Category> dataProvider = new ListDataProvider<Category>();
+							dataProvider.addDataDisplay(dataGrid);
+							dataProvider.setList(categories);
+
+							getView().getCategoryVerticalPanel().add(
+									categoryList);
+						} else {
+							// ERROR, not the response type we expected
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+	}
+
+	private class AbstractResponseHandler implements
+			AsyncCallback<AbstractResponse> {
+
+		@Override
+		public void onSuccess(AbstractResponse result) {
+			if (result.GetResponseType() == ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE) {
+				CategoryAdministrationPageContentResponse response = (CategoryAdministrationPageContentResponse) result;
+
+				List<CategoryCoreContent> categoryCoreContentList = response
+						.getCategoryCoreContentList();
+
+				getView().getCategoryVerticalPanel().clear();
+
+				List<Category> categories = new ArrayList<Category>();
+
+				for (CategoryCoreContent categoryCoreContent : categoryCoreContentList) {
+					Category category = new Category(
+							categoryCoreContent.getId(),
+							categoryCoreContent.getName(),
+							categoryCoreContent.getDescription(),
+							categoryCoreContent.getImageUrl());
+					categories.add(category);
+				}
+				CategoryList categoryList = new CategoryList();
+				CellTable<Category> dataGrid = categoryList.getDataGrid();
+				ListDataProvider<Category> dataProvider = new ListDataProvider<Category>();
+				dataProvider.addDataDisplay(dataGrid);
+				dataProvider.setList(categories);
+
+				getView().getCategoryVerticalPanel().add(categoryList);
+			} else {
+				// ERROR, not the response type we expected
+			}
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+		}
+	};
 }
