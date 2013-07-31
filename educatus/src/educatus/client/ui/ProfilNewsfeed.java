@@ -8,7 +8,9 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -38,6 +40,17 @@ public class ProfilNewsfeed extends Composite {
 		newsfeedTable = new CellTable<ListContent>(12, SeminaryDataGridRessources);
 		newsfeedTable.addStyleName("newsfeedTable");
 		initializeColumns();
+		
+		FlowPanel emptyPanel = new FlowPanel();
+		Label emptyLabel = new Label("List is empty !");
+		emptyLabel.setStyleName("emptyListLabel");
+		Image image = new Image("images/Sheep.png");
+		image.setStyleName("sheep");
+		emptyPanel.add(image);
+		emptyPanel.add(emptyLabel);
+
+		newsfeedTable.setEmptyTableWidget(emptyPanel);
+		
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
