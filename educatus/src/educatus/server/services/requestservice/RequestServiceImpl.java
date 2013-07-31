@@ -18,6 +18,7 @@ import educatus.server.businesslogic.exercicemanager.ExerciceContentBuilder;
 import educatus.server.businesslogic.exercicemanager.ExerciceHomeListingBuilder;
 import educatus.server.businesslogic.exercicemanager.ExerciceValidationManager;
 import educatus.server.businesslogic.profilmanager.UserProfilBuilder;
+import educatus.server.businesslogic.seminarymanager.CategoryManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryAdministrationManager;
 import educatus.server.businesslogic.seminarymanager.SeminaryContentBuilder;
 import educatus.server.businesslogic.seminarymanager.SeminaryHomeCategoryBuilder;
@@ -44,6 +45,7 @@ import educatus.shared.services.RequestService;
 import educatus.shared.services.requestservice.AbstractRequest;
 import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.RequestTypeEnum;
+import educatus.shared.services.requestservice.request.CategoryAdministrationPageContentRequest;
 import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest;
 import educatus.shared.services.requestservice.request.ExerciceAdministrationActionRequest.ExerciceAdministractionAction;
 import educatus.shared.services.requestservice.request.ExerciceContentRequest;
@@ -61,6 +63,7 @@ import educatus.shared.services.requestservice.request.SeminaryHomePageListingCo
 import educatus.shared.services.requestservice.request.SeminaryValidationRequest;
 import educatus.shared.services.requestservice.request.UserContentRequest;
 import educatus.shared.services.requestservice.request.UserListingRequest;
+import educatus.shared.services.requestservice.response.CategoryAdministrationPageContentResponse;
 import educatus.shared.services.requestservice.response.ExerciceAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.ExerciceContentResponse;
 import educatus.shared.services.requestservice.response.ExerciceHomePageListingContentResponse;
@@ -99,6 +102,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private ExerciceContentBuilder exerciceContentBuilder;
 	private ExerciceValidationManager exerciceValidationManager;
 	private ExerciceAdministrationManager exerciceAdministrationManager;
+	private CategoryManager categoryManager;
 	private SeminaryDao seminaryDao;
 	private EntityManager entityManager;
 	
@@ -125,6 +129,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		exerciceValidationManager = dbInjector.getInstance(ExerciceValidationManager.class);
 		exerciceAdministrationManager = dbInjector.getInstance(ExerciceAdministrationManager.class);
 		exerciceHomeListingBuilder = dbInjector.getInstance(ExerciceHomeListingBuilder.class);
+		categoryManager = dbInjector.getInstance(CategoryManager.class);
 		seminaryDao = dbInjector.getInstance(SeminaryDao.class);
 		entityManager = dbInjector.getInstance(EntityManager.class);
 	}
@@ -185,6 +190,11 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				case EXERCICE_ADMINISTRATION_ACTION_REQUEST:
 					response = ProcessExerciceAdministrationActionRequest((ExerciceAdministrationActionRequest) request);
 					break;
+				case CATEGORY_ADMINISTRATION_PAGE_CONTENT_REQUEST:
+					response = ProcessCategoryAdministrationPageContentRequest((CategoryAdministrationPageContentRequest) request);
+					break;
+					
+					
 				default:
 					break;
 			}
@@ -192,6 +202,20 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			e.printStackTrace();
 		}
 
+		return response;
+	}
+
+	private AbstractResponse ProcessCategoryAdministrationPageContentRequest(CategoryAdministrationPageContentRequest request) {
+		
+		CategoryAdministrationPageContentResponse response = new CategoryAdministrationPageContentResponse();
+		
+		try {
+			List<CategoryCoreContent> categoryCoreContentList = categoryManager.getAllCategory();
+			response.setCategoryCoreContentList(categoryCoreContentList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return response;
 	}
 
