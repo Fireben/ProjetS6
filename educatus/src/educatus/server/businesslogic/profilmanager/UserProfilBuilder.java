@@ -70,8 +70,7 @@ public class UserProfilBuilder {
 		for (Category category : categoryList) {
 			CategoryStat categoryStat = seminaryDao.getCategoryStat(cip, category.getId());
 			categoryStat.setCategoryCoreContent(SeminaryAdapter.categoryToCategoryCoreContent(category, CA_CULT, EN_LANG));
-			//categoryStat.setTotalSeminaries(100);
-			//categoryStat.setCompletedSeminaries((int) (Math.random() * 100));
+
 			categoryStatList.add(categoryStat);
 		}
 		userStatisticsContent.setCategoryStatList(categoryStatList);
@@ -79,14 +78,14 @@ public class UserProfilBuilder {
 
 		// TODO, replace with real completed seminary list
 		List<Seminary> completedSeminaryList = seminaryDao.findAllSeminary();
-		int count = 0;
 		for (Seminary seminary : completedSeminaryList) {
-			if (count > 5) {
-				break;
-			}
-			SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
-			content.getCompletedSeminaryList().add(seminaryCoreContent);
-			count++;
+			for (User u : seminary.getCompletedSeminaryUsers()) {
+				if (u.equals(requestedUser)) {
+					SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
+					content.getCompletedSeminaryList().add(seminaryCoreContent);
+					break;
+				}
+			}	
 		}
 
 		return content;
