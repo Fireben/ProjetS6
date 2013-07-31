@@ -75,6 +75,7 @@
 															<img ui:field="homePageFourthSectionImg" width="154" height="154" alt="" src=""></img>			
 														</p>
 														<p ui:field="homePageFourthSectionDescription"></p>
+														<p><a ui:field="homePageFourthSectionLink" href="#"></a></p>
 													</div>
 												</div>
 											</div>

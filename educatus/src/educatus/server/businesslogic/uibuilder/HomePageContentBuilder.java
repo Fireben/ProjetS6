@@ -37,17 +37,17 @@ public class HomePageContentBuilder {
 	private static final int STATS_SECTION_DESCRIPTION = -10016;
 	private static final int STATS_SECTION_LINK_TEXT = -10017;
 	
-	private static final int FORUM_SECTION_TITLE = -10018;
-	private static final int FORUM_SECTION_TEXT = -10019;
-	private static final int FORUM_SECTION_DESCRIPTION = -10020;
-	private static final int FORUM_SECTION_LINK_TEXT = -10021;
+	private static final int COMMUNITY_SECTION_TITLE = -10018;
+	private static final int COMMUNITY_SECTION_TEXT = -10019;
+	private static final int COMMUNITY_SECTION_DESCRIPTION = -10020;
+	private static final int COMMUNITY_SECTION_LINK_TEXT = -10021;
 	
 	/* Images */
 	private static final int WELCOME_IMAGE = -10000;
 	private static final int SEMINAR_SECTION_IMAGE = -10001;
 	private static final int PROBLEM_SECTION_IMAGE = -10002;
 	private static final int STATS_SECTION_IMAGE = -10003;
-	private static final int FORUM_SECTION_IMAGE = -10004;
+	private static final int COMMUNITY_SECTION_IMAGE = -10004;
 	
 	@Inject
 	private InternationalizationDao interDao;
@@ -127,19 +127,19 @@ public class HomePageContentBuilder {
 		statisticsSection.setSectionLinkText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
 		content.setStatisticsSection(statisticsSection);
 		
-		HomePageSection forumsSection = new HomePageSection();
+		HomePageSection communitySection = new HomePageSection();
 		
-		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, FORUM_SECTION_TITLE);
-		forumsSection.setSectionTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, FORUM_SECTION_TEXT);
-		forumsSection.setSectionText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		imageExternal = interDao.findImageExternalById(FORUM_SECTION_IMAGE);
-		forumsSection.setSectionImg(imageExternal == null ? "" : imageExternal.getUrl());
-		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, FORUM_SECTION_DESCRIPTION);
-		forumsSection.setSectionDescription(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, FORUM_SECTION_LINK_TEXT);
-		forumsSection.setSectionLinkText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
-		content.setForumsSection(forumsSection);
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, COMMUNITY_SECTION_TITLE);
+		communitySection.setSectionTitle(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, COMMUNITY_SECTION_TEXT);
+		communitySection.setSectionText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
+		imageExternal = interDao.findImageExternalById(COMMUNITY_SECTION_IMAGE);
+		communitySection.setSectionImg(imageExternal == null ? "" : imageExternal.getUrl());
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, COMMUNITY_SECTION_DESCRIPTION);
+		communitySection.setSectionDescription(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, COMMUNITY_SECTION_LINK_TEXT);
+		communitySection.setSectionLinkText(textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation());
+		content.setCommunitySection(communitySection);
 			
 		return content;
 	}

@@ -64,6 +64,7 @@ public class HomeView extends ViewImpl implements MyView {
 	@UiField Element homePageFourthSectionText;
 	@UiField Element homePageFourthSectionImg;
 	@UiField Element homePageFourthSectionDescription;
+	@UiField Element homePageFourthSectionLink;
 
 	public HomeView()
 	{
@@ -170,5 +171,8 @@ public class HomeView extends ViewImpl implements MyView {
 
 	public Element getHomePageFourthSectionDescription() {
 		return homePageFourthSectionDescription;
+	}
+	public Element getHomePageFourthSectionLink() {
+		return homePageFourthSectionLink;
 	}
 }
