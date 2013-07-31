@@ -35,9 +35,8 @@ public abstract class Answer implements Serializable {
 	
 	@OneToOne
 	@JoinColumns({
-		@JoinColumn(name = "exqu_id", nullable = false, insertable = false, updatable = false ),
-	    @JoinColumn(name = "exqt_type", nullable = false, insertable = false, updatable = false )
-	})	
+		@JoinColumn(name = "exqu_id", nullable = false, insertable = false, updatable = false )
+	})
 	protected ExerciceQuestion exerciceQuestion;
 
 	public Answer(){		

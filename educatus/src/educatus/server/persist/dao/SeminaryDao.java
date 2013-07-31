@@ -27,6 +27,9 @@ public class SeminaryDao {
 	@Inject
 	private InternationalizationDao internationalizationDao;
 
+	@Inject
+	private SecurityDao securityDao;
+
 	public Category createNewCategory(int nameTeceId, int descriptionTeceId, int imageId, Integer parent) throws Exception {
 
 		TextContentEntry nameTece = entityManager.find(TextContentEntry.class, nameTeceId);
@@ -168,5 +171,35 @@ public class SeminaryDao {
 		seminary = entityManager.merge(seminary);
 
 		return seminary;
+	}
+	
+	public boolean isSeminaryCompletedByUser(int semiId, String cip) throws Exception {
+		
+		boolean isCompleted = false;
+		
+		Seminary seminary = entityManager.find(Seminary.class, semiId);
+		User user = securityDao.findUserByCip(cip);
+		
+		List<User> completedUserList = seminary.getCompletedSeminaryUsers();
+		for (User user2 : completedUserList) {
+			if (user2.equals(user)){
+				isCompleted = true;
+				break;
+			}
+		}
+		
+		return isCompleted;
+	}
+	
+	public void addUserToCompletedSeminaryList(int semiId, String cip) throws Exception {
+		
+		Seminary seminary = entityManager.find(Seminary.class, semiId);
+		User user = securityDao.findUserByCip(cip);
+		
+		if (!seminary.getCompletedSeminaryUsers().contains(user)){
+			seminary.getCompletedSeminaryUsers().add(user);
+		}
+		
+		entityManager.merge(seminary);
 	}
 }

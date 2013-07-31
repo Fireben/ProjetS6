@@ -9,6 +9,7 @@ public class SeminaryContentResponse extends AbstractResponse {
 	private static final long serialVersionUID = -7374501950617557773L;
 
 	private SeminaryContent seminaryContent;
+	private boolean isSeminaryCompletedByUser;
 
 	@Override
 	public ResponseTypeEnum GetResponseType() {
@@ -21,5 +22,13 @@ public class SeminaryContentResponse extends AbstractResponse {
 
 	public void setSeminaryContent(SeminaryContent seminaryContent) {
 		this.seminaryContent = seminaryContent;
+	}
+
+	public boolean isSeminaryCompletedByUser() {
+		return isSeminaryCompletedByUser;
+	}
+
+	public void setSeminaryCompletedByUser(boolean isSeminaryCompletedByUser) {
+		this.isSeminaryCompletedByUser = isSeminaryCompletedByUser;
 	}
 }

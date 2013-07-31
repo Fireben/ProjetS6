@@ -11,10 +11,7 @@
 	    	<g:FlowPanel ui:field="rightSpacer"/>	
 			<g:FlowPanel ui:field="rightSection">	
 				<g:FlowPanel ui:field="descriptionContainer"/>
-				<g:FlowPanel ui:field="statsContainer">	
-					<g:Button ui:field="seenButton">
-						Seen it !
-					</g:Button>
+				<g:FlowPanel ui:field="statsContainer">						
 				</g:FlowPanel>
 			</g:FlowPanel>
 		</g:HorizontalPanel>				 									

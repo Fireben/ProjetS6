@@ -11,13 +11,11 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
+import educatus.server.persist.dao.dynamiccontent.DynamicSection;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
 import educatus.server.persist.dao.exercice.AnwserChoice;
-import educatus.server.persist.dao.exercice.AnwserChoicePK;
 import educatus.server.persist.dao.exercice.AnwserNumeric;
 import educatus.server.persist.dao.exercice.AnwserText;
-import educatus.server.persist.dao.exercice.EQAnwserChoiceDynamicSection;
-import educatus.server.persist.dao.exercice.EQAnwserChoiceDynamicSectionPK;
 import educatus.server.persist.dao.exercice.Exercice;
 import educatus.server.persist.dao.exercice.ExerciceQuestion;
 import educatus.server.persist.dao.exercice.ExerciceQuestionType;
@@ -178,17 +176,14 @@ public class ExerciceDao {
 		exercice.getExercicequestions().add(exerciceQuestion);
 		entityManager.persist(exerciceQuestion);
 		
-		AnwserChoice anwserChoice = new AnwserChoice();
-		AnwserChoicePK pk = new AnwserChoicePK();
-		pk.setExqtType(questionType.getId());
-		pk.setExquId(exerciceQuestion.getId());
-		//anwserChoice.setPK(pk);
-		anwserChoice.setExerciceQuestionType(questionType);
-		anwserChoice.setId(exerciceQuestion.getId());
-		anwserChoice.setExerciceQuestion(exerciceQuestion);
-		
 		DynamicContent dycoContent = dynamicContentDao.createDynamicContent();
 		DynamicSectionAlignment centerAlignment = entityManager.find(DynamicSectionAlignment.class, 1);
+		
+		AnwserChoice anwserChoice = new AnwserChoice();
+		anwserChoice.setId(exerciceQuestion.getId());	
+		anwserChoice.setExerciceQuestionType(questionType);
+		anwserChoice.setExerciceQuestion(exerciceQuestion);
+		anwserChoice.setDynamicContent(dycoContent);		
 		
 		int choiceSequence = 0;
 		for (String aChoice : answerChoiceList) {
@@ -209,19 +204,12 @@ public class ExerciceDao {
 			choiceSequence++;
 		}
 		
-		List<EQAnwserChoiceDynamicSection> eqAnwserChoiceDynamicSections = new ArrayList<EQAnwserChoiceDynamicSection>();
+		List<DynamicSection> eqAnwserChoiceDynamicSections = new ArrayList<DynamicSection>();
 		for (String string : answerList) {
 
 			int index = Integer.parseInt(string);
 			index = index - 1;
-			EQAnwserChoiceDynamicSection eqAnwserChoiceDynamicSection = new EQAnwserChoiceDynamicSection();
-			EQAnwserChoiceDynamicSectionPK pk2 = new EQAnwserChoiceDynamicSectionPK();
-			pk2.setExquId(questionContext.getId());
-			pk2.setDyseId(dycoContent.getDynamicSectionList().get(index).getId());
-			eqAnwserChoiceDynamicSection.setId(pk2);
-			eqAnwserChoiceDynamicSection.setDynamicSection(dycoContent.getDynamicSectionList().get(index));
-			eqAnwserChoiceDynamicSection.setAnwserchoice(anwserChoice);
-			eqAnwserChoiceDynamicSections.add(eqAnwserChoiceDynamicSection);
+			eqAnwserChoiceDynamicSections.add(dycoContent.getDynamicSectionList().get(index));
 		}
 		anwserChoice.setEqAnwserChoiceDynamicSection(eqAnwserChoiceDynamicSections);
 		

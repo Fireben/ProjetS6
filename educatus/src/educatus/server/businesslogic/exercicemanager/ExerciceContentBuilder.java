@@ -1,5 +1,6 @@
 package educatus.server.businesslogic.exercicemanager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,13 +11,17 @@ import com.google.inject.Singleton;
 import educatus.server.businesslogic.DynamicContentAdapter;
 import educatus.server.businesslogic.ExerciceAdapter;
 import educatus.server.businesslogic.InternationalizationUtility;
+import educatus.server.persist.dao.dynamiccontent.DynamicSection;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.exercice.AnwserChoice;
 import educatus.server.persist.dao.exercice.AnwserNumeric;
 import educatus.server.persist.dao.exercice.AnwserText;
 import educatus.server.persist.dao.exercice.Exercice;
 import educatus.server.persist.dao.exercice.ExerciceQuestion;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
+import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
 import educatus.shared.dto.exercice.AnswerChoiceContent;
+import educatus.shared.dto.exercice.AnswerChoiceContent.AnswerChoiceType;
 import educatus.shared.dto.exercice.AnswerNumericContent;
 import educatus.shared.dto.exercice.AnswerTextContent;
 import educatus.shared.dto.exercice.ExerciceContent;
@@ -82,10 +87,36 @@ public class ExerciceContentBuilder {
 					exerciceQuestionContent.setQuestionType(ExerciceQuestionType.ANSWER_CHOICE);
 					AnwserChoice anwserChoice = (AnwserChoice) exerciceQuestion.getAnswer();
 					
+					List<Integer> idList = new ArrayList<Integer>();
+					for(DynamicSection answer : anwserChoice.getEqAnwserChoiceDynamicSection()){
+						idList.add(answer.getId());
+					}
+					
+					int index = 0;
+					List<String> choiceList = new ArrayList<String>();
+					List<String> answerList = new ArrayList<String>();
+					for(DynamicSection dynamicSection : anwserChoice.getDynamicContent().getDynamicSectionList()){
+						DynamicSectionTextContent text = DynamicContentAdapter.dynamicSectionTextToContent((DynamicSectionText)dynamicSection, culture, language);
+						choiceList.add(text.getText());
+						
+						if (idList.contains(dynamicSection.getId())) {
+							answerList.add(String.valueOf(index + 1));
+						}						
+						index++;
+					}					
+					
 					AnswerChoiceContent answerChoiceContent = new AnswerChoiceContent();
 					answerChoiceContent.setId(anwserChoice.getId());
+					if (answerList.size() > 1){
+						answerChoiceContent.setType(AnswerChoiceType.MULTIPLE_CHOICE);						
+					} else {
+						answerChoiceContent.setType(AnswerChoiceType.SINGLE_CHOICE);							
+					}
+					answerChoiceContent.setAvailableChoiceList(choiceList);
+					answerChoiceContent.setAnswerList(answerList);
 					
 					exerciceQuestionContent.setAnswer(answerChoiceContent);
+									
 					break;
 				default :
 					break;

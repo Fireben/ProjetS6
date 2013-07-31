@@ -2,6 +2,7 @@ package educatus.server.services.requestservice;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -26,6 +27,7 @@ import educatus.server.businesslogic.uibuilder.MainPageContentBuilder;
 import educatus.server.businesslogic.uibuilder.SeminaryEditorContentBuilder;
 import educatus.server.persist.JpaInitializer;
 import educatus.server.persist.dao.DaoModule;
+import educatus.server.persist.dao.SeminaryDao;
 import educatus.shared.dto.exercice.ExerciceContent;
 import educatus.shared.dto.pagecontent.ExerciceHomePageListingContent;
 import educatus.shared.dto.pagecontent.HomePageContent;
@@ -56,6 +58,7 @@ import educatus.shared.services.requestservice.request.SeminaryAdministrationPag
 import educatus.shared.services.requestservice.request.SeminaryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageCategoryContentRequest;
 import educatus.shared.services.requestservice.request.SeminaryHomePageListingContentRequest;
+import educatus.shared.services.requestservice.request.SeminaryValidationRequest;
 import educatus.shared.services.requestservice.request.UserContentRequest;
 import educatus.shared.services.requestservice.request.UserListingRequest;
 import educatus.shared.services.requestservice.response.ExerciceAdministrationActionResponse;
@@ -71,6 +74,7 @@ import educatus.shared.services.requestservice.response.SeminaryAdministrationPa
 import educatus.shared.services.requestservice.response.SeminaryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageCategoryContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryHomePageListingContentResponse;
+import educatus.shared.services.requestservice.response.SeminaryValidationResponse;
 import educatus.shared.services.requestservice.response.UserContentResponse;
 import educatus.shared.services.requestservice.response.UserListingResponse;
 
@@ -95,7 +99,9 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private ExerciceContentBuilder exerciceContentBuilder;
 	private ExerciceValidationManager exerciceValidationManager;
 	private ExerciceAdministrationManager exerciceAdministrationManager;
-
+	private SeminaryDao seminaryDao;
+	private EntityManager entityManager;
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -119,6 +125,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		exerciceValidationManager = dbInjector.getInstance(ExerciceValidationManager.class);
 		exerciceAdministrationManager = dbInjector.getInstance(ExerciceAdministrationManager.class);
 		exerciceHomeListingBuilder = dbInjector.getInstance(ExerciceHomeListingBuilder.class);
+		seminaryDao = dbInjector.getInstance(SeminaryDao.class);
+		entityManager = dbInjector.getInstance(EntityManager.class);
 	}
 
 	@Override
@@ -164,7 +172,10 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 					break;
 				case SEMINARY_CONTENT_REQUEST:
 					response = ProcessSeminaryContentRequest((SeminaryContentRequest) request);
-					break;		
+					break;	
+				case SEMINARY_VALIDATION_REQUEST:
+					response = ProcessSeminaryValiadtionRequest((SeminaryValidationRequest) request);
+					break;
 				case EXERCICE_CONTENT_REQUEST:
 					response = ProcessExerciceContentRequest((ExerciceContentRequest) request);
 					break;
@@ -181,6 +192,26 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 			e.printStackTrace();
 		}
 
+		return response;
+	}
+
+	private SeminaryValidationResponse ProcessSeminaryValiadtionRequest(SeminaryValidationRequest request) {
+		
+		SeminaryValidationResponse response = new SeminaryValidationResponse();
+		try {
+			String cip = sessionManager.getSessionAssociatedCip(request.getSessionID());		
+			if (cip != null) {		
+				entityManager.getTransaction().begin();
+				seminaryDao.addUserToCompletedSeminaryList(
+						request.getSeminaryId(), 
+						cip
+				);
+				entityManager.getTransaction().commit();
+				response.setValid(true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return response;
 	}
 
@@ -354,9 +385,18 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private SeminaryContentResponse ProcessSeminaryContentRequest(SeminaryContentRequest request) {
 
 		SeminaryContentResponse response = new SeminaryContentResponse();
-
 		SeminaryContent content = seminaryContentBuilder.buildSeminaryContent(request.getSelectedSeminaryId(), request.getCulture(), request.getLanguage());
-
+		try {
+			String cip = sessionManager.getSessionAssociatedCip(request.getSessionID());		
+			if (cip != null) {				
+				boolean isSeminaryCompleted = seminaryDao.isSeminaryCompletedByUser(
+						request.getSelectedSeminaryId(), 
+						cip
+				);
+				response.setSeminaryCompletedByUser(isSeminaryCompleted);
+			}
+		} catch (Exception e) {
+		}
 		response.setSeminaryContent(content);
 
 		return response;

@@ -18,6 +18,7 @@ package educatus.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 
 import educatus.client.gin.ClientGinjector;
@@ -26,15 +27,19 @@ import educatus.resources.Resources;
 /**
  * @author Christian Goudreau
  */
-public class Educatus implements EntryPoint { 
-  public final ClientGinjector ginjector = GWT.create(ClientGinjector.class);
+public class Educatus implements EntryPoint {
+	public final ClientGinjector ginjector = GWT.create(ClientGinjector.class);
 
-  public final void onModuleLoad() {
-	  
-	Resources.INSTANCE.css().ensureInjected();
-    // This is required for Gwt-Platform proxy's generator.
-    DelayedBindRegistry.bind(ginjector);
+	public final void onModuleLoad() {
 
-    ginjector.getPlaceManager().revealCurrentPlace();
-  }
+		// Ensure previous cookies are removed
+		Cookies.removeCookie(CookiesConst.CURRENT_USER);
+		Cookies.removeCookie(CookiesConst.SESSION_ID);
+
+		Resources.INSTANCE.css().ensureInjected();
+		// This is required for Gwt-Platform proxy's generator.
+		DelayedBindRegistry.bind(ginjector);
+
+		ginjector.getPlaceManager().revealCurrentPlace();
+	}
 }
