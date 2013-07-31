@@ -24,6 +24,8 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 	@UiField
 	FlowPanel descriptionContainer;	
 	@UiField
+	FlowPanel rightSection;	
+	@UiField
 	FlowPanel statsContainer;	
 	@UiField
 	FlowPanel contentContainer;	
@@ -51,7 +53,7 @@ public class SeminaryViewView extends ViewImpl implements MyView {
 		
 		horizontalPanel.setCellWidth(leftSpacer, "45%");
 		horizontalPanel.setCellWidth(rightSpacer, "5%");
-		horizontalPanel.setCellWidth(descriptionContainer, "50%");
+		horizontalPanel.setCellWidth(rightSection, "50%");
 	}
 	
 	public FlowPanel getDescriptionContainer() {

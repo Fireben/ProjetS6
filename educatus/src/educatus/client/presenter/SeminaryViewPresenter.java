@@ -178,7 +178,7 @@ public class SeminaryViewPresenter extends
 
 		descriptionContainer.add(new DescriptionEntry("Author", coreContent.getAuthor().getFirstName() + " " + coreContent.getAuthor().getLastName()));
 		descriptionContainer.add(new DescriptionEntry("Description", coreContent.getDescription()));
-		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
+		descriptionContainer.add(new StarDescriptionEntry("Difficulty", coreContent.getDifficultyValue()));
 		descriptionContainer.add(new DescriptionEntry("Created Date", coreContent.getCreatedDate()));
 
 		DynamicSection dynamicSection = getView().getDynamicSection();

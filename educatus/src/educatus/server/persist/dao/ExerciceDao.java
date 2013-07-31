@@ -216,4 +216,9 @@ public class ExerciceDao {
 		exerciceQuestion.setAnswer(anwserChoice);
 		entityManager.persist(anwserChoice);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Exercice> findExercicesByIds(List<Integer> ids) {
+		return (List<Exercice>) entityManager.createNamedQuery(Exercice.FIND_BY_IDS).setParameter(Exercice.FIND_BY_IDS_PARAM, ids).getResultList();	
+	}
 }

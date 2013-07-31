@@ -7,9 +7,7 @@ import educatus.shared.services.requestservice.RequestTypeEnum;
 public class ExerciceAdministrationActionRequest extends AbstractRequest {
 
 	public static enum ExerciceAdministractionAction {
-		INSERT,
-		DELETE,
-		MODIFY
+		INSERT, DELETE, MODIFY
 	}
 
 	private static final long serialVersionUID = 3049588535764579312L;

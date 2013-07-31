@@ -108,7 +108,8 @@ public class ExerciceHomePresenter extends Presenter<ExerciceHomePresenter.MyVie
 	  PageChangingEvent.fire(this, NameTokens.getExerciceHomePage());
 	  categoryPresenter.setRootParent("Exercices");
 	  categoryPresenter.registerBackButton(backClickHandler);
-	  categoryPresenter.registerSeeAllButton(seeAllClickHandler);	  
+	  categoryPresenter.registerSeeAllButton(seeAllClickHandler);	
+	  categoryPresenter.registerSearchButton(searchHandler);
 	}
 	
 	@Override
@@ -138,6 +139,13 @@ public class ExerciceHomePresenter extends Presenter<ExerciceHomePresenter.MyVie
 		public void onClick(ClickEvent event) {
 			CustomButton buttonClicked = (CustomButton) event.getSource();
 			changeCategoryPanel(Integer.parseInt(buttonClicked.getElement().getId()));
+		}
+	};
+	
+	private ClickHandler searchHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {	 				
+	  		createAndSendSearchListingRequest(categoryPresenter.getView().getSearchBox().getValue());
 		}
 	};
 	
@@ -224,5 +232,13 @@ public class ExerciceHomePresenter extends Presenter<ExerciceHomePresenter.MyVie
   		request.setCulture(locale.getCulture());
   		request.setLanguage(locale.getLanguage());
   		requestService.sendRequest(request, responseHandler);	
+	}
+	
+	private void createAndSendSearchListingRequest(String value) {
+  		ExerciceHomePageListingContentRequest request = new ExerciceHomePageListingContentRequest();
+  		request.setSearchTerm(value);
+  		request.setCulture(locale.getCulture());
+  		request.setLanguage(locale.getLanguage());
+  		requestService.sendRequest(request, responseHandler);			
 	}
 }

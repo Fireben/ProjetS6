@@ -123,7 +123,7 @@ public class SeminaryAdministrationManager {
 		}
 
 		User user = securityDao.findUserByCip(cip);
-		Difficulty difficulty = seminaryDao.findDifficultyByLevel(1);
+		Difficulty difficulty = seminaryDao.findDifficultyByLevel(content.getCoreContent().getDifficultyValue());
 
 		TextContentTranslationEntry seminaryTitle = internationalizationDao.insertTextContentTranslationEntry(
 				EN_LANG, CA_CULT, content.getCoreContent().getTitle());

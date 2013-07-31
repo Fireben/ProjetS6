@@ -116,6 +116,11 @@ public class SeminaryDao {
 		
 		return (List<Seminary>) entityManager.createNamedQuery(Seminary.FIND_BY_CATEGORY).setParameter(Seminary.FIND_BY_CATEGORY_PARAM, categoryTreeIds).getResultList();	
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Seminary> findSeminariesByIds(List<Integer> ids) throws Exception {
+		return (List<Seminary>) entityManager.createNamedQuery(Seminary.FIND_BY_IDS).setParameter(Seminary.FIND_BY_IDS_PARAM, ids).getResultList();	
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Seminary> findAllSeminary() throws Exception {

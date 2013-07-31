@@ -261,6 +261,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		ListBox difficultyBox = getView().getDifficultyBox();
 		int index = difficultyBox.getSelectedIndex();
 		coreContent.setDifficulty(difficultyBox.getValue(index));
+		coreContent.setDifficultyValue(index);
 
 		return coreContent;
 	}

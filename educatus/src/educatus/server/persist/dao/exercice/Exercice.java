@@ -26,12 +26,13 @@ import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Competence;
 import educatus.server.persist.dao.seminary.Difficulty;
+import educatus.server.persist.dao.seminary.Seminary;
 
 @Entity
 @NamedQueries({
 	@NamedQuery(name = Exercice.FIND_ALL, query = "SELECT e FROM Exercice e"),
-	@NamedQuery(name = Exercice.FIND_BY_CATEGORY, query = "Select distinct e FROM Exercice e join e.categories c where c.id in :" + Exercice.FIND_BY_CATEGORY_PARAM)})
-
+	@NamedQuery(name = Exercice.FIND_BY_CATEGORY, query = "Select distinct e FROM Exercice e join e.categories c where c.id in :" + Exercice.FIND_BY_CATEGORY_PARAM),
+	@NamedQuery(name = Exercice.FIND_BY_IDS, query = "Select distinct e FROM Exercice e where e.id in :" + Exercice.FIND_BY_IDS_PARAM)})
 @Table(name = "exercice.exercice")
 public class Exercice implements Serializable {
 	
@@ -40,6 +41,8 @@ public class Exercice implements Serializable {
 	public static final String FIND_ALL = "Exercice.FIND_ALL";
 	public static final String FIND_BY_CATEGORY = "Exercice.FINB_BY_CATEGORY";
 	public static final String FIND_BY_CATEGORY_PARAM = "catIds";
+	public static final String FIND_BY_IDS = "EXERCICE.FIND_BY_IDS";
+	public static final String FIND_BY_IDS_PARAM = "ids";
 	
 	@Id
 	@SequenceGenerator(name = "exercice_exer_id", sequenceName = "exercice.exercice_exer_id_seq", allocationSize = 1)

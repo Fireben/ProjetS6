@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 import educatus.client.NameTokens;
 import educatus.client.ui.dataGrids.Category;
 import educatus.client.ui.dataGrids.HyperLinkCell;
-import educatus.client.ui.dataGrids.ImageCell;
 import educatus.resources.SeminaryDataGridCssRessource;
 
 public class CategoryList extends Composite{

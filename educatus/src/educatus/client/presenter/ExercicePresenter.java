@@ -27,11 +27,13 @@ import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.ui.widget.ChoiceQuestion;
+import educatus.client.ui.widget.DescriptionEntry;
 import educatus.client.ui.widget.DynamicSection;
 import educatus.client.ui.widget.MultipleChoiceQuestion;
 import educatus.client.ui.widget.Question;
 import educatus.client.ui.widget.ResponseFeedback;
 import educatus.client.ui.widget.SingleChoiceQuestion;
+import educatus.client.ui.widget.StarDescriptionEntry;
 import educatus.client.ui.widget.TextQuestion;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.exercice.AnswerChoiceContent;
@@ -127,6 +129,7 @@ public class ExercicePresenter extends
 				questionIndex = 0;
 			}
 			populateQuestion();
+			getView().getDescriptionContainer().setVisible(true);
 		}
 	};
 
@@ -172,6 +175,13 @@ public class ExercicePresenter extends
 		questionList = exerciceContent.getQuestionList();
 		questionCore = exerciceContent.getCoreContent();
 		populateQuestion();
+		
+		FlowPanel descriptionContainer = getView().getDescriptionContainer();
+		descriptionContainer.add(new DescriptionEntry("Author", questionCore.getAuthor().getFirstName() + " " + questionCore.getAuthor().getLastName()));
+		descriptionContainer.add(new DescriptionEntry("Description", questionCore.getDescription()));
+		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
+		descriptionContainer.add(new DescriptionEntry("Created Date", questionCore.getCreatedDate()));		
+		descriptionContainer.setVisible(true);
 	}
 
 	private void populateQuestion() {		
@@ -258,6 +268,7 @@ public class ExercicePresenter extends
 							responseFeedback = new ResponseFeedback("You don't have the right answer, try again", "images/error.png", "Back", backClickHandler);
 						}
 						getView().getContentContainer().setVisible(false);
+						getView().getDescriptionContainer().setVisible(false);
 						getView().getRootPanel().add(responseFeedback);
 					}
 				}
@@ -285,6 +296,7 @@ public class ExercicePresenter extends
 			((TextQuestion)currentQuestion).clearResponse();
 		}
 		getView().getContentContainer().setVisible(true);
+		getView().getDescriptionContainer().setVisible(true);
 	}
 	
 	protected void reset() {

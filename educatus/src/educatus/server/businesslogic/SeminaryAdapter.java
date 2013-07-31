@@ -19,7 +19,8 @@ public class SeminaryAdapter {
 		seminaryCoreContent.setTitle(InternationalizationUtility.getTranslationEntry(seminary.getTitle(), culture, language).getTcteTranslation());
 		seminaryCoreContent.setDescription(InternationalizationUtility.getTranslationEntry(seminary.getDescription(), culture, language).getTcteTranslation());
 		seminaryCoreContent.setDifficulty(InternationalizationUtility.getTranslationEntry(seminary.getDifficulty().getName(), culture, language).getTcteTranslation());
-
+		seminaryCoreContent.setDifficultyValue(seminary.getDifficulty().getDifficultyValue());
+		
 		User author = seminary.getAuthor();
 		User editor = seminary.getLastEditor();
 
