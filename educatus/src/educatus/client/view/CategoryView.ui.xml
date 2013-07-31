@@ -1,11 +1,12 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:my="urn:import:educatus.client.ui"
+	xmlns:my="urn:import:educatus.client.ui.widget"
 	>	
 	
 	<g:HTMLPanel height= "100%">	
-		<div class="categoryPanelParent" height= "100%">		
+		<div class="categoryPanelParent" height= "100%">	
+		    <my:SearchBox ui:field="searchBox"/>	
 			<g:FlowPanel ui:field="categoryPanel">
 			    <g:Label ui:field="titleLabel"/>
 			    <g:FlowPanel ui:field="buttonPanel"/>

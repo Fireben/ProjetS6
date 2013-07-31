@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import educatus.client.presenter.CategoryPresenter;
+import educatus.client.ui.widget.SearchBox;
 
 public class CategoryView extends ViewImpl implements
 CategoryPresenter.MyView {
@@ -21,6 +22,7 @@ CategoryPresenter.MyView {
 	@UiField Button backButton;
 	@UiField Button seeAllButton;
 	@UiField Label titleLabel;
+	@UiField SearchBox searchBox;
 	
 	public interface Binder extends UiBinder<Widget, CategoryView> {
 	}
@@ -58,5 +60,7 @@ CategoryPresenter.MyView {
 		return titleLabel;
 	}
 	
-	
+	public SearchBox getSearchBox() {
+		return searchBox;
+	}
 }

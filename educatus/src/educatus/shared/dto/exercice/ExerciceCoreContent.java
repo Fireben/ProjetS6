@@ -16,6 +16,7 @@ public class ExerciceCoreContent implements Serializable {
 	private UserCoreContent lastEditor;
 
 	private String difficulty;
+	private int difficultyValue;
 
 	private String createdDate;
 	private String editedDate;
@@ -82,5 +83,13 @@ public class ExerciceCoreContent implements Serializable {
 
 	public void setEditedDate(String editedDate) {
 		this.editedDate = editedDate;
+	}
+
+	public int getDifficultyValue() {
+		return difficultyValue;
+	}
+
+	public void setDifficultyValue(int difficultyValue) {
+		this.difficultyValue = difficultyValue;
 	}
 }

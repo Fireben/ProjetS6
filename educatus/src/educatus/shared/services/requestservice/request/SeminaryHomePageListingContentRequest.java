@@ -9,6 +9,7 @@ public class SeminaryHomePageListingContentRequest extends AbstractRequest {
 	private static final long serialVersionUID = -5804623818759076508L;
 
 	private CategoryCoreContent selectedCategory = null;
+	private String searchTerm;
 
 	@Override
 	public RequestTypeEnum GetRequestType() {
@@ -22,4 +23,12 @@ public class SeminaryHomePageListingContentRequest extends AbstractRequest {
 	public void setSelectedCategory(CategoryCoreContent selectedCategory) {
 		this.selectedCategory = selectedCategory;
 	}
+
+	public String getSearchTerm() {
+		return searchTerm;
+	}
+
+	public void setSearchTerm(String searchTerm) {
+		this.searchTerm = searchTerm;
+	}	
 }

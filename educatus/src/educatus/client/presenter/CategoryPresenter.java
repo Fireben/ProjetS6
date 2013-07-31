@@ -19,6 +19,7 @@ import educatus.client.animation.FadeAnimation;
 import educatus.client.animation.ListFadeAnimation;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.factory.CategoryButtonFactory;
+import educatus.client.ui.widget.SearchBox;
 import educatus.shared.dto.pagecontent.SeminaryHomePageCategoryContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 
@@ -26,20 +27,18 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 	ListFadeAnimation<HasWidgets> listAnimation = null;
 	HandlerRegistration backRegisteredHandler = null;
 	HandlerRegistration seeAllRegisteredHandler = null;
+	HandlerRegistration searchRegisteredHandler = null;
 	private String rootParent;
 	
 	private CategoryCoreContent parent = null; 
 	
 	public interface MyView extends View {
 		FlowPanel getCategoryPanel();
-
 		FlowPanel getButtonPanel();
-
 		Button getButton();
-
 		Button getSeeAllButton();
-
 		Label getLabel();
+		SearchBox getSearchBox();
 	}
 
 	@Inject
@@ -81,6 +80,7 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 		getView().getButtonPanel().clear();
 		getView().getButton().setVisible(false);
 		getView().getLabel().setVisible(false);
+		getView().getSearchBox().setVisible(false);
 	}
 
 	public void populateCategoryPanel(SeminaryHomePageCategoryContent content) {
@@ -96,6 +96,8 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 		this.parent = content.getCommonParent();
 		if (parent == null) {
 			getView().getLabel().setText(rootParent);
+			getView().getSearchBox().clearText();
+			getView().getSearchBox().setVisible(true);
 		} else {
 			getView().getLabel().setText(parent.getName());
 		}
@@ -116,6 +118,13 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 		if (seeAllRegisteredHandler == null) {
 			seeAllRegisteredHandler = getView().getSeeAllButton().addClickHandler(seeAllClickHandler);
 			registerHandler(seeAllRegisteredHandler);
+		}
+	}
+	
+	public void registerSearchButton(final ClickHandler searchClickHandler) {
+		if (searchRegisteredHandler == null) {
+			searchRegisteredHandler = getView().getSearchBox().addClickHandler(searchClickHandler);
+			registerHandler(searchRegisteredHandler);
 		}
 	}
 

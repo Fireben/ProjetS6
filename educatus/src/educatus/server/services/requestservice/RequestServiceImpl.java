@@ -60,11 +60,11 @@ import educatus.shared.services.requestservice.request.UserContentRequest;
 import educatus.shared.services.requestservice.request.UserListingRequest;
 import educatus.shared.services.requestservice.response.ExerciceAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.ExerciceContentResponse;
+import educatus.shared.services.requestservice.response.ExerciceHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.ExerciceQuestionValidationResponse;
 import educatus.shared.services.requestservice.response.HomePageContentResponse;
 import educatus.shared.services.requestservice.response.LoginResponse;
 import educatus.shared.services.requestservice.response.LoginResponse.LoginStatus;
-import educatus.shared.services.requestservice.response.ExerciceHomePageListingContentResponse;
 import educatus.shared.services.requestservice.response.MainPageContentResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationActionResponse;
 import educatus.shared.services.requestservice.response.SeminaryAdministrationPageContentResponse;
@@ -187,8 +187,9 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private ExerciceHomePageListingContentResponse ProcessExerciceHomePageListingContentRequest(ExerciceHomePageListingContentRequest request) {
 		
 		ExerciceHomePageListingContent content = new ExerciceHomePageListingContent();
-		
-		if(request.getSelectedCategory() == null)
+		if(request.getSearchTerm() != null)
+			content = exerciceHomeListingBuilder.buildExerciceHomePageListingContent(request.getSearchTerm(), request.getCulture(), request.getLanguage());
+		else if(request.getSelectedCategory() == null)
 			content = exerciceHomeListingBuilder.buildExerciceHomePageListingContent(request.getCulture(), request.getLanguage());
 		else
 			content = exerciceHomeListingBuilder.buildExerciceHomePageListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());
@@ -400,7 +401,10 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private SeminaryHomePageListingContentResponse ProcessSeminaryHomePageListingContentRequest(SeminaryHomePageListingContentRequest request) {
 		SeminaryHomePageListingContent content = new SeminaryHomePageListingContent();
 		
-		if(request.getSelectedCategory() == null)
+		if(request.getSearchTerm() != null) {
+			content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSearchTerm(), request.getCulture(), request.getLanguage());
+		}
+		else if(request.getSelectedCategory() == null)
 			content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getCulture(), request.getLanguage());
 		else
 			content = seminaryHomeListingBuilder.buildSeminaryHomeListingContent(request.getSelectedCategory().getId(), request.getCulture(), request.getLanguage());

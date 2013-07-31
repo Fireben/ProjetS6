@@ -15,6 +15,7 @@ import educatus.server.persist.dao.DynamicContentDao;
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.SecurityDao;
 import educatus.server.persist.dao.SeminaryDao;
+import educatus.server.persist.dao.seminary.Seminary;
 
 public class SearchManagerTest {
 
@@ -50,6 +51,8 @@ public class SearchManagerTest {
 		try
 		{
 			list = searchManager.SearchInSeminary("Basics of factory", false, internationalizationDao.findLanguageByCode("en"));
+			
+			List<Seminary> seminaries = seminaryDao.findSeminariesByIds(list);
 			list2 = searchManager.SearchInExercice("question de ",  true, internationalizationDao.findLanguageByCode("en"));
 		}
 		catch(Exception e)

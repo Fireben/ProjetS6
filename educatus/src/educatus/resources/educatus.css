@@ -3,6 +3,10 @@ body,table td,select {
 	
 }
 
+* {
+	font-family: Calibri !important;
+}
+
 pre {
 	
 }
@@ -2618,7 +2622,9 @@ a:hover, .logInClose {
 	margin-right:auto;
 	margin-bottom:50px;
 	margin-top: 20px;
-	color: white
+	color: white;
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, sans-serif;
+	font-size: 15px;
 }
 
 .editContent {
@@ -2630,6 +2636,7 @@ a:hover, .logInClose {
 	width: 350px;
 	resize: none;
 	margin-bottom: 10px;
+	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, sans-serif;
 }
 
 .editTitleBox {
@@ -2850,6 +2857,8 @@ a:hover, .logInClose {
 	height: 35px;
 	color: white;
 	cursor: pointer;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .answerEditButton>button:hover:enabled {
@@ -2924,4 +2933,22 @@ a:hover, .logInClose {
 .center {
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.searchBox {
+	float: right;
+	margin-top: -50px;
+	margin-right: 50px;
+}
+
+.searchText {
+	border-radius: 2px;
+}
+
+.searchButton {
+	width: 28px;
+	height: 28px;
+	margin-top: -4px;
+	margin-left: -5px;
+	cursor: pointer;
 }

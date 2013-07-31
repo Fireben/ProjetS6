@@ -9,8 +9,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -137,7 +135,7 @@ public class SeminaryViewPresenter extends
 
 		descriptionContainer.add(new DescriptionEntry("Author", coreContent.getAuthor().getFirstName() + " " + coreContent.getAuthor().getLastName()));
 		descriptionContainer.add(new DescriptionEntry("Description", coreContent.getDescription()));
-		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
+		descriptionContainer.add(new StarDescriptionEntry("Difficulty", coreContent.getDifficultyValue()));
 		descriptionContainer.add(new DescriptionEntry("Created Date", coreContent.getCreatedDate()));
 
 		DynamicSection dynamicSection = getView().getDynamicSection();

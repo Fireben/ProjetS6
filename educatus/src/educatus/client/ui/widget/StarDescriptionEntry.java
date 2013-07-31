@@ -23,9 +23,9 @@ public class StarDescriptionEntry extends Composite {
 	private void createStars(int difficulty) {
 		starPanel = new FlowPanel();
 		difficulty = difficulty/2;
-		for (int i = 0; i < difficulty; i++) {
+		for (int i = 0; i < difficulty+1; i++) {
 			Image starImage = new Image("images/star.png");
-			starImage.setSize("20px", "20px");
+			starImage.setSize("15px", "15px");
 			starPanel.add(starImage);
 		}		
 	}
