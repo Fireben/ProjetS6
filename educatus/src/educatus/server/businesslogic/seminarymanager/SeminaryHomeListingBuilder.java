@@ -83,15 +83,13 @@ public class SeminaryHomeListingBuilder {
 		pageContent.setCommonParent(null);
 		try {			
 			List<Integer> ids = searchManager.SearchInSeminary(searchTerm, true, internationalizationDao.findLanguageByCode("en"));
-			if(ids.size() == 0) {
-				return null;
-			}
-				
-			List<Seminary> seminaryList = semDao.findSeminariesByIds(ids);
-
-			for (Seminary seminary : seminaryList) {
-				SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
-				pageContent.getSeminariesChildren().add(seminaryCoreContent);
+			if(ids.size() != 0) {				
+				List<Seminary> seminaryList = semDao.findSeminariesByIds(ids);
+	
+				for (Seminary seminary : seminaryList) {
+					SeminaryCoreContent seminaryCoreContent = SeminaryAdapter.seminaryToSeminaryCoreContent(seminary, culture, language);
+					pageContent.getSeminariesChildren().add(seminaryCoreContent);
+				}
 			}
 
 		} catch (Exception e) {

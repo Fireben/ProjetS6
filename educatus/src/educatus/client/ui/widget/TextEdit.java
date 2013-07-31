@@ -2,32 +2,23 @@ package educatus.client.ui.widget;
 
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
-import educatus.client.ui.CustomButton;
 import educatus.client.ui.RichTextToolbar;
 
-public class TextEdit extends Composite{
+public class TextEdit extends EditSection{
 	private RichTextArea richTextArea;
 	private RichTextToolbar richTextToolbar;
-	private FlowPanel panel;
 	private Grid grid;
 	private HorizontalPanel titlePanel;
 	private TextBox titleBox;
-	private CustomButton closeButton;
 	
 	public TextEdit() {
-		super();
-		panel = new FlowPanel();
-		initWidget(panel);
-		
+		super();		
 		createPanel();
 	}
 	
@@ -41,20 +32,12 @@ public class TextEdit extends Composite{
 	}
 	
 	private void createPanel() {
+		titleLabel.setText("Text");
 		createTitle();
 		createGrid();
-		createCloseButton();
-		panel.add(closeButton);
 		panel.add(titlePanel);
 		panel.add(grid);		
-		panel.setStyleName("editSection");
 	}	
-	
-	private void createCloseButton() {
-		closeButton = new CustomButton();
-		closeButton.add(new Image("images/closeButton.png"));
-		closeButton.setStyleName("editCloseButton");
-	}
 	
 	private void createGrid() {
 		richTextArea = new RichTextArea();
@@ -79,9 +62,5 @@ public class TextEdit extends Composite{
 	
 	public String getTitle() {
 		return titleBox.getText();
-	}
-
-	public CustomButton getCloseButton() {
-		return closeButton;
 	}
 }

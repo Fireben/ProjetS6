@@ -28,6 +28,7 @@ import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
+import educatus.client.ui.widget.EditSection;
 import educatus.client.ui.widget.ImageEdit;
 import educatus.client.ui.widget.PdfEdit;
 import educatus.client.ui.widget.TextEdit;
@@ -74,32 +75,13 @@ public class SeminaryEditPresenter extends
 	public interface MyProxy extends ProxyPlace<SeminaryEditPresenter> {
 	}
 	
-	private ClickHandler closeTextHandler = new ClickHandler() {
+	private ClickHandler closeHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			CustomButton closeButton = (CustomButton)event.getSource();
 			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
-			TextEdit parent = (TextEdit)panelParent.getParent(); 
-			getView().getContentPanel().remove(parent);
-		}
-	};
-	
-	private ClickHandler closeImageHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton)event.getSource();
-			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
-			ImageEdit parent = (ImageEdit)panelParent.getParent(); 
-			getView().getContentPanel().remove(parent);
-		}
-	};
-	
-	private ClickHandler closePdfHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton)event.getSource();
-			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
-			PdfEdit parent = (PdfEdit)panelParent.getParent(); 
+			panelParent = (FlowPanel)panelParent.getParent();
+			EditSection parent = (EditSection) panelParent.getParent();
 			getView().getContentPanel().remove(parent);
 		}
 	};
@@ -108,8 +90,7 @@ public class SeminaryEditPresenter extends
 		@Override
 		public void onClick(ClickEvent event) {
 			TextEdit textEdit = new TextEdit();
-			textEdit.getCloseButton().addClickHandler(closeTextHandler);
-			addSectionTitle("Text");
+			textEdit.getCloseButton().addClickHandler(closeHandler);
 			getView().getContentPanel().add(textEdit);
 		}
 	};
@@ -118,8 +99,7 @@ public class SeminaryEditPresenter extends
 		@Override
 		public void onClick(ClickEvent event) {
 			ImageEdit imageEdit = new ImageEdit();
-			imageEdit.getCloseButton().addClickHandler(closePdfHandler);
-			addSectionTitle("Image");
+			imageEdit.getCloseButton().addClickHandler(closeHandler);
 			getView().getContentPanel().add(imageEdit);
 		}
 	};
@@ -128,8 +108,7 @@ public class SeminaryEditPresenter extends
 		@Override
 		public void onClick(ClickEvent event) {
 			PdfEdit pdfEdit = new PdfEdit();
-			pdfEdit.getCloseButton().addClickHandler(closeImageHandler);
-			addSectionTitle("Pdf");
+			pdfEdit.getCloseButton().addClickHandler(closeHandler);
 			getView().getContentPanel().add(pdfEdit);
 		}
 	};
@@ -327,11 +306,5 @@ public class SeminaryEditPresenter extends
 		pageContentRequest.setLanguage(locale.getLanguage());
 		pageContentRequest.setSessionID(Cookies.getCookie("SessionID"));
   		requestService.sendRequest(pageContentRequest, responseHandler);
-	}
-	
-	private void addSectionTitle(String title) {
-		Label titleLabel = new Label(title);
-		titleLabel.setStyleName("editSectionTitle");
-		getView().getContentPanel().add(titleLabel);
 	}
 }

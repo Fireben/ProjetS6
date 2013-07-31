@@ -29,6 +29,7 @@ import educatus.client.NameTokens;
 import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.CustomButton;
 import educatus.client.ui.widget.ChoiceEdit;
+import educatus.client.ui.widget.EditSection;
 import educatus.client.ui.widget.ImageEdit;
 import educatus.client.ui.widget.PdfEdit;
 import educatus.client.ui.widget.QuestionEdit;
@@ -84,32 +85,13 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 	public interface MyProxy extends ProxyPlace<ExerciceEditPresenter> {
 	}
 
-	private ClickHandler closeTextHandler = new ClickHandler() {
+	private ClickHandler closeHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton) event.getSource();
-			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
-			TextEdit parent = (TextEdit) panelParent.getParent();
-			getView().getContentPanel().remove(parent);
-		}
-	};
-
-	private ClickHandler closeImageHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton) event.getSource();
-			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
-			ImageEdit parent = (ImageEdit) panelParent.getParent();
-			getView().getContentPanel().remove(parent);
-		}
-	};
-
-	private ClickHandler closePdfHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton) event.getSource();
-			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
-			PdfEdit parent = (PdfEdit) panelParent.getParent();
+			CustomButton closeButton = (CustomButton)event.getSource();
+			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
+			panelParent = (FlowPanel)panelParent.getParent();
+			EditSection parent = (EditSection) panelParent.getParent();
 			getView().getContentPanel().remove(parent);
 		}
 	};
@@ -128,7 +110,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			TextEdit textEdit = new TextEdit();
-			textEdit.getCloseButton().addClickHandler(closeTextHandler);
+			textEdit.getCloseButton().addClickHandler(closeHandler);
 			getView().getContentPanel().add(textEdit);
 		}
 	};
@@ -137,7 +119,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			ImageEdit imageEdit = new ImageEdit();
-			imageEdit.getCloseButton().addClickHandler(closeImageHandler);
+			imageEdit.getCloseButton().addClickHandler(closeHandler);
 			getView().getContentPanel().add(imageEdit);
 		}
 	};
@@ -146,7 +128,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			PdfEdit pdfEdit = new PdfEdit();
-			pdfEdit.getCloseButton().addClickHandler(closePdfHandler);
+			pdfEdit.getCloseButton().addClickHandler(closeHandler);
 			getView().getContentPanel().add(pdfEdit);
 		}
 	};

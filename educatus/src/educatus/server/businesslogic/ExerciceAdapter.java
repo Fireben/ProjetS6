@@ -17,7 +17,8 @@ public class ExerciceAdapter {
 		exerciceCoreContent.setTitle(InternationalizationUtility.getTranslationEntry(exercice.getTitle(), culture, language).getTcteTranslation());
 		exerciceCoreContent.setDescription(InternationalizationUtility.getTranslationEntry(exercice.getDescription(), culture, language).getTcteTranslation());
 		exerciceCoreContent.setDifficulty(InternationalizationUtility.getTranslationEntry(exercice.getDifficultyValue().getName(), culture, language).getTcteTranslation());
-
+		exerciceCoreContent.setDifficultyValue(exercice.getDifficultyValue().getDifficultyValue());
+		
 		User author = exercice.getAuthor();
 		User editor = exercice.getLastEditor();
 

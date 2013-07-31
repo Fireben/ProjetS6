@@ -86,17 +86,14 @@ public class ExerciceHomeListingBuilder {
 			pageContent.setCommonParent(null);
 
 			List<Integer> ids = searchManager.SearchInExercice(searchTerm, true, internationalizationDao.findLanguageByCode("en"));
-			if(ids.size() == 0) {
-				return null;
+			if(ids.size() != 0) {				
+				List<Exercice> exerciceList = exerciceDao.findExercicesByIds(ids);
+	
+				for (Exercice exercice : exerciceList) {
+					ExerciceCoreContent exerciceCoreContent = ExerciceAdapter.exerciceToExerciceCoreContent(exercice, culture, language);
+					pageContent.getExercicesChildren().add(exerciceCoreContent);
+				}
 			}
-			
-			List<Exercice> exerciceList = exerciceDao.findExercicesByIds(ids);
-
-			for (Exercice exercice : exerciceList) {
-				ExerciceCoreContent exerciceCoreContent = ExerciceAdapter.exerciceToExerciceCoreContent(exercice, culture, language);
-				pageContent.getExercicesChildren().add(exerciceCoreContent);
-			}
-
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
