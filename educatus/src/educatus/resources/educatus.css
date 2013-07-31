@@ -2462,6 +2462,7 @@ html>body .gwt-DialogBox {
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
+	max-width: 550px
 }
 
 .descriptionContainer {

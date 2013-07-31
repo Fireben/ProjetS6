@@ -17,6 +17,7 @@ import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Category;
 import educatus.server.persist.dao.seminary.Difficulty;
 import educatus.server.persist.dao.seminary.Seminary;
+import educatus.shared.dto.user.UserStatisticsContent.CategoryStat;
 
 @Singleton
 public class SeminaryDao {
@@ -201,5 +202,27 @@ public class SeminaryDao {
 		}
 		
 		entityManager.merge(seminary);
+	}
+
+	public CategoryStat getCategoryStat(String cip, Integer id) throws Exception {
+		
+		CategoryStat categoryStat = new CategoryStat();
+		
+		User user = securityDao.findUserByCip(cip);
+		List<Seminary> seminaryList = this.findSeminariesByCategory(id);
+		
+		categoryStat.setTotalSeminaries(seminaryList.size());
+		int completedSeminaries = 0;
+		for (Seminary seminary : seminaryList) {
+			for (User u : seminary.getCompletedSeminaryUsers()){
+				if (u.equals(user)){
+					completedSeminaries++;
+					break;
+				}
+			}
+		}
+		categoryStat.setCompletedSeminaries(completedSeminaries);
+		
+		return categoryStat;
 	}
 }
