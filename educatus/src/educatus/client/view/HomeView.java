@@ -20,6 +20,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -65,6 +66,8 @@ public class HomeView extends ViewImpl implements MyView {
 	@UiField Element homePageFourthSectionImg;
 	@UiField Element homePageFourthSectionDescription;
 	@UiField Element homePageFourthSectionLink;
+	
+	@UiField HTMLPanel homePanel;
 
 	public HomeView()
 	{
@@ -172,7 +175,12 @@ public class HomeView extends ViewImpl implements MyView {
 	public Element getHomePageFourthSectionDescription() {
 		return homePageFourthSectionDescription;
 	}
+	
 	public Element getHomePageFourthSectionLink() {
 		return homePageFourthSectionLink;
+	}
+
+	public HTMLPanel getHomePanel() {
+		return homePanel;
 	}
 }

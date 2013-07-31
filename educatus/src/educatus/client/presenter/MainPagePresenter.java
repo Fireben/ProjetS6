@@ -303,7 +303,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	@Override
 	protected void onReset() {
 		super.onReset();
-
+		
 		if (request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage()) {
 			request.setCulture(locale.getCulture());
 			request.setLanguage(locale.getLanguage());

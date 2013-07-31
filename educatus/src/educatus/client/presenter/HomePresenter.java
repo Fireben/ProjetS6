@@ -19,6 +19,7 @@ package educatus.client.presenter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -107,6 +108,8 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		public Element getHomePageFourthSectionDescription();
 		
 		public Element getHomePageFourthSectionLink();
+		
+		public HTMLPanel getHomePanel();
 	}
 
 	@Inject
@@ -132,10 +135,11 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 	@Override
 	protected void onReset() {
-		super.onReset();
+		super.onReset();		
 		
 		if(request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage())
 		{
+			getView().getHomePanel().setVisible(false);
 			request.setCulture(locale.getCulture());
 			request.setLanguage(locale.getLanguage());
 			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
@@ -201,5 +205,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		getView().getHomePageFourthSectionLink().setInnerText(content.getCommunitySection().getSectionLinkText());
 		getView().getHomePageFourthSectionImg().setAttribute("src", content.getCommunitySection().getSectionImg());
 
+		getView().getHomePanel().setVisible(true);
 	}
 }

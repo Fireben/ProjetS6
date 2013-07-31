@@ -2637,7 +2637,7 @@ a:hover, .logInClose {
 	width: 350px;
 	resize: none;
 	margin-bottom: 10px;
-	font-family: "Century Gothic", Arial, "Arial Unicode MS", Helvetica, sans-serif;
+	padding: 0px;
 }
 
 .editTitleBox {
