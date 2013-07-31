@@ -62,7 +62,9 @@ public class FileUploadServlet extends UploadAction {
 						receivedContentTypes.put(item.getFieldName(),
 								item.getContentType());
 					}	
-					else if(item.getContentType().contains("pdf")) {
+					else if(   item.getContentType().contains("pdf") 
+							|| item.getContentType().contains("application/x-download")
+							|| item.getContentType().contains("application/download")) {
 						// TODO, prevent many request from the same user
 						File file = File.createTempFile("upload-", ".bin");
 						item.write(file);
