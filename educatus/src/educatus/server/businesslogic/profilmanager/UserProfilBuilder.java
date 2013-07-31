@@ -68,10 +68,10 @@ public class UserProfilBuilder {
 		UserStatisticsContent userStatisticsContent = new UserStatisticsContent();
 		List<CategoryStat> categoryStatList = new ArrayList<CategoryStat>();
 		for (Category category : categoryList) {
-			CategoryStat categoryStat = new CategoryStat();
+			CategoryStat categoryStat = seminaryDao.getCategoryStat(cip, category.getId());
 			categoryStat.setCategoryCoreContent(SeminaryAdapter.categoryToCategoryCoreContent(category, CA_CULT, EN_LANG));
-			categoryStat.setTotalSeminaries(100);
-			categoryStat.setCompletedSeminaries((int) (Math.random() * 100));
+			//categoryStat.setTotalSeminaries(100);
+			//categoryStat.setCompletedSeminaries((int) (Math.random() * 100));
 			categoryStatList.add(categoryStat);
 		}
 		userStatisticsContent.setCategoryStatList(categoryStatList);

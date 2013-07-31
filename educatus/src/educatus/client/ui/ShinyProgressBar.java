@@ -21,7 +21,10 @@ public class ShinyProgressBar extends Composite {
 	}
 	
 	public void setProgressValue(int max, int current){
-		int intPercentage = (int) (current / (double)max * 100.0);
+		int intPercentage = 0;
+		if (max != 0) {
+			intPercentage = (int) (current / (double)max * 100.0);
+		}
 		span.setAttribute("style", "width: " + intPercentage + "%");
 	}
 }
