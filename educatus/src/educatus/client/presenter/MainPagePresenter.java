@@ -268,6 +268,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	@Override
 	protected void onBind() {
 		super.onBind();
+		
 		getView().getMainMenu().getLogInUi().getLogInLink().addClickHandler(new ClickHandler() {
 
 			@Override

@@ -22,6 +22,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import educatus.client.CookiesConst;
 import educatus.client.EducatusLocale;
 import educatus.client.NameTokens;
+import educatus.client.events.PageChangingEvent;
 import educatus.client.ui.ProfilNewsfeed;
 import educatus.client.ui.ProfilSummary;
 import educatus.client.ui.UserStatisticsWidget;
@@ -90,6 +91,7 @@ public class ProfilPresenter extends
 	@Override
 	protected void onReset() {
 		super.onReset();
+		PageChangingEvent.fire(this, NameTokens.profil);
 		
 		String user = null;
 		if (requestedUser != null) {

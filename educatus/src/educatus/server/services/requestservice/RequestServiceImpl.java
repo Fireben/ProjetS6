@@ -2,6 +2,7 @@ package educatus.server.services.requestservice;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -99,7 +100,8 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 	private ExerciceValidationManager exerciceValidationManager;
 	private ExerciceAdministrationManager exerciceAdministrationManager;
 	private SeminaryDao seminaryDao;
-
+	private EntityManager entityManager;
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -124,6 +126,7 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		exerciceAdministrationManager = dbInjector.getInstance(ExerciceAdministrationManager.class);
 		exerciceHomeListingBuilder = dbInjector.getInstance(ExerciceHomeListingBuilder.class);
 		seminaryDao = dbInjector.getInstance(SeminaryDao.class);
+		entityManager = dbInjector.getInstance(EntityManager.class);
 	}
 
 	@Override
@@ -197,11 +200,13 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 		SeminaryValidationResponse response = new SeminaryValidationResponse();
 		try {
 			String cip = sessionManager.getSessionAssociatedCip(request.getSessionID());		
-			if (cip != null) {				
+			if (cip != null) {		
+				entityManager.getTransaction().begin();
 				seminaryDao.addUserToCompletedSeminaryList(
 						request.getSeminaryId(), 
 						cip
 				);
+				entityManager.getTransaction().commit();
 				response.setValid(true);
 			}
 		} catch (Exception e) {
@@ -390,7 +395,6 @@ public class RequestServiceImpl extends RemoteServiceServlet implements RequestS
 				response.setSeminaryCompletedByUser(isSeminaryCompleted);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		response.setSeminaryContent(content);
 
