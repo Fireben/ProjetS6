@@ -38,6 +38,9 @@ public class CommunityUsersFeed extends Composite {
 		usersFeedTable.addStyleName("newsfeedTable");
 		initializeColumns();
 		initWidget(uiBinder.createAndBindUi(this));
+
+		usersFeedTitleLabel.setStyleName("usersFeedTitleLabel");
+		usersFeedVerticalPanel.setStyleName("usersFeedVerticalPanel");
 	}
 	
 

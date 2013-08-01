@@ -2684,6 +2684,23 @@ a:hover, .logInClose {
 	padding: 10px;
 }
 
+.usersFeedVerticalPanel {
+	color: rgb(200, 200, 200);
+	background-color: rgb(40, 40, 40);
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;	
+	padding: 10px;
+}
+
+.usersFeedTitleLabel {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+
 .userStatisticVerticalPanel {
 	width: 100%
 }
