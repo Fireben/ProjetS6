@@ -3,14 +3,13 @@ package educatus.server.businesslogic.uibuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import educatus.client.NameTokens;
 import educatus.server.persist.dao.InternationalizationDao;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
 import educatus.shared.dto.pagecontent.MainPageContent;
-import educatus.shared.dto.pagecontent.ViewModeEnum;
 import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent;
 import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemContent;
 import educatus.shared.dto.pagecontent.MainPageContent.MainMenuContent.MainMenuItemEnum;
+import educatus.shared.dto.pagecontent.ViewModeEnum;
 
 @Singleton
 public class MainPageContentBuilder {
@@ -18,7 +17,7 @@ public class MainPageContentBuilder {
 	/* Text */
 	private static final int HOME_MAIN_MENU_ITEM = -11000;
 	private static final int SEMINARS_MAIN_MENU_ITEM = -11001;
-	//private static final int PROFILE_MAIN_MENU_ITEM = -11002;
+	private static final int PROFILE_MAIN_MENU_ITEM = -11002;
 	//private static final int VIEW_SEMINARY_MAIN_MENU_ITEM = -11003;
 	private static final int CREATE_SEMINARY_MAIN_MENU_ITEM = -11004;
 	private static final int CATEGORY_ADMINISTRATION_MAIN_MENU_ITEM = -11005;
@@ -115,6 +114,10 @@ public class MainPageContentBuilder {
 		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
 		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.COMMUNITY_ITEM));
 		
+		textContentTranslationEntry = interDao.findTextContentTranslationEntryById(languageId, cultureId, PROFILE_MAIN_MENU_ITEM);
+		text = textContentTranslationEntry == null ? "" : textContentTranslationEntry.getTcteTranslation();
+		mainMenuContent.getMainMenuItemContentList().add(new MainMenuItemContent(text, MainMenuItemEnum.PROFILE_ITEM));
+				
 		mainPageContent.setMainMenuContent(mainMenuContent);
 		
 		return mainPageContent;
