@@ -7,7 +7,7 @@
 	</ui:style>
 	<g:HTMLPanel ui:field="categoryHtmlPanel">
 		<g:VerticalPanel ui:field="categoryVerticalPanel">
-		    <g:Label ui:field="categoryLabel">Available categories</g:Label>
+		    <g:Label ui:field="categoryLabel"></g:Label>
 		    <c:CellTable ui:field="categoryTable"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
