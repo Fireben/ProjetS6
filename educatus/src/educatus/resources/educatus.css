@@ -2793,7 +2793,6 @@ a:hover, .logInClose {
 }
 
 .responseFeedbackPanel>button {
-	width: 65px;
 	height: 35px;
 	background: none repeat scroll 0% 0% #202020;
 	opacity: 0.75;
@@ -2804,6 +2803,8 @@ a:hover, .logInClose {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .responseFeedbackPanel>button:hover:enabled {
@@ -2970,7 +2971,7 @@ a:hover, .logInClose {
 
 .searchButton {
 	width: 28px;
-	height: 28px;
+	height: 27px;
 	margin-top: -4px;
 	margin-left: -5px;
 	cursor: pointer;

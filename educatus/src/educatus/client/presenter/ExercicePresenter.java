@@ -271,7 +271,7 @@ public class ExercicePresenter extends
 						boolean validAnswer = response.isValid();
 						if(validAnswer) {
 							if((questionIndex + 1) == questionList.size())
-								responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Return", returnClickHandler);
+								responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Return Home", returnClickHandler);
 							else
 								responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Next", nextClickHandler);
 						}
