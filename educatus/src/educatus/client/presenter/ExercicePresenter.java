@@ -19,6 +19,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
@@ -61,7 +62,6 @@ public class ExercicePresenter extends
 		public FlowPanel getContentContainer();
 		public FlowPanel getQuestionContainer();
 		public Label getTitleLabel();
-		public Button getNextButton();
 		public Button getSubmitButton();
 		public HTMLPanel getRootPanel();
 	}
@@ -82,6 +82,8 @@ public class ExercicePresenter extends
 	private final RequestServiceAsync requestService = GWT
 			.create(RequestService.class);
 
+	private PlaceManager placeManager;
+
 	@ProxyCodeSplit
 	@NameToken(NameTokens.exercice)
 	public interface MyProxy extends ProxyPlace<ExercicePresenter> {
@@ -89,8 +91,9 @@ public class ExercicePresenter extends
 
 	@Inject
 	public ExercicePresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy) {
+			final MyProxy proxy, final PlaceManager placeManager) {
 		super(eventBus, view, proxy);
+		this.placeManager = placeManager;
 	}
 
 	@Override
@@ -132,12 +135,19 @@ public class ExercicePresenter extends
 			getView().getDescriptionContainer().setVisible(true);
 		}
 	};
+	
+	private ClickHandler returnClickHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {	 
+			PlaceRequest placeRequest = new PlaceRequest(NameTokens.getExerciceHomePage());
+			placeManager.revealPlace(placeRequest);
+		}
+	};
 
 	@Override
 	protected void onBind() {
 		super.onBind();
 		getView().getSubmitButton().addClickHandler(submitResponseClickHandler);
-		getView().getNextButton().addClickHandler(nextClickHandler);
 	}
 
 	@Override
@@ -148,6 +158,7 @@ public class ExercicePresenter extends
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		getView().getDescriptionContainer().clear();
 		reset();
 		ExerciceContentRequest request = new ExerciceContentRequest();
 		request.setCulture(locale.getCulture());
@@ -179,7 +190,7 @@ public class ExercicePresenter extends
 		FlowPanel descriptionContainer = getView().getDescriptionContainer();
 		descriptionContainer.add(new DescriptionEntry("Author", questionCore.getAuthor().getFirstName() + " " + questionCore.getAuthor().getLastName()));
 		descriptionContainer.add(new DescriptionEntry("Description", questionCore.getDescription()));
-		descriptionContainer.add(new StarDescriptionEntry("Difficulty", 4));
+		descriptionContainer.add(new StarDescriptionEntry("Difficulty", questionCore.getDifficultyValue()));
 		descriptionContainer.add(new DescriptionEntry("Created Date", questionCore.getCreatedDate()));		
 		descriptionContainer.setVisible(true);
 	}
@@ -213,9 +224,6 @@ public class ExercicePresenter extends
 		DynamicSection dynamicSection = getView().getDynamicSection();
 		dynamicSection.setList(dynamicSectionList, getView().getContentContainer());
 		
-		if(questionList.size() == (questionIndex +1)) {
-			getView().getNextButton().setVisible(false);
-		}
 		getView().getContentContainer().setVisible(true);
 	}
 
@@ -262,7 +270,10 @@ public class ExercicePresenter extends
 						ExerciceQuestionValidationResponse response = (ExerciceQuestionValidationResponse) result;
 						boolean validAnswer = response.isValid();
 						if(validAnswer) {
-							responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Next", nextClickHandler);
+							if((questionIndex + 1) == questionList.size())
+								responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Return Home", returnClickHandler);
+							else
+								responseFeedback = new ResponseFeedback("Congrats, you have the right answer", "images/Good.png", "Next", nextClickHandler);
 						}
 						else {
 							responseFeedback = new ResponseFeedback("You don't have the right answer, try again", "images/error.png", "Back", backClickHandler);
@@ -300,7 +311,6 @@ public class ExercicePresenter extends
 	}
 	
 	protected void reset() {
-		getView().getNextButton().setVisible(true);
 		if(responseFeedback != null) {
 			getView().getRootPanel().remove(responseFeedback);
 			responseFeedback = null;

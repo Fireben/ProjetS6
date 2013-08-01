@@ -37,7 +37,6 @@ import educatus.shared.services.requestservice.AbstractResponse;
 import educatus.shared.services.requestservice.ResponseTypeEnum;
 import educatus.shared.services.requestservice.request.CategoryAdministrationPageContentRequest;
 import educatus.shared.services.requestservice.response.CategoryAdministrationPageContentResponse;
-import educatus.shared.services.requestservice.response.HomePageContentResponse;
 
 public class CategoryAdministrationPresenter
 		extends
@@ -52,10 +51,15 @@ public class CategoryAdministrationPresenter
 
 	// Response handler
 	private AbstractResponseHandler responseHandler = null;
+	
+	public static final Object SLOT_content = new Object();
 
 	String action = null;
 	String id = null;
 
+	@Inject
+	ContentListPresenter listPresenter;
+	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.categoryAdministration)
 	public interface MyProxy extends
@@ -68,8 +72,6 @@ public class CategoryAdministrationPresenter
 
 	@Inject
 	private EducatusLocale locale;
-
-	public static final Object SLOT_content = new Object();
 
 	@Inject
 	public CategoryAdministrationPresenter(final EventBus eventBus,
@@ -93,9 +95,9 @@ public class CategoryAdministrationPresenter
 	protected void onReset() {
 		super.onReset();
 		PageChangingEvent.fire(this, NameTokens.getCategoryAdministration());
-
+		
 		getView().getCategoryVerticalPanel().clear();
-
+		
 		if ("Edit".equals(action) && id != null) {
 
 			CategoryInformation categoryInformation = new CategoryInformation();
@@ -124,62 +126,7 @@ public class CategoryAdministrationPresenter
 		}
 
 		else if (action == null && id == null) {
-
-			/*
-			 * CategoryAdministrationPageContentRequest request = new
-			 * CategoryAdministrationPageContentRequest();
-			 * request.setCulture(locale.getCulture());
-			 * request.setLanguage(locale.getLanguage());
-			 * requestService.sendRequest(request, new
-			 * AsyncCallback<AbstractResponse>() {
-			 * 
-			 * @Override public void onSuccess(AbstractResponse result) {
-			 * 
-			 * if (result.GetResponseType() ==
-			 * ResponseTypeEnum.CATEGORY_ADMINISTRATION_CONTENT_RESPONSE) {
-			 * CategoryAdministrationPageContentResponse response =
-			 * (CategoryAdministrationPageContentResponse) result;
-			 * 
-			 * List<CategoryCoreContent> categoryCoreContentList =
-			 * response.getCategoryCoreContentList();
-			 * 
-			 * getView().getCategoryVerticalPanel().clear();
-			 * 
-			 * List<Category> categories = new ArrayList<Category>();
-			 * 
-			 * for (CategoryCoreContent categoryCoreContent :
-			 * categoryCoreContentList) { Category category = new Category(
-			 * categoryCoreContent.getId(), categoryCoreContent.getName(),
-			 * categoryCoreContent.getDescription(),
-			 * categoryCoreContent.getImageUrl() ); categories.add(category); }
-			 * CellTable<Category> dataGrid =
-			 * getView().getCategoryList().getDataGrid();
-			 * ListDataProvider<Category> dataProvider = new
-			 * ListDataProvider<Category>();
-			 * dataProvider.addDataDisplay(dataGrid);
-			 * dataProvider.setList(categories); }
-			 * 
-			 * 
-			 * //Category category1 = new Category(1, "Hardware",
-			 * "Seminars related to the hardware", "C:/Url/Path"); //Category
-			 * category2 = new Category(2, "Software",
-			 * "Seminars related to the software", "C:/Url/Path/Software");
-			 * //Category category3 = new Category(3, "Algorithm",
-			 * "Seminars related to the algorithm", "C:/Url/Path/Algorithm");
-			 * 
-			 * //List<Category> categories = new ArrayList<Category>();
-			 * //categories.add(category1); //categories.add(category2);
-			 * //categories.add(category3);
-			 * 
-			 * //CategoryList categoryList = new CategoryList();
-			 * //CellTable<Category> dataGrid = categoryList.getDataGrid();
-			 * //ListDataProvider<Category> dataProvider = new
-			 * ListDataProvider<Category>();
-			 * //dataProvider.addDataDisplay(dataGrid);
-			 * //dataProvider.setList(categories);
-			 * 
-			 * //getView().getCategoryVerticalPanel().add(categoryList);
-			 */
+			createAndSendCategoryListRequest();
 		}
 
 		else {
@@ -212,50 +159,7 @@ public class CategoryAdministrationPresenter
 		request.setCulture(locale.getCulture());
 		request.setLanguage(locale.getLanguage());
 		request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
-		// requestService.sendRequest(request, responseHandler);
-		requestService.sendRequest(request,
-				new AsyncCallback<AbstractResponse>() {
-
-					@Override
-					public void onSuccess(AbstractResponse result) {
-						if (result.GetResponseType() == ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE) {
-							CategoryAdministrationPageContentResponse response = (CategoryAdministrationPageContentResponse) result;
-
-							List<CategoryCoreContent> categoryCoreContentList = response
-									.getCategoryCoreContentList();
-
-							getView().getCategoryVerticalPanel().clear();
-
-							List<Category> categories = new ArrayList<Category>();
-
-							for (CategoryCoreContent categoryCoreContent : categoryCoreContentList) {
-								Category category = new Category(
-										categoryCoreContent.getId(),
-										categoryCoreContent.getName(),
-										categoryCoreContent.getDescription(),
-										categoryCoreContent.getImageUrl());
-								categories.add(category);
-							}
-							CategoryList categoryList = new CategoryList();
-							CellTable<Category> dataGrid = categoryList
-									.getDataGrid();
-							ListDataProvider<Category> dataProvider = new ListDataProvider<Category>();
-							dataProvider.addDataDisplay(dataGrid);
-							dataProvider.setList(categories);
-
-							getView().getCategoryVerticalPanel().add(
-									categoryList);
-						} else {
-							// ERROR, not the response type we expected
-						}
-					}
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
-					}
-				});
+		requestService.sendRequest(request, responseHandler);
 	}
 
 	private class AbstractResponseHandler implements
@@ -264,30 +168,34 @@ public class CategoryAdministrationPresenter
 		@Override
 		public void onSuccess(AbstractResponse result) {
 			if (result.GetResponseType() == ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE) {
-				CategoryAdministrationPageContentResponse response = (CategoryAdministrationPageContentResponse) result;
+					setInSlot(SLOT_content, listPresenter);	
+					
+					
+					CategoryAdministrationPageContentResponse response = (CategoryAdministrationPageContentResponse) result;
 
-				List<CategoryCoreContent> categoryCoreContentList = response
-						.getCategoryCoreContentList();
+					List<CategoryCoreContent> categoryCoreContentList = response
+							.getCategoryCoreContentList();
 
-				getView().getCategoryVerticalPanel().clear();
+					getView().getCategoryVerticalPanel().clear();
 
-				List<Category> categories = new ArrayList<Category>();
+					List<Category> categories = new ArrayList<Category>();
 
-				for (CategoryCoreContent categoryCoreContent : categoryCoreContentList) {
-					Category category = new Category(
-							categoryCoreContent.getId(),
-							categoryCoreContent.getName(),
-							categoryCoreContent.getDescription(),
-							categoryCoreContent.getImageUrl());
-					categories.add(category);
-				}
-				CategoryList categoryList = new CategoryList();
-				CellTable<Category> dataGrid = categoryList.getDataGrid();
-				ListDataProvider<Category> dataProvider = new ListDataProvider<Category>();
-				dataProvider.addDataDisplay(dataGrid);
-				dataProvider.setList(categories);
+					for (CategoryCoreContent categoryCoreContent : categoryCoreContentList) {
+						Category category = new Category(
+								categoryCoreContent.getId(),
+								categoryCoreContent.getName(),
+								categoryCoreContent.getDescription(),
+								categoryCoreContent.getImageUrl());
+						categories.add(category);
+					}
+					CategoryList categoryList = new CategoryList();
+					CellTable<Category> dataGrid = categoryList.getDataGrid();
+					ListDataProvider<Category> dataProvider = new ListDataProvider<Category>();
+					dataProvider.addDataDisplay(dataGrid);
+					dataProvider.setList(categories);
+					dataProvider.refresh();
 
-				getView().getCategoryVerticalPanel().add(categoryList);
+					getView().getCategoryVerticalPanel().add(categoryList);
 			} else {
 				// ERROR, not the response type we expected
 			}

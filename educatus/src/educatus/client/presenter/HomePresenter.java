@@ -19,6 +19,7 @@ package educatus.client.presenter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -96,8 +97,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 		public Element getHomePageThirdSectionDescription();
 
-		public Element getHomePageThirdSectionLink();
-
 		public Element getHomePageFourthSectionTitle();
 
 		public Element getHomePageFourthSectionText();
@@ -106,7 +105,7 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 		public Element getHomePageFourthSectionDescription();
 		
-		public Element getHomePageFourthSectionLink();
+		public HTMLPanel getHomePanel();
 	}
 
 	@Inject
@@ -136,6 +135,7 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		
 		if(request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage())
 		{
+			getView().getHomePanel().setVisible(false);
 			request.setCulture(locale.getCulture());
 			request.setLanguage(locale.getLanguage());
 			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
@@ -191,15 +191,14 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		getView().getHomePageThirdSectionTitle().setInnerText(content.getStatisticsSection().getSectionTitle());
 		getView().getHomePageThirdSectionText().setInnerText(content.getStatisticsSection().getSectionText());
 		getView().getHomePageThirdSectionDescription().setInnerText(content.getStatisticsSection().getSectionDescription());
-		getView().getHomePageThirdSectionLink().setInnerText(content.getStatisticsSection().getSectionLinkText());
 		getView().getHomePageThirdSectionImg().setAttribute("src", content.getStatisticsSection().getSectionImg());
 
 		// Community section
 		getView().getHomePageFourthSectionTitle().setInnerText(content.getCommunitySection().getSectionTitle());
 		getView().getHomePageFourthSectionText().setInnerText(content.getCommunitySection().getSectionText());
 		getView().getHomePageFourthSectionDescription().setInnerText(content.getCommunitySection().getSectionDescription());
-		getView().getHomePageFourthSectionLink().setInnerText(content.getCommunitySection().getSectionLinkText());
 		getView().getHomePageFourthSectionImg().setAttribute("src", content.getCommunitySection().getSectionImg());
 
+		getView().getHomePanel().setVisible(true);
 	}
 }

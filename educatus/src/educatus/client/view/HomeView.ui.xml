@@ -4,7 +4,7 @@
 	
 	<ui:with type="educatus.client.NameTokens" field="nameTokens"></ui:with>
 	
-	<g:HTMLPanel>	
+	<g:HTMLPanel ui:field="homePanel">	
 		<style>
 			.art-content .art-postcontent-0 .layout-item-0 { margin-bottom: 40px;  }
 			.art-content .art-postcontent-0 .layout-item-1 { border-top-style:solid;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;border-width:0px;border-color:#FAFAFA; color: #DEDEDE; background: ;  }
@@ -66,7 +66,6 @@
 														    <img ui:field="homePageThirdSectionImg" width="154" height="154" alt="" src="" class=""></img>
 														</p>
 														<p ui:field="homePageThirdSectionDescription"></p>
-														<p><a ui:field="homePageThirdSectionLink" href="#"></a></p>
 													</div>
 													<div class="art-layout-cell layout-item-3" style="width: 25%; padding-right: 20px; padding-left: 20px;" >
 														<h1 ui:field="homePageFourthSectionTitle"></h1>
@@ -75,7 +74,6 @@
 															<img ui:field="homePageFourthSectionImg" width="154" height="154" alt="" src=""></img>			
 														</p>
 														<p ui:field="homePageFourthSectionDescription"></p>
-														<p><a ui:field="homePageFourthSectionLink" href="#"></a></p>
 													</div>
 												</div>
 											</div>

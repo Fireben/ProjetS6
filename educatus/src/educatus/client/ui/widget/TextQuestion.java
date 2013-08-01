@@ -17,6 +17,6 @@ public class TextQuestion extends Question {
 	}
 	
 	public void clearResponse() {
-		responseBox = new TextBox();
+		responseBox.setText("");
 	}
 }

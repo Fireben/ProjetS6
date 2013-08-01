@@ -163,8 +163,7 @@ public class SeminaryAdministrationManager {
 				difficulty.getDifficultyValue()
 				);
 
-		// TODO, remove category hardcoding
-		seminary = seminaryDao.addCategoryToSeminary(seminary.getSemiId(), 47);
+		seminary = seminaryDao.addCategoryToSeminary(seminary.getSemiId(), content.getCategories().get(0));
 
 		manager.getTransaction().commit();
 	}

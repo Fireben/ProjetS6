@@ -184,9 +184,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 				fillPageWithContent(response.getMainPageContent());
 				
 				if (response.getViewMode() == ViewModeEnum.ADMIN) {
-					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("User");
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setUserModeImg("images/user_login_admin.png");
 				} else {
-					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonText("Admin");
+					getView().getMainMenu().getLogInProfilUi().getDropDownUi().setUserModeImg("images/user_login_user.png");
 				}
 			}
 		}
@@ -282,7 +282,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		// Set click handlers for LogInProfilUi
 		getView().getMainMenu().getLogInProfilUi().getLogOutLink().addClickHandler(new LogoutButtonClickHandler());
 		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setAdminButtonHandler(new AdminModeButtonClickHandler());
-		getView().getMainMenu().getLogInProfilUi().getDropDownUi().setProfilButtonHandler(new ViewProfileButtonClickHandler());
 
 		// Default -> display Login
 		displayLoginUi();
@@ -303,7 +302,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 	@Override
 	protected void onReset() {
 		super.onReset();
-
+		
 		if (request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage()) {
 			request.setCulture(locale.getCulture());
 			request.setLanguage(locale.getLanguage());
@@ -414,7 +413,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MyView, MainP
 		credentialsFail.setStyleName("credentialsFail", true);
 		
 		// Add some text to the top of the dialog
-		HTML userName = new HTML("UserName");
+		HTML userName = new HTML("Cip");
 		dialogContents.add(userName);
 		dialogContents.setCellHorizontalAlignment(userName, HasHorizontalAlignment.ALIGN_LEFT);
 

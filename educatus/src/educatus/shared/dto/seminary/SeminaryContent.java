@@ -11,6 +11,8 @@ public class SeminaryContent implements Serializable {
 	private static final long serialVersionUID = 3375315024357286924L;
 
 	private SeminaryCoreContent coreContent;
+	
+	private List<Integer> categories = new ArrayList<Integer>();
 
 	private List<AbstractDynamicSection> dynamicSectionList = new ArrayList<AbstractDynamicSection>();
 
@@ -28,5 +30,13 @@ public class SeminaryContent implements Serializable {
 
 	public void setDynamicSectionList(List<AbstractDynamicSection> dynamicSectionList) {
 		this.dynamicSectionList = dynamicSectionList;
+	}
+
+	public List<Integer> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Integer> categories) {
+		this.categories = categories;
 	}
 }

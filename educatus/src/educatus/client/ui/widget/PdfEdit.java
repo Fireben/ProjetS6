@@ -1,47 +1,35 @@
 package educatus.client.ui.widget;
 
-import educatus.client.ui.CustomButton;
 import gwtupload.client.IUploadStatus.Status;
 import gwtupload.client.IUploader;
 import gwtupload.client.IUploader.UploadedInfo;
 import gwtupload.client.SingleUploader;
 
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
 
-public class PdfEdit extends Composite {
-	private FlowPanel panel;
+public class PdfEdit extends EditSection {
 	private FlowPanel pdfUploadPanel;
 	private SingleUploader defaultUploader;
 	private String pdfId = null;
-	private CustomButton closeButton;
 	
 	public PdfEdit() {
-		super();
-		panel = new FlowPanel();
-		initWidget(panel);		
+		super();	
 		createPanel();
 	}
 	
 	private void createPanel() {
-		createCloseButton();
 		createUploader();
 		
-		panel.add(closeButton);
+		titleLabel.setText("Pdf");
+		
 		panel.add(pdfUploadPanel);		
 		panel.setStyleName("editSection");
 	}	
-	
-	private void createCloseButton() {
-		closeButton = new CustomButton();
-		closeButton.add(new Image("images/closeButton.png"));
-		closeButton.setStyleName("editCloseButton");
-	}
-	
+
 	private void createUploader() {
 		defaultUploader = new SingleUploader();
 		defaultUploader.setAutoSubmit(true);
@@ -75,9 +63,5 @@ public class PdfEdit extends Composite {
 		horizontalPanel.add(label);		
 		horizontalPanel.setStyleName("center");
 		panel.add(horizontalPanel);
-	}
-
-	public CustomButton getCloseButton() {
-		return closeButton;
 	}
 }

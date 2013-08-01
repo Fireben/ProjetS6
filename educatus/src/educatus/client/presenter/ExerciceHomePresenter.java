@@ -215,7 +215,7 @@ public class ExerciceHomePresenter extends Presenter<ExerciceHomePresenter.MyVie
 					exerciceCoreContent.getDescription(), 
 					exerciceCoreContent.getAuthor().getFirstName() + " " + exerciceCoreContent.getAuthor().getLastName(), 
 					exerciceCoreContent.getCreatedDate(), 
-					2,
+					exerciceCoreContent.getDifficultyValue(),
 					NameTokens.getExercice()
 			);
 			list.add(listContent);
