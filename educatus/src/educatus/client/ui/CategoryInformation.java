@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HeaderPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,12 +27,19 @@ public class CategoryInformation extends Composite {
 	@UiField
 	HTMLPanel categoryEditHtmlPanel;
 	@UiField
-	VerticalPanel categoryEditVerticalPanel;	@UiField 
+	VerticalPanel categoryEditVerticalPanel;
+	@UiField
+	Label categoryNameTitle;
+	@UiField 
 	TextBox categoryName; 
+	@UiField
+	Label categoryImageTitle;
 	@UiField 
 	Image categoryImage;
 	@UiField
 	VerticalPanel categoryDescriptionVerticalPanel;
+	@UiField
+	Label categoryDescriptionTitle;
 	@UiField
 	VerticalPanel categoryImageVerticalPanel;
 	
@@ -44,11 +52,18 @@ public class CategoryInformation extends Composite {
 
 	public CategoryInformation(){
 		initWidget(uiBinder.createAndBindUi(this));
-		categoryName.setStyleName("editCategoryVerticalPanel");
-		categoryEditHtmlPanel.setStyleName("editCategoryHtmlPanel");
-		categoryName.setStyleName("editCategoryHtmlPanel");
-		categoryImage.setStyleName("editCategoryImage");
-		categoryDescriptionVerticalPanel.setStyleName("editCategoryDescriptionBox");
+		categoryNameTitle.setStyleName("editCore");
+		categoryName.setStyleName("editTitleTextBox");
+		categoryEditHtmlPanel.setStyleName("editCore");
+		//categoryEditHtmlPanel.setStyleName("editCategoryHtmlPanel");
+		//categoryName.setStyleName("editCategoryHtmlPanel");
+		
+		categoryImageTitle.setStyleName("editTitle");
+		categoryImage.setStyleName("editTitleTextBox");
+		
+		categoryDescriptionTitle.setStyleName("editCore");
+		categoryDescriptionVerticalPanel.setStyleName("editDescriptionBox");
+				
 		defaultUploader = new SingleUploader();
 		defaultUploader.setAutoSubmit(true);
 		defaultUploader.addOnFinishUploadHandler(onFinishUploaderHandler);

@@ -6,16 +6,16 @@
 	</ui:style>
 	<g:HTMLPanel ui:field="categoryEditHtmlPanel">
 		<g:VerticalPanel ui:field ="categoryEditVerticalPanel" width="100%" height="100%">
-			<g:Label text="Category Name" height="20px"/>
+			<g:Label ui:field="categoryNameTitle">Category Name</g:Label>
 			<g:TextBox ui:field="categoryName"></g:TextBox>
 			<!-- <g:HorizontalPanel width="100%" height="100%">-->
 				<g:VerticalPanel ui:field="categoryImageVerticalPanel" width="50%" height="100%">
-					<g:Label text="Category Image" />
+					<g:Label ui:field="categoryImageTitle">Category Image</g:Label>
 					<g:Image ui:field="categoryImage"></g:Image>
 			</g:VerticalPanel>
 			<!-- </g:HorizontalPanel>-->
 			<g:VerticalPanel ui:field="categoryDescriptionVerticalPanel">
-					<g:Label text="Category Description" />
+					<g:Label ui:field="categoryDescriptionTitle">Category Description</g:Label>
 					<g:TextArea ui:field="categoryDescription" width="210px" height="110px"></g:TextArea>
 				</g:VerticalPanel>
 		</g:VerticalPanel>
