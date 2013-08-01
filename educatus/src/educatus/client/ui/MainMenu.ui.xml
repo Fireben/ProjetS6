@@ -12,7 +12,7 @@
 					<ul ui:field="mainMenuList" class="art-hmenu">
 					    <!-- Add <li> element dynamically -->
 					</ul>
-					<div style="float: right; width: 25%;">
+					<div style="float: right; width: 25%; margin-right: 74px;">
 						<npui:LogIn ui:field="logInUi"/>
 						<npui:LogInProfil ui:field="logInProfilUi" />
 					</div>

@@ -19,15 +19,10 @@ package educatus.client.ui;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DropDown extends Composite implements ClickHandler {
@@ -35,31 +30,27 @@ public class DropDown extends Composite implements ClickHandler {
 	}
 
 	private ClickHandler adminButtonHandler;
-	private ClickHandler profilButtonHandler;
 
+	private Image img;
 	private PushButton userImage;
-	private PushButton arrow;
-	private String adminButtonText = "Admin";
+//	private String adminButtonText = "Admin";
+	private String userModeImgSrc = "images/user_login_user.png";
 
 	public DropDown() {
 
-		Image img = new Image("images/user_128.png");
-		Image imgArrow = new Image("images/arrow_down.png");
-		img.setPixelSize(32, 32);
+		img = new Image(userModeImgSrc);
+		
+		img.setPixelSize(60, 32);
 
 		userImage = new PushButton(img);
-		arrow = new PushButton(imgArrow);
 
 		userImage.addClickHandler(this);
-		arrow.addClickHandler(this);
 
 		userImage.removeStyleName("gwt-PushButton");
-		arrow.removeStyleName("gwt-PushButton");
 
 		HorizontalPanel panel = new HorizontalPanel();
 		panel.setStyleName("logInProfilImg", true);
 		panel.add(userImage);
-		panel.add(arrow);
 
 		// All composites must call initWidget() in their constructors.
 		initWidget(panel);
@@ -68,66 +59,59 @@ public class DropDown extends Composite implements ClickHandler {
 
 	@Override
 	public void onClick(ClickEvent event) {
-		final DialogBox dialogBox = createOptionDropDown();
-		dialogBox.setGlassEnabled(false);
-		dialogBox.setStyleName("logInProfilDialogBox");
-		dialogBox.setModal(false);
-		dialogBox.setAnimationEnabled(true);
-		dialogBox.setAutoHideEnabled(true);
-		dialogBox.setPopupPositionAndShow(new PositionCallback() {
-
-			@Override
-			public void setPosition(int offsetWidth, int offsetHeight) {
-				dialogBox.showRelativeTo(userImage);
-			}
-		});
-		// dialogBox.setPopupPosition(getAbsoluteLeft()-300,
-		// getAbsoluteTop()+50);
-		dialogBox.show();
+		if (adminButtonHandler != null) {
+			adminButtonHandler.onClick(event);					
+		}
+		
+		/*TODO Add a dialog box if more options are avaible for a box */
+//		final DialogBox dialogBox = createOptionDropDown();
+//		dialogBox.setGlassEnabled(false);
+//		//dialogBox.setStyleName("logInProfilDialogBox");
+//		dialogBox.setModal(false);
+//		dialogBox.setAnimationEnabled(true);
+//		dialogBox.setAutoHideEnabled(true);
+//		dialogBox.setPopupPositionAndShow(new PositionCallback() {
+//
+//			@Override
+//			public void setPosition(int offsetWidth, int offsetHeight) {
+//				dialogBox.showRelativeTo(userImage);
+//			}
+//		});
+//		// dialogBox.setPopupPosition(getAbsoluteLeft()-300,
+//		// getAbsoluteTop()+50);
+//		dialogBox.show();
 	}
 
-	private DialogBox createOptionDropDown() {
-		// Create a dialog box and set the caption text
-		final DialogBox dialogBox = new DialogBox();
-		// dialogBox.setText("Log In ");
+	/*TODO Add a dialog box if more options are avaible for a box */
 
-		// Create a table to layout the content
-		VerticalPanel dialogContents = new VerticalPanel();
-		dialogContents.setSpacing(5);
-		dialogBox.setWidget(dialogContents);
-
-		// Add a profil button at the bottom of the dialog
-		Button profilButton = new Button("Profil", new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (profilButtonHandler != null) {
-					profilButtonHandler.onClick(event);					
-				}
-				dialogBox.hide();
-			}
-		});
-		profilButton.setStyleName("backButton", true);
-		dialogContents.add(profilButton);
-		dialogContents.setCellHorizontalAlignment(profilButton,
-				HasHorizontalAlignment.ALIGN_RIGHT);
-
-		// Add a admin button at the bottom of the dialog
-		// HACK, refactorer le dropdown, on expose l'admin button pour changer le texte à partir du MainPagePresenter
-		Button adminButton = new Button(adminButtonText, new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (adminButtonHandler != null) {
-					adminButtonHandler.onClick(event);					
-				}
-				dialogBox.hide();
-			}
-		});
-		adminButton.setStyleName("backButton", true);
-		dialogContents.add(adminButton);
-		dialogContents.setCellHorizontalAlignment(adminButton,
-				HasHorizontalAlignment.ALIGN_RIGHT);
-
-		// Return the dialog box
-		return dialogBox;
-	}
+//	private DialogBox createOptionDropDown() {
+//		// Create a dialog box and set the caption text
+//		final DialogBox dialogBox = new DialogBox();
+//		// dialogBox.setText("Log In ");
+//
+//		// Create a table to layout the content
+//		VerticalPanel dialogContents = new VerticalPanel();
+//		dialogContents.setSpacing(5);
+//		dialogBox.setWidget(dialogContents);
+//
+//		// Add a admin button at the bottom of the dialog
+//		// HACK, refactorer le dropdown, on expose l'admin button pour changer le texte à partir du MainPagePresenter
+//		Button adminButton = new Button(adminButtonText, new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				if (adminButtonHandler != null) {
+//					adminButtonHandler.onClick(event);					
+//				}
+//				dialogBox.hide();
+//			}
+//		});
+//		adminButton.setStyleName("backButton", true);
+//		dialogContents.add(adminButton);
+//		dialogContents.setCellHorizontalAlignment(adminButton,
+//				HasHorizontalAlignment.ALIGN_RIGHT);
+//
+//		// Return the dialog box
+//		return dialogBox;
+//	}
 
 	public ClickHandler getAdminButtonHandler() {
 		return adminButtonHandler;
@@ -137,15 +121,12 @@ public class DropDown extends Composite implements ClickHandler {
 		this.adminButtonHandler = adminButtonHandler;
 	}
 
-	public ClickHandler getProfilButtonHandler() {
-		return profilButtonHandler;
-	}
-
-	public void setProfilButtonHandler(ClickHandler profilButtonHandler) {
-		this.profilButtonHandler = profilButtonHandler;
+	public void setUserModeImg(String imgSrc) {
+		
+		img.setUrl(imgSrc);
 	}
 	
-	public void setAdminButtonText(String text) {
-		adminButtonText = text;
-	}
+//	public void setAdminButtonText(String text) {
+//		adminButtonText = text;
+//	}
 }
