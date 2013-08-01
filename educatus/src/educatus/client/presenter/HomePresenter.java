@@ -96,8 +96,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 		public Element getHomePageThirdSectionDescription();
 
-		public Element getHomePageThirdSectionLink();
-
 		public Element getHomePageFourthSectionTitle();
 
 		public Element getHomePageFourthSectionText();
@@ -189,7 +187,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		getView().getHomePageThirdSectionTitle().setInnerText(content.getStatisticsSection().getSectionTitle());
 		getView().getHomePageThirdSectionText().setInnerText(content.getStatisticsSection().getSectionText());
 		getView().getHomePageThirdSectionDescription().setInnerText(content.getStatisticsSection().getSectionDescription());
-		getView().getHomePageThirdSectionLink().setInnerText(content.getStatisticsSection().getSectionLinkText());
 		getView().getHomePageThirdSectionImg().setAttribute("src", content.getStatisticsSection().getSectionImg());
 
 		// Forums section

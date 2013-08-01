@@ -2542,7 +2542,7 @@ a:hover, .logInClose {
 
 .boxPassword {
 	color: black;
-	width: 79% !important;
+	width: 96% !important;
 	padding: 2px !important;
 }
 
@@ -2951,4 +2951,10 @@ a:hover, .logInClose {
 	margin-top: -4px;
 	margin-left: -5px;
 	cursor: pointer;
+}
+
+.textUser {
+	position: relative;
+	right: 11px;
+	top: 20px;
 }
