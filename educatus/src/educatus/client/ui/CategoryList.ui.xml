@@ -9,6 +9,7 @@
 		<g:VerticalPanel ui:field="categoryVerticalPanel">
 		    <g:Label ui:field="categoryLabel"></g:Label>
 		    <c:CellTable ui:field="categoryTable"/>
+	    	<g:Button ui:field='addButton'> Add Category </g:Button>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

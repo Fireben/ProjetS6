@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -58,7 +60,7 @@ public class CategoryAdministrationPresenter
 	String id = null;
 
 	@Inject
-	ContentListPresenter listPresenter;
+	CategoryList categoryListPresenter;
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.categoryAdministration)
@@ -144,7 +146,41 @@ public class CategoryAdministrationPresenter
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		createAndSendCategoryListRequest();
+		if ("Edit".equals(action) && id != null) {
+
+			CategoryInformation categoryInformation = new CategoryInformation();
+
+			TextBox software = new TextBox();
+			software.setText("Software");
+			categoryInformation.setCategoryName(software);
+
+			VerticalPanel verticalPanel = new VerticalPanel();
+			verticalPanel.add(new RichTextArea());
+			categoryInformation
+					.setCategoryDescriptionVerticalPanel(verticalPanel);
+
+			Image categoryImage = new Image("images/categories/software.png");
+			categoryInformation.setCategoryImage(categoryImage);
+
+			getView().getCategoryVerticalPanel().add(categoryInformation);
+			action = null;
+			id = null;
+		}
+
+		else if (action == "delete" && id != null) {
+			// Supprimer la catégorie sélectionner
+			action = null;
+			id = null;
+		}
+
+		else if (action == null && id == null) {
+			createAndSendCategoryListRequest();
+		}
+
+		else {
+			// ERROR not a expected token name
+		}
+		// }
 	}
 
 	@Override
@@ -167,10 +203,7 @@ public class CategoryAdministrationPresenter
 
 		@Override
 		public void onSuccess(AbstractResponse result) {
-			if (result.GetResponseType() == ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE) {
-					setInSlot(SLOT_content, listPresenter);	
-					
-					
+			if (result.GetResponseType() == ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE) {		
 					CategoryAdministrationPageContentResponse response = (CategoryAdministrationPageContentResponse) result;
 
 					List<CategoryCoreContent> categoryCoreContentList = response
@@ -194,15 +227,52 @@ public class CategoryAdministrationPresenter
 					dataProvider.addDataDisplay(dataGrid);
 					dataProvider.setList(categories);
 					dataProvider.refresh();
+					
+					categoryListPresenter.setAddButtonHandler(addClickHandler);
 
 					getView().getCategoryVerticalPanel().add(categoryList);
-			} else {
+			} 
+			
+			else if (result.GetResponseType() == ResponseTypeEnum.CATEGORY_ADMINISTRATION_PAGE_CONTENT_RESPONSE){
+				
+				
+			}
+			else {
 				// ERROR, not the response type we expected
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
+		}
+	};
+	
+	private ClickHandler addClickHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {	 
+			sendAddPageRequest();
+		}
+
+		private void sendAddPageRequest() {
+			CategoryInformation categoryInformation = new CategoryInformation();
+
+			getView().getCategoryVerticalPanel().clear();
+			
+			TextBox software = new TextBox();
+			software.setText("Software");
+			categoryInformation.setCategoryName(software);
+
+			VerticalPanel verticalPanel = new VerticalPanel();
+			verticalPanel.add(new RichTextArea());
+			categoryInformation
+					.setCategoryDescriptionVerticalPanel(verticalPanel);
+
+			Image categoryImage = new Image("images/categories/software.png");
+			categoryInformation.setCategoryImage(categoryImage);
+
+			getView().getCategoryVerticalPanel().add(categoryInformation);
+			action = null;
+			id = null;
 		}
 	};
 }

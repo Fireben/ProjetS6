@@ -2,11 +2,13 @@ package educatus.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
@@ -28,6 +30,8 @@ public class CategoryList extends Composite{
 	Label categoryLabel;
 	@UiField(provided=true) 
 	CellTable<Category> categoryTable;
+	@UiField
+	Button addButton;
 	
 	interface CategoryListUiBinder extends UiBinder<Widget, CategoryList> {
 	}
@@ -40,6 +44,8 @@ public class CategoryList extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		categoryLabel.setText("Available categories");
 		categoryLabel.setStyleName("listTitle");
+		
+		addButton.setStyleName("backButton");
 	}
 
 	public CellTable<Category> getDataGrid() {
@@ -108,5 +114,13 @@ public class CategoryList extends Composite{
 				
 		categoryTable.addColumn(DeleteColumn, "", "");
 		categoryTable.setColumnWidth(EditColumn,50, Unit.PX);
+	}
+	
+	public Button getAddButton() {
+		return addButton;
+	}
+	
+	public void setAddButtonHandler(ClickHandler addClickHandler) {
+		addButton.addClickHandler(addClickHandler);
 	}
 }
