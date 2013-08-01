@@ -22,7 +22,7 @@ public abstract class AbstractRequest implements Serializable {
 	public String getCulture() {
 		return culture;
 	}
-	
+
 	public void setCulture(String culture) {
 		this.culture = culture;
 	}

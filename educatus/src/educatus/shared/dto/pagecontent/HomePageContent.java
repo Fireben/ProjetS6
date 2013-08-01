@@ -69,7 +69,7 @@ public class HomePageContent implements Serializable {
 	private HomePageSection seminarsSection;
 	private HomePageSection problemsSection;
 	private HomePageSection statisticsSection;
-	private HomePageSection forumsSection;
+	private HomePageSection communitySection;
 
 	public String getTitle() {
 		return title;
@@ -151,11 +151,11 @@ public class HomePageContent implements Serializable {
 		this.statisticsSection = statisticsSection;
 	}
 
-	public HomePageSection getForumsSection() {
-		return forumsSection;
+	public HomePageSection getCommunitySection() {
+		return communitySection;
 	}
 
-	public void setForumsSection(HomePageSection forumsSection) {
-		this.forumsSection = forumsSection;
+	public void setCommunitySection(HomePageSection communitySection) {
+		this.communitySection = communitySection;
 	}
 }

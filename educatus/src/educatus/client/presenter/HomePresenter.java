@@ -189,11 +189,11 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		getView().getHomePageThirdSectionDescription().setInnerText(content.getStatisticsSection().getSectionDescription());
 		getView().getHomePageThirdSectionImg().setAttribute("src", content.getStatisticsSection().getSectionImg());
 
-		// Forums section
-		getView().getHomePageFourthSectionTitle().setInnerText(content.getForumsSection().getSectionTitle());
-		getView().getHomePageFourthSectionText().setInnerText(content.getForumsSection().getSectionText());
-		getView().getHomePageFourthSectionDescription().setInnerText(content.getForumsSection().getSectionDescription());
-		getView().getHomePageFourthSectionImg().setAttribute("src", content.getForumsSection().getSectionImg());
+		// Community section
+		getView().getHomePageFourthSectionTitle().setInnerText(content.getCommunitySection().getSectionTitle());
+		getView().getHomePageFourthSectionText().setInnerText(content.getCommunitySection().getSectionText());
+		getView().getHomePageFourthSectionDescription().setInnerText(content.getCommunitySection().getSectionDescription());
+		getView().getHomePageFourthSectionImg().setAttribute("src", content.getCommunitySection().getSectionImg());
 
 	}
 }
