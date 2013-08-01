@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.eclipse.persistence.tools.schemaframework.DynamicSchemaManager;
+
 import com.google.inject.Inject;
 
 import educatus.server.persist.dao.dynamiccontent.DynamicContent;
@@ -12,8 +14,10 @@ import educatus.server.persist.dao.dynamiccontent.DynamicSectionImage;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionPDF;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionType;
+import educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.server.persist.dao.internationalization.ImageContentEntry;
 import educatus.server.persist.dao.internationalization.TextContentEntry;
+import educatus.server.persist.dao.internationalization.VideoContentEntry;
 
 public class DynamicContentDao {
 
@@ -94,5 +98,25 @@ public class DynamicContentDao {
 
 		dynamicContent.getDynamicSectionList().add(dynamicSectionPDF);
 		entityManager.persist(dynamicSectionPDF);
+	}
+	
+	public void addDynamicSectionVideo(int dynamicContentId, int descriptionTextContentEntryId, int videoContentEntryId, int dynamicSectionAlignmentId, int sequenceNumber) throws Exception {
+
+		DynamicContent dynamicContent = entityManager.find(DynamicContent.class, dynamicContentId);
+		TextContentEntry descriptionTextContentEntry = entityManager.find(TextContentEntry.class, descriptionTextContentEntryId);
+		VideoContentEntry videoContentEntry = entityManager.find(VideoContentEntry.class, videoContentEntryId);
+		DynamicSectionAlignment dynamicSectionAlignment = entityManager.find(DynamicSectionAlignment.class, dynamicSectionAlignmentId);
+		DynamicSectionType dynamicSectionType = entityManager.find(DynamicSectionType.class, DynamicSectionVideo.DYNAMIC_SECTION_TYPE_VALUE);
+
+		DynamicSectionVideo dynamicSectionVideo = new DynamicSectionVideo();
+		dynamicSectionVideo.setDescription(descriptionTextContentEntry);	
+		dynamicSectionVideo.setDynamicContent(dynamicContent);
+		dynamicSectionVideo.setDynamicSectionAlignment(dynamicSectionAlignment);
+		dynamicSectionVideo.setSequenceNumber(sequenceNumber);
+		dynamicSectionVideo.setVideo(videoContentEntry); 
+		dynamicSectionVideo.setDynamicSectionType(dynamicSectionType);
+		
+		dynamicContent.getDynamicSectionList().add(dynamicSectionVideo);
+		entityManager.persist(dynamicSectionVideo);
 	}
 }

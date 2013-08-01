@@ -35,6 +35,7 @@ import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionVideoContent;
 import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
@@ -134,6 +135,16 @@ public class SeminaryEditPresenter extends
 		}
 	};
 	
+	//TODO take Nic's widget
+	private ClickHandler addVideoHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			TextBox textBox = new TextBox();
+			addSectionTitle("Video");
+			getView().getContentPanel().add(textBox);
+		}
+	};
+	
 	private ClickHandler cancelHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -197,7 +208,7 @@ public class SeminaryEditPresenter extends
 		editButtonPanelPresenter.addSectionButton("images/addText.png", addTextHandler);
 		editButtonPanelPresenter.addSectionButton("images/addImage.png", addImageHandler);
 		editButtonPanelPresenter.addSectionButton("images/addPdf.png", addPdfHandler);
-		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addPdfHandler);
+		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addVideoHandler);
 		
 		editButtonPanelPresenter.setSaveButtonHandler(confirmHandler);
 		editButtonPanelPresenter.setCancelHandler(cancelHandler);
@@ -268,6 +279,14 @@ public class SeminaryEditPresenter extends
 				DynamicSectionPDFContent dynamicSectionPDFContent = new DynamicSectionPDFContent();
 				dynamicSectionPDFContent.setPDFUrl(id);
 				dynamicSectionList.add(dynamicSectionPDFContent);
+			}
+			//TODO modify to Nic's videoWidget
+			else if(currentWidget instanceof TextBox){
+				TextBox textBox = ((TextBox)currentWidget);
+				DynamicSectionVideoContent dynamicSectionVideoContent = new DynamicSectionVideoContent();
+				dynamicSectionVideoContent.setVideoUrl(textBox.getText());
+				dynamicSectionVideoContent.setVideoDescription("Test Ben");
+				dynamicSectionList.add(dynamicSectionVideoContent);
 			}
 		}
 		return dynamicSectionList;

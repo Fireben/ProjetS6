@@ -7,7 +7,8 @@ public class DynamicSectionVideoContent extends AbstractDynamicSection implement
 	private static final long serialVersionUID = -5024107190445279652L;
 	
 	private String videoUrl;
-	
+	private String videoDescription;
+
 	@Override
 	public DynamicSectionType getSectionType() {
 		return DynamicSectionType.VIDEO_SECTION;
@@ -19,5 +20,13 @@ public class DynamicSectionVideoContent extends AbstractDynamicSection implement
 
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
+	}
+	
+	public String getVideoDescription(){
+		return videoDescription;
+	}
+	
+	public void setVideoDescription(String videoDescription) {
+		this.videoDescription = videoDescription;
 	}
 }

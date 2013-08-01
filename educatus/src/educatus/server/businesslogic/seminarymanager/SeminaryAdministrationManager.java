@@ -19,6 +19,8 @@ import educatus.server.persist.dao.dynamiccontent.DynamicSectionAlignment;
 import educatus.server.persist.dao.internationalization.ImageContentTranslationEntry;
 import educatus.server.persist.dao.internationalization.ImageInternal;
 import educatus.server.persist.dao.internationalization.TextContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.Video;
+import educatus.server.persist.dao.internationalization.VideoContentTranslationEntry;
 import educatus.server.persist.dao.security.User;
 import educatus.server.persist.dao.seminary.Difficulty;
 import educatus.server.persist.dao.seminary.Seminary;
@@ -27,6 +29,7 @@ import educatus.shared.dto.dynamiccontent.AbstractDynamicSection.DynamicSectionT
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionVideoContent;
 import educatus.shared.dto.seminary.SeminaryContent;
 
 @Singleton
@@ -102,6 +105,28 @@ public class SeminaryAdministrationManager {
 						);
 
 			} else if (dynamicSection.getSectionType() == DynamicSectionType.VIDEO_SECTION) {
+				
+				DynamicSectionVideoContent videoContent = (DynamicSectionVideoContent) dynamicSection;
+				
+				String description = "";
+				if (videoContent.getVideoDescription() != null) {
+					description = videoContent.getVideoDescription();
+				}
+				
+				TextContentTranslationEntry videoDescription = internationalizationDao.insertTextContentTranslationEntry(
+						EN_LANG, CA_CULT, description);
+				
+				
+				Video video = internationalizationDao.insertVideo(videoContent.getVideoUrl());
+				VideoContentTranslationEntry videoEntry = internationalizationDao.insertVideoTranslationEntry(EN_LANG, CA_CULT, video.getId());
+				
+				dynamicContentDao.addDynamicSectionVideo(
+						seminaryDynamicContent.getId(),
+						videoDescription.getTextcontententry().getId(),
+						videoEntry.getVideocontententry().getId(),
+						centerAlignment.getId(),
+						sequenceId
+				);
 
 			} else if (dynamicSection.getSectionType() == DynamicSectionType.FORMULA_SECTION) {
 

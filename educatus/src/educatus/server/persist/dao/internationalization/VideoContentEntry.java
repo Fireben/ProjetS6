@@ -1,6 +1,7 @@
 package educatus.server.persist.dao.internationalization;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ public class VideoContentEntry implements Serializable {
 
 	// bi-directional many-to-one association to Videocontenttranslationentry
 	@OneToMany(mappedBy = "VideoContentEntry")
-	private List<VideoContentTranslationEntry> videoContentTranslationEntries;
+	private List<VideoContentTranslationEntry> videoContentTranslationEntries = new ArrayList<VideoContentTranslationEntry>();
 
 	public VideoContentEntry() {
 	}

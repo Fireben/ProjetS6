@@ -7,12 +7,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 
 import educatus.client.ui.PdfViewer;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionVideoContent;
 
 public class DynamicSection extends Composite {
 	private FlowPanel panel;
@@ -54,6 +56,8 @@ public class DynamicSection extends Composite {
 			addTextSection(textContent.getTitle(), textContent.getText());
 			break;
 		case VIDEO_SECTION:
+			DynamicSectionVideoContent videoContent = (DynamicSectionVideoContent) abstractDynamicSection;
+			addVideoSection(videoContent.getVideoUrl());
 			break;
 		case PDF_SECTION:
 			DynamicSectionPDFContent pdfContent = (DynamicSectionPDFContent) abstractDynamicSection;
@@ -85,6 +89,14 @@ public class DynamicSection extends Composite {
 		panel.add(pdfViewer);
 		
 		containsPdf = true;
+	}
+	
+	//TODO replace by Nic's widget
+	private void addVideoSection(String videoUrl){
+		TextBox textBox = new TextBox();
+		textBox.setText(videoUrl);
+		
+		panel.add(textBox);
 	}
 
 	public void clear() {

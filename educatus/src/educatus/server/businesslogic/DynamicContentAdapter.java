@@ -12,12 +12,14 @@ import educatus.server.persist.dao.dynamiccontent.DynamicSectionText;
 import educatus.server.persist.dao.dynamiccontent.DynamicSectionVideo;
 import educatus.server.persist.dao.internationalization.Image;
 import educatus.server.persist.dao.internationalization.ImageInternal;
+import educatus.server.persist.dao.internationalization.Video;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment;
 import educatus.shared.dto.dynamiccontent.DynamicSectionAlignment.AlignmentEnum;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionVideoContent;
 
 public class DynamicContentAdapter {
 
@@ -54,6 +56,8 @@ public class DynamicContentAdapter {
 				break;
 			case 3:
 				DynamicSectionVideo dynamicSectionVideo = (DynamicSectionVideo) dynamicSection;
+				DynamicSectionVideoContent dynamicSectionVideoContent = DynamicContentAdapter.dynamicSectionVideoToContent(dynamicSectionVideo, culture, language);
+				abstractDynamicSections.add(dynamicSectionVideoContent);
 				break;
 			case 4:
 				DynamicSectionFormula dynamicSectionFormula = (DynamicSectionFormula) dynamicSection;
@@ -105,7 +109,22 @@ public class DynamicContentAdapter {
 		
 		return dynamicSectionPDFContent;
 	}
-
+	
+	public static DynamicSectionVideoContent dynamicSectionVideoToContent(DynamicSectionVideo dynamicSectionVideo, String culture, String language){
+		DynamicSectionVideoContent dynamicSectionVideoContent = new DynamicSectionVideoContent();
+		
+		dynamicSectionVideoContent.setId(dynamicSectionVideo.getId());
+		dynamicSectionVideoContent.setSequenceNumber(dynamicSectionVideo.getSequenceNumber());
+		
+		Video video = dynamicSectionVideo.getVideo().getVideoContentTranslationEntries().get(0).getVideo();
+		dynamicSectionVideoContent.setVideoUrl(video.getUrl());
+		
+		dynamicSectionVideoContent.setVideoDescription(InternationalizationUtility.getTranslationEntry(dynamicSectionVideo.getDescription(), culture, language).getTcteTranslation());
+		dynamicSectionVideoContent.setAlignment(getAlignment());
+		
+		return dynamicSectionVideoContent;	
+	}
+	
 	// TODO Remove hardcoding
 	private static DynamicSectionAlignment getAlignment() {
 		

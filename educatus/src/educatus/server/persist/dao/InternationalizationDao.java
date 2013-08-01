@@ -23,6 +23,7 @@ import educatus.server.persist.dao.internationalization.TextContentTranslationEn
 import educatus.server.persist.dao.internationalization.Video;
 import educatus.server.persist.dao.internationalization.VideoContentEntry;
 import educatus.server.persist.dao.internationalization.VideoContentTranslationEntry;
+import educatus.server.persist.dao.internationalization.VideoContentTranslationEntryPK;
 
 @Singleton
 public class InternationalizationDao {
@@ -261,6 +262,38 @@ public class InternationalizationDao {
 
 		return imte;		
 	}
+	
+	public VideoContentTranslationEntry insertVideoTranslationEntry(String languageCode, String cultureCode, int videoId) throws Exception{
+
+		Language language = findLanguageByCode(languageCode);
+		Culture culture = findCultureByCode(cultureCode);
+
+		VideoContentEntry vidce = new VideoContentEntry();
+		entityManager.persist(vidce);
+		
+		Video video = entityManager.find(Video.class, videoId);
+
+		VideoContentTranslationEntry vidte = new VideoContentTranslationEntry();
+
+		// Create a primary key
+		VideoContentTranslationEntryPK pk = new VideoContentTranslationEntryPK();
+		pk.setLanguageId(language.getId());
+		pk.setCultureId(culture.getId());
+		pk.setVideoContentEntryId(vidce.getId());
+
+		// Assign primary key and objects
+		vidte.setId(pk);
+		vidte.setCulture(culture);
+		vidte.setLanguage(language);
+		vidte.setVideocontententry(vidce);
+		vidte.setVideo(video);
+
+		// Insert Object
+		vidce.getVideoContentTranslationEntries().add(vidte);
+		entityManager.persist(vidte);
+
+		return vidte;		
+	}
 
 	public ImageExternal insertImageExternal(String externalUrl) throws Exception {
 
@@ -288,5 +321,15 @@ public class InternationalizationDao {
 		entityManager.persist(imageInternal);
 		
 		return imageInternal;
+	}
+	
+	public Video insertVideo(String videoUrl) throws Exception{
+		
+		Video video = new Video();
+		video.setUrl(videoUrl);
+		
+		entityManager.persist(video);
+		
+		return video;
 	}
 }
