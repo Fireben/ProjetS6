@@ -202,7 +202,7 @@ public class ExerciceAdministrationManager {
 
 			exerciceQuestionContentSequence++;
 		}
-
+		exerciceDao.addCategoryToExercice(exercice.getId(), exerciceContent.getCategories().get(0));
 		manager.getTransaction().commit();
 	}
 

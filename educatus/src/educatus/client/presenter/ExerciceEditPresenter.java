@@ -35,6 +35,7 @@ import educatus.client.ui.widget.PdfEdit;
 import educatus.client.ui.widget.QuestionEdit;
 import educatus.client.ui.widget.TextAnswerEdit;
 import educatus.client.ui.widget.TextEdit;
+import educatus.client.ui.widget.VideoEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
@@ -59,15 +60,10 @@ import educatus.shared.services.requestservice.response.SeminaryAdministrationPa
 public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyView, ExerciceEditPresenter.MyProxy> {
 	public interface MyView extends View {
 		public FlowPanel getSeminaryDescriptionContainer();
-
 		public FlowPanel getContentPanel();
-
 		public TextBox getTitleBox();
-
 		public TextArea getDescriptionBox();
-
 		public ListBox getDifficultyBox();
-
 		public ListBox getCategoryBox();
 	}
 
@@ -92,16 +88,6 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 			FlowPanel panelParent = (FlowPanel)closeButton.getParent();
 			panelParent = (FlowPanel)panelParent.getParent();
 			EditSection parent = (EditSection) panelParent.getParent();
-			getView().getContentPanel().remove(parent);
-		}
-	};
-
-	private ClickHandler closeQuestionHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			CustomButton closeButton = (CustomButton) event.getSource();
-			FlowPanel panelParent = (FlowPanel) closeButton.getParent();
-			QuestionEdit parent = (QuestionEdit) panelParent.getParent();
 			getView().getContentPanel().remove(parent);
 		}
 	};
@@ -137,8 +123,17 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		@Override
 		public void onClick(ClickEvent event) {
 			QuestionEdit questionEdit = new QuestionEdit();
-			questionEdit.getCloseButton().addClickHandler(closeQuestionHandler);
+			questionEdit.getCloseButton().addClickHandler(closeHandler);
 			getView().getContentPanel().add(questionEdit);
+		}
+	};
+	
+	private ClickHandler addVideoHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			VideoEdit videoEdit = new VideoEdit();
+			videoEdit.getCloseButton().addClickHandler(closeHandler);
+			getView().getContentPanel().add(videoEdit);
 		}
 	};
 
@@ -159,7 +154,6 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 			request.setSessionID(Cookies.getCookie(CookiesConst.SESSION_ID));
 			
 			requestService.sendRequest(request, new AsyncCallback<AbstractResponse>() {
-
 				@Override
 				public void onSuccess(AbstractResponse result) {
 					resetAll();
@@ -202,7 +196,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		editButtonPanelPresenter.addSectionButton("images/addText.png", addTextHandler);
 		editButtonPanelPresenter.addSectionButton("images/addImage.png", addImageHandler);
 		editButtonPanelPresenter.addSectionButton("images/addPdf.png", addPdfHandler);
-		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addPdfHandler);
+		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addVideoHandler);
 		editButtonPanelPresenter.addSectionButton("images/addQuestion.png", addQuestionHandler);
 
 		editButtonPanelPresenter.setSaveButtonHandler(confirmHandler);
@@ -215,7 +209,6 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		pageContentRequest.setLanguage(locale.getLanguage());
 		requestService.sendRequest(pageContentRequest, responseHandler);
 		PageChangingEvent.fire(this, NameTokens.getExerciceEdit());
-
 	}
 
 	@Override
@@ -231,6 +224,10 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		ExerciceContent exerciceContent = new ExerciceContent();
 		exerciceContent.setCoreContent(coreContent);
 		exerciceContent.setQuestionList(questionList);
+		
+		List<Integer> categories = new ArrayList<Integer>();
+		categories.add(Integer.valueOf(getView().getCategoryBox().getValue(getView().getCategoryBox().getSelectedIndex())));
+		exerciceContent.setCategories(categories);
 
 		return exerciceContent;
 	}
@@ -337,7 +334,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 		ListBox categoryBox = getView().getCategoryBox();
 		categoryBox.clear();
 		for (CategoryCoreContent category : categoryList) {
-			categoryBox.addItem(category.getName());
+			categoryBox.addItem(category.getName(), String.valueOf(category.getId()));
 		}
 		descriptionContainer.add(categoryBox);
 	}

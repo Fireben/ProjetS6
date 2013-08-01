@@ -40,8 +40,6 @@ public class ExerciceView extends ViewImpl implements MyView {
 	@UiField
 	Button submitButton;
 	@UiField
-	Button nextButton;
-	@UiField
 	HTMLPanel rootPanel;
 
 	@Inject
@@ -81,10 +79,6 @@ public class ExerciceView extends ViewImpl implements MyView {
 	public Button getSubmitButton() {
 		return submitButton;
 	}	
-	
-	public Button getNextButton() {
-		return nextButton;
-	}
 
 	public HTMLPanel getRootPanel() {
 		return rootPanel;

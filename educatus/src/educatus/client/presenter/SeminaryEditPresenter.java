@@ -32,6 +32,7 @@ import educatus.client.ui.widget.EditSection;
 import educatus.client.ui.widget.ImageEdit;
 import educatus.client.ui.widget.PdfEdit;
 import educatus.client.ui.widget.TextEdit;
+import educatus.client.ui.widget.VideoEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
@@ -113,6 +114,15 @@ public class SeminaryEditPresenter extends
 		}
 	};
 	
+	private ClickHandler addVideoHandler = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			VideoEdit videoEdit = new VideoEdit();
+			videoEdit.getCloseButton().addClickHandler(closeHandler);
+			getView().getContentPanel().add(videoEdit);
+		}
+	};
+	
 	private ClickHandler cancelHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -176,7 +186,7 @@ public class SeminaryEditPresenter extends
 		editButtonPanelPresenter.addSectionButton("images/addText.png", addTextHandler);
 		editButtonPanelPresenter.addSectionButton("images/addImage.png", addImageHandler);
 		editButtonPanelPresenter.addSectionButton("images/addPdf.png", addPdfHandler);
-		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addPdfHandler);
+		editButtonPanelPresenter.addSectionButton("images/addVideo.png", addVideoHandler);
 		
 		editButtonPanelPresenter.setSaveButtonHandler(confirmHandler);
 		editButtonPanelPresenter.setCancelHandler(cancelHandler);
@@ -200,7 +210,11 @@ public class SeminaryEditPresenter extends
 		List<AbstractDynamicSection> dynamicSectionList = getDynamicContentList();
 		SeminaryCoreContent coreContent = getCoreContent();
 		
+		List<Integer> categories = new ArrayList<Integer>();
+		categories.add(Integer.valueOf(getView().getCategoryBox().getValue(getView().getCategoryBox().getSelectedIndex())));
+		
 		SeminaryContent seminaryContent= new SeminaryContent();
+		seminaryContent.setCategories(categories);
 		seminaryContent.setCoreContent(coreContent);
 		seminaryContent.setDynamicSectionList(dynamicSectionList);
 		
@@ -214,7 +228,7 @@ public class SeminaryEditPresenter extends
 		
 		ListBox difficultyBox = getView().getDifficultyBox();
 		int index = difficultyBox.getSelectedIndex();
-		coreContent.setDifficulty(difficultyBox.getValue(index));
+		coreContent.setDifficulty(difficultyBox.getItemText(index));
 		coreContent.setDifficultyValue(index+1);
 		
 		return coreContent;
@@ -286,7 +300,7 @@ public class SeminaryEditPresenter extends
 		ListBox categoryBox = getView().getCategoryBox();
 		categoryBox.clear();
 		for(CategoryCoreContent category : categoryList) {
-			categoryBox.addItem(category.getName());
+			categoryBox.addItem(category.getName(), String.valueOf(category.getId()));
 		}
 		descriptionContainer.add(categoryBox);
 	}	
