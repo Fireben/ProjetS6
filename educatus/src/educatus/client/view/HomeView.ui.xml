@@ -66,7 +66,6 @@
 														    <img ui:field="homePageThirdSectionImg" width="154" height="154" alt="" src="" class=""></img>
 														</p>
 														<p ui:field="homePageThirdSectionDescription"></p>
-														<p><a ui:field="homePageThirdSectionLink" href="#"></a></p>
 													</div>
 													<div class="art-layout-cell layout-item-3" style="width: 25%; padding-right: 20px; padding-left: 20px;" >
 														<h1 ui:field="homePageFourthSectionTitle"></h1>
@@ -75,7 +74,6 @@
 															<img ui:field="homePageFourthSectionImg" width="154" height="154" alt="" src=""></img>			
 														</p>
 														<p ui:field="homePageFourthSectionDescription"></p>
-														<p><a ui:field="homePageFourthSectionLink" href="#"></a></p>
 													</div>
 												</div>
 											</div>

@@ -96,8 +96,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 		public Element getHomePageThirdSectionDescription();
 
-		public Element getHomePageThirdSectionLink();
-
 		public Element getHomePageFourthSectionTitle();
 
 		public Element getHomePageFourthSectionText();
@@ -105,8 +103,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		public Element getHomePageFourthSectionImg();
 
 		public Element getHomePageFourthSectionDescription();
-		
-		public Element getHomePageFourthSectionLink();
 	}
 
 	@Inject
@@ -191,14 +187,12 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		getView().getHomePageThirdSectionTitle().setInnerText(content.getStatisticsSection().getSectionTitle());
 		getView().getHomePageThirdSectionText().setInnerText(content.getStatisticsSection().getSectionText());
 		getView().getHomePageThirdSectionDescription().setInnerText(content.getStatisticsSection().getSectionDescription());
-		getView().getHomePageThirdSectionLink().setInnerText(content.getStatisticsSection().getSectionLinkText());
 		getView().getHomePageThirdSectionImg().setAttribute("src", content.getStatisticsSection().getSectionImg());
 
 		// Community section
 		getView().getHomePageFourthSectionTitle().setInnerText(content.getCommunitySection().getSectionTitle());
 		getView().getHomePageFourthSectionText().setInnerText(content.getCommunitySection().getSectionText());
 		getView().getHomePageFourthSectionDescription().setInnerText(content.getCommunitySection().getSectionDescription());
-		getView().getHomePageFourthSectionLink().setInnerText(content.getCommunitySection().getSectionLinkText());
 		getView().getHomePageFourthSectionImg().setAttribute("src", content.getCommunitySection().getSectionImg());
 
 	}
