@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
+import educatus.client.NameTokens;
 import educatus.client.presenter.HomePresenter.MyView;
 
 /**
@@ -59,19 +60,19 @@ public class HomeView extends ViewImpl implements MyView {
 	@UiField Element homePageThirdSectionText;
 	@UiField Element homePageThirdSectionImg;
 	@UiField Element homePageThirdSectionDescription;
-	@UiField Element homePageThirdSectionLink;
 	
 	@UiField Element homePageFourthSectionTitle;
 	@UiField Element homePageFourthSectionText;
 	@UiField Element homePageFourthSectionImg;
 	@UiField Element homePageFourthSectionDescription;
-	@UiField Element homePageFourthSectionLink;
 	
 	@UiField HTMLPanel homePanel;
 
 	public HomeView()
 	{
 		widget = uiBinder.createAndBindUi(this);
+		homePageFirstSectionLink.setAttribute("href", "#"+NameTokens.seminarHomePage);
+		homePageSecondSectionLink.setAttribute("href", "#"+NameTokens.exerciceHomePage);
 	}
 
 	public Widget asWidget()
@@ -156,10 +157,6 @@ public class HomeView extends ViewImpl implements MyView {
 		return homePageThirdSectionDescription;
 	}
 
-	public Element getHomePageThirdSectionLink() {
-		return homePageThirdSectionLink;
-	}
-
 	public Element getHomePageFourthSectionTitle() {
 		return homePageFourthSectionTitle;
 	}
@@ -174,10 +171,6 @@ public class HomeView extends ViewImpl implements MyView {
 
 	public Element getHomePageFourthSectionDescription() {
 		return homePageFourthSectionDescription;
-	}
-	
-	public Element getHomePageFourthSectionLink() {
-		return homePageFourthSectionLink;
 	}
 
 	public HTMLPanel getHomePanel() {

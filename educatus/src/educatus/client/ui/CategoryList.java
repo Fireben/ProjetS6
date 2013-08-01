@@ -35,24 +35,22 @@ public class CategoryList extends Composite{
 	public CategoryList() {
 		CellTable.Resources CategoryDataGridRessources = GWT.create(SeminaryDataGridCssRessource.class);
 		categoryTable = new CellTable<Category>(12, CategoryDataGridRessources);
-		categoryTable.addStyleName("categoryTable");
+		categoryTable.addStyleName("newsfeedTable");
 		initializeColumns();
 		initWidget(uiBinder.createAndBindUi(this));
+		categoryLabel.setText("Available categories");
+		categoryLabel.setStyleName("listTitle");
 	}
-	
 
 	public CellTable<Category> getDataGrid() {
 		return categoryTable;
 	}	
 	
 	private void initializeColumns() {		
-		Column<Category, Hyperlink> IdColumn = 
-			    new Column<Category, Hyperlink>(new HyperLinkCell()) { 
-			        @Override 
-			        public Hyperlink getValue(Category category) {			    	  
-			        	Hyperlink link = new Hyperlink(String.valueOf(category.getId()), NameTokens.getCategoryAdministration() + ";id=" + category.getId());
-			            link.setStyleName("cellTableHyperlink");
-			            return link; 
+		TextColumn<Category> IdColumn = new TextColumn<Category>() {
+			@Override
+				public String getValue(Category category) {
+					return String.valueOf(category.getId());
 			        }
 				};
 		categoryTable.addColumn(IdColumn, "Id", "");
@@ -76,13 +74,10 @@ public class CategoryList extends Composite{
 		categoryTable.addColumn(ImageColumn, "Image", "");
 		categoryTable.setColumnWidth(ImageColumn, 200, Unit.PX);
 		
-		Column<Category, Hyperlink> DescriptionColumn = 
-		    new Column<Category, Hyperlink>(new HyperLinkCell()) { 
+		TextColumn<Category> DescriptionColumn = new TextColumn<Category>() { 
 		        @Override 
-		        public Hyperlink getValue(Category category) {			    	  
-		        	Hyperlink link = new Hyperlink(category.getDescription(), NameTokens.getCategoryAdministration() + ";id=" + category.getId());
-		            link.setStyleName("cellTableHyperlink");
-		            return link; 
+		        public String getValue(Category category) {			    	  
+		        	return category.getDescription();
 		        }
 			};
 		categoryTable.addColumn(DescriptionColumn, "Description", "");

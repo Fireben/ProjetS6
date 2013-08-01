@@ -97,8 +97,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 		public Element getHomePageThirdSectionDescription();
 
-		public Element getHomePageThirdSectionLink();
-
 		public Element getHomePageFourthSectionTitle();
 
 		public Element getHomePageFourthSectionText();
@@ -106,8 +104,6 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		public Element getHomePageFourthSectionImg();
 
 		public Element getHomePageFourthSectionDescription();
-		
-		public Element getHomePageFourthSectionLink();
 		
 		public HTMLPanel getHomePanel();
 	}
@@ -135,7 +131,7 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 
 	@Override
 	protected void onReset() {
-		super.onReset();		
+		super.onReset();
 		
 		if(request.getCulture() != locale.getCulture() || request.getLanguage() != locale.getLanguage())
 		{
@@ -195,14 +191,12 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
 		getView().getHomePageThirdSectionTitle().setInnerText(content.getStatisticsSection().getSectionTitle());
 		getView().getHomePageThirdSectionText().setInnerText(content.getStatisticsSection().getSectionText());
 		getView().getHomePageThirdSectionDescription().setInnerText(content.getStatisticsSection().getSectionDescription());
-		getView().getHomePageThirdSectionLink().setInnerText(content.getStatisticsSection().getSectionLinkText());
 		getView().getHomePageThirdSectionImg().setAttribute("src", content.getStatisticsSection().getSectionImg());
 
 		// Community section
 		getView().getHomePageFourthSectionTitle().setInnerText(content.getCommunitySection().getSectionTitle());
 		getView().getHomePageFourthSectionText().setInnerText(content.getCommunitySection().getSectionText());
 		getView().getHomePageFourthSectionDescription().setInnerText(content.getCommunitySection().getSectionDescription());
-		getView().getHomePageFourthSectionLink().setInnerText(content.getCommunitySection().getSectionLinkText());
 		getView().getHomePageFourthSectionImg().setAttribute("src", content.getCommunitySection().getSectionImg());
 
 		getView().getHomePanel().setVisible(true);
