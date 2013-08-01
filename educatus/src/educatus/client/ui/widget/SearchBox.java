@@ -1,6 +1,7 @@
 package educatus.client.ui.widget;
 
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -38,5 +39,9 @@ public class SearchBox extends Composite {
 
 	public void clearText() {
 		searchText.setValue(null);
+	}
+	
+	public HandlerRegistration addKeyHandler(KeyDownHandler handler) {
+		return searchText.addKeyDownHandler(handler);
 	}
 }

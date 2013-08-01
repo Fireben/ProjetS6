@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -28,6 +29,7 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 	HandlerRegistration backRegisteredHandler = null;
 	HandlerRegistration seeAllRegisteredHandler = null;
 	HandlerRegistration searchRegisteredHandler = null;
+	HandlerRegistration searchEnterRegisteredHandler = null;
 	private String rootParent;
 	
 	private CategoryCoreContent parent = null; 
@@ -125,6 +127,13 @@ public class CategoryPresenter extends PresenterWidget<CategoryPresenter.MyView>
 		if (searchRegisteredHandler == null) {
 			searchRegisteredHandler = getView().getSearchBox().addClickHandler(searchClickHandler);
 			registerHandler(searchRegisteredHandler);
+		}
+	}
+	
+	public void registerSearchEnter(final KeyDownHandler handler) {
+		if (searchEnterRegisteredHandler == null) {
+			searchEnterRegisteredHandler = getView().getSearchBox().addKeyHandler(handler);
+			registerHandler(searchEnterRegisteredHandler);
 		}
 	}
 

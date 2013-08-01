@@ -22,6 +22,9 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -109,7 +112,8 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 	  categoryPresenter.setRootParent("Seminars");
 	  categoryPresenter.registerBackButton(backClickHandler);
 	  categoryPresenter.registerSeeAllButton(seeAllClickHandler);
-	  categoryPresenter.registerSearchButton(searchHandler);	  
+	  categoryPresenter.registerSearchButton(searchHandler);	
+	  categoryPresenter.registerSearchEnter(searchEnterHandler);
 	}
 	
 	@Override
@@ -147,6 +151,15 @@ public class SeminarHomePresenter extends Presenter<SeminarHomePresenter.MyView,
 			CustomButton buttonClicked = (CustomButton) event.getSource();
 			changeCategoryPanel(Integer.parseInt(buttonClicked.getElement().getId()));
 		}
+	};
+	
+	private KeyDownHandler searchEnterHandler = new KeyDownHandler() {
+	    @Override
+	    public void onKeyDown(KeyDownEvent event) {
+	        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+	        	createAndSendSearchListingRequest(categoryPresenter.getView().getSearchBox().getValue());
+	        }
+	    }
 	};
 	
 	private void changeCategoryPanel(int id) {  		

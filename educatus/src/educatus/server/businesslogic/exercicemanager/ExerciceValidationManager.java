@@ -32,7 +32,7 @@ public class ExerciceValidationManager {
 					getTranslationEntry(((AnwserText)answer).getValue(), culture, language).
 					getTcteTranslation();
 			String currentAnswer = ((AnswerTextContent)questionContent.getAnswer()).getTextAnswer();
-			return validAnswer.equals(currentAnswer);
+			return validAnswer.equalsIgnoreCase(currentAnswer);
 		}
 		else if(questionType == ExerciceQuestionType.ANSWER_NUMERIC)
 		{

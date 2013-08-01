@@ -263,19 +263,11 @@ public class SeminaryEditPresenter extends
 				dynamicSectionPDFContent.setPDFUrl(id);
 				dynamicSectionList.add(dynamicSectionPDFContent);
 			}
-			//TODO modify to Nic's videoWidget
-			else if(currentWidget instanceof TextBox){
-				TextBox textBox = ((TextBox)currentWidget);
-				DynamicSectionVideoContent dynamicSectionVideoContent = new DynamicSectionVideoContent();
-				dynamicSectionVideoContent.setVideoUrl(textBox.getText());
-				dynamicSectionVideoContent.setVideoDescription("Test Ben");
-				dynamicSectionList.add(dynamicSectionVideoContent);
-			}
 			else if(currentWidget instanceof VideoEdit) {
 				VideoEdit videoEdit = ((VideoEdit)currentWidget);
 				DynamicSectionVideoContent dynamicSectionVideoContent = new DynamicSectionVideoContent();
 				dynamicSectionVideoContent.setVideoUrl(videoEdit.getHyperlink());
-				dynamicSectionVideoContent.setVideoDescription("Test Ben");
+				dynamicSectionVideoContent.setVideoDescription(videoEdit.getDescription());
 				dynamicSectionList.add(dynamicSectionVideoContent);
 			}
 		}

@@ -91,12 +91,9 @@ public class DynamicSection extends Composite {
 		containsPdf = true;
 	}
 	
-	//TODO replace by Nic's widget
 	private void addVideoSection(String videoUrl){
-		TextBox textBox = new TextBox();
-		textBox.setText(videoUrl);
-		
-		panel.add(textBox);
+		HTML video = new HTML("<embed width=\"550\" height=\"345\"src=\"" + videoUrl + "\"type=\"application/x-shockwave-flash\"></embed>");
+		panel.add(video);
 	}
 
 	public void clear() {
