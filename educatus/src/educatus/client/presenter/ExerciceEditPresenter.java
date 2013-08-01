@@ -275,6 +275,7 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 				VideoEdit videoEdit = ((VideoEdit)currentWidget);
 				DynamicSectionVideoContent dynamicSectionVideoContent = new DynamicSectionVideoContent();
 				dynamicSectionVideoContent.setVideoUrl(videoEdit.getHyperlink());
+				dynamicSectionVideoContent.setVideoDescription(videoEdit.getDescription());
 				dynamicSectionList.add(dynamicSectionVideoContent);
 			}			
 			else if (currentWidget instanceof QuestionEdit) {
