@@ -39,6 +39,7 @@ import educatus.client.ui.widget.VideoEdit;
 import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionVideoContent;
 import educatus.shared.dto.exercice.AnswerChoiceContent;
 import educatus.shared.dto.exercice.AnswerTextContent;
 import educatus.shared.dto.exercice.ExerciceContent;
@@ -270,7 +271,12 @@ public class ExerciceEditPresenter extends Presenter<ExerciceEditPresenter.MyVie
 				dynamicSectionImageContent.setImageDescription(imageEdit.getTitle());
 				dynamicSectionList.add(dynamicSectionImageContent);
 			} 
-			
+			else if(currentWidget instanceof VideoEdit) {
+				VideoEdit videoEdit = ((VideoEdit)currentWidget);
+				DynamicSectionVideoContent dynamicSectionVideoContent = new DynamicSectionVideoContent();
+				dynamicSectionVideoContent.setVideoUrl(videoEdit.getHyperlink());
+				dynamicSectionList.add(dynamicSectionVideoContent);
+			}			
 			else if (currentWidget instanceof QuestionEdit) {
 				ExerciceQuestionContent exerciceQuestion = new ExerciceQuestionContent();
 

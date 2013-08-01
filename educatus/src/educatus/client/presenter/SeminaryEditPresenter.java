@@ -37,6 +37,7 @@ import educatus.shared.dto.dynamiccontent.AbstractDynamicSection;
 import educatus.shared.dto.dynamiccontent.DynamicSectionImageContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionPDFContent;
 import educatus.shared.dto.dynamiccontent.DynamicSectionTextContent;
+import educatus.shared.dto.dynamiccontent.DynamicSectionVideoContent;
 import educatus.shared.dto.pagecontent.SeminaryAdministrationPageContent;
 import educatus.shared.dto.seminary.CategoryCoreContent;
 import educatus.shared.dto.seminary.DifficultyContent;
@@ -261,6 +262,12 @@ public class SeminaryEditPresenter extends
 				DynamicSectionPDFContent dynamicSectionPDFContent = new DynamicSectionPDFContent();
 				dynamicSectionPDFContent.setPDFUrl(id);
 				dynamicSectionList.add(dynamicSectionPDFContent);
+			}
+			else if(currentWidget instanceof VideoEdit) {
+				VideoEdit videoEdit = ((VideoEdit)currentWidget);
+				DynamicSectionVideoContent dynamicSectionVideoContent = new DynamicSectionVideoContent();
+				dynamicSectionVideoContent.setVideoUrl(videoEdit.getHyperlink());
+				dynamicSectionList.add(dynamicSectionVideoContent);
 			}
 		}
 		return dynamicSectionList;
