@@ -114,17 +114,7 @@ public class SeminaryEditPresenter extends
 			getView().getContentPanel().add(pdfEdit);
 		}
 	};
-	
-	//TODO take Nic's widget
-	private ClickHandler addVideoHandler = new ClickHandler() {
-		@Override
-		public void onClick(ClickEvent event) {
-			TextBox textBox = new TextBox();
-			addSectionTitle("Video");
-			getView().getContentPanel().add(textBox);
-		}
-	};
-	
+
 	private ClickHandler addVideoHandler = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
