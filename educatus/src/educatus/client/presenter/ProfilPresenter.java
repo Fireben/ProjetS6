@@ -88,6 +88,14 @@ public class ProfilPresenter extends
 		getView().getUserStatisticsWidget().clearAllProgressBars();
 	}
 	
+	private void hideAll() {
+		getView().getProfilVerticalPanel().setVisible(false);
+	}
+	
+	private void showAll() {
+		getView().getProfilVerticalPanel().setVisible(true);
+	}
+	
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -101,6 +109,7 @@ public class ProfilPresenter extends
 		}
 		// we clear all content before request
 		cleanPageContent();
+		hideAll();
 		
 		UserContentRequest request = new UserContentRequest();
 		request.setRequestedUser(user);
@@ -169,7 +178,8 @@ public class ProfilPresenter extends
 								categoryStat.getTotalSeminaries(),
 								categoryStat.getCompletedSeminaries()
 						);
-					}				
+					}
+					showAll();
 				}
 			}
 
